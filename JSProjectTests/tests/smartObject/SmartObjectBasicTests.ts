@@ -9,7 +9,13 @@ module SmartObjectTest {
     let deserializer: smartObj.SmartObjectDeserializer<TestObject> = new smartObj.SmartObjectDeserializer<TestObject>(builder);
 
     class TestObject extends smartObj.SmartObject {
-        testSmartObj: TestObject2 = new TestObject2(); 
+        testSmartObj: TestObject2 = new TestObject2();
+        
+        getMetadata(): smartObj.ISmartObjectMemberMap {
+            return { 
+                ['testSmartObj']: smartObj.SmartObjectType.SMART_OBJECT 
+            };
+        } 
     }
 
     class TestObject2 extends smartObj.SmartObject {
@@ -17,6 +23,15 @@ module SmartObjectTest {
         testNumber: number = 999;
         testArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         testMap: Object = {'1':1, 2:2, 3:3};
+
+        getMetadata(): smartObj.ISmartObjectMemberMap {
+            return { 
+                ['testVal']: smartObj.SmartObjectType.STRING,
+                ['testNumber']: smartObj.SmartObjectType.NUMBER,
+                ['testArray']: smartObj.SmartObjectType.COLLECTION,
+                ['testMap']: smartObj.SmartObjectType.COLLECTION
+            };
+        }
     }
 
     builder.register('TestObject', TestObject.prototype); 
@@ -27,9 +42,9 @@ module SmartObjectTest {
     testObj1.testSmartObj.id = '2'; 
 
 
-    export class BasicTest extends tsUnit.TestClass {
+    export class BasicTests extends tsUnit.TestClass {
 
-        basicTest123() {
+        deserializationTest() {
             let serialized: string = serializer.serialize(testObj1);
             let deserialized: TestObject = deserializer.deserialize(serialized);
 

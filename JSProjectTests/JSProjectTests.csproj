@@ -25,11 +25,10 @@
     <TypeScriptCompile Include="tests\tsUnit.ts" />
     <TypeScriptCompile Include="tests\smartObject\SmartObjectBasicTests.ts" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Scripts\tsUnit\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="tests\Tests.html" />
+    <Content Include="html\app.css" />
+    <Content Include="html\Tests.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

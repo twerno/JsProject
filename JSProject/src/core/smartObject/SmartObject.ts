@@ -1,23 +1,41 @@
 ﻿namespace smartObj {
 
     export enum SmartObjectType { STRING, NUMBER, SMART_OBJECT, SMART_OBJECT_COLLECTION, COLLECTION }
-    export enum SmartObjectFlag { NONE, IS_NULL, IS_UNDEFINED, IS_REF } 
-
-    export interface ISmartObjectMap { [id: string]: SmartObject };   
     export interface ISmartObjectMemberMap { [member: string]: SmartObjectType }
 
+    export namespace internal { 
+    
+        export enum SmartObjectFlag { NONE, IS_NULL, IS_UNDEFINED, IS_REF } 
+        export interface ISmartObjectMap { [id: string]: SmartObject };   
+        
+        export interface ISmartObjectData 
+        {
+            id?: string,
+            type: SmartObjectType,
+            flag: SmartObjectFlag,
+            clazz?: string,
+            jsonData?: string,
+            members?: { [key: string]: ISmartObjectData }
+        }
 
-    export interface ISmartObjectData 
-    {
-        id?: string,
-        type: SmartObjectType,
-        flag: SmartObjectFlag,
-        clazz?: string,
-        jsonData?: string,
-        members?: { [key: string]: ISmartObjectData }
+
+        export class SmartObjectHelper {
+            static validateSmartObjId(smartObjId: string): void {
+                if (smartObjId === '' || smartObjId === null || smartObjId === undefined)
+                    throw new Error(`SmartObj id can't be empty!`);
+            }
+        
+
+
+            static validateDuplicateId(smartObj: SmartObject, smartObjCache: internal.ISmartObjectMap) : void {
+                let cacheObj: SmartObject = smartObjCache[smartObj.id] || null;
+                if (cacheObj != null && cacheObj != smartObj) 
+                    throw new Error(`Duplicated id: ${smartObj.id}`);
+            }
+        }
     }
 
-
+             
     export class SmartObjectBuilder {
         private map: IObjectMap = {};
 
@@ -66,26 +84,5 @@
             return this.constructor['name'];
         } 
     }
-
- 
-
-    export class SmartObjectHelper {
-        static validateSmartObjId(smartObjId: string): void {
-            if (smartObjId === '' || smartObjId === null || smartObjId === undefined)
-                throw new Error(`SmartObj id can't be empty!`);
-        }
-        
-
-
-        static validateDuplicateId(smartObj: SmartObject, smartObjCache: ISmartObjectMap) : void {
-            let cacheObj: SmartObject = smartObjCache[smartObj.id] || null;
-            if (cacheObj != null && cacheObj != smartObj) 
-                throw new Error(`Duplicated id: ${smartObj.id}`);
-        }
-    }
-
-
-
-
 
 }

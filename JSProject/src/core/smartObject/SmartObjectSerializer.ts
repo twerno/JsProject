@@ -4,7 +4,7 @@ namespace smartObj {
 
     export class SmartObjectSerializer {
 
-        private smartObjCache: ISmartObjectMap = {}; 
+        private smartObjCache: internal.ISmartObjectMap = {}; 
 
         serialize(smart: SmartObject): string {
             return JSON.stringify(this.smartObj2Data(smart));
@@ -12,14 +12,14 @@ namespace smartObj {
 
 
 
-        private string2Data(value: string): ISmartObjectData {
+        private string2Data(value: string): internal.ISmartObjectData {
             if (value === null || value === undefined)
                 return this.getEmptySmartObjData(smartObj, SmartObjectType.STRING);
          
             else if (typeof value === 'string') 
                 return {
                     type: SmartObjectType.STRING,
-                    flag: SmartObjectFlag.NONE,
+                    flag: internal.SmartObjectFlag.NONE,
                     jsonData: JSON.stringify(value)
                 };
             else
@@ -28,14 +28,14 @@ namespace smartObj {
     
 
 
-        private number2Data(value: number): ISmartObjectData {
+        private number2Data(value: number): internal.ISmartObjectData {
             if (value === null || value === undefined)
                 return this.getEmptySmartObjData(smartObj, SmartObjectType.NUMBER); 
 
             else if (typeof value === 'number')
                 return {
                     type: SmartObjectType.NUMBER,
-                    flag: SmartObjectFlag.NONE,
+                    flag: internal.SmartObjectFlag.NONE,
                     jsonData: JSON.stringify(value)
                 };
             else
@@ -44,9 +44,9 @@ namespace smartObj {
     
     
     
-        private smartObj2Data(smartObj: SmartObject): ISmartObjectData {
-            SmartObjectHelper.validateSmartObjId(smartObj.id);
-            SmartObjectHelper.validateDuplicateId(smartObj, this.smartObjCache);
+        private smartObj2Data(smartObj: SmartObject): internal.ISmartObjectData {
+            internal.SmartObjectHelper.validateSmartObjId(smartObj.id);
+            internal.SmartObjectHelper.validateDuplicateId(smartObj, this.smartObjCache);
              
             if (smartObj === null || smartObj === undefined)
                 return this.getEmptySmartObjData(smartObj, SmartObjectType.SMART_OBJECT);
@@ -54,7 +54,7 @@ namespace smartObj {
             if (!(smartObj instanceof SmartObject))
                 throw new Error(`Value is not a "SmartObject"!`);
 
-            let result: ISmartObjectData = this.getFromCache(smartObj);
+            let result: internal.ISmartObjectData = this.getFromCache(smartObj);
 
             if (result != null)
                 return result;
@@ -64,7 +64,7 @@ namespace smartObj {
             result = {
                 id: smartObj.id,
                 type: SmartObjectType.SMART_OBJECT,
-                flag: SmartObjectFlag.NONE,
+                flag: internal.SmartObjectFlag.NONE,
                 clazz: smartObj.clazz(),
                 members: {} 
             };
@@ -75,7 +75,7 @@ namespace smartObj {
 
 
 
-        private smartObj2DataFillMembers(smartObj: SmartObject, result: ISmartObjectData): void {
+        private smartObj2DataFillMembers(smartObj: SmartObject, result: internal.ISmartObjectData): void {
             let meta: ISmartObjectMemberMap = smartObj.getMetadata();
             let isEmpty: boolean = true;
             
@@ -107,14 +107,14 @@ namespace smartObj {
 
 
 
-        private getFromCache(smartObj: SmartObject): ISmartObjectData {
+        private getFromCache(smartObj: SmartObject): internal.ISmartObjectData {
             let cacheObj: SmartObject = this.smartObjCache[smartObj.id] || null;
             if (cacheObj === null)
                 return null;
             else  
                 return {
                     id: smartObj.id,
-                    flag: SmartObjectFlag.IS_REF,
+                    flag: internal.SmartObjectFlag.IS_REF,
                     type: SmartObjectType.SMART_OBJECT,
                     clazz: smartObj.clazz()
                 };
@@ -128,13 +128,13 @@ namespace smartObj {
 
 
 
-        private smartCollection2Data(collection: SmartObject[] | ISmartObjectMap): ISmartObjectData {
+        private smartCollection2Data(collection: SmartObject[] | internal.ISmartObjectMap): internal.ISmartObjectData {
             if (collection === null || collection === undefined)
                 return this.getEmptySmartObjData(collection, SmartObjectType.SMART_OBJECT_COLLECTION);
 
-            let result: ISmartObjectData = {
+            let result: internal.ISmartObjectData = {
                 type: SmartObjectType.SMART_OBJECT_COLLECTION,
-                flag: SmartObjectFlag.NONE,
+                flag: internal.SmartObjectFlag.NONE,
                 clazz: collection instanceof Array ? 'Array' : 'Object', 
                 members: {} 
             };
@@ -147,13 +147,13 @@ namespace smartObj {
 
 
 
-        private collection2Data(collection: any[] | Object): ISmartObjectData {
+        private collection2Data(collection: any[] | Object): internal.ISmartObjectData {
             if (collection === null || collection === undefined)
                 return this.getEmptySmartObjData(collection, SmartObjectType.COLLECTION);
 
             return {
                 type: SmartObjectType.COLLECTION,
-                flag: SmartObjectFlag.NONE,
+                flag: internal.SmartObjectFlag.NONE,
                 clazz: collection instanceof Array ? 'Array' : 'Object',
                 jsonData: JSON.stringify(collection)
             };
@@ -161,10 +161,10 @@ namespace smartObj {
 
 
 
-        private getEmptySmartObjData(emptyObject: Object, smartObjectType: SmartObjectType): ISmartObjectData {
+        private getEmptySmartObjData(emptyObject: Object, smartObjectType: SmartObjectType): internal.ISmartObjectData {
             return {
                 type: smartObjectType,
-                flag: smartObj === null ? SmartObjectFlag.IS_NULL : SmartObjectFlag.IS_UNDEFINED
+                flag: smartObj === null ? internal.SmartObjectFlag.IS_NULL : internal.SmartObjectFlag.IS_UNDEFINED
             };
         }
     }

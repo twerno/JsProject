@@ -66,6 +66,14 @@ declare class AsyncMethodRunner {
     runAsync(): void;
     kill(): void;
 }
+interface IObjectMap {
+    [key: string]: Object;
+}
+declare namespace Const {
+    const WORKER_TIMEOUT_LOCAL: number;
+    const RPC_TASK_TIMEOUT: number;
+    const DEFAULT_ASYNC_DELAY: number;
+}
 declare enum TaskState {
     SUCCESS = 0,
     FAILURE = 1,
@@ -101,14 +109,6 @@ declare class TaskRunner implements ITaskRunner {
     private _internalOnSuccess;
     private _internalOnError;
     private _internalOnTimeout;
-}
-interface IObjectMap {
-    [key: string]: Object;
-}
-declare namespace Const {
-    const WORKER_TIMEOUT_LOCAL: number;
-    const RPC_TASK_TIMEOUT: number;
-    const DEFAULT_ASYNC_DELAY: number;
 }
 declare namespace rpc {
     type MessageId = string;
@@ -168,6 +168,39 @@ declare namespace rpc {
         onTimeout: (msg: string, token: IRpcToken) => void;
     }
 }
+declare namespace rpc {
+    class RpcControllerManager implements IRpcControllerManager {
+        private controllerMap;
+        registerController(controller: IRpcController<IJsonMetaData>): void;
+        getControllerByName(name: string): IRpcController<IJsonMetaData>;
+    }
+    class JsonRpcContent<T extends IJsonMetaData> implements IJsonRpcContent<IJsonMetaData> {
+        stringify(content: T): string;
+        parse(serializedContent: string): T;
+        stringifyError(content: Error): string;
+        parseError(serializedContent: string): Error;
+        parseString(serializedContent: string): string;
+    }
+    class RpcController<T extends IJsonMetaData> implements IRpcController<IJsonMetaData> {
+        name: string;
+        private rpcCommunicator;
+        private jsonRpcContent;
+        private tokenMap;
+        onRpcCall: (respondToken: IRespondToken, rpcMethod: string, data: T) => void;
+        onRespond: (token: IRpcToken, data: T) => void;
+        onTimeout: (msg: string, token: IRpcToken) => void;
+        onError: (error: Error, token: IRpcToken) => void;
+        constructor(name: string, rpcCommunicator: IRpcCommunicator, jsonRpcContent: IJsonRpcContent<T>);
+        callRpc(rpcMethod: string, data: T, timeout?: number): IRpcToken;
+        respondTo(respondToken: IRespondToken, data: T): void;
+        callError(error: Error, respondToken?: IRespondToken): void;
+        callTimeut(msg: string, respondToken?: IRespondToken): void;
+        onReceive(message: IMessage): void;
+        private getToken(id);
+        private buildToken();
+        private sendAsync(message);
+    }
+}
 declare class SequentialRpcMethodQueueRpcTask implements IRpcTask {
     static TASK_NAME: string;
     protected methodQueue: IRpcMethod[];
@@ -218,39 +251,6 @@ interface IRpcRemoteMethod {
     parent: IRpcMethod;
     run(dataMap: IObjectMap): IObjectMap;
 }
-declare namespace rpc {
-    class RpcControllerManager implements IRpcControllerManager {
-        private controllerMap;
-        registerController(controller: IRpcController<IJsonMetaData>): void;
-        getControllerByName(name: string): IRpcController<IJsonMetaData>;
-    }
-    class JsonRpcContent<T extends IJsonMetaData> implements IJsonRpcContent<IJsonMetaData> {
-        stringify(content: T): string;
-        parse(serializedContent: string): T;
-        stringifyError(content: Error): string;
-        parseError(serializedContent: string): Error;
-        parseString(serializedContent: string): string;
-    }
-    class RpcController<T extends IJsonMetaData> implements IRpcController<IJsonMetaData> {
-        name: string;
-        private rpcCommunicator;
-        private jsonRpcContent;
-        private tokenMap;
-        onRpcCall: (respondToken: IRespondToken, rpcMethod: string, data: T) => void;
-        onRespond: (token: IRpcToken, data: T) => void;
-        onTimeout: (msg: string, token: IRpcToken) => void;
-        onError: (error: Error, token: IRpcToken) => void;
-        constructor(name: string, rpcCommunicator: IRpcCommunicator, jsonRpcContent: IJsonRpcContent<T>);
-        callRpc(rpcMethod: string, data: T, timeout?: number): IRpcToken;
-        respondTo(respondToken: IRespondToken, data: T): void;
-        callError(error: Error, respondToken?: IRespondToken): void;
-        callTimeut(msg: string, respondToken?: IRespondToken): void;
-        onReceive(message: IMessage): void;
-        private getToken(id);
-        private buildToken();
-        private sendAsync(message);
-    }
-}
 declare class RpcTaskController extends rpc.RpcController<rpc.IJsonMetaData> implements IRpcTaskController {
     static CONTROLLER_NAME: string;
     constructor(rpcCommunicator: rpc.IRpcCommunicator, jsonRpcContent: rpc.IJsonRpcContent<IRpcTask>);
@@ -269,27 +269,33 @@ declare namespace smartObj {
         SMART_OBJECT_COLLECTION = 3,
         COLLECTION = 4,
     }
-    enum SmartObjectFlag {
-        NONE = 0,
-        IS_NULL = 1,
-        IS_UNDEFINED = 2,
-        IS_REF = 3,
-    }
-    interface ISmartObjectMap {
-        [id: string]: SmartObject;
-    }
     interface ISmartObjectMemberMap {
         [member: string]: SmartObjectType;
     }
-    interface ISmartObjectData {
-        id?: string;
-        type: SmartObjectType;
-        flag: SmartObjectFlag;
-        clazz?: string;
-        jsonData?: string;
-        members?: {
-            [key: string]: ISmartObjectData;
-        };
+    namespace internal {
+        enum SmartObjectFlag {
+            NONE = 0,
+            IS_NULL = 1,
+            IS_UNDEFINED = 2,
+            IS_REF = 3,
+        }
+        interface ISmartObjectMap {
+            [id: string]: SmartObject;
+        }
+        interface ISmartObjectData {
+            id?: string;
+            type: SmartObjectType;
+            flag: SmartObjectFlag;
+            clazz?: string;
+            jsonData?: string;
+            members?: {
+                [key: string]: ISmartObjectData;
+            };
+        }
+        class SmartObjectHelper {
+            static validateSmartObjId(smartObjId: string): void;
+            static validateDuplicateId(smartObj: SmartObject, smartObjCache: internal.ISmartObjectMap): void;
+        }
     }
     class SmartObjectBuilder {
         private map;
@@ -303,9 +309,25 @@ declare namespace smartObj {
         getMetadata(): ISmartObjectMemberMap;
         clazz(): string;
     }
-    class SmartObjectHelper {
-        static validateSmartObjId(smartObjId: string): void;
-        static validateDuplicateId(smartObj: SmartObject, smartObjCache: ISmartObjectMap): void;
+}
+declare namespace smartObj {
+    class SmartObjectDeserializer<T extends SmartObject> {
+        private builder;
+        private smartObjCache;
+        private smartObjRef2Fill;
+        constructor(builder: SmartObjectBuilder);
+        deserialize(serializedObj: string): T;
+        private getAsSmartObject(data);
+        private getOrCreateSmartObject(data);
+        private fillRef(smartObj, data);
+        private members2SmartObject(data, obj2Fill);
+        private isEmpty(data);
+        private getAsEmpty(data);
+        private getAsString(data);
+        private getAsNumber(data);
+        private getAsSmartObjectCollection(data);
+        private getAsCollection(data);
+        private areAllSmartObjectFilled();
     }
 }
 declare namespace smartObj {
@@ -321,25 +343,6 @@ declare namespace smartObj {
         private smartCollection2Data(collection);
         private collection2Data(collection);
         private getEmptySmartObjData(emptyObject, smartObjectType);
-    }
-}
-declare namespace smartObj {
-    class SmartObjectDeserializer<T extends SmartObject> {
-        private builder;
-        private smartObjCache;
-        private smartObjRef2Fill;
-        constructor(builder: SmartObjectBuilder);
-        deserialize(serializedObj: string): T;
-        private getAsSmartObject(data);
-        private getOrCreateSmartObject(data);
-        private fillRef(smartObj, data);
-        private members2SmartObject(data, obj2Fill);
-        private getAsEmpty(data);
-        private getAsString(data);
-        private getAsNumber(data);
-        private getAsSmartObjectCollection(data);
-        private getAsCollection(data);
-        private areAllSmartObjectFilled();
     }
 }
 interface IWebRtcConnectionData {

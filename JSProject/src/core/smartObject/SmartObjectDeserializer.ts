@@ -3,8 +3,8 @@
 namespace smartObj {
 
     export class SmartObjectDeserializer<T extends SmartObject> {
-        private smartObjCache: ISmartObjectMap = {};
-        private smartObjRef2Fill: ISmartObjectMap = {};
+        private smartObjCache: internal.ISmartObjectMap = {};
+        private smartObjRef2Fill: internal.ISmartObjectMap = {};
 
 
         constructor (private builder: SmartObjectBuilder) {}
@@ -12,7 +12,7 @@ namespace smartObj {
           
 
         deserialize(serializedObj: string): T {
-            let serializedData: ISmartObjectData = JSON.parse(serializedObj); 
+            let serializedData: internal.ISmartObjectData = JSON.parse(serializedObj); 
             let result: SmartObject = this.getAsSmartObject(serializedData);
 
             if (!this.areAllSmartObjectFilled())
@@ -23,13 +23,13 @@ namespace smartObj {
 
 
 
-        private getAsSmartObject(data: ISmartObjectData): SmartObject {
+        private getAsSmartObject(data: internal.ISmartObjectData): SmartObject {
             let result: SmartObject;
             
-            if (data.flag in [SmartObjectFlag.IS_NULL, SmartObjectFlag.IS_UNDEFINED])
+            if (this.isEmpty(data))
                 result = this.getAsEmpty(data);
 
-            else if (data.flag === SmartObjectFlag.IS_REF)
+            else if (data.flag === internal.SmartObjectFlag.IS_REF)
                 result = this.getOrCreateSmartObject(data);
 
             else {
@@ -42,9 +42,9 @@ namespace smartObj {
 
 
 
-        private getOrCreateSmartObject(data: ISmartObjectData): SmartObject {
-            SmartObjectHelper.validateSmartObjId(data.id);
-            let result: SmartObject = this.smartObjCache[data.id];
+        private getOrCreateSmartObject(data: internal.ISmartObjectData): SmartObject {
+            internal.SmartObjectHelper.validateSmartObjId(data.id);
+            let result: SmartObject = this.smartObjCache[data.id] || null;
 
             if (result === null) {
                 result = this.builder.build(data.clazz);
@@ -59,7 +59,7 @@ namespace smartObj {
         
         
         
-        private fillRef(smartObj: SmartObject, data: ISmartObjectData): void {
+        private fillRef(smartObj: SmartObject, data: internal.ISmartObjectData): void {
             if ((this.smartObjRef2Fill[data.id] || null) === null)
                 throw new Error(`SmartObject ${data.id} has been filled already.`);
             else
@@ -70,14 +70,17 @@ namespace smartObj {
 
 
 
-        private members2SmartObject(data: ISmartObjectData, obj2Fill: Object): void {
-            let member: ISmartObjectData;
+        private members2SmartObject(data: internal.ISmartObjectData, obj2Fill: Object): void {
+            let member: internal.ISmartObjectData;
 
             if ((data.members || null) != null)
                 for (let key in data.members) {
-                    member = data.members[key];
+                    member = data.members[key] || null;
 
-                    if (member.flag in [SmartObjectFlag.IS_NULL, SmartObjectFlag.IS_UNDEFINED])
+                    if (member === null)
+                        throw new Error(`SmartObject: ${data.id}; clazz: ${data.clazz}; Member at "${key}" is NULL!`);
+
+                    if (this.isEmpty(member))
                         obj2Fill[key] = this.getAsEmpty(member);
 
                     else if (member.type === SmartObjectType.STRING)
@@ -99,16 +102,22 @@ namespace smartObj {
 
 
 
-        private getAsEmpty(data: ISmartObjectData): any {
-            if (data.flag === SmartObjectFlag.IS_NULL)
+        private isEmpty(data: internal.ISmartObjectData): boolean {
+            return data.flag === internal.SmartObjectFlag.IS_NULL || data.flag === internal.SmartObjectFlag.IS_UNDEFINED; 
+        }
+
+
+
+        private getAsEmpty(data: internal.ISmartObjectData): any {
+            if (data.flag === internal.SmartObjectFlag.IS_NULL)
                 return null;
-            else if (data.flag === SmartObjectFlag.IS_UNDEFINED)
+            else if (data.flag === internal.SmartObjectFlag.IS_UNDEFINED)
                 return undefined;
         }
 
 
 
-        private getAsString(data: ISmartObjectData): string {
+        private getAsString(data: internal.ISmartObjectData): string {
             let result = JSON.parse(data.jsonData);
 
             if (typeof result != 'string')
@@ -119,7 +128,7 @@ namespace smartObj {
         
        
          
-        private getAsNumber(data: ISmartObjectData): number {
+        private getAsNumber(data: internal.ISmartObjectData): number {
             let result: number = JSON.parse(data.jsonData);
 
             if (typeof result != 'number')
@@ -130,8 +139,8 @@ namespace smartObj {
         
 
         
-        private getAsSmartObjectCollection(data: ISmartObjectData): SmartObject[] | ISmartObjectMap {
-            let result: SmartObject[] | ISmartObjectMap;
+        private getAsSmartObjectCollection(data: internal.ISmartObjectData): SmartObject[] | internal.ISmartObjectMap {
+            let result: SmartObject[] | internal.ISmartObjectMap;
 
             if (data.clazz === 'Array')
                 result = [];
@@ -145,7 +154,7 @@ namespace smartObj {
         
 
 
-        private getAsCollection(data: ISmartObjectData): Object[] | Object {
+        private getAsCollection(data: internal.ISmartObjectData): Object[] | Object {
             let result: Object[] | Object = JSON.parse(data.jsonData);
 
             if (data.clazz === 'Array' && !(result instanceof Array))
