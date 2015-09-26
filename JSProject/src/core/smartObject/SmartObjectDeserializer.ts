@@ -5,8 +5,8 @@
 namespace smartObj {
 
     export class SmartObjectDeserializer<T extends SmartObject> {
-        private smartObjCache: internal.ISmartObjectMap = {};
-        private smartObjRef2Fill: internal.ISmartObjectMap = {};
+        private smartObjCache: ISmartObjectMap = {};
+        private smartObjRef2Fill: ISmartObjectMap = {};
 
 
         constructor (private builder: SmartObjectBuilder) {}
@@ -143,8 +143,8 @@ namespace smartObj {
         
 
         
-        private getAsSmartObjectCollection(data: internal.ISmartObjectData): SmartObject[] | internal.ISmartObjectMap {
-            let result: SmartObject[] | internal.ISmartObjectMap;
+        private getAsSmartObjectCollection(data: internal.ISmartObjectData): SmartObject[] | ISmartObjectMap {
+            let result: SmartObject[] | ISmartObjectMap;
 
             if (data.clazz === 'Array')
                 result = [];

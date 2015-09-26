@@ -16,13 +16,23 @@ namespace smartObj {
 
 
         build(clazz: string): SmartObject {
+            return Object.create(this.getPrototype(clazz), { });
+        }
+
+
+        checkClazz(clazz: string): void {
+            this.getPrototype(clazz);
+        }
+
+
+        private getPrototype(clazz: string): Object {
             this.validateClazz(clazz);
 
             let prototype: Object = this.map[clazz] || null;
             if (prototype === null)
                 throw new Error(`No SmartObject "${clazz}" registered!`);
 
-            return Object.create(prototype, { });
+            return prototype;
         }
 
 
@@ -32,9 +42,12 @@ namespace smartObj {
         }
 
         private validatePrototype(clazz: string, prototype: Object): void {
+            if ((prototype || null) === null)
+                throw new Error(`Prototype for clazz ${clazz} can't be empty!`);
+
             let cachedPrototype: Object = this.map[clazz] || null;
             if (cachedPrototype != null && cachedPrototype != prototype)
-                throw new Error(`Duplicated clazz name: "${clazz}"`); 
+                throw new Error(`Duplicated clazz name: "${clazz}"`);
         }
     }
 }

@@ -6,7 +6,12 @@ namespace smartObj {
 
     export class SmartObjectSerializer {
 
-        private smartObjCache: internal.ISmartObjectMap = {}; 
+        private smartObjCache: ISmartObjectMap = {}; 
+
+        
+        constructor (private builder: SmartObjectBuilder) {}
+
+
 
         serialize(smartObject: SmartObject): string {
             internal.SmartObjectHelper.validateMetadataOf(smartObject);
@@ -57,6 +62,8 @@ namespace smartObj {
             if (!(smartObj instanceof SmartObject))
                 throw new Error(`Value is not a "SmartObject"!`);
 
+            this.builder.checkClazz(smartObj.clazz());
+
             let result: internal.ISmartObjectData = this.getFromCache(smartObj);
 
             if (result != null)
@@ -68,7 +75,7 @@ namespace smartObj {
                 id: smartObj.id,
                 type: SmartObjectType.SMART_OBJECT,
                 flag: internal.SmartObjectFlag.NONE,
-                clazz: smartObj.clazz,
+                clazz: smartObj.clazz(),
                 members: {} 
             };
 
@@ -79,7 +86,7 @@ namespace smartObj {
 
 
         private smartObj2DataFillMembers(smartObj: SmartObject, result: internal.ISmartObjectData): void {
-            let meta: ISmartObjectMemberMap = smartObj.metadata;
+            let meta: ISmartObjectMemberMap = smartObj.getMetadata();
             let isEmpty: boolean = true;
             
             for (let key in meta) {
@@ -121,7 +128,7 @@ namespace smartObj {
                     id: smartObj.id,
                     flag: internal.SmartObjectFlag.IS_REF,
                     type: SmartObjectType.SMART_OBJECT,
-                    clazz: smartObj.clazz
+                    clazz: smartObj.clazz()
                 };
         }
 
@@ -133,7 +140,7 @@ namespace smartObj {
 
 
 
-        private smartCollection2Data(collection: SmartObject[] | internal.ISmartObjectMap): internal.ISmartObjectData {
+        private smartCollection2Data(collection: SmartObject[] | ISmartObjectMap): internal.ISmartObjectData {
             if (collection === null || collection === undefined)
                 return this.getEmptySmartObjData(collection, SmartObjectType.SMART_OBJECT_COLLECTION);
 
@@ -144,8 +151,15 @@ namespace smartObj {
                 members: {} 
             };
 
-            for (var key in collection)
+            let isEmpty: boolean = true;
+
+            for (let key in collection) {
                 result.members[key] = this.smartObj2Data(collection[key]);
+                isEmpty = false;
+            }
+
+            if (isEmpty)
+                delete result.members;
         
             return result;
         }  

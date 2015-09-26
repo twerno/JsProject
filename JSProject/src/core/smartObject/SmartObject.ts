@@ -4,18 +4,18 @@ namespace smartObj {
 
     export enum SmartObjectType { STRING, NUMBER, SMART_OBJECT, SMART_OBJECT_COLLECTION, COLLECTION, IGNORED }
     export interface ISmartObjectMemberMap { [member: string]: SmartObjectType }
-
+    export interface ISmartObjectMap { [id: string]: SmartObject };
 
 
     export class SmartObject {
 
         id: string;
 
-        get metadata(): ISmartObjectMemberMap {
+        getMetadata(): ISmartObjectMemberMap {
             return {};
         }
     
-        get clazz(): string {
+        clazz(): string {
             return this.constructor['name'];
         } 
     }
@@ -26,7 +26,7 @@ namespace smartObj {
     export namespace internal { 
     
         export enum SmartObjectFlag { NONE, IS_NULL, IS_UNDEFINED, IS_REF } 
-        export interface ISmartObjectMap { [id: string]: SmartObject };   
+  
         
         export interface ISmartObjectData 
         {
@@ -46,7 +46,7 @@ namespace smartObj {
             }
         
 
-            static validateDuplicateId(smartObj: SmartObject, smartObjCache: internal.ISmartObjectMap) : void {
+            static validateDuplicateId(smartObj: SmartObject, smartObjCache: ISmartObjectMap) : void {
                 let cacheObj: SmartObject = smartObjCache[smartObj.id] || null;
                 if (cacheObj != null && cacheObj != smartObj) 
                     throw new Error(`Duplicated id: ${smartObj.id}`);
@@ -54,14 +54,17 @@ namespace smartObj {
 
 
             static validateMetadataOf(smartObject: SmartObject): void {
-                let metadata: ISmartObjectMemberMap = smartObject.metadata;
+                let metadata: ISmartObjectMemberMap = smartObject.getMetadata();
 
-                for (let key in smartObj) {
+                for (let key in smartObject) {
+                    if (!smartObject.hasOwnProperty(key) || key === 'id')
+                        continue;
+
                     if (!(key in metadata))
-                        throw new Error(`Metadata of "${smartObject.clazz}" does not describe member "${key}".`);
+                        throw new Error(`Metadata of "${smartObject.clazz()}" does not describe member "${key}".`);
 
                     if (SmartObjectType[metadata[key]] === undefined)
-                        throw new Error(`Metadata of "${smartObject.clazz}" contains unknown code "${metadata[key]}".`);
+                        throw new Error(`Metadata of "${smartObject.clazz()}" contains unknown code "${metadata[key]}".`);
                 }
             }
         }
