@@ -2,6 +2,8 @@
 ///<reference path="../CommTypy.ts"/>
 ///<reference path="IRpcController.ts"/>
 
+"use strict";
+
 namespace rpc {
 
     interface ITokenMap { [key: string]: IRpcToken }

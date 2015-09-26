@@ -3,7 +3,6 @@
 ///<reference path="WebRtcProducer.ts"/>
 ///<reference path="WebRtcConsumer.ts"/>
 
-	
 "use strict";
 
 class WebRtcCommunicator {

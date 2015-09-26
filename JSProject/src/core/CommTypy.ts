@@ -1,3 +1,5 @@
-﻿interface IObjectMap { [key: string]: Object }
+﻿"use strict";
+
+interface IObjectMap { [key: string]: Object }
 
 

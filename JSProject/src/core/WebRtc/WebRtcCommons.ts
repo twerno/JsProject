@@ -1,6 +1,7 @@
 ///<reference path="../../lib/RTCPeerConnection.d.ts"/>
 ///<reference path="../CommTypy.ts"/>
 	
+"use strict";
 
 
 interface IWebRtcConnectionData {

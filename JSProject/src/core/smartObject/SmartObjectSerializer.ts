@@ -1,5 +1,7 @@
 ﻿///<reference path="SmartObject.ts"/>
 
+"use strict";
+
 namespace smartObj {
 
     export class SmartObjectSerializer {

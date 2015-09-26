@@ -5,6 +5,8 @@
 ///<reference path="../Commons/AsyncTaskRunner.ts"/>
 ///<reference path="IRpcTask.ts"/>
 
+"use strict";
+
 class RpcTaskController extends rpc.RpcController<rpc.IJsonMetaData> implements IRpcTaskController {
 
     static CONTROLLER_NAME: string = 'RpcTaskController';

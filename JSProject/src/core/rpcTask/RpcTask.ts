@@ -5,6 +5,7 @@
 ///<reference path="../Const.ts"/>
 ///<reference path="../Commons/AsyncTaskRunner.ts"/>
 
+"use strict";
 
 
 class SequentialRpcMethodQueueRpcTask implements IRpcTask {

@@ -1,4 +1,6 @@
-﻿namespace smartObj {
+﻿"use strict";
+
+namespace smartObj {
 
     export enum SmartObjectType { STRING, NUMBER, SMART_OBJECT, SMART_OBJECT_COLLECTION, COLLECTION }
     export interface ISmartObjectMemberMap { [member: string]: SmartObjectType }

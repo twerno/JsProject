@@ -1,3 +1,5 @@
+"use strict";
+
 enum ActionType {
     WORKER,
     SUB_ACTION,

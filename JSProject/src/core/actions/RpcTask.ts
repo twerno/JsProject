@@ -1,4 +1,5 @@
-﻿/////<reference path="RpcToken.ts"/>
+﻿"use strict";
+/////<reference path="RpcToken.ts"/>
 /////<reference path="../CommTypy.ts"/>
 /////<reference path="../Helper.ts"/>
 /////<reference path="../Const.ts"/>

@@ -3,6 +3,8 @@
 ///<reference path="../CommTypy.ts"/>
 ///<reference path="../Commons/AsyncTaskRunner.ts"/>
 
+"use strict";
+
 interface IRpcTaskController extends rpc.IRpcController<IRpcTask> {
 
     registerTask(rpcTask: IRpcTask): rpc.IRpcToken;

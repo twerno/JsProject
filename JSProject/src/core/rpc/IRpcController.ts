@@ -1,5 +1,7 @@
 ///<reference path="../CommTypy.ts"/>
 
+"use strict";
+
 namespace rpc {
 
     export type MessageId = string;

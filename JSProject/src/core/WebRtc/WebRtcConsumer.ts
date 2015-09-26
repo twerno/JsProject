@@ -1,7 +1,7 @@
 ///<reference path="../../lib/RTCPeerConnection.d.ts"/>
 ///<reference path="WebRtcCommons.ts"/>
 
-"use strict"
+"use strict";
 
 class WebRtcConsumer {
     private _id: string;

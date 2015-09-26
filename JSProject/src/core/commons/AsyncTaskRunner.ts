@@ -1,3 +1,4 @@
+"use strict";
 
 const enum AsyncTaskState {
     NEW,

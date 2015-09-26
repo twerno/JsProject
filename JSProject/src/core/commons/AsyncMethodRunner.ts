@@ -1,4 +1,6 @@
 ///<reference path="AsyncTaskRunner.ts"/>
+
+"use strict";
 	
 class AsyncMethodWrapperTask implements IAsyncTask {
     asyncTaskState: AsyncTaskState = AsyncTaskState.NEW;
