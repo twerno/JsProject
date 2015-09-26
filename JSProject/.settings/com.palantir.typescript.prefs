@@ -1,0 +1,16 @@
+build.path.exportedFolder=dist
+build.path.sourceFolder=src
+compiler.codeGenTarget=ECMASCRIPT5
+compiler.compileOnSave=true
+compiler.generateDeclarationFiles=false
+compiler.jsx=NONE
+compiler.mapSourceFiles=false
+compiler.moduleGenTarget=NONE
+compiler.noEmitOnError=true
+compiler.noImplicitAny=true
+compiler.noLib=false
+compiler.outputDirOption=js
+compiler.outputFileOption=
+compiler.removeComments=false
+compiler.suppressImplicitAnyIndexErrors=false
+eclipse.preferences.version=1
