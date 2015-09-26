@@ -6,7 +6,10 @@ namespace smartObj {
         private smartObjCache: ISmartObjectMap = {};
         private smartObjRef2Fill: ISmartObjectMap = {};
 
-        private builder: SmartObjectBuilder; 
+
+        constructor (private builder: SmartObjectBuilder) {}
+        
+          
 
         deserialize(serializedObj: string): T {
             let serializedData: ISmartObjectData = JSON.parse(serializedObj); 

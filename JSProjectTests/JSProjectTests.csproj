@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}</ProjectGuid>
+    <ProjectGuid>{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <OutputPath>bin</OutputPath>
@@ -22,38 +22,20 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\core\actions\Action.ts" />
-    <TypeScriptCompile Include="src\core\commons\AsyncMethodRunner.ts" />
-    <TypeScriptCompile Include="src\core\commons\AsyncTaskRunner.ts" />
-    <TypeScriptCompile Include="src\core\old\Action_old.ts" />
-    <TypeScriptCompile Include="src\core\old\ActionController.ts" />
-    <TypeScriptCompile Include="src\core\old\ActionControllerMethod.ts" />
-    <TypeScriptCompile Include="src\core\old\ActionStack.ts" />
-    <TypeScriptCompile Include="src\core\actions\RpcTask.ts" />
-    <TypeScriptCompile Include="src\core\old\Task_old.ts" />
-    <TypeScriptCompile Include="src\core\CommTypy.ts" />
-    <TypeScriptCompile Include="src\core\Const.ts" />
-    <TypeScriptCompile Include="src\core\JSONHelper.ts" />
-    <TypeScriptCompile Include="src\core\rpcTask\IRpcTask.ts" />
-    <TypeScriptCompile Include="src\core\rpcTask\RpcTask.ts" />
-    <TypeScriptCompile Include="src\core\rpcTask\RpcTaskBuilder.ts" />
-    <TypeScriptCompile Include="src\core\rpcTask\RpcTaskMessageController.ts" />
-    <TypeScriptCompile Include="src\core\rpcTask\RpcTaskRunner.ts" />
-    <TypeScriptCompile Include="src\core\rpc\IRpcController.ts" />
-    <TypeScriptCompile Include="src\core\rpc\RpcController.ts" />
-    <TypeScriptCompile Include="src\core\smartObject\SmartObject.ts" />
-    <TypeScriptCompile Include="src\core\smartObject\SmartObjectSerializer.ts" />
-    <TypeScriptCompile Include="src\core\smartObject\SmartObjectDeserializer.ts" />
-    <TypeScriptCompile Include="src\core\WebRtc\WebRtcCommons.ts" />
-    <TypeScriptCompile Include="src\core\WebRtc\WebRtcCommunicator.ts" />
-    <TypeScriptCompile Include="src\core\WebRtc\WebRtcConsumer.ts" />
-    <TypeScriptCompile Include="src\core\WebRtc\WebRtcProducer.ts" />
+    <TypeScriptCompile Include="tests\tsUnit.ts" />
+    <TypeScriptCompile Include="tests\smartObject\SmartObjectBasicTests.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\tsUnit\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tests\Tests.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>JSProject</RootNamespace>
+    <RootNamespace>JSProjectTests</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
@@ -63,9 +45,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>53805</DevelopmentServerPort>
+          <DevelopmentServerPort>53428</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53805/</IISUrl>
+          <IISUrl>http://localhost:53428/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -79,19 +61,17 @@
     <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
     <TypeScriptSourceMap>False</TypeScriptSourceMap>
     <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>None</TypeScriptModuleKind>
-    <TypeScriptOutFile>dist\jsProject.js</TypeScriptOutFile>
-    <TypeScriptOutDir>
-    </TypeScriptOutDir>
-    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
+    <TypeScriptOutFile>
+    </TypeScriptOutFile>
+    <TypeScriptOutDir>js</TypeScriptOutDir>
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
-    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <OutputPath>.\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
