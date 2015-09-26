@@ -1,6 +1,7 @@
 ﻿///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
 ///<reference path="../tsUnit.ts" />
 
+"use strict";
 
 module SmartObjectTest {
 

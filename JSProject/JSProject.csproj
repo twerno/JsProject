@@ -42,6 +42,7 @@
     <TypeScriptCompile Include="src\core\rpc\IRpcController.ts" />
     <TypeScriptCompile Include="src\core\rpc\RpcController.ts" />
     <TypeScriptCompile Include="src\core\smartObject\SmartObject.ts" />
+    <TypeScriptCompile Include="src\core\smartObject\SmartObjectBuilder.ts" />
     <TypeScriptCompile Include="src\core\smartObject\SmartObjectSerializer.ts" />
     <TypeScriptCompile Include="src\core\smartObject\SmartObjectDeserializer.ts" />
     <TypeScriptCompile Include="src\core\WebRtc\WebRtcCommons.ts" />

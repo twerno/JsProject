@@ -17,8 +17,10 @@ namespace smartObj {
             let serializedData: internal.ISmartObjectData = JSON.parse(serializedObj); 
             let result: SmartObject = this.getAsSmartObject(serializedData);
 
+            internal.SmartObjectHelper.validateMetadataOf(result);
+
             if (!this.areAllSmartObjectFilled())
-                throw new Error(`Not every smart object are build properly!`);
+                throw new Error(`Not all smart objects has been filled properly!`);
 
             return <T> result;
         }

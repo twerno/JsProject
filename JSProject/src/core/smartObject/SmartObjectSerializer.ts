@@ -8,8 +8,9 @@ namespace smartObj {
 
         private smartObjCache: internal.ISmartObjectMap = {}; 
 
-        serialize(smart: SmartObject): string {
-            return JSON.stringify(this.smartObj2Data(smart));
+        serialize(smartObject: SmartObject): string {
+            internal.SmartObjectHelper.validateMetadataOf(smartObject);
+            return JSON.stringify(this.smartObj2Data(smartObject));
         }
 
 
@@ -67,7 +68,7 @@ namespace smartObj {
                 id: smartObj.id,
                 type: SmartObjectType.SMART_OBJECT,
                 flag: internal.SmartObjectFlag.NONE,
-                clazz: smartObj.clazz(),
+                clazz: smartObj.clazz,
                 members: {} 
             };
 
@@ -78,7 +79,7 @@ namespace smartObj {
 
 
         private smartObj2DataFillMembers(smartObj: SmartObject, result: internal.ISmartObjectData): void {
-            let meta: ISmartObjectMemberMap = smartObj.getMetadata();
+            let meta: ISmartObjectMemberMap = smartObj.metadata;
             let isEmpty: boolean = true;
             
             for (let key in meta) {
@@ -99,6 +100,8 @@ namespace smartObj {
                 else if (meta[key] === SmartObjectType.COLLECTION)
                     result.members[key] = this.collection2Data(smartObj[key]);
 
+                else if (meta[key] === SmartObjectType.IGNORED) { }
+
                 else 
                     throw new Error(`"meta[key]" is not a valid SmartObjectType.`);
             }
@@ -118,7 +121,7 @@ namespace smartObj {
                     id: smartObj.id,
                     flag: internal.SmartObjectFlag.IS_REF,
                     type: SmartObjectType.SMART_OBJECT,
-                    clazz: smartObj.clazz()
+                    clazz: smartObj.clazz
                 };
         }
 

@@ -2,8 +2,26 @@
 
 namespace smartObj {
 
-    export enum SmartObjectType { STRING, NUMBER, SMART_OBJECT, SMART_OBJECT_COLLECTION, COLLECTION }
+    export enum SmartObjectType { STRING, NUMBER, SMART_OBJECT, SMART_OBJECT_COLLECTION, COLLECTION, IGNORED }
     export interface ISmartObjectMemberMap { [member: string]: SmartObjectType }
+
+
+
+    export class SmartObject {
+
+        id: string;
+
+        get metadata(): ISmartObjectMemberMap {
+            return {};
+        }
+    
+        get clazz(): string {
+            return this.constructor['name'];
+        } 
+    }
+
+
+
 
     export namespace internal { 
     
@@ -28,63 +46,25 @@ namespace smartObj {
             }
         
 
-
             static validateDuplicateId(smartObj: SmartObject, smartObjCache: internal.ISmartObjectMap) : void {
                 let cacheObj: SmartObject = smartObjCache[smartObj.id] || null;
                 if (cacheObj != null && cacheObj != smartObj) 
                     throw new Error(`Duplicated id: ${smartObj.id}`);
             }
+
+
+            static validateMetadataOf(smartObject: SmartObject): void {
+                let metadata: ISmartObjectMemberMap = smartObject.metadata;
+
+                for (let key in smartObj) {
+                    if (!(key in metadata))
+                        throw new Error(`Metadata of "${smartObject.clazz}" does not describe member "${key}".`);
+
+                    if (SmartObjectType[metadata[key]] === undefined)
+                        throw new Error(`Metadata of "${smartObject.clazz}" contains unknown code "${metadata[key]}".`);
+                }
+            }
         }
-    }
-
-             
-    export class SmartObjectBuilder {
-        private map: IObjectMap = {};
-
-
-        register(clazz: string, prototype: Object) {
-            this.validateClazz(clazz);
-            this.validatePrototype(clazz, prototype);
-
-            this.map[clazz] = prototype;
-        }
-
-
-        build(clazz: string): SmartObject {
-            this.validateClazz(clazz);
-
-            let prototype: Object = this.map[clazz] || null;
-            if (prototype === null)
-                throw new Error(`No SmartObject "${clazz}" registered!`);
-
-            return Object.create(prototype, { });
-        }
-
-
-        private validateClazz(clazz: string): void {
-            if (clazz === '' || clazz === null || clazz === undefined)
-                throw new Error(`Clazz can't be empty!`);
-        }
-
-        private validatePrototype(clazz: string, prototype: Object): void {
-            let cachedPrototype: Object = this.map[clazz] || null;
-            if (cachedPrototype != null && cachedPrototype != prototype)
-                throw new Error(`Duplicated clazz name: "${clazz}"`); 
-        }
-    }
-
-                                                                 
-    export class SmartObject {
-
-        id: string;
-
-        getMetadata(): ISmartObjectMemberMap {
-            return {};
-        }
-    
-        clazz(): string {
-            return this.constructor['name'];
-        } 
     }
 
 }
