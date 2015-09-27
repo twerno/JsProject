@@ -22,6 +22,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="tests\Main.ts" />
+    <TypeScriptCompile Include="tests\smartObject\TestObjectFactory.ts" />
     <TypeScriptCompile Include="tests\tsUnit.ts" />
     <TypeScriptCompile Include="tests\smartObject\SmartObjectBasicTests.ts" />
   </ItemGroup>

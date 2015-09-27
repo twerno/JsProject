@@ -1,69 +1,21 @@
 ﻿///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
 ///<reference path="../tsUnit.ts" />
+///<reference path="TestObjectFactory.ts" />
 
 "use strict";
 
-module SmartObjectTest {
+module TestModule {
 
-    let builder: smartObj.SmartObjectBuilder = new smartObj.SmartObjectBuilder();
-    let serializer: smartObj.SmartObjectSerializer = new smartObj.SmartObjectSerializer(builder);
-    let deserializer: smartObj.SmartObjectDeserializer<TestObject> = new smartObj.SmartObjectDeserializer<TestObject>(builder);
+    let factory: TestObjectFactory = new TestObjectFactory();
 
-    class TestObject extends smartObj.SmartObject {
-        testSmartObj: TestObject2 = new TestObject2();
-        smartArray: smartObj.SmartObject[] = [];
-        smartMap: smartObj.ISmartObjectMap = {};
-
-        privateStr: string;
-        
-        getMetadata(): smartObj.ISmartObjectMemberMap { 
-            return { 
-                ['testSmartObj']: smartObj.SmartObjectType.SMART_OBJECT, 
-                ['smartArray']: smartObj.SmartObjectType.SMART_OBJECT_COLLECTION,
-                ['smartMap']: smartObj.SmartObjectType.SMART_OBJECT_COLLECTION,
-                ['privateStr']: smartObj.SmartObjectType.IGNORED
-            };
-        } 
-    }
-
-    class TestObject2 extends smartObj.SmartObject {
-        testVal: string = 'testVal';
-        testNumber: number = 999;
-        testArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        testMap: Object = {'1':1, 2:2, 3:3};
-
-        getMetadata(): smartObj.ISmartObjectMemberMap {
-            return { 
-                ['testVal']: smartObj.SmartObjectType.STRING,
-                ['testNumber']: smartObj.SmartObjectType.NUMBER,
-                ['testArray']: smartObj.SmartObjectType.COLLECTION,
-                ['testMap']: smartObj.SmartObjectType.COLLECTION
-            };
-        }
-    }
-
-    builder.register('TestObject', TestObject.prototype); 
-    builder.register('TestObject2', TestObject2.prototype);
-
-    let testObj1: TestObject = new TestObject();
-    testObj1.id = '1';
-    testObj1.testSmartObj.id = '2';
-    
-    testObj1.privateStr = 'secret';
-    testObj1.smartArray.push(testObj1.testSmartObj); 
-    testObj1.smartMap[testObj1.testSmartObj.id] = testObj1.testSmartObj;
-
-    let testObj2: TestObject = new TestObject();
-    testObj2.id = '3';
-    testObj2.testSmartObj.id = '4';
-    testObj1.smartArray.push(testObj2); 
-    testObj1.smartMap[testObj2.id] = testObj2;
-      
-    export class BasicTests extends tsUnit.TestClass {
+    export class SmartObjectBasicTests extends tsUnit.TestClass {
 
         deserializationTest() {
-            let serialized: string = serializer.serialize(testObj1);
-            let deserialized: TestObject = deserializer.deserialize(serialized);
+            let testEnvironment: ITestEnvironment = factory.testEnvironment1();
+            let testObj1: TestObject = testEnvironment.testObjects[0];
+
+            let serialized: string = testEnvironment.serializer.serialize(testObj1);
+            let deserialized: TestObject = testEnvironment.deserializer.deserialize(serialized);
 
             this.isTrue(deserialized instanceof TestObject, 'instanceof TestObject');
             this.areNotIdentical(testObj1, deserialized);
@@ -83,12 +35,77 @@ module SmartObjectTest {
                 JSON.stringify(deserialized.testSmartObj.testMap), 'TestObject2.testMap');
         }
 
+
+        incorrectDataDeserializationTest_0() {
+            let testEnvironment: ITestEnvironment = factory.testEnvironment1();
+            let testObj1: TestObject = testEnvironment.testObjects[0];
+
+            let serialized: string = JSON.stringify(testObj1);
+            try {
+                let deserialized: TestObject = testEnvironment.deserializer.deserialize(serialized);
+                this.isTrue(false, 'incorrectDataDeserializationTest_0');
+            } catch (err) {}
+        }
+
+
+        incorrectDataDeserializationTest_1() {
+            let testEnvironment: ITestEnvironment = factory.testEnvironment1();
+            let testObj1: TestObject = testEnvironment.testObjects[0];
+
+            // correctOne
+            try {
+                testEnvironment.deserializer.deserialize('{"id":"1","type":2,"flag":0,"clazz":"TestObject"}');
+                this.isTrue(true, 'incorrectDataDeserializationTest_1');
+            } catch (err) { this.isTrue(false, `incorrectDataDeserializationTest_1 - ${err.message}`); }
+        }
+
+
+        incorrectDataDeserializationTest_2() {
+            let testEnvironment: ITestEnvironment = factory.testEnvironment1();
+            let testObj1: TestObject = testEnvironment.testObjects[0];
+
+            //incorrect
+            try {
+                testEnvironment.deserializer.deserialize('{"id":"1","type":2,"flag":0,"clazz":"TestObjectX"}');
+                this.isTrue(false, 'incorrectDataDeserializationTest_2');
+            } catch (err) {}
+        }
+
+
+        incorrectDataDeserializationTest_3() {
+            let testEnvironment: ITestEnvironment = factory.testEnvironment1();
+            let testObj1: TestObject = testEnvironment.testObjects[0];
+
+            //incorrect
+            try {
+                testEnvironment.deserializer.deserialize('{"id":"1","type":2,"flag":20,"clazz":"TestObject"}');
+                this.isTrue(false, 'incorrectDataDeserializationTest_3');
+            } catch (err) {}
+        }
+
+
+        incorrectDataDeserializationTest_4() {
+            let testEnvironment: ITestEnvironment = factory.testEnvironment1();
+            let testObj1: TestObject = testEnvironment.testObjects[0];
+
+            //incorrect
+            try {
+                testEnvironment.deserializer.deserialize('{"id":"1","type":20,"flag":0,"clazz":"TestObject"}');
+                this.isTrue(false, 'incorrectDataDeserializationTest_4');
+            } catch (err) {}
+        }
+
+
+        incorrectDataDeserializationTest_5() {
+            let testEnvironment: ITestEnvironment = factory.testEnvironment1();
+            let testObj1: TestObject = testEnvironment.testObjects[0];
+
+            //correctOne
+            try {
+                testEnvironment.deserializer.deserialize('{"id":"1","type":2,"flag":0,"clazz":"TestObject", "XXX":"yyy"}');
+                this.isTrue(true, 'incorrectDataDeserializationTest_4');
+            } catch (err) { this.isTrue(false, `incorrectDataDeserializationTest_5 - ${err.message}`); }
+        }
+
     }
 }
-
-
-// new instance of tsUnit - pass in modules that contain test classes
-var test = new tsUnit.Test(SmartObjectTest);
-
-// Use the built in results display
-test.showResults(document.getElementById('result'), test.run());

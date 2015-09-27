@@ -15,7 +15,10 @@ namespace smartObj {
 
         serialize(smartObject: SmartObject): string {
             internal.SmartObjectHelper.validateMetadataOf(smartObject);
-            return JSON.stringify(this.smartObj2Data(smartObject));
+            let serializedData: internal.ISmartObjectData = this.smartObj2Data(smartObject);
+            if (serializedData.flag != internal.SmartObjectFlag.NONE)
+                throw new Error(`Incorrect root object flag!`);
+            return JSON.stringify(serializedData);
         }
 
 

@@ -14,7 +14,14 @@ namespace smartObj {
           
 
         deserialize(serializedObj: string): T {
-            let serializedData: internal.ISmartObjectData = JSON.parse(serializedObj); 
+            let serializedData: internal.ISmartObjectData = JSON.parse(serializedObj);
+            
+            if (this.isEmpty(serializedData))
+                throw new Error(`Root object cannot be marked as null or undefined`);
+
+            if (serializedData.flag === internal.SmartObjectFlag.IS_REF)
+                throw new Error(`Root object cannot be marked as REF.`); 
+
             let result: SmartObject = this.getAsSmartObject(serializedData);
 
             internal.SmartObjectHelper.validateMetadataOf(result);
@@ -36,10 +43,13 @@ namespace smartObj {
             else if (data.flag === internal.SmartObjectFlag.IS_REF)
                 result = this.getOrCreateSmartObject(data);
 
-            else {
+            else if (data.flag === internal.SmartObjectFlag.NONE) {
                 result = this.getOrCreateSmartObject(data);
                 this.fillRef(result, data);
             } 
+            
+            else 
+                throw new Error(`Unknown flag: ${data.flag}.`); 
 
             return result;
         }
