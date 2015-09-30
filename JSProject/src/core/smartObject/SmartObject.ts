@@ -2,7 +2,7 @@
 
 namespace smartObj {
 
-    export enum SmartObjectType { STRING, NUMBER, SMART_OBJECT, SMART_OBJECT_COLLECTION, COLLECTION, IGNORED }
+    export enum SmartObjectType { STRING, NUMBER, SMART_OBJECT, SMART_OBJECT_COLLECTION, COLLECTION, IGNORED, ENUM = NUMBER }
     export interface ISmartObjectMemberMap { [member: string]: SmartObjectType }
     export interface ISmartObjectMap { [id: string]: SmartObject };
 
@@ -23,9 +23,7 @@ namespace smartObj {
             throw new Error(`getNewObj(): not implemented yet.`)
         }
     }
-
-
-
+                                          
 
     export namespace internal {
 
@@ -43,6 +41,7 @@ namespace smartObj {
 
 
         export class SmartObjectHelper {
+        
             static validateSmartObjId(smartObjId: string): void {
                 if (smartObjId === '' || smartObjId === null || smartObjId === undefined)
                     throw new Error(`SmartObj id can't be empty!`);
@@ -72,5 +71,4 @@ namespace smartObj {
             }
         }
     }
-
 }

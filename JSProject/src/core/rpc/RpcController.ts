@@ -1,13 +1,16 @@
 ///<reference path="../Const.ts"/>
 ///<reference path="../CommTypy.ts"/>
 ///<reference path="IRpcController.ts"/>
+///<reference path="../smartObject/SmartObject.ts"/>
+///<reference path="../smartObject/SmartObjectSerializer.ts"/>
+///<reference path="../smartObject/SmartObjectDeserializer.ts"/>
 
 "use strict";
 
 namespace rpc {
 
     interface ITokenMap { [key: string]: IRpcToken }
-    interface IControllerMap { [key: string]: IRpcController<IJsonMetaData> }
+    interface IControllerMap { [key: string]: IRpcController<smartObj.SmartObject> }
 
 
 
@@ -39,15 +42,15 @@ namespace rpc {
 
         private controllerMap: IControllerMap = {};
 
-        registerController(controller: IRpcController<IJsonMetaData>): void {
+        registerController(controller: IRpcController<smartObj.SmartObject>): void {
             if (controller.name in this.controllerMap)
                 throw new Error(`Controller ${controller.name} is already registered.`);
 
             this.controllerMap[controller.name] = controller;
         };
 
-        getControllerByName(name: string): IRpcController<IJsonMetaData> {
-            let result: IRpcController<IJsonMetaData> = this.controllerMap[name] || null;
+        getControllerByName(name: string): IRpcController<smartObj.SmartObject> {
+            let result: IRpcController<smartObj.SmartObject> = this.controllerMap[name] || null;
             if (result === null)
                 throw new Error(`Controller ${result.name} not found.`);
 
@@ -56,26 +59,37 @@ namespace rpc {
     }
 
 
+    export class JsonRpcParser<T extends smartObj.SmartObject> implements IJsonRpcParser<smartObj.SmartObject> {
 
-    export class JsonRpcContent<T extends IJsonMetaData> implements IJsonRpcContent<IJsonMetaData> {
-        stringify(content: T): string {
-            return JSON.stringify(content);
+        constructor (private serializer: smartObj.SmartObjectSerializer, 
+            private deserializer: smartObj.SmartObjectDeserializer<T>) {}
+
+        stringify(data: T | Error | string): string {
+            if (typeof data === 'string')
+                return JSON.stringify(data);
+            
+            else if (data instanceof Error)
+                return JSON.stringify(data);
+
+            else if (data instanceof smartObj.SmartObject)
+                return this.serializer.serialize(data);
+
+            else
+                throw new Error(`Not valid parametr type: ${data}.`);
         }
 
-        parse(serializedContent: string): T {
-            return <T>JSON.parse(serializedContent);
+        parse(serializedData: string): T {
+            return this.deserializer.deserialize(serializedData);
         }
 
-        stringifyError(content: Error): string {
-            return JSON.stringify(content);
+
+        parseError(serializedData: string): Error {
+            return <Error>JSON.parse(serializedData);
         }
 
-        parseError(serializedContent: string): Error {
-            return <Error>JSON.parse(serializedContent);
-        }
 
-        parseString(serializedContent: string): string {
-            return JSON.parse(serializedContent);
+        parseString(serializedData: string): string {
+            return JSON.parse(serializedData);
         }
     }
 
@@ -83,7 +97,7 @@ namespace rpc {
 	/**
 	 *  RpcController
 	 */
-    export class RpcController<T extends IJsonMetaData> implements IRpcController<IJsonMetaData> {
+    export class RpcController<T extends smartObj.SmartObject> implements IRpcController<smartObj.SmartObject> {
         private tokenMap: ITokenMap = {};
 
         onRpcCall: (respondToken: IRespondToken, rpcMethod: string, data: T) => void;
@@ -93,7 +107,7 @@ namespace rpc {
 
 
 
-        constructor(public name: string, private rpcCommunicator: IRpcCommunicator, private jsonRpcContent: IJsonRpcContent<T>) {
+        constructor(public name: string, private rpcCommunicator: IRpcCommunicator, private jsonParser: JsonRpcParser<T>) {
             this.rpcCommunicator.registerController(this);
         }
 
@@ -107,7 +121,7 @@ namespace rpc {
                 rpcController: this.name,
                 rpcMethod: rpcMethod,
                 messageType: MessageType.MESSAGE,
-                serializedContent: this.jsonRpcContent.stringify(data),
+                serializedContent: this.jsonParser.stringify(data),
                 respondTo: undefined
             }
 
@@ -126,7 +140,7 @@ namespace rpc {
                 rpcController: this.name,
                 rpcMethod: '',
                 messageType: MessageType.MESSAGE,
-                serializedContent: this.jsonRpcContent.stringify(data),
+                serializedContent: this.jsonParser.stringify(data),
                 respondTo: respondToken.respondTo
             }
 
@@ -141,7 +155,7 @@ namespace rpc {
                 rpcController: this.name,
                 rpcMethod: '',
                 messageType: MessageType.ERROR,
-                serializedContent: this.jsonRpcContent.stringify(error),
+                serializedContent: this.jsonParser.stringify(error),
                 respondTo: (respondToken || null) != null ? respondToken.respondTo : undefined
             };
 
@@ -156,7 +170,7 @@ namespace rpc {
                 rpcController: this.name,
                 rpcMethod: '',
                 messageType: MessageType.TIMEOUT,
-                serializedContent: this.jsonRpcContent.stringify(msg),
+                serializedContent: this.jsonParser.stringify(msg),
                 respondTo: (respondToken || null) != null ? respondToken.respondTo : undefined
             };
 
@@ -170,7 +184,7 @@ namespace rpc {
                 throw new Error('message is null');
 
             if (message.messageType = MessageType.MESSAGE) {
-                let messageData: T = this.jsonRpcContent.parse(message.serializedContent);
+                let messageData: T = this.jsonParser.parse(message.serializedContent);
 
                 if ((message.respondTo || null) === null) { //message
                     let respondToken: RespondToken = new RespondToken(this.rpcCommunicator.newMessageId(), message.id);
@@ -182,13 +196,13 @@ namespace rpc {
 
             } else if (message.messageType = MessageType.ERROR) {
 
-                let error: Error = this.jsonRpcContent.parseError(message.serializedContent);
+                let error: Error = this.jsonParser.parseError(message.serializedContent);
                 let token: IRpcToken = (message.respondTo || null) === null ? null : this.getToken(message.id);
                 this.onError === null || this.onError(error, token);
 
             } else if (message.messageType = MessageType.TIMEOUT) {
 
-                let msg: string = this.jsonRpcContent.parseString(message.serializedContent);
+                let msg: string = this.jsonParser.parseString(message.serializedContent);
                 let token: IRpcToken = (message.respondTo || null) === null ? null : this.getToken(message.id);
                 this.onTimeout === null || this.onTimeout(msg, token);
 

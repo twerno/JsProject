@@ -2,16 +2,17 @@
 ///<reference path="RpcTask.ts"/>
 ///<reference path="../CommTypy.ts"/>
 ///<reference path="../Commons/AsyncTaskRunner.ts"/>
+///<reference path="../smartObject/SmartObject.ts"/>
 
 "use strict";
 
-interface IRpcTaskController extends rpc.IRpcController<IRpcTask> {
+interface IRpcTaskController extends rpc.IRpcController<smartObj.SmartObject> {
 
     registerTask(rpcTask: IRpcTask): rpc.IRpcToken;
     onRegisterTask: (respondToken: rpc.IRespondToken, rpcTask: IRpcTask) => void;
 
-    runRunRemoteMethod(methodName: string, result: rpc.IJsonMetaData): rpc.IRpcToken;
-    onRunRemoteMethod: (respondToken: rpc.IRespondToken, methodName: string, result: rpc.IJsonMetaData) => void;
+    runRunRemoteMethod(methodName: string, result: smartObj.SmartObject): rpc.IRpcToken;
+    onRunRemoteMethod: (respondToken: rpc.IRespondToken, methodName: string, result: smartObj.SmartObject) => void;
 
     unregisterTask(rpcTask: IRpcTask): rpc.IRpcToken;
     onUnregisterTask: (respondToken: rpc.IRespondToken, rpcTask: IRpcTask) => void;
@@ -19,11 +20,11 @@ interface IRpcTaskController extends rpc.IRpcController<IRpcTask> {
 
 
 
-interface IRpcTask extends IAsyncTask, rpc.IJsonMetaData {
+interface IRpcTask extends IAsyncTask {
     controller: IRpcTaskController;
 
     name: string;
-    params: IObjectMap;
+    params: smartObj.SmartObject;
 
     getNextMethod(): IRpcMethod;
 }

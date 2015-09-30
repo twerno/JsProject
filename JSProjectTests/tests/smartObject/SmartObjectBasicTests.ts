@@ -33,6 +33,8 @@ module TestModule {
             this.areCollectionsIdentical(testObj1.testSmartObj.testArray, deserialized.testSmartObj.testArray, 'TestObject2.testArray');
             this.areIdentical(JSON.stringify(testObj1.testSmartObj.testMap),
                 JSON.stringify(deserialized.testSmartObj.testMap), 'TestObject2.testMap');
+            this.areIdentical(deserialized.privateStr, undefined, 'TestObject.privateStr');
+            this.areIdentical(testObj1.testEnum, deserialized.testEnum, 'TestObject.testEnum');
         }
 
 

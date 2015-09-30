@@ -36,7 +36,6 @@
     <TypeScriptCompile Include="src\core\JSONHelper.ts" />
     <TypeScriptCompile Include="src\core\rpcTask\IRpcTask.ts" />
     <TypeScriptCompile Include="src\core\rpcTask\RpcTask.ts" />
-    <TypeScriptCompile Include="src\core\rpcTask\RpcTaskBuilder.ts" />
     <TypeScriptCompile Include="src\core\rpcTask\RpcTaskMessageController.ts" />
     <TypeScriptCompile Include="src\core\rpcTask\RpcTaskRunner.ts" />
     <TypeScriptCompile Include="src\core\rpc\IRpcController.ts" />

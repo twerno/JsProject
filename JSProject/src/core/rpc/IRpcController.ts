@@ -1,4 +1,5 @@
 ///<reference path="../CommTypy.ts"/>
+///<reference path="../smartObject/SmartObject.ts"/>
 
 "use strict";
 
@@ -14,7 +15,7 @@ namespace rpc {
         serializedContent: string,
         respondTo?: MessageId
     }
-    export type TokenSuccessCallback = (token: IRpcToken, result: IObjectMap) => void;
+    export type TokenSuccessCallback = (token: IRpcToken, result: smartObj.SmartObject) => void;
     export type TokenErrorCallback = (error: Error, token: IRpcToken) => void;
     export type TokenTimeoutCallback = (msg: string, token: IRpcToken) => void;
 
@@ -35,13 +36,11 @@ namespace rpc {
         respondTo: MessageId;
     }
 
-    export interface IJsonMetaData {
-        getMetadata(): Object
-    }
+
 
     export interface IRpcControllerManager {
-        registerController(controller: IRpcController<IJsonMetaData>): void;
-        getControllerByName(name: string): IRpcController<IJsonMetaData>;
+        registerController(controller: IRpcController<smartObj.SmartObject>): void;
+        getControllerByName(name: string): IRpcController<smartObj.SmartObject>;
     }
 
 
@@ -52,16 +51,15 @@ namespace rpc {
     }
 
 
-    export interface IJsonRpcContent<T extends IJsonMetaData> {
-        stringify(content: T | Error | string): string;
-        parse(serializedContent: string): T;
-        parseError(serializedContent: string): Error;
-        parseString(serializedContent: string): string;
+    export interface IJsonRpcParser<T extends smartObj.SmartObject> {
+        stringify(data: T | Error | string): string;
+        parse(serializedData: string): T;
+        parseError(serializedData: string): Error;
+        parseString(serializedData: string): string;
     }
 
 
-
-    export interface IRpcController<T extends IJsonMetaData> {
+    export interface IRpcController<T extends smartObj.SmartObject> {
         name: string;
 
         callRpc(rpcMethod: string, data: T, timeout?: number): IRpcToken;

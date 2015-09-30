@@ -7,12 +7,12 @@
 
 "use strict";
 
-class RpcTaskController extends rpc.RpcController<rpc.IJsonMetaData> implements IRpcTaskController {
+class RpcTaskController extends rpc.RpcController<smartObj.SmartObject> implements IRpcTaskController {
 
     static CONTROLLER_NAME: string = 'RpcTaskController';
 
-    constructor(rpcCommunicator: rpc.IRpcCommunicator, jsonRpcContent: rpc.IJsonRpcContent<IRpcTask>) {
-        super(RpcTaskController.CONTROLLER_NAME, rpcCommunicator, jsonRpcContent);
+    constructor(rpcCommunicator: rpc.IRpcCommunicator, jsonParser: rpc.JsonRpcParser<smartObj.SmartObject>) {
+        super(RpcTaskController.CONTROLLER_NAME, rpcCommunicator, jsonParser);
     }
 
     registerTask(rpcTask: IRpcTask): rpc.IRpcToken {
@@ -27,9 +27,9 @@ class RpcTaskController extends rpc.RpcController<rpc.IJsonMetaData> implements 
 
     onUnregisterTask: (respondToken: rpc.IRespondToken, rpcTask: IRpcTask) => void;
 
-    runRunRemoteMethod(methodName: string, result: rpc.IJsonMetaData): rpc.IRpcToken {
+    runRunRemoteMethod(methodName: string, result: smartObj.SmartObject): rpc.IRpcToken {
         return null;
     }
 
-    onRunRemoteMethod: (respondToken: rpc.IRespondToken, methodName: string, result: rpc.IJsonMetaData) => void;
+    onRunRemoteMethod: (respondToken: rpc.IRespondToken, methodName: string, result: smartObj.SmartObject) => void;
 }
