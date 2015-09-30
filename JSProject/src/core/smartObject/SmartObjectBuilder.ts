@@ -1,22 +1,26 @@
-﻿"use strict";
+"use strict";
 
 namespace smartObj {
 
+    export type BuildSmartObjFn = () => SmartObject;
+    interface IBuilderMap { [clazz: string]: BuildSmartObjFn }
+
     export class SmartObjectBuilder {
 
-        private map: IObjectMap = {};
+        private map: IBuilderMap = {};
 
 
-        register(clazz: string, prototype: Object) {
+        register(clazz: string, builder: BuildSmartObjFn) {
             this.validateClazz(clazz);
-            this.validatePrototype(clazz, prototype);
+            this.validatePrototype(clazz, builder);
 
-            this.map[clazz] = prototype;
+            this.map[clazz] = builder;
         }
 
 
         build(clazz: string): SmartObject {
-            return Object.create(this.getPrototype(clazz), { });
+            //return Object.create(this.getPrototype(clazz), {});
+            return this.getPrototype(clazz).apply(this);
         }
 
 
@@ -25,14 +29,14 @@ namespace smartObj {
         }
 
 
-        private getPrototype(clazz: string): Object {
+        private getPrototype(clazz: string): BuildSmartObjFn {
             this.validateClazz(clazz);
 
-            let prototype: Object = this.map[clazz] || null;
-            if (prototype === null)
+            let builder: BuildSmartObjFn = this.map[clazz] || null;
+            if (builder === null)
                 throw new Error(`No SmartObject "${clazz}" registered!`);
 
-            return prototype;
+            return builder;
         }
 
 
@@ -41,12 +45,12 @@ namespace smartObj {
                 throw new Error(`Clazz can't be empty!`);
         }
 
-        private validatePrototype(clazz: string, prototype: Object): void {
-            if ((prototype || null) === null)
+        private validatePrototype(clazz: string, builder: BuildSmartObjFn): void {
+            if ((builder || null) === null)
                 throw new Error(`Prototype for clazz ${clazz} can't be empty!`);
 
-            let cachedPrototype: Object = this.map[clazz] || null;
-            if (cachedPrototype != null && cachedPrototype != prototype)
+            let cachedPrototype: BuildSmartObjFn = this.map[clazz] || null;
+            if (cachedPrototype != null && cachedPrototype != builder)
                 throw new Error(`Duplicated clazz name: "${clazz}"`);
         }
     }

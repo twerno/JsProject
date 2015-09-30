@@ -1,22 +1,17 @@
 ///<reference path="AsyncTaskRunner.ts"/>
 
 "use strict";
-	
+
 class AsyncMethodWrapperTask implements IAsyncTask {
     asyncTaskState: AsyncTaskState = AsyncTaskState.NEW;
     callbacks: AsyncTaskCallbacks = { onSuccess: null, onError: null, onTimeout: null };
 
     run(): void {
-        try {
-            this.worker();
-        } catch (error) {
-            this.callbacks === null
-            || this.callbacks.onError === null
-            || this.callbacks.onError(this, error);
-        }
-        this.callbacks === null
-        || this.callbacks.onSuccess === null
-        || this.callbacks.onSuccess(this);
+        this.worker();
+
+        setTimeout(() => this.callbacks === null
+            || this.callbacks.onSuccess === null
+            || this.callbacks.onSuccess(this), 1);
     }
 
     constructor(private worker: () => void) { }
@@ -27,6 +22,7 @@ class AsyncMethodWrapperTask implements IAsyncTask {
 class AsyncMethodRunner {
 
     private asyncRunner: AsyncTaskRunner<AsyncMethodWrapperTask>;
+
 
     constructor(
         worker: () => void,
@@ -55,5 +51,10 @@ class AsyncMethodRunner {
 
     kill(): void {
         this.asyncRunner.kill();
+    }
+
+
+    isWorking(): boolean {
+        return this.asyncRunner.isWorking();
     }
 }

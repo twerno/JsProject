@@ -1,10 +1,14 @@
+//https://github.com/Steve-Fenton/tsUnit
+///<reference path="../../JSProject/dist/jsProject.d.ts"/>
+	
 module tsUnit {
     export class Test {
         public privateMemberPrefix = '_';
-        
+
         private tests: TestDefintion[] = [];
+        private asyncTests: AsyncTestRunner[] = [];
         private testRunLimiter: TestRunLimiter;
-        private reservedMethodNameContainer: TestClass = new TestClass();
+        private reservedMethodNameContainer: TestClass = new AsyncTestClass();
 
         constructor(...testModules: any[]) {
             this.createTestLimiter();
@@ -21,8 +25,24 @@ module tsUnit {
             this.tests.push(new TestDefintion(testClass, name));
         }
 
-        run(testRunLimiter: ITestRunLimiter = null) {
-            var parameters: any[][] = null;
+        addAsyncTestClass(asyncTestClass: AsyncTestClass, testsGroupName: string = 'AsyncTest'): void {
+            this.asyncTests.push(new AsyncTestRunner(asyncTestClass, testsGroupName, this._internalOnTestReady));
+        }
+
+        private _internalOnTestReady(asyncTestClass: AsyncTestClass, testResult: TestResult, testsGroupName: string): void {
+            this.executeTestClass(testResult, asyncTestClass, testsGroupName, this.testRunLimiter);
+        }
+
+        runAsyncTests(testResult: TestResult): void {
+            let runner: AsyncTestRunner;
+            for (let i = 0; i < this.asyncTests.length; i++) {
+                runner = this.asyncTests[i];
+                runner.testResult = testResult;
+                runner.runAsync();
+            }
+        }
+
+        runSyncTest(testRunLimiter: ITestRunLimiter = null): void {
             var testContext = new TestContext();
             var testResult = new TestResult();
 
@@ -32,37 +52,43 @@ module tsUnit {
 
             for (var i = 0; i < this.tests.length; ++i) {
                 var testClass = this.tests[i].testClass;
-                var dynamicTestClass = <any>testClass;
                 var testsGroupName = this.tests[i].name;
 
                 if (testRunLimiter && !testRunLimiter.isTestsGroupActive(testsGroupName)) {
                     continue;
                 }
 
-                for (var unitTestName in testClass) {
-                    if (this.isReservedFunctionName(unitTestName)
-                        || (unitTestName.substring(0, this.privateMemberPrefix.length) === this.privateMemberPrefix)
-                        || (typeof dynamicTestClass[unitTestName] !== 'function')
-                        || (testRunLimiter && !testRunLimiter.isTestActive(unitTestName))) {
-                        continue;
-                    }
+                this.executeTestClass(testResult, testClass, testsGroupName, testRunLimiter);
+            }
+        }
 
-                    if (typeof dynamicTestClass[unitTestName].parameters !== 'undefined') {
-                        parameters = dynamicTestClass[unitTestName].parameters;
-                        for (var parameterIndex = 0; parameterIndex < parameters.length; parameterIndex++) {
-                            if (testRunLimiter && !testRunLimiter.isParametersSetActive(parameterIndex)) {
-                                continue;
-                            }
+        private executeTestClass(testResult: TestResult, testClass: TestClass, testsGroupName: string, testRunLimiter: ITestRunLimiter): void {
+            let dynamicTestClass = <any>testClass;
+            let parameters: any[][] = null;
 
-                            this.runSingleTest(testResult, testClass, unitTestName, testsGroupName, parameters, parameterIndex);
+            for (var unitTestName in testClass) {
+                if (this.isReservedFunctionName(unitTestName)
+                    || (unitTestName.substring(0, this.privateMemberPrefix.length) === this.privateMemberPrefix)
+                    || (typeof dynamicTestClass[unitTestName] !== 'function')
+                    || (testRunLimiter && !testRunLimiter.isTestActive(unitTestName))) {
+                    continue;
+                }
+
+                if (typeof dynamicTestClass[unitTestName].parameters !== 'undefined') {
+                    parameters = dynamicTestClass[unitTestName].parameters;
+                    for (var parameterIndex = 0; parameterIndex < parameters.length; parameterIndex++) {
+                        if (testRunLimiter && !testRunLimiter.isParametersSetActive(parameterIndex)) {
+                            continue;
                         }
-                    } else {
-                        this.runSingleTest(testResult, testClass, unitTestName, testsGroupName);
+
+                        // testResult: TestResult, testClass: TestClass, unitTestName: string, testsGroupName: string, parameters: any[][] = null, parameterSetIndex: number = null
+                        this.runSingleTest(testResult, testClass, unitTestName, testsGroupName, parameters, parameterIndex);
                     }
+                } else {
+
+                    this.runSingleTest(testResult, testClass, unitTestName, testsGroupName);
                 }
             }
-
-            return testResult;
         }
 
         showResults(target: HTMLElement, result: TestResult) {
@@ -116,7 +142,7 @@ module tsUnit {
             return false;
         }
 
-        private runSingleTest(testResult: TestResult, testClass: TestClass, unitTestName: string, testsGroupName: string, parameters: any[][]= null, parameterSetIndex: number = null) {
+        private runSingleTest(testResult: TestResult, testClass: TestClass, unitTestName: string, testsGroupName: string, parameters: any[][] = null, parameterSetIndex: number = null) {
             if (typeof testClass['setUp'] === 'function') {
                 testClass['setUp']();
             }
@@ -256,7 +282,7 @@ module tsUnit {
         private setRefreshOnLinksWithHash() {
             var previousHandler = window.onhashchange;
 
-            window.onhashchange = function (ev: HashChangeEvent) {
+            window.onhashchange = function(ev: HashChangeEvent) {
                 window.location.reload();
 
                 if (typeof previousHandler === 'function') {
@@ -499,13 +525,13 @@ module tsUnit {
 
     export class FakeFactory {
         static getFake<T>(obj: any, ...implementations: [string, any][]): T {
-            var fakeType: any = function () { };
+            var fakeType: any = function() { };
             this.populateFakeType(fakeType, obj);
             var fake: any = new fakeType();
 
             for (var member in fake) {
                 if (typeof fake[member] === 'function') {
-                    fake[member] = function () { console.log('Default fake called.'); };
+                    fake[member] = function() { console.log('Default fake called.'); };
                 }
             }
 
@@ -527,7 +553,7 @@ module tsUnit {
                 }
             }
 
-            var __: any = function () {
+            var __: any = function() {
                 this.constructor = fake;
             }
 
@@ -542,6 +568,11 @@ module tsUnit {
         }
     }
 
+    class AsyncTestDefintion {
+        constructor(public asyncTestClass: AsyncTestClass, public name: string) {
+        }
+    }
+
     export class TestDescription {
         constructor(public testName: string, public funcName: string, public parameterSetNumber: number, public message: string) {
         }
@@ -550,5 +581,36 @@ module tsUnit {
     export class TestResult {
         public passes: TestDescription[] = [];
         public errors: TestDescription[] = [];
+    }
+
+
+    export class AsyncTestClass extends TestClass {
+        public asyncSetUpTimeout: number = 0;
+
+        asyncSetUp(): void { }
+    }
+
+    class AsyncTestRunner {
+
+        private runner: AsyncMethodRunner = null;
+        public testResult: TestResult = null;
+
+        constructor(private asyncTest: AsyncTestClass, public testsGroupName: string,
+            public onTestReady: (asyncTest: AsyncTestClass, testResult: TestResult, testsGroupName: string) => void) {
+            this.runner = new AsyncMethodRunner(
+                asyncTest.asyncSetUp,
+                (task: IAsyncTask): void => { this.onTestReady(this.asyncTest, this.testResult, this.testsGroupName) },
+                (task: IAsyncTask, error: Error): void => { throw error },
+                (task: IAsyncTask, msg: string): void => { throw new Error(`[TIMEOUT] ${msg}`); },
+                asyncTest.asyncSetUpTimeout || 0);
+        }
+
+        runAsync(): void {
+            this.runner.runAsync();
+        }
+
+        isWorking(): boolean {
+            return this.runner.isWorking();
+        }
     }
 }

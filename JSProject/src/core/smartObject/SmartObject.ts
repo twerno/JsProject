@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace smartObj {
 
@@ -12,24 +12,27 @@ namespace smartObj {
         id: string;
 
         getMetadata(): ISmartObjectMemberMap {
-            return {};
+            throw new Error(`getMetadata(): not implemented yet.`)
         }
-    
-        clazz(): string {
+
+        getClazz(): string {
             return this.constructor['name'];
-        } 
+        }
+
+        static build(): SmartObject {
+            throw new Error(`getNewObj(): not implemented yet.`)
+        }
     }
 
 
 
 
-    export namespace internal { 
-    
-        export enum SmartObjectFlag { NONE, IS_NULL, IS_UNDEFINED, IS_REF } 
-  
-        
-        export interface ISmartObjectData 
-        {
+    export namespace internal {
+
+        export enum SmartObjectFlag { NONE, IS_NULL, IS_UNDEFINED, IS_REF }
+
+
+        export interface ISmartObjectData {
             id?: string,
             type: SmartObjectType,
             flag: SmartObjectFlag,
@@ -44,11 +47,11 @@ namespace smartObj {
                 if (smartObjId === '' || smartObjId === null || smartObjId === undefined)
                     throw new Error(`SmartObj id can't be empty!`);
             }
-        
 
-            static validateDuplicateId(smartObj: SmartObject, smartObjCache: ISmartObjectMap) : void {
+
+            static validateDuplicateId(smartObj: SmartObject, smartObjCache: ISmartObjectMap): void {
                 let cacheObj: SmartObject = smartObjCache[smartObj.id] || null;
-                if (cacheObj != null && cacheObj != smartObj) 
+                if (cacheObj != null && cacheObj != smartObj)
                     throw new Error(`Duplicated id: ${smartObj.id}`);
             }
 
@@ -61,10 +64,10 @@ namespace smartObj {
                         continue;
 
                     if (!(key in metadata))
-                        throw new Error(`Metadata of "${smartObject.clazz()}" does not describe member "${key}".`);
+                        throw new Error(`Metadata of "${smartObject.getClazz() }" does not describe member "${key}".`);
 
                     if (SmartObjectType[metadata[key]] === undefined)
-                        throw new Error(`Metadata of "${smartObject.clazz()}" contains unknown code "${metadata[key]}".`);
+                        throw new Error(`Metadata of "${smartObject.getClazz() }" contains unknown code "${metadata[key]}".`);
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿///<reference path="SmartObject.ts"/>
+///<reference path="SmartObject.ts"/>
 
 "use strict";
 
@@ -6,10 +6,10 @@ namespace smartObj {
 
     export class SmartObjectSerializer {
 
-        private smartObjCache: ISmartObjectMap = {}; 
+        private smartObjCache: ISmartObjectMap = {};
 
-        
-        constructor (private builder: SmartObjectBuilder) {}
+
+        constructor(private builder: SmartObjectBuilder) { }
 
 
 
@@ -26,8 +26,8 @@ namespace smartObj {
         private string2Data(value: string): internal.ISmartObjectData {
             if (value === null || value === undefined)
                 return this.getEmptySmartObjData(smartObj, SmartObjectType.STRING);
-         
-            else if (typeof value === 'string') 
+
+            else if (typeof value === 'string')
                 return {
                     type: SmartObjectType.STRING,
                     flag: internal.SmartObjectFlag.NONE,
@@ -36,12 +36,12 @@ namespace smartObj {
             else
                 throw new Error(`Value type is not a "string"!`);
         }
-    
+
 
 
         private number2Data(value: number): internal.ISmartObjectData {
             if (value === null || value === undefined)
-                return this.getEmptySmartObjData(smartObj, SmartObjectType.NUMBER); 
+                return this.getEmptySmartObjData(smartObj, SmartObjectType.NUMBER);
 
             else if (typeof value === 'number')
                 return {
@@ -52,67 +52,67 @@ namespace smartObj {
             else
                 throw new Error(`Value type is not a "number"!`);
         }
-    
-    
-    
+
+
+
         private smartObj2Data(smartObj: SmartObject): internal.ISmartObjectData {
             internal.SmartObjectHelper.validateSmartObjId(smartObj.id);
             internal.SmartObjectHelper.validateDuplicateId(smartObj, this.smartObjCache);
-             
+
             if (smartObj === null || smartObj === undefined)
                 return this.getEmptySmartObjData(smartObj, SmartObjectType.SMART_OBJECT);
 
             if (!(smartObj instanceof SmartObject))
                 throw new Error(`Value is not a "SmartObject"!`);
 
-            this.builder.checkClazz(smartObj.clazz());
+            this.builder.checkClazz(smartObj.getClazz());
 
             let result: internal.ISmartObjectData = this.getFromCache(smartObj);
 
             if (result != null)
                 return result;
-            
+
             this.putIntoCache(smartObj);
 
             result = {
                 id: smartObj.id,
                 type: SmartObjectType.SMART_OBJECT,
                 flag: internal.SmartObjectFlag.NONE,
-                clazz: smartObj.clazz(),
-                members: {} 
+                clazz: smartObj.getClazz(),
+                members: {}
             };
 
             this.smartObj2DataFillMembers(smartObj, result);
-            return result; 
+            return result;
         }
 
 
 
-        private smartObj2DataFillMembers(smartObj: SmartObject, result: internal.ISmartObjectData): void {
-            let meta: ISmartObjectMemberMap = smartObj.getMetadata();
+        private smartObj2DataFillMembers(smartObject: SmartObject, result: internal.ISmartObjectData): void {
+            let meta: ISmartObjectMemberMap = smartObject.getMetadata();
             let isEmpty: boolean = true;
-            
+
             for (let key in meta) {
                 isEmpty = false;
 
                 if (meta[key] === SmartObjectType.STRING)
-                    result.members[key] = this.string2Data(smartObj[key]);
-            
+                    result.members[key] = this.string2Data(smartObject[key]);
+
                 else if (meta[key] === SmartObjectType.NUMBER)
-                    result.members[key] = this.number2Data(smartObj[key]);
+                    result.members[key] = this.number2Data(smartObject[key]);
 
                 else if (meta[key] === SmartObjectType.SMART_OBJECT)
-                    result.members[key] = this.smartObj2Data(smartObj[key]);
+                    result.members[key] = this.smartObj2Data(smartObject[key]);
 
                 else if (meta[key] === SmartObjectType.SMART_OBJECT_COLLECTION)
-                    result.members[key] = this.smartCollection2Data(smartObj[key]);
+                    result.members[key] = this.smartCollection2Data(smartObject[key]);
 
                 else if (meta[key] === SmartObjectType.COLLECTION)
-                    result.members[key] = this.collection2Data(smartObj[key]);
+                    result.members[key] = this.collection2Data(smartObject[key]);
 
                 else if (meta[key] === SmartObjectType.IGNORED) { }
 
-                else 
+                else
                     throw new Error(`"meta[key]" is not a valid SmartObjectType.`);
             }
 
@@ -126,32 +126,32 @@ namespace smartObj {
             let cacheObj: SmartObject = this.smartObjCache[smartObj.id] || null;
             if (cacheObj === null)
                 return null;
-            else  
+            else
                 return {
                     id: smartObj.id,
                     flag: internal.SmartObjectFlag.IS_REF,
                     type: SmartObjectType.SMART_OBJECT,
-                    clazz: smartObj.clazz()
+                    clazz: smartObj.getClazz()
                 };
         }
 
 
 
         private putIntoCache(smartObj: SmartObject): void {
-            this.smartObjCache[smartObj.id] = smartObj; 
+            this.smartObjCache[smartObj.id] = smartObj;
         }
 
 
 
-        private smartCollection2Data(collection: SmartObject[] | ISmartObjectMap): internal.ISmartObjectData {
+        private smartCollection2Data(collection: SmartObject[]| ISmartObjectMap): internal.ISmartObjectData {
             if (collection === null || collection === undefined)
                 return this.getEmptySmartObjData(collection, SmartObjectType.SMART_OBJECT_COLLECTION);
 
             let result: internal.ISmartObjectData = {
                 type: SmartObjectType.SMART_OBJECT_COLLECTION,
                 flag: internal.SmartObjectFlag.NONE,
-                clazz: collection instanceof Array ? 'Array' : 'Object', 
-                members: {} 
+                clazz: collection instanceof Array ? 'Array' : 'Object',
+                members: {}
             };
 
             let isEmpty: boolean = true;
@@ -163,13 +163,13 @@ namespace smartObj {
 
             if (isEmpty)
                 delete result.members;
-        
+
             return result;
-        }  
+        }
 
 
 
-        private collection2Data(collection: any[] | Object): internal.ISmartObjectData {
+        private collection2Data(collection: any[]| Object): internal.ISmartObjectData {
             if (collection === null || collection === undefined)
                 return this.getEmptySmartObjData(collection, SmartObjectType.COLLECTION);
 

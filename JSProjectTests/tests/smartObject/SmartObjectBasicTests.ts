@@ -1,4 +1,4 @@
-﻿///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
+///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
 ///<reference path="../tsUnit.ts" />
 ///<reference path="TestObjectFactory.ts" />
 
@@ -19,19 +19,19 @@ module TestModule {
 
             this.isTrue(deserialized instanceof TestObject, 'instanceof TestObject');
             this.areNotIdentical(testObj1, deserialized);
-            this.areIdentical(testObj1.clazz(), deserialized.clazz(), 'TestObject.clazz()');
+            this.areIdentical(testObj1.getClazz(), deserialized.getClazz(), 'TestObject.getClazz()');
             this.areIdentical(JSON.stringify(testObj1.getMetadata()), JSON.stringify(deserialized.getMetadata()), 'TestObject.getMetadata');
             this.areIdentical(testObj1.id, deserialized.id, 'TestObject.id');
 
-            this.areIdentical(testObj1.testSmartObj.clazz(), deserialized.testSmartObj.clazz(), 'TestObject2.clazz()');
-            this.areIdentical(JSON.stringify(testObj1.testSmartObj.getMetadata()), 
+            this.areIdentical(testObj1.testSmartObj.getClazz(), deserialized.testSmartObj.getClazz(), 'TestObject2.getClazz()');
+            this.areIdentical(JSON.stringify(testObj1.testSmartObj.getMetadata()),
                 JSON.stringify(deserialized.testSmartObj.getMetadata()), 'TestObject2.getMetadata');
             this.areIdentical(testObj1.testSmartObj.id, deserialized.testSmartObj.id, 'TestObject2.id');
 
             this.areIdentical(testObj1.testSmartObj.testVal, deserialized.testSmartObj.testVal, 'TestObject2.testVal');
             this.areIdentical(testObj1.testSmartObj.testNumber, deserialized.testSmartObj.testNumber, 'TestObject2.testNumber');
             this.areCollectionsIdentical(testObj1.testSmartObj.testArray, deserialized.testSmartObj.testArray, 'TestObject2.testArray');
-            this.areIdentical(JSON.stringify(testObj1.testSmartObj.testMap), 
+            this.areIdentical(JSON.stringify(testObj1.testSmartObj.testMap),
                 JSON.stringify(deserialized.testSmartObj.testMap), 'TestObject2.testMap');
         }
 
@@ -44,7 +44,7 @@ module TestModule {
             try {
                 let deserialized: TestObject = testEnvironment.deserializer.deserialize(serialized);
                 this.isTrue(false, 'incorrectDataDeserializationTest_0');
-            } catch (err) {}
+            } catch (err) { }
         }
 
 
@@ -68,7 +68,7 @@ module TestModule {
             try {
                 testEnvironment.deserializer.deserialize('{"id":"1","type":2,"flag":0,"clazz":"TestObjectX"}');
                 this.isTrue(false, 'incorrectDataDeserializationTest_2');
-            } catch (err) {}
+            } catch (err) { }
         }
 
 
@@ -80,7 +80,7 @@ module TestModule {
             try {
                 testEnvironment.deserializer.deserialize('{"id":"1","type":2,"flag":20,"clazz":"TestObject"}');
                 this.isTrue(false, 'incorrectDataDeserializationTest_3');
-            } catch (err) {}
+            } catch (err) { }
         }
 
 
@@ -92,7 +92,7 @@ module TestModule {
             try {
                 testEnvironment.deserializer.deserialize('{"id":"1","type":20,"flag":0,"clazz":"TestObject"}');
                 this.isTrue(false, 'incorrectDataDeserializationTest_4');
-            } catch (err) {}
+            } catch (err) { }
         }
 
 

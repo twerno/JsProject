@@ -60,10 +60,11 @@ class AsyncTaskRunner<T extends IAsyncTask> {
         this.task.callbacks.onTimeout = (task, msg) => this.internalOnTimeout2(msg);
 
         this.task.asyncTaskState = AsyncTaskState.NEW;
-        setTimeout(() => this.task.run(), 1);
 
         if ((this.timeout || 0) > 0)
             this.timeoutHandler = setTimeout(() => this.internalOnTimeout1, this.timeout);
+
+        setTimeout(() => this._internalRun(), 1);
     }
 
 
@@ -75,6 +76,22 @@ class AsyncTaskRunner<T extends IAsyncTask> {
 
         this.task.asyncTaskState = AsyncTaskState.FINISHED_KILLED;
         this.cleanUp();
+    }
+
+
+
+    isWorking(): boolean {
+        return this.task != null && this.task.asyncTaskState === AsyncTaskState.WORKING;
+    }
+
+
+
+    private _internalRun(): void {
+        try {
+            this.task.run();
+        } catch (error) {
+            this.internalOnError(error);
+        }
     }
 
 

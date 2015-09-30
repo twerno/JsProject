@@ -1,4 +1,4 @@
-﻿///<reference path="SmartObject.ts"/>
+///<reference path="SmartObject.ts"/>
 
 "use strict";
 
@@ -9,18 +9,18 @@ namespace smartObj {
         private smartObjRef2Fill: ISmartObjectMap = {};
 
 
-        constructor (private builder: SmartObjectBuilder) {}
-        
-          
+        constructor(private builder: SmartObjectBuilder) { }
+
+
 
         deserialize(serializedObj: string): T {
             let serializedData: internal.ISmartObjectData = JSON.parse(serializedObj);
-            
+
             if (this.isEmpty(serializedData))
                 throw new Error(`Root object cannot be marked as null or undefined`);
 
             if (serializedData.flag === internal.SmartObjectFlag.IS_REF)
-                throw new Error(`Root object cannot be marked as REF.`); 
+                throw new Error(`Root object cannot be marked as REF.`);
 
             let result: SmartObject = this.getAsSmartObject(serializedData);
 
@@ -36,7 +36,7 @@ namespace smartObj {
 
         private getAsSmartObject(data: internal.ISmartObjectData): SmartObject {
             let result: SmartObject;
-            
+
             if (this.isEmpty(data))
                 result = this.getAsEmpty(data);
 
@@ -46,10 +46,10 @@ namespace smartObj {
             else if (data.flag === internal.SmartObjectFlag.NONE) {
                 result = this.getOrCreateSmartObject(data);
                 this.fillRef(result, data);
-            } 
-            
-            else 
-                throw new Error(`Unknown flag: ${data.flag}.`); 
+            }
+
+            else
+                throw new Error(`Unknown flag: ${data.flag}.`);
 
             return result;
         }
@@ -70,21 +70,21 @@ namespace smartObj {
 
             return result;
         }
-        
-        
-        
+
+
+
         private fillRef(smartObj: SmartObject, data: internal.ISmartObjectData): void {
             if ((this.smartObjRef2Fill[data.id] || null) === null)
                 throw new Error(`SmartObject ${data.id} has been filled already.`);
             else
                 delete this.smartObjRef2Fill[data.id];
 
-            this.members2SmartObject(data, smartObj);
+            this.data2SmartObject(data, smartObj);
         }
 
 
 
-        private members2SmartObject(data: internal.ISmartObjectData, obj2Fill: Object): void {
+        private data2SmartObject(data: internal.ISmartObjectData, obj2Fill: Object): void {
             let member: internal.ISmartObjectData;
 
             if ((data.members || null) != null)
@@ -98,7 +98,7 @@ namespace smartObj {
                         obj2Fill[key] = this.getAsEmpty(member);
 
                     else if (member.type === SmartObjectType.STRING)
-                        obj2Fill[key] = this.getAsString(member);         
+                        obj2Fill[key] = this.getAsString(member);
 
                     else if (member.type === SmartObjectType.NUMBER)
                         obj2Fill[key] = this.getAsNumber(member);
@@ -117,7 +117,7 @@ namespace smartObj {
 
 
         private isEmpty(data: internal.ISmartObjectData): boolean {
-            return data.flag === internal.SmartObjectFlag.IS_NULL || data.flag === internal.SmartObjectFlag.IS_UNDEFINED; 
+            return data.flag === internal.SmartObjectFlag.IS_NULL || data.flag === internal.SmartObjectFlag.IS_UNDEFINED;
         }
 
 
@@ -139,9 +139,9 @@ namespace smartObj {
 
             return result;
         }
-        
-       
-         
+
+
+
         private getAsNumber(data: internal.ISmartObjectData): number {
             let result: number = JSON.parse(data.jsonData);
 
@@ -150,26 +150,26 @@ namespace smartObj {
 
             return result;
         }
-        
 
-        
-        private getAsSmartObjectCollection(data: internal.ISmartObjectData): SmartObject[] | ISmartObjectMap {
-            let result: SmartObject[] | ISmartObjectMap;
+
+
+        private getAsSmartObjectCollection(data: internal.ISmartObjectData): SmartObject[]| ISmartObjectMap {
+            let result: SmartObject[]| ISmartObjectMap;
 
             if (data.clazz === 'Array')
                 result = [];
             else
                 result = {};
 
-            this.members2SmartObject(data, result);
+            this.data2SmartObject(data, result);
 
             return result;
         }
-        
 
 
-        private getAsCollection(data: internal.ISmartObjectData): Object[] | Object {
-            let result: Object[] | Object = JSON.parse(data.jsonData);
+
+        private getAsCollection(data: internal.ISmartObjectData): Object[]| Object {
+            let result: Object[]| Object = JSON.parse(data.jsonData);
 
             if (data.clazz === 'Array' && !(result instanceof Array))
                 throw new Error(`Array expected, ${typeof result} received.`);
@@ -178,18 +178,18 @@ namespace smartObj {
 
             return result;
         }
-        
-        
-        
+
+
+
         private areAllSmartObjectFilled(): boolean {
 
             let isEmpty: boolean = true;
             for (let key in this.smartObjRef2Fill) {
                 isEmpty = false;
                 break;
-            } 
+            }
 
             return isEmpty;
-        } 
+        }
     }
 }
