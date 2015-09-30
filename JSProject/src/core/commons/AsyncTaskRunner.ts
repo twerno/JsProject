@@ -1,168 +1,196 @@
 "use strict";
 
-const enum AsyncTaskState {
-    NEW,
-    WORKING,
-    FINISHED_SUCCESS,
-    FINISHED_ERROR,
-    FINISHED_TIMEOUT,
-    FINISHED_KILLED
-}
+namespace asyncRunner {
+
+    export const enum AsyncTaskState {
+        NEW,
+        WORKING,
+        FINISHED_SUCCESS,
+        FINISHED_ERROR,
+        FINISHED_TIMEOUT,
+        FINISHED_KILLED
+    }
+    export const enum AsyncTaskFailureCode {ERROR, TIMEOUT}
 
 
-
-type AsyncTaskSuccess = (task: IAsyncTask) => void;
-type AsyncTaskError = (task: IAsyncTask, error: Error) => void;
-type AsyncTaskTimeout = (task: IAsyncTask, msg: string) => void;
-
+    export type AsyncTaskWorker  = (onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure) => void;
+    export type AsyncTaskSuccess = (result?: Object) => void;
+    export type AsyncTaskFailure = (msg?: string, details?: Object) => void;
 
 
-interface AsyncTaskCallbacks {
-    onSuccess: AsyncTaskSuccess;
-    onError: AsyncTaskError;
-    onTimeout: AsyncTaskTimeout;
-}
+    export type AsyncRunnerSuccess = (task: IAsyncTask, result?: Object) => void;
+    export type AsyncRunnerFailure = (task: IAsyncTask, code: AsyncTaskFailureCode, msg?: string, details?: Object) => void;
 
 
-
-interface IAsyncTask {
-    asyncTaskState: AsyncTaskState;
-    callbacks: AsyncTaskCallbacks;
-
-    run(): void;
-}
-
-
-
-class AsyncTaskRunner<T extends IAsyncTask> {
-
-    private timeoutHandler: number = 0;
-
-
-    constructor(
-        private task: T,
-        private onSuccess: (task: T) => void,
-        private onError: (task: T, error: Error) => void,
-        private onTimeout: (task: T, msg: string) => void,
-        private timeout?: number) { }
-
-
-
-    runAsync(): void {
-
-        if ((this.task || null) === null)
-            throw new Error('Task is null is not defined');
-
-        this.clearTasksCallbacks(this.task);
-
-        this.task.callbacks.onSuccess = (task) => this.internalOnSuccess();
-        this.task.callbacks.onError = (task, error) => this.internalOnError(error);
-        this.task.callbacks.onTimeout = (task, msg) => this.internalOnTimeout2(msg);
-
-        this.task.asyncTaskState = AsyncTaskState.NEW;
-
-        if ((this.timeout || 0) > 0)
-            this.timeoutHandler = setTimeout(() => this.internalOnTimeout1, this.timeout);
-
-        setTimeout(() => this._internalRun(), 1);
+    export class AsyncTaskTimeoutError extends Error {
+        timeout: number;
     }
 
 
+    export abstract class IAsyncTask {
+        asyncTaskState: AsyncTaskState;
 
-    kill(): void {
-        clearTimeout(this.timeoutHandler);
-        if (this.task === null)
-            return;
-
-        this.task.asyncTaskState = AsyncTaskState.FINISHED_KILLED;
-        this.cleanUp();
+        abstract run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void;
     }
 
 
+    export class AsyncTaskRunner {
 
-    isWorking(): boolean {
-        return this.task != null && this.task.asyncTaskState === AsyncTaskState.WORKING;
-    }
-
+        private timeoutHandler: number = 0;
 
 
-    private _internalRun(): void {
-        try {
-            this.task.run();
-        } catch (error) {
-            this.internalOnError(error);
+        constructor(
+            private task: IAsyncTask,
+            private onSuccess: AsyncRunnerSuccess,
+            private onFailure: AsyncRunnerFailure,
+            private timeout: number = 0) { }
+
+
+        runAsync(): void {
+
+            if ((this.task || null) === null)
+                throw new Error(`Task cant be null.`);
+
+            if (!(this.task instanceof IAsyncTask))
+                throw new Error(`Task has to be IAsyncTask type.`);
+
+            if (typeof this.task.run != 'function')
+                throw new Error(`Task has no "run" method.`);
+
+            this.task.asyncTaskState = AsyncTaskState.NEW;
+
+            if ((this.timeout || 0) > 0)
+                this.timeoutHandler = setTimeout(() => this.internalOnTimeout(), this.timeout);
+
+            setTimeout(() => this._internalRun(), 1);
+        }
+ 
+
+        kill(): void {
+            clearTimeout(this.timeoutHandler);
+            if (this.task === null)
+                return;
+
+            this.task.asyncTaskState = AsyncTaskState.FINISHED_KILLED;
+            this.cleanUp();
+        }
+
+
+        isWorking(): boolean {
+            return this.task != null && this.task.asyncTaskState === AsyncTaskState.WORKING;
+        }
+  
+
+        private _internalRun(): void {
+            try {
+                this.task.run(
+                    (result): void => this.internalOnSuccess(result || null),
+                    (msg, details): void => this.internalOnFailure(AsyncTaskFailureCode.ERROR, msg || '', details || null));
+            } catch (error) {
+                this.internalOnFailure(AsyncTaskFailureCode.ERROR, error.msg, {error: error});
+            }
+        }
+ 
+
+        private internalOnSuccess(result: Object) {
+            clearTimeout(this.timeoutHandler);
+            if (this.task === null)
+                return;
+
+            let task: IAsyncTask = this.task; 
+            let onSuccess: AsyncRunnerSuccess = this.onSuccess;
+
+            this.cleanUp();
+
+            task.asyncTaskState = AsyncTaskState.FINISHED_SUCCESS;
+            onSuccess === null || onSuccess(task, result);
+        }
+
+
+        private internalOnFailure(code: AsyncTaskFailureCode, msg?: string, details?: Object): void {
+            clearTimeout(this.timeoutHandler);
+            if (this.task === null)
+                return;
+
+            let task: IAsyncTask = this.task; 
+            let onFailure: AsyncRunnerFailure = this.onFailure;
+
+            this.cleanUp();
+
+            task.asyncTaskState = (code === AsyncTaskFailureCode.TIMEOUT ? AsyncTaskState.FINISHED_TIMEOUT : AsyncTaskState.FINISHED_ERROR);
+            onFailure === null || onFailure(task, code, msg, details);
+        }
+
+
+        private internalOnTimeout() {
+            clearTimeout(this.timeoutHandler);
+            if (this.task === null)
+                return;
+
+            let error:AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[Timeout] AsyncTaskRunner; task: ${this.task}`);
+            error.timeout = this.timeout;
+
+            this.internalOnFailure(AsyncTaskFailureCode.TIMEOUT, error.message, {error: error});
+        }
+ 
+
+        private cleanUp(): void {
+            clearTimeout(this.timeoutHandler);
+
+            this.task = null;
+            this.timeoutHandler = null;
+            this.timeout = null;
+            this.onSuccess = null;
+            this.onFailure = null;
         }
     }
 
 
 
-    private internalOnSuccess() {
-        clearTimeout(this.timeoutHandler);
-        if (this.task === null)
-            return;
+    class AsyncMethodWrapperTask extends IAsyncTask {
 
-        this.clearTasksCallbacks(this.task);
-        this.task.asyncTaskState = AsyncTaskState.FINISHED_SUCCESS;
-        this.onSuccess === null || this.onSuccess(this.task);
-        this.cleanUp();
+        run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void {
+            this.worker(onSuccess, onFailure);
+        }
+
+        constructor(private worker: AsyncTaskWorker) {
+            super();
+        }
     }
 
 
 
-    private internalOnTimeout1() {
-        clearTimeout(this.timeoutHandler);
-        if (this.task === null)
-            return;
+    export class AsyncMethodRunner {
+        private asyncRunner: AsyncTaskRunner;
 
-        this.clearTasksCallbacks(this.task);
-        this.task.asyncTaskState = AsyncTaskState.FINISHED_TIMEOUT;
-        this.onTimeout === null || this.onTimeout(this.task, `[Timeout] AsyncTaskRunner; task: ${this.task}`);
-        this.cleanUp();
+        constructor(
+            worker: AsyncTaskWorker,
+            private onSuccess: AsyncRunnerSuccess,
+            private onFailure: AsyncRunnerFailure,
+            timeout?: number) {
+
+            let wrapper: AsyncMethodWrapperTask = new AsyncMethodWrapperTask(worker);
+
+            this.asyncRunner = new AsyncTaskRunner(
+                wrapper,
+                onSuccess,
+                onFailure,
+                timeout);
+        }
+
+
+        runAsync(): void {
+            this.asyncRunner.runAsync();
+        }
+
+
+        kill(): void {
+            this.asyncRunner.kill();
+        }
+
+
+        isWorking(): boolean {
+            return this.asyncRunner.isWorking();
+        }
     }
-
-
-
-    private internalOnTimeout2(msg: string): void {
-        clearTimeout(this.timeoutHandler);
-        if (this.task === null)
-            return;
-
-        this.clearTasksCallbacks(this.task);
-        this.task.asyncTaskState = AsyncTaskState.FINISHED_TIMEOUT;
-        this.onTimeout === null || this.onTimeout(this.task, msg);
-        this.cleanUp();
-    }
-
-
-
-    private internalOnError(error: Error): void {
-        clearTimeout(this.timeoutHandler);
-        if (this.task === null)
-            return;
-
-        this.clearTasksCallbacks(this.task);
-        this.task.asyncTaskState = AsyncTaskState.FINISHED_ERROR;
-        this.onError === null || this.onError(this.task, error);
-        this.cleanUp();
-    }
-
-
-
-    private cleanUp(): void {
-        clearTimeout(this.timeoutHandler);
-
-        this.task = null;
-        this.timeoutHandler = null;
-        this.timeout = null;
-        this.onSuccess = null;
-        this.onError = null;
-        this.onTimeout = null;
-    }
-
-
-
-    private clearTasksCallbacks(task: IAsyncTask): void {
-        this.task.callbacks = { onSuccess: null, onError: null, onTimeout: null };
-    }
-
 }

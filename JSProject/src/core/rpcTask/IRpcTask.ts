@@ -20,7 +20,7 @@ interface IRpcTaskController extends rpc.IRpcController<smartObj.SmartObject> {
 
 
 
-interface IRpcTask extends IAsyncTask {
+interface IRpcTask /*extends IAsyncTask*/ {
     controller: IRpcTaskController;
 
     name: string;

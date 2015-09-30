@@ -11,8 +11,8 @@ abstract class RpcTask extends smartObj.SmartObject implements IRpcTask {
 
     params: smartObj.SmartObject = null;
     controller: IRpcTaskController = null;
-    callbacks: AsyncTaskCallbacks = { onSuccess: null, onError: null, onTimeout: null };
-    asyncTaskState: AsyncTaskState = AsyncTaskState.NEW;
+    //callbacks: AsyncTaskCallbacks = { onSuccess: null, onError: null, onTimeout: null };
+    //asyncTaskState: AsyncTaskState = AsyncTaskState.NEW;
     name: string;
 
     abstract getNextMethod(): IRpcMethod; 

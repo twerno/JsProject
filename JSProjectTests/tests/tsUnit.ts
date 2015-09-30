@@ -587,30 +587,44 @@ module tsUnit {
     export class AsyncTestClass extends TestClass {
         public asyncSetUpTimeout: number = 0;
 
-        asyncSetUp(): void { }
+        asyncSetUp(onSuccess: asyncRunner.AsyncTaskSuccess, onFailure: asyncRunner.AsyncTaskFailure): void { }
     }
+
 
     class AsyncTestRunner {
 
-        private runner: AsyncMethodRunner = null;
+        private runner: asyncRunner.AsyncMethodRunner = null;
         public testResult: TestResult = null;
 
         constructor(private asyncTest: AsyncTestClass, public testsGroupName: string,
             public onTestReady: (asyncTest: AsyncTestClass, testResult: TestResult, testsGroupName: string) => void) {
-            this.runner = new AsyncMethodRunner(
-                asyncTest.asyncSetUp,
-                (task: IAsyncTask): void => { this.onTestReady(this.asyncTest, this.testResult, this.testsGroupName) },
-                (task: IAsyncTask, error: Error): void => { throw error },
-                (task: IAsyncTask, msg: string): void => { throw new Error(`[TIMEOUT] ${msg}`); },
-                asyncTest.asyncSetUpTimeout || 0);
+
         }
 
         runAsync(): void {
+            this.runner.kill();
+            this.runner = null;
+
+            this.runner = new asyncRunner.AsyncMethodRunner( 
+                this.asyncTest.asyncSetUp,
+                (task: asyncRunner.IAsyncTask, result?: Object): void => { this.onTestReady(this.asyncTest, this.testResult, this.testsGroupName) },
+                (task: asyncRunner.IAsyncTask, code: asyncRunner.AsyncTaskFailureCode, msg?: string, details?: Object): void => {
+                    if (details != null && details['error'] instanceof Error)
+                        throw details['error'];
+                    else
+                        throw new Error(msg); 
+                },
+                asyncTest.asyncSetUpTimeout || 0);
+
             this.runner.runAsync();
         }
 
         isWorking(): boolean {
             return this.runner.isWorking();
+        }
+
+        kill(): void {
+            this.runner.kill();
         }
     }
 }
