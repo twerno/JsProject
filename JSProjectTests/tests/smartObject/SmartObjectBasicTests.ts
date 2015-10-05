@@ -1,5 +1,5 @@
 ///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
-///<reference path="../tsUnit.ts" />
+///<reference path="../tsUnit/tsUnit.ts" />
 ///<reference path="TestObjectFactory.ts" />
 
 "use strict";
