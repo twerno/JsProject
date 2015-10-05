@@ -1,15 +1,15 @@
 ///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
-///<reference path="../tsUnit.ts" />
+///<reference path="../tsUnit/tsUnit.ts" />
 
 "use strict";
 
-    enum TestEnum { TEST_1, TEST_2, TEST_3 };
+enum TestEnum { TEST_1, TEST_2, TEST_3 };
 
 class TestObject extends smartObj.SmartObject {
     testSmartObj: TestObject2 = new TestObject2();
     smartArray: smartObj.SmartObject[] = [];
     smartMap: smartObj.ISmartObjectMap = {};
-        testEnum: TestEnum = TestEnum.TEST_3; 
+    testEnum: TestEnum = TestEnum.TEST_3;
 
     privateStr: string = 'secret';
 
@@ -67,7 +67,7 @@ class TestObjectFactory {
         let testObj1: TestObject = new TestObject();
         testObj1.id = this.getID();
         testObj1.testSmartObj.id = this.getID();
-            testObj1.privateStr = 'secret';
+        testObj1.privateStr = 'secret';
         return testObj1;
     }
 
