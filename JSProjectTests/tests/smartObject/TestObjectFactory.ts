@@ -1,5 +1,5 @@
-///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
-///<reference path="../tsUnit/tsUnit.ts" />
+///<reference path="../../../JSProject/dist/JSProject.d.ts"/>
+///<reference path="../tsUnit.ts" />
 
 "use strict";
 
@@ -11,7 +11,7 @@ class TestObject extends smartObj.SmartObject {
     smartMap: smartObj.ISmartObjectMap = {};
     testEnum: TestEnum = TestEnum.TEST_3;
 
-    privateStr: string = 'secret';
+    privateStr: string;
 
     getMetadata(): smartObj.ISmartObjectMemberMap {
         return {

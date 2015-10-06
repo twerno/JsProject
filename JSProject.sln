@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProject", "JSProject\JSProject.csproj", "{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProjectTests", "JSProjectTests\JSProjectTests.csproj", "{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EBF6EEFA-4508-4193-B73A-A8D32E6E589B} = {EBF6EEFA-4508-4193-B73A-A8D32E6E589B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

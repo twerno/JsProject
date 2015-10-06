@@ -1,5 +1,5 @@
-///<reference path="../../../JSProject/dist/jsProject.d.ts"/>
-///<reference path="../tsUnit/tsUnit.ts" />
+///<reference path="../../../JSProject/dist/JSProject.d.ts"/>
+///<reference path="../tsUnit.ts" />
 ///<reference path="TestObjectFactory.ts" />
 
 "use strict";
@@ -7,6 +7,23 @@
 module TestModule {
 
     let factory: TestObjectFactory = new TestObjectFactory();
+
+    export class AsyncTests extends tsUnit.AsyncSetUpTestClass {
+
+        constructor() {
+            super();
+            this.setUpTimeLimit = 3;
+        }
+
+        asyncSetUp(onSuccess: asyncRunner.AsyncTaskSuccess, onFailure: asyncRunner.AsyncTaskFailure): void {
+            setTimeout((): void => { onSuccess(null); }, 2000);
+        }
+
+        basicTest() {
+            this.isTrue(true, 'dummy test');
+        }
+
+    }
 
     export class SmartObjectBasicTests extends tsUnit.TestClass {
 

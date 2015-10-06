@@ -3,7 +3,6 @@
 	<name>JSProjectTests</name>
 	<comment></comment>
 	<projects>
-		<project>JSProject</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
