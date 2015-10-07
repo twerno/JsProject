@@ -3,16 +3,17 @@
 	<name>JSProjectTests</name>
 	<comment></comment>
 	<projects>
+		<project>JSProject</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>com.axmor.eclipse.typescript.builder.typescriptBuilder</name>
+			<name>com.palantir.typescript.typeScriptBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.axmor.eclipse.typescript.builder.typescriptNature</nature>
+		<nature>com.palantir.typescript.typeScriptNature</nature>
 	</natures>
 	<linkedResources>
 		<link>

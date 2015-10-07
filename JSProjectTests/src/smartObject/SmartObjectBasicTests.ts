@@ -12,11 +12,11 @@ module TestModule {
 
         constructor() {
             super();
-            this.setUpTimeLimit = 3;
+            this.setUpTimeLimit = 3 * 1000;
         }
 
         asyncSetUp(onSuccess: asyncRunner.AsyncTaskSuccess, onFailure: asyncRunner.AsyncTaskFailure): void {
-            setTimeout((): void => { onSuccess(null); }, 2000);
+            //    setTimeout((): void => { onSuccess(null); }, 2000);
         }
 
         basicTest() {
@@ -45,7 +45,7 @@ module TestModule {
                 JSON.stringify(deserialized.testSmartObj.getMetadata()), 'TestObject2.getMetadata');
             this.areIdentical(testObj1.testSmartObj.id, deserialized.testSmartObj.id, 'TestObject2.id');
 
-            this.areIdentical(testObj1.testSmartObj.testVal, deserialized.testSmartObj.testVal, 'TestObject2.testVal');
+            this.areIdentical(testObj1.testSmartObj.testVal + '1', deserialized.testSmartObj.testVal, 'TestObject2.testVal');
             this.areIdentical(testObj1.testSmartObj.testNumber, deserialized.testSmartObj.testNumber, 'TestObject2.testNumber');
             this.areCollectionsIdentical(testObj1.testSmartObj.testArray, deserialized.testSmartObj.testArray, 'TestObject2.testArray');
             this.areIdentical(JSON.stringify(testObj1.testSmartObj.testMap),

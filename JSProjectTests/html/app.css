@@ -25,14 +25,45 @@ span {
 
 li {
     font-weight: bold;
+	display: block;
 }
 
-    li li {
-        font-weight: normal;
-        color: #666;
-    }
+li ul {
+	padding-left: 30px;
+}
+
+li li {
+	font-weight: normal;
+    color: #666;
+	margin-top: 2px;
+    display: block;
+}
+
+li.indent {
+    padding-left: 22px;
+}
+
+li li:first-child {
+   margin-top: 6px;
+}
 
 .ascii {
     font-family: Arial, sans-serif;
     color: #8CBF26;
+}
+
+li.group {
+	margin-top: 15px;
+}
+
+hr {
+    margin-bottom: 10px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 15px;
 }

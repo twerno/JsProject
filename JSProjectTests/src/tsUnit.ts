@@ -1,6 +1,6 @@
 /* tsUnit (c) Copyright 2012-2015 Steve Fenton, licensed under Apache 2.0 https://github.com/Steve-Fenton/tsUnit */
 
-///<reference path="../../JSProject/dist/JSProject.d.ts"/>
+/// <reference path="../../JSProject/dist/JSProject.d.ts"/>;
 
 
 module tsUnit {
@@ -8,13 +8,14 @@ module tsUnit {
 
     export class TestEngine {
         public privateMemberPrefix = '_';
-        private testResult: TestResult = null;
+        private testResult: TestResults = null;
 
         private tests: TestDefintion[] = [];
         private testRunLimiter: TestRunLimiter;
         private reservedMethodNameContainer: TestClass;
+        private testsDone: number = 0;
 
-        public onResultChange: (result: TestResult) => void = null;
+        public onResultChange: (result: TestResults) => void = null;
 
 
 
@@ -38,23 +39,23 @@ module tsUnit {
 
 
 
-        private _internalOnTestReady(asyncTestClass: AsyncSetUpTestClass, testResult: TestResult, testsGroupName: string): void {
-            this.testResult.asyncSetUpTestMap[testsGroupName] = { state: AsyncSetUpTestState.DONE, error_message: '' };
+        private _internalOnTestReady(asyncTestClass: AsyncSetUpTestClass, testResult: TestResults, testsGroupName: string): void {
+            this.testResult.updateAsyncSetUpInfo(testsGroupName, AsyncSetUpTestState.DONE, '');
             this.onResultChange && this.onResultChange(this.testResult);
             this.executeTestClass(testResult, asyncTestClass, testsGroupName, this.testRunLimiter);
         }
 
 
-        private _internalOnAsyncSetUpFailure(asyncTestClass: AsyncSetUpTestClass, testResult: TestResult, testsGroupName: string, msg: string): void {
-            this.testResult.asyncSetUpTestMap[testsGroupName] = { state: AsyncSetUpTestState.FAILED, error_message: msg };
+        private _internalOnAsyncSetUpFailure(asyncTestClass: AsyncSetUpTestClass, testResult: TestResults, testsGroupName: string, error_message: string): void {
+            this.testResult.done = (this.tests.length === ++this.testsDone);
+            this.testResult.updateAsyncSetUpInfo(testsGroupName, AsyncSetUpTestState.FAILED, error_message);
             this.onResultChange && this.onResultChange(this.testResult);
-            testResult.errors.push(new TestDescription(testsGroupName, TestContext.getNameOfClass(asyncTestClass), null, msg));
         }
 
 
         run(testRunLimiter: ITestRunLimiter = null): void {
             var testContext = new TestContext();
-            this.testResult = new TestResult();
+            this.testResult = new TestResults();
 
             if (testRunLimiter == null) {
                 testRunLimiter = this.testRunLimiter;
@@ -74,7 +75,7 @@ module tsUnit {
                         (asyncTestClass, testResult, testsGroupName, msg): void => { this._internalOnAsyncSetUpFailure(asyncTestClass, testResult, testsGroupName, msg) });
                     runner.runAsync(testClass.setUpTimeLimit);
 
-                    this.testResult.asyncSetUpTestMap[testsGroupName] = { state: AsyncSetUpTestState.SETTING_UP, error_message: '' };
+                    this.testResult.updateAsyncSetUpInfo(testsGroupName, AsyncSetUpTestState.SETTING_UP, 'Asynchronous initialization');
                     this.onResultChange && this.onResultChange(this.testResult);
                 } else
                     this.executeTestClass(this.testResult, testClass, testsGroupName, testRunLimiter);
@@ -83,7 +84,7 @@ module tsUnit {
 
 
 
-        private executeTestClass(testResult: TestResult, testClass: TestClass, testsGroupName: string, testRunLimiter: ITestRunLimiter): void {
+        private executeTestClass(testResult: TestResults, testClass: TestClass, testsGroupName: string, testRunLimiter: ITestRunLimiter): void {
             let dynamicTestClass = <any>testClass;
             let parameters: any[][] = null;
 
@@ -109,6 +110,10 @@ module tsUnit {
                     this.runSingleTest(testResult, testClass, unitTestName, testsGroupName);
                 }
             }
+            this.testResult.done = this.tests.length === ++this.testsDone;
+            if (this.testResult.done) 
+                this.onResultChange && this.onResultChange(this.testResult);
+            
         }
 
 
@@ -134,7 +139,7 @@ module tsUnit {
 
 
 
-        private runSingleTest(testResult: TestResult, testClass: TestClass, unitTestName: string, testsGroupName: string, parameters: any[][] = null, parameterSetIndex: number = null) {
+        private runSingleTest(testResult: TestResults, testClass: TestClass, unitTestName: string, testsGroupName: string, parameters: any[][] = null, parameterSetIndex: number = null) {
             if (typeof testClass['setUp'] === 'function') {
                 testClass['setUp']();
             }
@@ -144,10 +149,10 @@ module tsUnit {
                 var args = (parameterSetIndex !== null) ? parameters[parameterSetIndex] : null;
                 dynamicTestClass[unitTestName].apply(testClass, args);
 
-                testResult.passes.push(new TestDescription(testsGroupName, unitTestName, parameterSetIndex, 'OK'));
+                testResult.addTestResult(testsGroupName, TestFuncState.PASSED, unitTestName, parameterSetIndex, 'OK');
                 this.onResultChange && this.onResultChange(this.testResult);
             } catch (err) {
-                testResult.errors.push(new TestDescription(testsGroupName, unitTestName, parameterSetIndex, err.toString()));
+                testResult.addTestResult(testsGroupName, TestFuncState.FAILED, unitTestName, parameterSetIndex, err.toString());
                 this.onResultChange && this.onResultChange(this.testResult);
             }
 
@@ -266,19 +271,101 @@ module tsUnit {
         }
     }
 
+    export enum TestFuncState { PASSED, FAILED }
+
+    export class TestFuncDescription {
+        constructor(public parent: TestDescription,
+            public state: TestFuncState,
+            public funcName: string,
+            public parameterSetNumber: number,
+            public message: string) {
+        }
+    }
+
     export class TestDescription {
-        constructor(public testName: string, public funcName: string, public parameterSetNumber: number, public message: string) {
+
+        failed: TestFuncDescription[] = [];
+        passed: TestFuncDescription[] = [];
+
+        asyncSetUpInfo: AsyncSetUpTestInfo = null;
+        public message: string = '';
+
+        constructor(public testName: string) {
+        }
+
+        hasErrors(): boolean {
+            return this.failed.length != 0 || (this.asyncSetUpInfo && this.asyncSetUpInfo.state === AsyncSetUpTestState.FAILED);
         }
     }
 
     export enum AsyncSetUpTestState { SETTING_UP, DONE, FAILED }
-    export interface AsyncSetUpTestInfo { state: AsyncSetUpTestState, error_message: string }
-    export interface AsyncSetUpTestInfoMap { [key: string]: AsyncSetUpTestInfo }
+    export interface AsyncSetUpTestInfo { parent: TestDescription, state: AsyncSetUpTestState, error_message: string }
+    export interface AsyncSetUpTestInfoMap { [key: string]: AsyncSetUpTestInfo } 
+    export interface TestDescriptionMap { [key: string]: TestDescription }
 
-    export class TestResult {
-        public passes: TestDescription[] = [];
-        public errors: TestDescription[] = [];
-        public asyncSetUpTestMap: AsyncSetUpTestInfoMap = {};
+
+    export class TestResults {
+        done: boolean = false;
+        resultMap: TestDescriptionMap = {};
+
+        private failed: number = 0;
+        private passed: number = 0;
+        private asyncSetUp: number = 0;
+        private asyncSetUpDone: number = 0;
+        private asyncSetUpFailed: number = 0;
+        initializers: AsyncSetUpTestInfoMap = {};
+
+        getOrCreate(testsGroupName: string): TestDescription {
+            let description: TestDescription = this.resultMap[testsGroupName] || null;
+            if (description === null) {
+                description = new TestDescription(testsGroupName);
+                this.resultMap[testsGroupName] = description;
+            }
+            return description;
+        }
+
+        updateAsyncSetUpInfo(testsGroupName: string, state: AsyncSetUpTestState, error_message: string): void {
+            let description: TestDescription = this.getOrCreate(testsGroupName);
+            let info: AsyncSetUpTestInfo = { state: state, error_message: error_message, parent: description }
+            description.asyncSetUpInfo = info;
+
+            if (state === AsyncSetUpTestState.SETTING_UP) {
+                this.asyncSetUp++;
+                this.initializers[description.testName] = info;
+            } else if (state === AsyncSetUpTestState.DONE) {
+                this.asyncSetUpDone++;
+                delete this.initializers[description.testName];
+            } else if (state === AsyncSetUpTestState.FAILED) {
+                this.asyncSetUpFailed++;
+                delete this.initializers[description.testName];
+            }
+        }
+
+
+        addTestResult(testsGroupName: string, state: TestFuncState, funcName: string, parameterSetNumber: number, message: string): void {
+            let description: TestDescription = this.getOrCreate(testsGroupName);
+            let testResult: TestFuncDescription = new TestFuncDescription(description, state, funcName, parameterSetNumber, message);
+
+            if (state === TestFuncState.PASSED) {
+                description.passed.push(testResult);
+                this.passed++;
+            }
+            else {
+                description.failed.push(testResult);
+                this.failed++;
+            }
+        }
+
+        hasError(): boolean {
+            return (this.countFailed() + this.countAsyncSetUpFailed()) != 0;
+        }
+
+        countTests(): number { return this.passed + this.failed }
+        countPassed(): number { return this.passed }
+        countFailed(): number { return this.failed }
+        countAsyncSetUp(): number { return this.asyncSetUp }
+        countAsyncSetUpDone(): number { return this.asyncSetUpDone }
+        countAsyncSetUpFailed(): number { return this.asyncSetUpFailed }
     }
 
 
@@ -288,10 +375,10 @@ module tsUnit {
 
         constructor(
             public asyncTest: AsyncSetUpTestClass,
-            public testResult: TestResult,
+            public testResult: TestResults,
             public testsGroupName: string,
-            public onTestReady: (asyncTest: AsyncSetUpTestClass, testResult: TestResult, testsGroupName: string) => void,
-            public onSetUpFailure: (asyncTest: AsyncSetUpTestClass, testResult: TestResult, testsGroupName: string, msg?: string) => void) { }
+            public onTestReady: (asyncTest: AsyncSetUpTestClass, testResult: TestResults, testsGroupName: string) => void,
+            public onSetUpFailure: (asyncTest: AsyncSetUpTestClass, testResult: TestResults, testsGroupName: string, msg?: string) => void) { }
 
 
         runAsync(timeLimit: number): void {
@@ -307,7 +394,7 @@ module tsUnit {
 
                 });
 
-            this.runner.runAsync(timeLimit * 1000);
+            this.runner.runAsync(timeLimit);
         }
     }
 
@@ -315,91 +402,124 @@ module tsUnit {
 
     export class TestResultPainter {
 
-        getHTML(result: TestResult): string {
-            return `<article>
-                    <h1>${this.getTestResult(result)}</h1>
-                    <p>${this.getTestSummary(result)}</p>
-                    ${this.getLimitCleaner()}
+        getHTML(result: TestResults): string {
+            return `
+				<article>
+                    <h1>${this.getTestResult(result) }</h1>
+                    <p>${this.getTestSummary(result) }</p>
+                    ${this.getLimitCleaner() }
+                    <hr/>`
+                    +((result.countAsyncSetUp() -result.countAsyncSetUpFailed() -result.countAsyncSetUpDone() > 0) ?
+            		`<section id="testing">
+            			<h2>Initializing (${result.countAsyncSetUp() -result.countAsyncSetUpFailed() -result.countAsyncSetUpDone() })</h2> 
+            		<ul> ${this.getInitializersList(result) } </ul>
+           		 	</section>` : '')
 
-                    <section id="tsFail">
-                        <h2>Errors</h2>
-                        <ul class="bad">${this.getTestResultList(result.errors)}</ul>
-                    </section>
+            	    +`<section id="tsFail">
+            			<h2>Errors (${result.countFailed() +result.countAsyncSetUpFailed() })</h2> 
+            		<ul class="bad"> ${this.getErrorList(result) } </ul>
+           		 	</section>
+
                     <section id="tsOkay">
-                        <h2>Passing Tests</h2>
-                        <ul class="good">${this.getTestResultList(result.passes)}</ul>
+                        <h2>Success (${result.countPassed() }/${result.countTests() })</h2>
+                        <ul class="good">${this.getPassedList(result) }</ul>
                     </section>
-                    <section>
-                        <h2>Async set up</h2>
-                        <ul>${this.getAsyncTestState(result.asyncSetUpTestMap)}</ul>
-                    </section>
+                    <hr/>
                 </article>
-                ${this.getLimitCleaner()}`;
-            
+                ${this.getLimitCleaner() }`;
         }
 
-        showResults(target: HTMLElement, result: TestResult): void {
+        showResults(target: HTMLElement, result: TestResults): void {
             target.innerHTML = this.getHTML(result);
         }
 
-        private getTestResult(result: TestResult) {
-            return result.errors.length === 0 ? 'Test Passed' : 'Test Failed';
+        private getTestResult(result: TestResults) {
+            if (result.done)
+                return !result.hasError() ? 'Test Passed' : 'Test Failed';
+            else
+                return 'Testing in progress...';
         }
 
-        private getTestSummary(result: TestResult) {
-            return 'Total tests: <span id="tsUnitTotalCout">' + (result.passes.length + result.errors.length).toString() + '</span>. ' +
-                'Passed tests: <span id="tsUnitPassCount" class="good">' + result.passes.length + '</span>. ' +
-                'Failed tests: <span id="tsUnitFailCount" class="bad">' + result.errors.length + '</span>.';
+        private getTestSummary(result: TestResults) {
+            return `Passed tests: <span id="tsUnitPassCount" class="good">${result.countPassed() }/${result.countTests() }</span>.`
+                + ` Failed tests: <span id="tsUnitFailCount" class="bad">${result.countFailed() +result.countAsyncSetUpFailed() }</span>.`;
         }
 
-        private getTestResultList(testResults: TestDescription[]) {
-            var list = '';
-            var group = '';
-            var isFirst = true;
-            for (var i = 0; i < testResults.length; ++i) {
-                var result = testResults[i];
-                if (result.testName !== group) {
-                    group = result.testName;
-                    if (isFirst) {
-                        isFirst = false;
-                    } else {
-                        list += '</li></ul>';
-                    }
-                    list += '<li>' + this.getLimiterForGroup(group) + result.testName + '<ul>';
-                }
 
-                var resultClass = (result.message === 'OK') ? 'success' : 'error';
-                var functionLabal = result.funcName + ((result.parameterSetNumber === null)
-                    ? '()'
-                    : '(' + this.getLimiterForTest(group, result.funcName, result.parameterSetNumber) + ' paramater set: ' + result.parameterSetNumber + ')');
-
-                list += '<li class="' + resultClass + '">' + this.getLimiterForTest(group, result.funcName) + functionLabal + ': ' + this.encodeHtmlEntities(result.message) + '</li>';
-            }
-            return list + '</ul>';
-        }
-
-        private getAsyncTestState(infoMap: AsyncSetUpTestInfoMap): string {
+        private getInitializersList(testResults: TestResults): string {
             let result: string = '';
-            let info: AsyncSetUpTestInfo;
-            for (let key in infoMap) {
-                info = infoMap[key];
+            let initalizer: AsyncSetUpTestInfo;
+            for (let key in testResults.initializers) {
+                initalizer = testResults.initializers[key];
 
-                result += `<li>${key}: ${this.getAsyncTestStateColor(info.state) }
-                	${AsyncSetUpTestState[info.state]} ${info.error_message}</span> </li>`;
+                result += `<li class="error">${this.getLimiterForGroup(initalizer.parent.testName) } ${initalizer.parent.testName}</li>`;
             }
-
             return result;
         }
 
-        private getAsyncTestStateColor(state: AsyncSetUpTestState): string {
-            if (state === AsyncSetUpTestState.DONE)
-                return `<span class='good'>`;
 
-            else if (state === AsyncSetUpTestState.FAILED)
-                return `<span class='bad'>`;
+        private getErrorList(testResults: TestResults): string {
+            let result = '';
+            let testGroup: TestDescription;
 
-            else
-                return `<span>`;
+            for (let key in testResults.resultMap) {
+                testGroup = testResults.resultMap[key];
+                if (!testGroup.hasErrors())
+                    continue;
+
+                if (testGroup.asyncSetUpInfo && testGroup.asyncSetUpInfo.state === AsyncSetUpTestState.FAILED) {
+                    result += `<li class="error">${this.getLimiterForGroup(testGroup.testName) } ${testGroup.testName}
+                        <ul>
+                            <li class="indent">Asynchronous initialization error: <b>${testGroup.asyncSetUpInfo.error_message}</b>
+                        </li></ul></li>`;
+                    continue;      
+                }
+
+                result += `<li class="group">${this.getLimiterForGroup(testGroup.testName) } ${testGroup.testName}<ul>`;
+                for (let i = 0; i < testGroup.failed.length; i++) {
+                    result += this.getFuncTestResult(testGroup, testGroup.failed[i]); 
+                }
+
+                result += '</ul>'
+
+            }
+            return result;
+        }
+
+        private getPassedList(testResults: TestResults): string {
+            let result = '';
+            let testGroup: TestDescription;
+
+            for (let key in testResults.resultMap) {
+                testGroup = testResults.resultMap[key];
+
+                if (testGroup.passed.length === 0)
+                    continue;
+
+                result += `<li class="group">${this.getLimiterForGroup(testGroup.testName) } ${testGroup.testName}<ul>`;
+                for (let i = 0; i < testGroup.passed.length; i++) {
+                    result += this.getFuncTestResult(testGroup, testGroup.passed[i]); 
+                }
+
+                result += '</ul>'
+
+            }
+            return result;
+        }
+
+        private getFuncTestResult(testGroup: TestDescription, funcResult: TestFuncDescription): string {
+            let result = '';
+            let functionLabel = funcResult.funcName + ((funcResult.parameterSetNumber === null) 
+                    ? '()'
+                    : '(' + this.getLimiterForTest(testGroup.testName, funcResult.funcName, funcResult.parameterSetNumber)
+                    + ' paramater set: ' + funcResult.parameterSetNumber + ')');
+
+                result += `<li class=" + ${(funcResult.state === TestFuncState.PASSED) ? 'success' : 'error'} ">`
+                    + this.getLimiterForTest(testGroup.testName, funcResult.funcName)
+                    + functionLabel + ': '
+                    + `<b>${this.encodeHtmlEntities(funcResult.message) }</b></li>`;
+
+            return result;
         }
 
         private getLimiterForGroup(groupName: string): string {
@@ -429,10 +549,10 @@ module tsUnit {
         private painter: TestResultPainter = new TestResultPainter();
 
         constructor(public target: HTMLElement, public testEngine: TestEngine) {
-            testEngine.onResultChange = (result: TestResult): void => { this._repaint(result) };
+            testEngine.onResultChange = (result: TestResults): void => { this._repaint(result) };
         }
 
-        private _repaint(result: TestResult): void {
+        private _repaint(result: TestResults): void {
             this.painter.showResults(this.target, result);
         }
     }
@@ -654,10 +774,10 @@ module tsUnit {
 
     export class AsyncSetUpTestClass extends TestClass {
 
-        public setUpTimeLimit: number = 0;
+        public setUpTimeLimit: number = 60 * 1000;
 
         asyncSetUp(onSuccess: asyncRunner.AsyncTaskSuccess, onFailure: asyncRunner.AsyncTaskFailure): void {
-            throw new Error('not implemented yet');
+            throw new Error(`Method asyncSetUp() for class "${TestContext.getNameOfClass(this) }" has not yet been implemented.`);
         }
     }
 }

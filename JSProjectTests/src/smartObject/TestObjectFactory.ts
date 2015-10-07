@@ -1,5 +1,4 @@
 ///<reference path="../../../JSProject/dist/JSProject.d.ts"/>
-///<reference path="../tsUnit.ts" />
 
 "use strict";
 
