@@ -25,8 +25,12 @@
     <Folder Include="src\smartObject\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\core\commons\AsyncTaskRunner.ts" />
+    <TypeScriptCompile Include="src\core\Const.ts" />
     <TypeScriptCompile Include="src\core\rpc\IRpcController.ts" />
     <TypeScriptCompile Include="src\core\rpc\RpcController.ts" />
+    <TypeScriptCompile Include="src\core\testFramework\TestFramework.ts" />
+    <TypeScriptCompile Include="src\core\Utils.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -61,10 +65,10 @@
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>System</TypeScriptModuleKind>
-    <TypeScriptOutFile />
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptOutFile>dist\jsProject6.js</TypeScriptOutFile>
     <TypeScriptOutDir>D:\Projects\javascript\JSProject\JSProjectECMA6\dist</TypeScriptOutDir>
-    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />

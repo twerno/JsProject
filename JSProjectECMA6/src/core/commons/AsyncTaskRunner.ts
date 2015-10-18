@@ -1,6 +1,6 @@
 "use strict";
 
-namespace asyncRunner {
+namespace asyncRunner6 {
 
     export const enum AsyncTaskState {
         NEW,
@@ -36,6 +36,7 @@ namespace asyncRunner {
 
     export abstract class IAsyncTask {
         asyncTaskState: AsyncTaskState;
+        executionTime: number;
 
         abstract run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void;
     }
@@ -55,6 +56,7 @@ namespace asyncRunner {
 
         private timeoutHandler: number = 0;
         private timeLimit: number = 0;
+        private startTime: number;
 
 
         constructor(
@@ -101,6 +103,7 @@ namespace asyncRunner {
 
         private _internalRun(): void {
             try {
+                this.startTime = performance.now();
                 this.task.run(
                     (result): void => this.internalOnSuccess(result || null),
                     (error): void => this.internalOnFailure(AsyncTaskFailureCode.ERROR, error || null));
@@ -120,6 +123,7 @@ namespace asyncRunner {
 
             this.cleanUp();
 
+            task.executionTime = performance.now() - this.startTime; 
             task.asyncTaskState = AsyncTaskState.FINISHED_SUCCESS;
             onSuccess && onSuccess(task, result);
         }
@@ -135,6 +139,7 @@ namespace asyncRunner {
 
             this.cleanUp();
 
+            task.executionTime = performance.now() - this.startTime; 
             task.asyncTaskState = (code === AsyncTaskFailureCode.TIMEOUT ? AsyncTaskState.FAILED_TIMEOUT : AsyncTaskState.FAILED_ERROR);
             onFailure && onFailure(task, code, error);
         }
@@ -172,6 +177,7 @@ namespace asyncRunner {
             this.timeLimit = null;
             this.onSuccess = null;
             this.onFailure = null;
+            this.startTime = null;
         }
     }
 
