@@ -95,11 +95,8 @@ module testEC6 {
             let testCase: TestCase = <TestCase> Object.create(next.testClass);
 
             try {
-                testCase.onSuccess = () => { this._onSuccessHandler() };
-                testCase.onFailure = (errorMsg: string) => { this._onFailureHandler(errorMsg) };
                 testCase.testContext = next.testContext;
-
-                testCase.run();
+                testCase.run(() => { this._onSuccessHandler() }, (error: Error) => { this._onFailureHandler(error) });
 
             } catch(error) {
                 if (!(error instanceof TestInterruptError)) {
@@ -114,7 +111,7 @@ module testEC6 {
             this._runNextTest();
         }
 
-        private _onFailureHandler(errorMsg: string): void {
+        private _onFailureHandler(error: Error): void {
             // update results
 
             // skip current test group
@@ -158,7 +155,7 @@ module testEC6 {
     }
 
 
-    class TestTask extends asyncRunner6.IAsyncTask {
+    class TestCase extends asyncRunner6.IAsyncTask {
 
         timeLimit(): number {return 0 }; // 0 -unlimited
 
@@ -170,7 +167,7 @@ module testEC6 {
 
 
 
-        protected testContext: TestContext = null;
+        testContext: TestContext = null;
         protected onSuccess: asyncRunner6.AsyncTaskSuccess = null;
         protected onFailure: asyncRunner6.AsyncTaskFailure = null;
 
@@ -191,36 +188,4 @@ module testEC6 {
             this.assertTrue(!check, customErrorDesc);
         }
     }
-
-
-    //export class TestCase {
-
-    //    testContext: TestContext = null;
-    //    onSuccess: () => void = null;
-    //    onFailure:(errorMsg: string) => void = null;
-
-
-    //    timeLimit(): number { return 0 }  // 0 -unlimited
-
-    //    testId(): string { return Utils.getNameOfClass(this) }
-        
-    
-
-    //    run(): void {
-            
-    //    }
-
-
-    //    assertTrue(check: boolean, customErrorDesc: string): void {
-    //        if (!check) {
-    //            this.onFailure && this.onFailure(customErrorDesc);
-    //            throw new TestInterruptError();
-    //        } 
-    //    }
-
-
-    //    assertFalse(check: boolean, customErrorDesc: string): void {
-    //        this.assertTrue(!check, customErrorDesc);
-    //    }
-    //}
 }
