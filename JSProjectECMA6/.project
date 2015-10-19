@@ -29,7 +29,7 @@
 		<link>
 			<name>std-lib/lib.d.ts</name>
 			<type>1</type>
-			<location>C:/twerno/eclipse/eclipse/plugins/com.axmor.eclipse.typescript.core_4.0.0.201508061529/lib/typescript-bridge/ts/lib.d.ts</location>
+			<location>C:/twerno/moje/JSProject/JSProjectECMA6/std-lib/lib.es6.d.ts</location>
 		</link>
 	</linkedResources>
 </projectDescription>

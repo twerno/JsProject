@@ -54,98 +54,98 @@ namespace asyncRunner6 {
 
     export class AsyncTaskRunner extends ITaskRunner {
 
-        private timeoutHandler: number = 0;
-        private timeLimit: number = 0;
-        private startTime: number;
+        private _timeoutHandler: number = 0;
+        private _timeLimit: number = 0;
+        private _startTime: number;
 
 
         constructor(
-            private task: IAsyncTask,
-            private onSuccess: AsyncRunnerSuccess,
-            private onFailure: AsyncRunnerFailure) { super(); }
+            private _task: IAsyncTask,
+            private _onSuccess: AsyncRunnerSuccess,
+            private _onFailure: AsyncRunnerFailure) { super(); }
 
 
         runAsync(timeLimit: number): void {
 
-            if ((this.task || null) === null)
+            if ((this._task || null) === null)
                 throw new Error(`Task cant be null.`);
 
-            if (!(this.task instanceof IAsyncTask))
+            if (!(this._task instanceof IAsyncTask))
                 throw new Error(`Task has to be IAsyncTask type.`);
 
-            if (typeof this.task.run != 'function')
+            if (typeof this._task.run != 'function')
                 throw new Error(`Task has no "run" method.`);
 
-            this.task.asyncTaskState = AsyncTaskState.NEW;
-            this.timeLimit = timeLimit || 0;
+            this._task.asyncTaskState = AsyncTaskState.NEW;
+            this._timeLimit = timeLimit || 0;
 
             if (timeLimit > 0)
-                this.timeoutHandler = setTimeout(() => this.internalOnTimeout(), timeLimit);
+                this._timeoutHandler = setTimeout(() => this._internalOnTimeout(), timeLimit);
 
             setTimeout(() => this._internalRun(), 1);
         }
 
 
         kill(): void {
-            clearTimeout(this.timeoutHandler);
-            if (this.task === null)
+            clearTimeout(this._timeoutHandler);
+            if (this._task === null)
                 return;
 
-            this.task.asyncTaskState = AsyncTaskState.FINISHED_KILLED;
-            this.cleanUp();
+            this._task.asyncTaskState = AsyncTaskState.FINISHED_KILLED;
+            this._cleanUp();
         }
 
 
         isWorking(): boolean {
-            return this.task != null && this.task.asyncTaskState === AsyncTaskState.WORKING;
+            return this._task != null && this._task.asyncTaskState === AsyncTaskState.WORKING;
         }
 
 
         private _internalRun(): void {
             try {
-                this.startTime = performance.now();
-                this.task.run(
-                    (result): void => this.internalOnSuccess(result || null),
-                    (error): void => this.internalOnFailure(AsyncTaskFailureCode.ERROR, error || null));
+                this._startTime = performance.now();
+                this._task.run(
+                    (result): void => this._internalOnSuccess(result || null),
+                    (error): void => this._internalOnFailure(AsyncTaskFailureCode.ERROR, error || null));
             } catch (error) {
-                this.internalOnFailure(AsyncTaskFailureCode.ERROR, error);
+                this._internalOnFailure(AsyncTaskFailureCode.ERROR, error);
             }
         }
 
 
-        private internalOnSuccess(result: Object) {
-            clearTimeout(this.timeoutHandler);
-            if (this.task === null)
+        private _internalOnSuccess(result: Object) {
+            clearTimeout(this._timeoutHandler);
+            if (this._task === null)
                 return;
 
-            let task: IAsyncTask = this.task;
-            let onSuccess: AsyncRunnerSuccess = this.onSuccess;
+            let task: IAsyncTask = this._task;
+            let onSuccess: AsyncRunnerSuccess = this._onSuccess;
 
-            this.cleanUp();
+            this._cleanUp();
 
-            task.executionTime = performance.now() - this.startTime; 
+            task.executionTime = performance.now() - this._startTime;
             task.asyncTaskState = AsyncTaskState.FINISHED_SUCCESS;
             onSuccess && onSuccess(task, result);
         }
 
 
-        private internalOnFailure(code: AsyncTaskFailureCode, error: Error): void {
-            clearTimeout(this.timeoutHandler);
-            if (this.task === null && !this.emergencyThrowError(code, error)) 
+        private _internalOnFailure(code: AsyncTaskFailureCode, error: Error): void {
+            clearTimeout(this._timeoutHandler);
+            if (this._task === null && !this._emergencyThrowError(code, error))
                 return;
-            
-            let task: IAsyncTask = this.task;
-            let onFailure: AsyncRunnerFailure = this.onFailure;
 
-            this.cleanUp();
+            let task: IAsyncTask = this._task;
+            let onFailure: AsyncRunnerFailure = this._onFailure;
 
-            task.executionTime = performance.now() - this.startTime; 
+            this._cleanUp();
+
+            task.executionTime = performance.now() - this._startTime;
             task.asyncTaskState = (code === AsyncTaskFailureCode.TIMEOUT ? AsyncTaskState.FAILED_TIMEOUT : AsyncTaskState.FAILED_ERROR);
             onFailure && onFailure(task, code, error);
         }
 
 
-        private emergencyThrowError(code: AsyncTaskFailureCode, error: Error): boolean {
+        private _emergencyThrowError(code: AsyncTaskFailureCode, error: Error): boolean {
             if (code === AsyncTaskFailureCode.ERROR) {
                 if (error != null)
                     throw error
@@ -157,27 +157,27 @@ namespace asyncRunner6 {
         }
 
 
-        private internalOnTimeout() {
-            clearTimeout(this.timeoutHandler);
-            if (this.task === null)
+        private _internalOnTimeout() {
+            clearTimeout(this._timeoutHandler);
+            if (this._task === null)
                 return;
 
-            let error: AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[timeout] ${this.timeLimit} milliseconds.`);
-            error.timeLimit = this.timeLimit;
+            let error: AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[timeout] ${this._timeLimit} milliseconds.`);
+            error.timeLimit = this._timeLimit;
 
-            this.internalOnFailure(AsyncTaskFailureCode.TIMEOUT, error);
+            this._internalOnFailure(AsyncTaskFailureCode.TIMEOUT, error);
         }
 
 
-        private cleanUp(): void {
-            clearTimeout(this.timeoutHandler);
+        private _cleanUp(): void {
+            clearTimeout(this._timeoutHandler);
 
-            this.task = null;
-            this.timeoutHandler = null;
-            this.timeLimit = null;
-            this.onSuccess = null;
-            this.onFailure = null;
-            this.startTime = null;
+            this._task = null;
+            this._timeoutHandler = null;
+            this._timeLimit = null;
+            this._onSuccess = null;
+            this._onFailure = null;
+            this._startTime = null;
         }
     }
 
@@ -186,10 +186,10 @@ namespace asyncRunner6 {
     class AsyncMethodWrapperTask extends IAsyncTask {
 
         run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void {
-            this.worker(onSuccess, onFailure);
+            this._worker(onSuccess, onFailure);
         }
 
-        constructor(private worker: AsyncWorker) {
+        constructor(private _worker: AsyncWorker) {
             super();
         }
     }
@@ -197,30 +197,30 @@ namespace asyncRunner6 {
 
 
     export class AsyncMethodRunner extends ITaskRunner {
-        private asyncRunner: AsyncTaskRunner;
+        private _asyncRunner: AsyncTaskRunner;
 
         constructor(
             worker: AsyncWorker,
-            private onSuccess: AsyncRunnerSuccess,
-            private onFailure: AsyncRunnerFailure) {
+            private _onSuccess: AsyncRunnerSuccess,
+            private _onFailure: AsyncRunnerFailure) {
 
             super();
-            this.asyncRunner = new AsyncTaskRunner(new AsyncMethodWrapperTask(worker), onSuccess, onFailure);
+            this._asyncRunner = new AsyncTaskRunner(new AsyncMethodWrapperTask(worker), _onSuccess, _onFailure);
         }
 
 
         runAsync(timeLimit: number): void {
-            this.asyncRunner.runAsync(timeLimit);
+            this._asyncRunner.runAsync(timeLimit);
         }
 
 
         kill(): void {
-            this.asyncRunner.kill();
+            this._asyncRunner.kill();
         }
 
 
         isWorking(): boolean {
-            return this.asyncRunner.isWorking();
+            return this._asyncRunner.isWorking();
         }
     }
 
@@ -231,11 +231,11 @@ namespace asyncRunner6 {
     class MethodWrapperTask extends IAsyncTask {
 
         run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void {
-            this.syncWorker();
+            this._syncWorker();
             onSuccess(null);
         }
 
-        constructor(private syncWorker: SyncWorker) {
+        constructor(private _syncWorker: SyncWorker) {
             super();
         }
     }
@@ -243,30 +243,30 @@ namespace asyncRunner6 {
 
 
     export class SyncMethodRunner extends ITaskRunner {
-        private asyncRunner: AsyncTaskRunner;
+        private _asyncRunner: AsyncTaskRunner;
 
         constructor(
             syncWorker: SyncWorker,
-            private onSuccess: AsyncRunnerSuccess,
-            private onFailure: AsyncRunnerFailure) {
+            private _onSuccess: AsyncRunnerSuccess,
+            private _onFailure: AsyncRunnerFailure) {
 
             super();
-            this.asyncRunner = new AsyncTaskRunner(new MethodWrapperTask(syncWorker), onSuccess, onFailure);
+            this._asyncRunner = new AsyncTaskRunner(new MethodWrapperTask(syncWorker), _onSuccess, _onFailure);
         }
 
 
         runAsync(timeLimit: number): void {
-            this.asyncRunner.runAsync(timeLimit);
+            this._asyncRunner.runAsync(timeLimit);
         }
 
 
         kill(): void {
-            this.asyncRunner.kill();
+            this._asyncRunner.kill();
         }
 
 
         isWorking(): boolean {
-            return this.asyncRunner.isWorking();
+            return this._asyncRunner.isWorking();
         }
     }
 }
