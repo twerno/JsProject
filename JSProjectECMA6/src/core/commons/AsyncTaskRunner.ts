@@ -1,25 +1,25 @@
 "use strict";
 
-namespace asyncRunner6 {
+namespace asyncUtils6 {
 
-    export const enum AsyncTaskState {
+    export const enum TaskState {
         NEW,
         WORKING,
         FINISHED_SUCCESS,
         FAILED_ERROR,
-        FAILED_TIMEOUT,
-        FINISHED_KILLED
+        FAILED_KILLED,
+        FAILED_TIMEOUT
     }
-    export const enum AsyncTaskFailureCode { ERROR, TIMEOUT }
+    export const enum TaskFailureCode { ERROR, TIMEOUT, KILLED }
 
 
-    export type AsyncWorker = (onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure) => void;
-    export type AsyncTaskSuccess = (result?: Object) => void;
-    export type AsyncTaskFailure = (error: Error) => void;
+    export type AsyncWorker = (onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback) => void;
+    export type TaskSuccessCallback = (result?: Object) => void;
+    export type TaskFailureCallback = (error: Error) => void;
 
 
-    export type AsyncRunnerSuccess = (task: IAsyncTask, result?: Object) => void;
-    export type AsyncRunnerFailure = (task: IAsyncTask, code: AsyncTaskFailureCode, error: Error) => void;
+    export type RunnerSuccessCallback = (task: IAsyncTask, result?: Object) => void;
+    export type RunnerFailureCallback = (task: IAsyncTask, code: TaskFailureCode, error: Error) => void;
 
 
 
@@ -35,10 +35,10 @@ namespace asyncRunner6 {
 
 
     export abstract class IAsyncTask {
-        asyncTaskState: AsyncTaskState;
+        asyncTaskState: TaskState;
         executionTime: number;
 
-        abstract run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void;
+        abstract run(onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback): void;
     }
 
 
@@ -46,7 +46,7 @@ namespace asyncRunner6 {
 	export abstract class ITaskRunner {
 
         abstract runAsync(timeLimit: number): void;
-        abstract kill(): void;
+        abstract kill(silent: boolean): void;
         abstract isWorking(): boolean;
     }
 
@@ -61,8 +61,8 @@ namespace asyncRunner6 {
 
         constructor(
             private _task: IAsyncTask,
-            private _onSuccess: AsyncRunnerSuccess,
-            private _onFailure: AsyncRunnerFailure) { super(); }
+            private _onSuccess: RunnerSuccessCallback,
+            private _onFailure: RunnerFailureCallback) { super(); }
 
 
         runAsync(timeLimit: number): void {
@@ -76,7 +76,7 @@ namespace asyncRunner6 {
             if (typeof this._task.run != 'function')
                 throw new Error(`Task has no "run" method.`);
 
-            this._task.asyncTaskState = AsyncTaskState.NEW;
+            this._task.asyncTaskState = TaskState.NEW;
             this._timeLimit = timeLimit || 0;
 
             if (timeLimit > 0)
@@ -86,18 +86,13 @@ namespace asyncRunner6 {
         }
 
 
-        kill(): void {
-            clearTimeout(this._timeoutHandler);
-            if (this._task === null)
-                return;
-
-            this._task.asyncTaskState = AsyncTaskState.FINISHED_KILLED;
-            this._cleanUp();
+        kill(silent: boolean): void {
+            this._internalOnFailure(TaskFailureCode.KILLED, null, silent);
         }
 
 
         isWorking(): boolean {
-            return this._task != null && this._task.asyncTaskState === AsyncTaskState.WORKING;
+            return this._task != null && this._task.asyncTaskState === TaskState.WORKING;
         }
 
 
@@ -106,9 +101,9 @@ namespace asyncRunner6 {
                 this._startTime = performance.now();
                 this._task.run(
                     (result): void => this._internalOnSuccess(result || null),
-                    (error): void => this._internalOnFailure(AsyncTaskFailureCode.ERROR, error || null));
+                    (error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, false));
             } catch (error) {
-                this._internalOnFailure(AsyncTaskFailureCode.ERROR, error);
+                this._internalOnFailure(TaskFailureCode.ERROR, error, false);
             }
         }
 
@@ -119,34 +114,34 @@ namespace asyncRunner6 {
                 return;
 
             let task: IAsyncTask = this._task;
-            let onSuccess: AsyncRunnerSuccess = this._onSuccess;
+            let onSuccess: RunnerSuccessCallback = this._onSuccess;
 
             this._cleanUp();
 
             task.executionTime = performance.now() - this._startTime;
-            task.asyncTaskState = AsyncTaskState.FINISHED_SUCCESS;
+            task.asyncTaskState = TaskState.FINISHED_SUCCESS;
             onSuccess && onSuccess(task, result);
         }
 
 
-        private _internalOnFailure(code: AsyncTaskFailureCode, error: Error): void {
+        private _internalOnFailure(code: TaskFailureCode, error: Error, silent: boolean): void {
             clearTimeout(this._timeoutHandler);
             if (this._task === null && !this._emergencyThrowError(code, error))
                 return;
 
             let task: IAsyncTask = this._task;
-            let onFailure: AsyncRunnerFailure = this._onFailure;
+            let onFailure: RunnerFailureCallback = this._onFailure;
 
             this._cleanUp();
 
             task.executionTime = performance.now() - this._startTime;
-            task.asyncTaskState = (code === AsyncTaskFailureCode.TIMEOUT ? AsyncTaskState.FAILED_TIMEOUT : AsyncTaskState.FAILED_ERROR);
-            onFailure && onFailure(task, code, error);
+            task.asyncTaskState = this._FailureCode2ATaskState(code);
+            !silent && onFailure && onFailure(task, code, error);
         }
 
 
-        private _emergencyThrowError(code: AsyncTaskFailureCode, error: Error): boolean {
-            if (code === AsyncTaskFailureCode.ERROR) {
+        private _emergencyThrowError(code: TaskFailureCode, error: Error): boolean {
+            if (code === TaskFailureCode.ERROR) {
                 if (error != null)
                     throw error
                 else
@@ -165,7 +160,7 @@ namespace asyncRunner6 {
             let error: AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[timeout] ${this._timeLimit} milliseconds.`);
             error.timeLimit = this._timeLimit;
 
-            this._internalOnFailure(AsyncTaskFailureCode.TIMEOUT, error);
+            this._internalOnFailure(TaskFailureCode.TIMEOUT, error, false);
         }
 
 
@@ -179,13 +174,26 @@ namespace asyncRunner6 {
             this._onFailure = null;
             this._startTime = null;
         }
+
+
+        private _FailureCode2ATaskState(code: TaskFailureCode): TaskState {
+
+            if (code === TaskFailureCode.TIMEOUT)
+                return TaskState.FAILED_TIMEOUT;
+
+            else if (code === TaskFailureCode.KILLED)
+                return TaskState.FAILED_KILLED;
+
+            else
+                return TaskState.FAILED_ERROR;
+        }
     }
 
 
 
     class AsyncMethodWrapperTask extends IAsyncTask {
 
-        run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void {
+        run(onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback): void {
             this._worker(onSuccess, onFailure);
         }
 
@@ -201,8 +209,8 @@ namespace asyncRunner6 {
 
         constructor(
             worker: AsyncWorker,
-            private _onSuccess: AsyncRunnerSuccess,
-            private _onFailure: AsyncRunnerFailure) {
+            private _onSuccess: RunnerSuccessCallback,
+            private _onFailure: RunnerFailureCallback) {
 
             super();
             this._asyncRunner = new AsyncTaskRunner(new AsyncMethodWrapperTask(worker), _onSuccess, _onFailure);
@@ -214,8 +222,8 @@ namespace asyncRunner6 {
         }
 
 
-        kill(): void {
-            this._asyncRunner.kill();
+        kill(silent: boolean): void {
+            this._asyncRunner.kill(silent);
         }
 
 
@@ -230,7 +238,7 @@ namespace asyncRunner6 {
 
     class MethodWrapperTask extends IAsyncTask {
 
-        run(onSuccess: AsyncTaskSuccess, onFailure: AsyncTaskFailure): void {
+        run(onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback): void {
             this._syncWorker();
             onSuccess(null);
         }
@@ -247,8 +255,8 @@ namespace asyncRunner6 {
 
         constructor(
             syncWorker: SyncWorker,
-            private _onSuccess: AsyncRunnerSuccess,
-            private _onFailure: AsyncRunnerFailure) {
+            private _onSuccess: RunnerSuccessCallback,
+            private _onFailure: RunnerFailureCallback) {
 
             super();
             this._asyncRunner = new AsyncTaskRunner(new MethodWrapperTask(syncWorker), _onSuccess, _onFailure);
@@ -260,8 +268,8 @@ namespace asyncRunner6 {
         }
 
 
-        kill(): void {
-            this._asyncRunner.kill();
+        kill(silent: boolean): void {
+            this._asyncRunner.kill(silent);
         }
 
 

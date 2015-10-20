@@ -29,6 +29,8 @@
     <TypeScriptCompile Include="src\core\Const.ts" />
     <TypeScriptCompile Include="src\core\rpc\IRpcController.ts" />
     <TypeScriptCompile Include="src\core\rpc\RpcController.ts" />
+    <TypeScriptCompile Include="src\core\testFramework\Commons.ts" />
+    <TypeScriptCompile Include="src\core\testFramework\ResultPainter.ts" />
     <TypeScriptCompile Include="src\core\testFramework\TestFramework.ts" />
     <TypeScriptCompile Include="src\core\Utils.ts" />
   </ItemGroup>
@@ -64,7 +66,7 @@
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
-    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>None</TypeScriptModuleKind>
     <TypeScriptOutFile>dist\jsProject6.js</TypeScriptOutFile>
     <TypeScriptOutDir>D:\Projects\javascript\JSProject\JSProjectECMA6\dist</TypeScriptOutDir>

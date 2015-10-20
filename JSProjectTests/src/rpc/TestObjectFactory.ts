@@ -1,7 +1,13 @@
 ///<reference path="../../../JSProjectECMA6/dist/jsProject6.d.ts"/>
 
-
 "use strict";
+
+class RPC_TestContextFactory implements testEC6.ITestContextFactory {
+    buildTestContext(): testEC6.TestContext {
+        return null;
+    }
+}
+
 
 class TestConnectrProxy implements rpc6.IConnectorProxy {
 
@@ -28,10 +34,10 @@ class TestController extends rpc6.CustomController {
     constructor() {
         super();
 
-        this.registerRpcMethod(this.CALL_TEST_RPC_METHOD, new testMethod());
+        //this.registerRpcMethod(this.CALL_TEST_RPC_METHOD, new testMethod());
     }
 
-    callTest(data: Object, onSuccess: asyncRunner6.AsyncTaskSuccess, onFailure: asyncRunner6.AsyncTaskFailure): void {
+    callTest(data: Object, onSuccess: asyncUtils6.TaskSuccessCallback, onFailure: asyncUtils6.TaskFailureCallback): void {
         rpcCommunicator_A.callRpc(this.getControllerName(), this.CALL_TEST_RPC_METHOD, null, 60 * 1000);
     }
 }
@@ -56,3 +62,5 @@ let onError = function(error: Error): void {
 }
 
 let testController: TestController = new TestController();
+
+
