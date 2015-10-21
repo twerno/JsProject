@@ -174,8 +174,8 @@ module testEC6 {
 
             } else if (group.testCases.length > this._testStateHolder.nextTestIdx()) {
                 try {
-                    if (this._testStateHolder.currentContext === null && group.contextFactory)
-                        this._testStateHolder.currentContext = group.contextFactory.buildTestContext() || null;
+                    if (this._testStateHolder.currentContext === null)
+                        this._testStateHolder.currentContext = (group.contextFactory && group.contextFactory.buildTestContext()) || {};
 
                     testCase = group.testCases[this._testStateHolder.currentTestIdx];
                     let test: AsyncTest = this._buildTest(group, this._testStateHolder.currentTestIdx, testCase);

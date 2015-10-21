@@ -16,8 +16,16 @@ h1 {
 	color: red;
 }
 
+.error_bgr {
+	background-color: red;
+}
+
 .success {
 	color: green;
+}
+
+.success_bgr {
+	background-color: green;
 }
 
 .working {
@@ -26,4 +34,20 @@ h1 {
 
 .new {
 	color: grey;
+}
+
+.box {
+	padding: 8px;	
+}
+
+.box > ul {
+	list-style-type: none;
+}
+
+.box > ul > li {
+	margin-bottom: 10px;
+}
+
+.box > ul > li:last-child {
+	margin-bottom: 0px;
 }

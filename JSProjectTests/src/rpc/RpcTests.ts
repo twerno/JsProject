@@ -5,10 +5,10 @@
 
 class BasicTest extends testEC6.AsyncTest {
     performTest(): void {
-        //throw new Error('test');
+        throw new Error('test');
         this.assertTrue(true, 'assertTrue=true');
         this.assertTrue(true, 'assertTrue=false');
-        setTimeout(() => {this.callSuccess();}, 100};
+        setTimeout(() => {this.callSuccess()}, 100);
     }
 }
 

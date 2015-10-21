@@ -12,15 +12,20 @@ module testEC6 {
 
         resultUpdateHandler(testResult: Result, updated: GroupResult | TestResult | TestResult[]): void {
             this.target.innerHTML = this._getHtml(testResult);
-            throw new Error('');
         };
 
         private _getHtml(testResult: Result): string {
-            let html: string = `<p>Test results</p>`;
-            if (testResult.engine_errors.length > 0)
-                for (let s in testResult.engine_errors) {
-                    html += `<p class='error'>${s}</p>`
-                }
+            let html: string = `<div class="page-header"><h1>Test results <small>`
+                +` <span class="badge">${testResult.allTestCount}</span>`
+                +` <span class="badge success_bgr">${testResult.succeedCount}</span>`
+                +` <span class="badge error_bgr">${testResult.failedCount}</span>`
+                +`</small></h1></div>`;
+            if (testResult.engine_errors.length > 0) {
+                html += `<div class="alert alert-danger box" role="alert"><ul class='box'>`;
+                for (let err of testResult.engine_errors) 
+                    html += `<li><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> ${err}</li>`;
+                html += '</ul></div>';
+            }
 
             html += `<ul> ${this._getGroupsHtml(testResult) } </ul>`;
 
