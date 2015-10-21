@@ -3,11 +3,12 @@
 
 "use strict";
 
-class BasicTest extends testEC6.Test {
-    perormTests(): void {
-        throw new Error('test');
+class BasicTest extends testEC6.AsyncTest {
+    performTest(): void {
+        //throw new Error('test');
         this.assertTrue(true, 'assertTrue=true');
-        this.assertTrue(false, 'assertTrue=false');
+        this.assertTrue(true, 'assertTrue=false');
+        setTimeout(() => {this.callSuccess();}, 100};
     }
 }
 

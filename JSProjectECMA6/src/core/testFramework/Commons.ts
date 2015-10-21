@@ -5,7 +5,7 @@
 
 module testEC6 {
 
-    export enum TestResultState { NEW, WORKING, SUCCESS, FAILED, TIMEOUT, KILLED }
+    export enum TestResultState { NEW, WORKING, SUCCESS, FAILURE, TIMEOUT, KILLED, SKIPPED }
 
 
     export class TestResult {
@@ -63,6 +63,6 @@ module testEC6 {
 //    }
 
     export abstract class IResultPainter {
-        abstract resultUpdateHandler(result: Result, updated: GroupResult | TestResult): void;
+        abstract resultUpdateHandler(result: Result, updated: GroupResult | TestResult | TestResult[]): void;
     }
 }

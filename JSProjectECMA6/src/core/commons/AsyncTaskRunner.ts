@@ -2,6 +2,11 @@
 
 namespace asyncUtils6 {
 
+    export const SYNC = false;
+    export const ASYNC = true;
+    export const SILENCE = false;
+    export const VERBOSE = true;
+
     export const enum TaskState {
         NEW,
         WORKING,
@@ -45,9 +50,10 @@ namespace asyncUtils6 {
 
 	export abstract class ITaskRunner {
 
-        abstract runAsync(timeLimit: number): void;
-        abstract kill(silent: boolean): void;
+        abstract run(timeLimit: number, async: boolean): void;
+        abstract kill(tfVerbose: boolean): void;
         abstract isWorking(): boolean;
+        abstract executionTime(): number;
     }
 
 
@@ -65,13 +71,40 @@ namespace asyncUtils6 {
             private _onFailure: RunnerFailureCallback) { super(); }
 
 
-        runAsync(timeLimit: number): void {
+        run(timeLimit: number, async: boolean): void {
+            this._prepareRun(timeLimit);
 
+            if (async)
+                setTimeout(() => this._internalRun(), 1);
+            else
+                this._internalRun();
+        }
+
+
+        kill(tfVerbose: boolean): void {
+            this._internalOnFailure(TaskFailureCode.KILLED, null, tfVerbose);
+        }
+
+
+        isWorking(): boolean {
+            return this._task != null && this._task.asyncTaskState === TaskState.WORKING;
+        }
+
+
+        executionTime(): number {
+            if (!this.isWorking())
+                return -1
+            else
+                return performance.now() - this._startTime; 
+        }
+
+
+        private _prepareRun(timeLimit: number): void {
             if ((this._task || null) === null)
                 throw new Error(`Task cant be null.`);
 
             if (!(this._task instanceof IAsyncTask))
-                throw new Error(`Task has to be IAsyncTask type.`);
+                throw new Error(`Task have to extends IAsyncTask class.`);
 
             if (typeof this._task.run != 'function')
                 throw new Error(`Task has no "run" method.`);
@@ -81,18 +114,6 @@ namespace asyncUtils6 {
 
             if (timeLimit > 0)
                 this._timeoutHandler = setTimeout(() => this._internalOnTimeout(), timeLimit);
-
-            setTimeout(() => this._internalRun(), 1);
-        }
-
-
-        kill(silent: boolean): void {
-            this._internalOnFailure(TaskFailureCode.KILLED, null, silent);
-        }
-
-
-        isWorking(): boolean {
-            return this._task != null && this._task.asyncTaskState === TaskState.WORKING;
         }
 
 
@@ -101,54 +122,51 @@ namespace asyncUtils6 {
                 this._startTime = performance.now();
                 this._task.run(
                     (result): void => this._internalOnSuccess(result || null),
-                    (error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, false));
+                    (error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, VERBOSE));
             } catch (error) {
-                this._internalOnFailure(TaskFailureCode.ERROR, error, false);
+                this._internalOnFailure(TaskFailureCode.ERROR, error, VERBOSE);
             }
         }
 
 
         private _internalOnSuccess(result: Object) {
             clearTimeout(this._timeoutHandler);
-            if (this._task === null)
+            if (!this._task)
                 return;
 
+            this._task.executionTime = performance.now() - this._startTime;
             let task: IAsyncTask = this._task;
             let onSuccess: RunnerSuccessCallback = this._onSuccess;
 
             this._cleanUp();
 
-            task.executionTime = performance.now() - this._startTime;
             task.asyncTaskState = TaskState.FINISHED_SUCCESS;
             onSuccess && onSuccess(task, result);
         }
 
 
-        private _internalOnFailure(code: TaskFailureCode, error: Error, silent: boolean): void {
+        private _internalOnFailure(code: TaskFailureCode, error: Error, tfVerbose: boolean): void {
             clearTimeout(this._timeoutHandler);
-            if (this._task === null && !this._emergencyThrowError(code, error))
+            if (!this._task) {
+                this._postMortemLogError(code, error);
                 return;
+            }
 
+            this._task.executionTime = performance.now() - this._startTime;
             let task: IAsyncTask = this._task;
             let onFailure: RunnerFailureCallback = this._onFailure;
 
             this._cleanUp();
 
-            task.executionTime = performance.now() - this._startTime;
             task.asyncTaskState = this._FailureCode2ATaskState(code);
-            !silent && onFailure && onFailure(task, code, error);
+            tfVerbose && onFailure && onFailure(task, code, error);
         }
 
 
-        private _emergencyThrowError(code: TaskFailureCode, error: Error): boolean {
+        private _postMortemLogError(code: TaskFailureCode, error: Error): void {
             if (code === TaskFailureCode.ERROR) {
-                if (error != null)
-                    throw error
-                else
-                    throw new Error('Unknown error');
+                console.log(error);
             }
-
-            return false;
         }
 
 
@@ -157,10 +175,10 @@ namespace asyncUtils6 {
             if (this._task === null)
                 return;
 
-            let error: AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[timeout] ${this._timeLimit} milliseconds.`);
+            let error: AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[TIMEOUT] ${this._timeLimit} milliseconds.`);
             error.timeLimit = this._timeLimit;
 
-            this._internalOnFailure(TaskFailureCode.TIMEOUT, error, false);
+            this._internalOnFailure(TaskFailureCode.TIMEOUT, error, VERBOSE);
         }
 
 
@@ -217,18 +235,23 @@ namespace asyncUtils6 {
         }
 
 
-        runAsync(timeLimit: number): void {
-            this._asyncRunner.runAsync(timeLimit);
+        run(timeLimit: number, async: boolean): void {
+            this._asyncRunner.run(timeLimit, async);
         }
 
 
-        kill(silent: boolean): void {
-            this._asyncRunner.kill(silent);
+        kill(tfVerbose: boolean): void {
+            this._asyncRunner.kill(tfVerbose);
         }
 
 
         isWorking(): boolean {
             return this._asyncRunner.isWorking();
+        }
+
+
+        executionTime(): number {
+            return this._asyncRunner.executionTime();
         }
     }
 
@@ -263,18 +286,23 @@ namespace asyncUtils6 {
         }
 
 
-        runAsync(timeLimit: number): void {
-            this._asyncRunner.runAsync(timeLimit);
+        run(timeLimit: number, async: boolean): void {
+            this._asyncRunner.run(timeLimit, async);
         }
 
 
-        kill(silent: boolean): void {
-            this._asyncRunner.kill(silent);
+        kill(tfVerbose: boolean): void {
+            this._asyncRunner.kill(tfVerbose);
         }
 
 
         isWorking(): boolean {
             return this._asyncRunner.isWorking();
+        }
+
+
+        executionTime(): number {
+            return this._asyncRunner.executionTime();
         }
     }
 }

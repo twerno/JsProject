@@ -9,13 +9,13 @@ module testEC6 {
 	/**
 	 *  Test
 	 */
-    export abstract class Test extends asyncUtils6.IAsyncTask {
+    export abstract class AsyncTest extends asyncUtils6.IAsyncTask {
 
-        timeLimit(): number { return 60 * 1000 }; // 0 -unlimited
+        timeLimit(): number { return 6 * 1000 }; // 0 -unlimited
 
         testId(): string { return Utils.getNameOfClass(this) }
 
-        abstract perormTests(): void;
+        abstract performTest(): void;
 
 
         testContext: TestContext = null;
@@ -27,13 +27,13 @@ module testEC6 {
         run(onSuccess: asyncUtils6.TaskSuccessCallback, onFailure: asyncUtils6.TaskFailureCallback): void {
             this.onSuccess = onSuccess || null;
             this.onFailure = onFailure || null;
-            this.perormTests();
+            this.performTest();
         }
 
         protected assertTrue(check: boolean, customErrorDesc: string): void {
             if (!check) {
-                this.onFailure && this.onFailure(new Error(customErrorDesc));
-                throw new TestInterruptError();
+                //this.onFailure && this.onFailure(new Error(customErrorDesc));
+                throw new AssertError(customErrorDesc);
             }
         }
 
@@ -47,7 +47,7 @@ module testEC6 {
     }
     
 
-    export abstract class SyncTest extends Test {
+    export abstract class SyncTest extends AsyncTest {
         run(onSuccess: asyncUtils6.TaskSuccessCallback, onFailure: asyncUtils6.TaskFailureCallback): void {
             super.run(onSuccess, onFailure);
             this.callSuccess();
@@ -89,7 +89,7 @@ module testEC6 {
 
 
         runTests(resultUpdateHandler: IResultPainter): void {
-            this._testStateHolder && this._testStateHolder.kill(TestStateHolder.SILENCE);
+            this._testStateHolder && this._testStateHolder.kill(asyncUtils6.SILENCE);
             this._testStateHolder = new TestStateHolder(resultUpdateHandler, this._groupList, this._engine_errors);
             this._testStateHolder.callResultUpdateHandler(null);
             this._runNextTest();
@@ -97,7 +97,7 @@ module testEC6 {
 
 
         kill(): void {
-            this._testStateHolder && this._testStateHolder.kill(TestStateHolder.VERBOSE);
+            this._testStateHolder && this._testStateHolder.kill(asyncUtils6.VERBOSE);
         }
 
 
@@ -108,25 +108,23 @@ module testEC6 {
             try {
                 this._testStateHolder.currentTestRunner = new asyncUtils6.AsyncTaskRunner(
                     testMeta.test,
-                    (task: Test, result: Object) => { this._runnerOnSuccessHandler(task) },
-                    (task: Test, code: asyncUtils6.TaskFailureCode, error: Error) => { this._runnerOnFailureHandler(task, code, error) });
+                    (task: AsyncTest, result: Object) => { this._runnerOnSuccessHandler(task) },
+                    (task: AsyncTest, code: asyncUtils6.TaskFailureCode, error: Error) => { this._runnerOnFailureHandler(task, code, error) });
 
-                this._testStateHolder.currentTestRunner.runAsync(testMeta.test.timeLimit() || 0);
+                this._testStateHolder.currentTestRunner.run(testMeta.test.timeLimit() || 0, asyncUtils6.ASYNC);
                 this._testStateHolder.updateTestState_Running(testMeta.testCase);
             } catch (error) {
-                if (!(error instanceof TestInterruptError))
-                    this._onFailureHandler(testMeta.test, asyncUtils6.TaskFailureCode.ERROR, error);
-
+                this._onFailureHandler(testMeta.test, asyncUtils6.TaskFailureCode.ERROR, error);
                 this._runNextGroup();
             }
         }
 
-        private _runnerOnSuccessHandler(task: Test): void {
+        private _runnerOnSuccessHandler(task: AsyncTest): void {
             this._onSuccessHandler(task);
             this._runNextTest();
         }
 
-        private _runnerOnFailureHandler(task: Test, code: asyncUtils6.TaskFailureCode, error: Error): void {
+        private _runnerOnFailureHandler(task: AsyncTest, code: asyncUtils6.TaskFailureCode, error: Error): void {
             this._onFailureHandler(task, code, error);
             this._runNextGroup();
         }
@@ -138,16 +136,16 @@ module testEC6 {
         }
 
 
-        private _onSuccessHandler(task: Test): void {
+        private _onSuccessHandler(task: AsyncTest): void {
             this._testStateHolder.updateTestState_Success(task);
         }
 
 
-        private _onFailureHandler(task_or_group: Test | TestGroup | TestCase, code: asyncUtils6.TaskFailureCode, error: Error): void {
-            error = error || new Error('Unknown error.')
+        private _onFailureHandler(task_or_group: AsyncTest | TestGroup | TestCase, code: asyncUtils6.TaskFailureCode, error: Error): void {
             console.error(error);
+            error = error || new Error('Unknown error.');
 
-            if (task_or_group instanceof Test)
+            if (task_or_group instanceof AsyncTest)
                 this._testStateHolder.updateTestState_Failure(task_or_group, code, error);
 
             else if (task_or_group instanceof TestGroup)
@@ -158,9 +156,9 @@ module testEC6 {
         }
 
 
-        private _buildTest(group: TestGroup, testCaseIdx: number, testCase: TestCase): Test {
+        private _buildTest(group: TestGroup, testCaseIdx: number, testCase: TestCase): AsyncTest {
             try {
-                return <Test> Object.create(testCase.testClassPrototype);
+                return <AsyncTest> Object.create(testCase.testClassPrototype);
             } catch (error) {
                 throw new Error(`Error! Creating TestCase ${testCase.testId} of group: ${group.groupId} failed: ${error.message}`);
             }
@@ -180,7 +178,7 @@ module testEC6 {
                         this._testStateHolder.currentContext = group.contextFactory.buildTestContext() || null;
 
                     testCase = group.testCases[this._testStateHolder.currentTestIdx];
-                    let test: Test = this._buildTest(group, this._testStateHolder.currentTestIdx, testCase);
+                    let test: AsyncTest = this._buildTest(group, this._testStateHolder.currentTestIdx, testCase);
                     test.testContext = this._testStateHolder.currentContext;
 
                     return new INextTestMeta(group.testCases[this._testStateHolder.currentTestIdx], test);
@@ -199,7 +197,7 @@ module testEC6 {
 
         private _addTest2Group(groupId: string, testClass: Function, testCases: TestCase[]): void {
             try {
-                let test: Test = <Test> Object.create(testClass.prototype);
+                let test: AsyncTest = <AsyncTest> Object.create(testClass.prototype);
                 let testCase: TestCase = new TestCase(test.testId(), test.timeLimit(), testClass.prototype);
                 testCases.push(testCase);
             } catch (error) {
@@ -212,9 +210,6 @@ module testEC6 {
 
 
     class TestStateHolder {
-
-        static SILENCE = true;
-        static VERBOSE = false;
 
         currentGroupIdx: number = null;
         currentTestIdx: number = null;
@@ -248,13 +243,23 @@ module testEC6 {
         }
 
         skipCurrentGroup(): void {
+            let currentGroup: GroupResult = this.result.groups[this.currentGroupIdx];
+            let testResults: TestResult[] = [];
+
+            if (currentGroup && currentGroup.tests)
+                for (let i = this.currentTestIdx + 1; i < currentGroup.tests.length; i++) {
+                    currentGroup.tests[i].state = TestResultState.SKIPPED;
+                    testResults.push(currentGroup.tests[i]);
+                }
+            this.callResultUpdateHandler(testResults);
+
             this.currentGroupIdx++;
             this.currentTestIdx = -1;
             this.currentContext = null;
         }
 
-        kill(silent: boolean): void {
-            this.currentTestRunner && this.currentTestRunner.kill(silent);
+        kill(tfVerbose: boolean): void {
+            this.currentTestRunner && this.currentTestRunner.kill(tfVerbose);
         }
 
         clean(): void {
@@ -271,8 +276,10 @@ module testEC6 {
             this.resultUpdateCalback = null;
         }
 
-        callResultUpdateHandler(updated: GroupResult | TestResult): void {
-            this.resultUpdateCalback && this.resultUpdateCalback.resultUpdateHandler(this.result, updated);
+        callResultUpdateHandler(updated: GroupResult | TestResult | TestResult[]): void {
+            setTimeout( () => {
+                this.resultUpdateCalback && this.resultUpdateCalback.resultUpdateHandler(this.result, updated);
+                }, Const.DEFAULT_ASYNC_DELAY);
         }
 
         updateTestState_Running(testCase: TestCase): void {
@@ -285,7 +292,7 @@ module testEC6 {
             this.callResultUpdateHandler(testResult);
         }
 
-        updateTestState_Success(test: Test): void {
+        updateTestState_Success(test: AsyncTest): void {
             let testResult: TestResult = this._testResultMap.get(this.currentTestCase);
             if (testResult) {
                 testResult.state = TestResultState.SUCCESS;
@@ -295,7 +302,7 @@ module testEC6 {
             this.callResultUpdateHandler(testResult);
         }
 
-        updateTestState_Failure(test: Test, code: asyncUtils6.TaskFailureCode, error: Error): void {
+        updateTestState_Failure(test: AsyncTest, code: asyncUtils6.TaskFailureCode, error: Error): void {
             let testResult: TestResult = this._testResultMap.get(this.currentTestCase);
             if (testResult) {
                 testResult.state = this._taskFailureCode2TestResultState(code);
@@ -391,12 +398,14 @@ module testEC6 {
                 return TestResultState.KILLED;
 
             else
-                return TestResultState.FAILED;
+                return TestResultState.FAILURE;
         }
     }
 
 
-    class TestInterruptError extends Error { }
+    class AssertError extends Error {
+        constructor(public message: string) { super(message) };
+    }
 
     class TestCase {
         constructor(public testId: string, public timeLimit: number, public testClassPrototype: Function) { }
@@ -407,6 +416,6 @@ module testEC6 {
     }
 
     class INextTestMeta {
-        constructor(public testCase: TestCase, public test: Test) { }; 
+        constructor(public testCase: TestCase, public test: AsyncTest) { };
     }
 }
