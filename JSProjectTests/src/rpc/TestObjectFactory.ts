@@ -37,8 +37,8 @@ class TestController extends rpc6.CustomController {
         //this.registerRpcMethod(this.CALL_TEST_RPC_METHOD, new testMethod());
     }
 
-    callTest(data: Object, onSuccess: asyncUtils6.TaskSuccessCallback, onFailure: asyncUtils6.TaskFailureCallback): void {
-        rpcCommunicator_A.callRpc(this.getControllerName(), this.CALL_TEST_RPC_METHOD, null, 60 * 1000);
+    callTest(data: Object): void {
+        rpcCommunicator_A.callRpc(this.getControllerName(), this.CALL_TEST_RPC_METHOD, data, 60 * 1000);
     }
 }
 

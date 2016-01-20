@@ -4,13 +4,13 @@
 window.onload = () => {
     var testEngine: testEC6.TestEngine = new testEC6.TestEngine();
     testEngine.registerTestGroup('basic', null, [BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest]);
-    testEngine.registerTestGroup('basic', null, [BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest]);
+    //testEngine.registerTestGroup('basic', null, [BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest]);
     testEngine.registerTestGroup('basic2', null, [BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest, BasicTest]);
 
     var resultPainter = new testEC6.LiveResultPainter(document.getElementById('result'));
-    testEngine.runTests(resultPainter);
+    testEngine.run(resultPainter);
 };
 
-function resultUpdateHandler(result: testEC6.Result, updated: testEC6.GroupResult | testEC6.TestResult): void {
+function resultUpdateHandler(result: testEC6.TestResult, updated: testEC6.TestGroupResult | testEC6.TestResult): void {
     console.log(updated);
 }

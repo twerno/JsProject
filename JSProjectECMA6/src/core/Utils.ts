@@ -1,13 +1,21 @@
 "use strict";
 
-class Utils {
+namespace Utils {
 
-    public static getNameOfClass(inputClass: Object): string {
+    export interface StringMap<T> { [key: string]: T }
+    export interface NumberMap<T> { [key: number]: T }
+
+    // Function does not have parametr "name" (ES3, ES5)
+    interface IFunctionWithNameParam extends Function {
+        name: string;
+    }
+
+    export function getNameOfClass(inputClass: Object): string {
         //// see: https://www.stevefenton.co.uk/Content/Blog/Date/201304/Blog/Obtaining-A-Class-Name-At-Runtime-In-TypeScript/
 
         //var funcNameRegex = /function (.{1,})\(/;
         //var results = (funcNameRegex).exec((<any> inputClass).constructor.toString());
         //return (results && results.length > 1) ? results[1] : '';
-        return inputClass && inputClass.constructor && (inputClass.constructor.name || 'Unknown class name!');
+        return inputClass && inputClass.constructor && ((<IFunctionWithNameParam>inputClass.constructor).name || 'Unknown class name!');
     }
 }

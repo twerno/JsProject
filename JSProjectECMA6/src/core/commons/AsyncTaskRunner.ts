@@ -2,114 +2,124 @@
 
 namespace asyncUtils6 {
 
-    export const SYNC = false;
-    export const ASYNC = true;
-    export const SILENCE = false;
-    export const VERBOSE = true;
+    const SILENCE = false;
+    const VERBOSE = true;
 
     export const enum TaskState {
-        NEW,
+        PENDING,
         WORKING,
         FINISHED_SUCCESS,
         FAILED_ERROR,
         FAILED_KILLED,
         FAILED_TIMEOUT
     }
-    export const enum TaskFailureCode { ERROR, TIMEOUT, KILLED }
+
+    export const enum TaskFailureCode {
+        ERROR,
+        TIMEOUT,
+        KILLED
+    }
 
 
-    export type AsyncWorker = (onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback) => void;
-    export type TaskSuccessCallback = (result?: Object) => void;
+
+    export type SuccessCallback<T> = (executionInfo: TaskAndExecutionInfo<T>, result: T) => void;
+    export type FailureCallback<T> = (executionInfo: TaskAndExecutionInfo<T>, code: TaskFailureCode, error: Error) => void;
+
+
+    export type AsyncWorker<T> = (success: TaskSuccessCallback<T>, failure: TaskFailureCallback) => void;
+    export type TaskSuccessCallback<T> = (result: T) => void;
     export type TaskFailureCallback = (error: Error) => void;
 
-
-    export type RunnerSuccessCallback = (task: IAsyncTask, result?: Object) => void;
-    export type RunnerFailureCallback = (task: IAsyncTask, code: TaskFailureCode, error: Error) => void;
-
-
-
-    export class AsyncTaskTimeoutError extends Error {
-        timeLimit: number;
-
-        constructor(message: string) {
-            super();
-            this.message = message;
-        };
+    export abstract class AsyncTask<T> {
+        abstract run(success: TaskSuccessCallback < T >, failure: TaskFailureCallback): void;
     }
 
 
 
-    export abstract class IAsyncTask {
-        asyncTaskState: TaskState;
+    export class TaskAndExecutionInfo<T> {
+        task: AsyncTask<T> | AsyncWorker<T>;
+        state: TaskState;
         executionTime: number;
-
-        abstract run(onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback): void;
     }
 
 
 
-	export abstract class ITaskRunner {
-
-        abstract run(timeLimit: number, async: boolean): void;
-        abstract kill(tfVerbose: boolean): void;
-        abstract isWorking(): boolean;
-        abstract executionTime(): number;
-    }
-
-
-
-    export class AsyncTaskRunner extends ITaskRunner {
+    export class AsyncTaskRunner<T> {
 
         private _timeoutHandler: number = 0;
         private _timeLimit: number = 0;
         private _startTime: number;
+        private _taskExecutionInfo: TaskAndExecutionInfo<T>;
+        private _onSuccess: SuccessCallback<T> = null;
+        private _onFailure: FailureCallback<T> = null;
 
 
         constructor(
-            private _task: IAsyncTask,
-            private _onSuccess: RunnerSuccessCallback,
-            private _onFailure: RunnerFailureCallback) { super(); }
+            private _task: AsyncTask<T> | AsyncWorker<T>) {
 
+            this._taskExecutionInfo = {
+                task: _task,
+                state: TaskState.PENDING,
+                executionTime: 0
+            }
 
-        run(timeLimit: number, async: boolean): void {
-            this._prepareRun(timeLimit);
-
-            if (async)
-                setTimeout(() => this._internalRun(), 1);
-            else
-                this._internalRun();
         }
 
 
-        kill(tfVerbose: boolean): void {
-            this._internalOnFailure(TaskFailureCode.KILLED, null, tfVerbose);
+        success(onSuccess: SuccessCallback<T>): AsyncTaskRunner<T> {
+            this._onSuccess = onSuccess;
+            return this;
+        }
+
+
+        failure(onFailure: FailureCallback<T>): AsyncTaskRunner<T> {
+            this._onFailure = onFailure;
+            return this;
+        }
+
+
+        run(timeLimit: number): AsyncTaskRunner<T> {
+            if (this._taskExecutionInfo.state != TaskState.PENDING)
+                throw new Error('Create new instance of AsyncTaskRunner for every task.');
+
+            this._prepareToRun(timeLimit);
+            setTimeout(() => this._internalRun(), 0);
+
+            return this;
+        }
+
+
+        killSilently(): void {
+            this._internalOnFailure(TaskFailureCode.KILLED, null, SILENCE);
+        }
+
+
+        killAndCallFailure(): void {
+            this._internalOnFailure(TaskFailureCode.KILLED, null, VERBOSE);
         }
 
 
         isWorking(): boolean {
-            return this._task != null && this._task.asyncTaskState === TaskState.WORKING;
+            return this._taskExecutionInfo && this._taskExecutionInfo.state === TaskState.WORKING;
         }
 
 
         executionTime(): number {
-            if (!this.isWorking())
+            if (!this._taskExecutionInfo)
                 return -1
+            else if (this._taskExecutionInfo.state === TaskState.PENDING)
+                return 0
+            else if (this._taskExecutionInfo.state === TaskState.WORKING)
+                return performance.now() - this._startTime
             else
-                return performance.now() - this._startTime; 
+                return this._taskExecutionInfo.executionTime;
         }
 
 
-        private _prepareRun(timeLimit: number): void {
+        private _prepareToRun(timeLimit: number): void {
             if ((this._task || null) === null)
                 throw new Error(`Task cant be null.`);
 
-            if (!(this._task instanceof IAsyncTask))
-                throw new Error(`Task have to extends IAsyncTask class.`);
-
-            if (typeof this._task.run != 'function')
-                throw new Error(`Task has no "run" method.`);
-
-            this._task.asyncTaskState = TaskState.NEW;
             this._timeLimit = timeLimit || 0;
 
             if (timeLimit > 0)
@@ -120,52 +130,70 @@ namespace asyncUtils6 {
         private _internalRun(): void {
             try {
                 this._startTime = performance.now();
-                this._task.run(
-                    (result): void => this._internalOnSuccess(result || null),
-                    (error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, VERBOSE));
+
+                if (this._taskExecutionInfo.task instanceof AsyncTask) {
+                    //                    let p: Promise<T> = (<AsyncTask<T>>this._taskInfo.task).run();
+                    //                    p.catch(
+                    //                        (error: Error): void => {
+                    //                            this._internalOnFailure(TaskFailureCode.ERROR, error || null, VERBOSE);
+                    //                        });
+
+
+
+                    let task: AsyncTask<T> = <AsyncTask<T>> this._taskExecutionInfo.task;
+                    task.run(
+                        (result: T): void => this._internalOnSuccess(result || null),
+                        (error: Error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, VERBOSE));
+                } else {
+                    let worker: AsyncWorker<T> = <AsyncWorker<T>> this._taskExecutionInfo.task;
+                    worker.call(null,
+                        (result: T): void => { this._internalOnSuccess(result || null) },
+                        (error: Error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, VERBOSE));
+                }
+
             } catch (error) {
                 this._internalOnFailure(TaskFailureCode.ERROR, error, VERBOSE);
             }
         }
 
 
-        private _internalOnSuccess(result: Object) {
+        private _internalOnSuccess(result: T) {
             clearTimeout(this._timeoutHandler);
-            if (!this._task)
+            if (!this._taskExecutionInfo)
                 return;
 
-            this._task.executionTime = performance.now() - this._startTime;
-            let task: IAsyncTask = this._task;
-            let onSuccess: RunnerSuccessCallback = this._onSuccess;
+            this._taskExecutionInfo.executionTime = performance.now() - this._startTime;
+            let taskInfo: TaskAndExecutionInfo<T> = this._taskExecutionInfo;
+            let onSuccess: SuccessCallback<T> = this._onSuccess;
 
-            this._cleanUp();
+            this._destroy();
 
-            task.asyncTaskState = TaskState.FINISHED_SUCCESS;
-            onSuccess && onSuccess(task, result);
+            taskInfo.state = TaskState.FINISHED_SUCCESS;
+            onSuccess && onSuccess(taskInfo, result);
         }
 
 
         private _internalOnFailure(code: TaskFailureCode, error: Error, tfVerbose: boolean): void {
             clearTimeout(this._timeoutHandler);
-            if (!this._task) {
+            if (!this._taskExecutionInfo) {
                 this._postMortemLogError(code, error);
                 return;
             }
 
-            this._task.executionTime = performance.now() - this._startTime;
-            let task: IAsyncTask = this._task;
-            let onFailure: RunnerFailureCallback = this._onFailure;
+            this._taskExecutionInfo.executionTime = performance.now() - this._startTime;
+            let taskInfo: TaskAndExecutionInfo<T> = this._taskExecutionInfo;
+            let onFailure: FailureCallback<T> = this._onFailure;
 
-            this._cleanUp();
+            this._destroy();
 
-            task.asyncTaskState = this._FailureCode2ATaskState(code);
-            tfVerbose && onFailure && onFailure(task, code, error);
+            taskInfo.state = this._FailureCode2ATaskState(code);
+            tfVerbose && onFailure && onFailure(taskInfo, code, error);
         }
 
 
         private _postMortemLogError(code: TaskFailureCode, error: Error): void {
             if (code === TaskFailureCode.ERROR) {
-                console.log(error);
+                console.error(error);
             }
         }
 
@@ -182,10 +210,11 @@ namespace asyncUtils6 {
         }
 
 
-        private _cleanUp(): void {
+        private _destroy(): void {
             clearTimeout(this._timeoutHandler);
 
             this._task = null;
+            this._taskExecutionInfo = null;
             this._timeoutHandler = null;
             this._timeLimit = null;
             this._onSuccess = null;
@@ -208,101 +237,12 @@ namespace asyncUtils6 {
     }
 
 
+    export class AsyncTaskTimeoutError extends Error {
+        timeLimit: number;
 
-    class AsyncMethodWrapperTask extends IAsyncTask {
-
-        run(onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback): void {
-            this._worker(onSuccess, onFailure);
-        }
-
-        constructor(private _worker: AsyncWorker) {
+        constructor(message: string) {
             super();
-        }
-    }
-
-
-
-    export class AsyncMethodRunner extends ITaskRunner {
-        private _asyncRunner: AsyncTaskRunner;
-
-        constructor(
-            worker: AsyncWorker,
-            private _onSuccess: RunnerSuccessCallback,
-            private _onFailure: RunnerFailureCallback) {
-
-            super();
-            this._asyncRunner = new AsyncTaskRunner(new AsyncMethodWrapperTask(worker), _onSuccess, _onFailure);
-        }
-
-
-        run(timeLimit: number, async: boolean): void {
-            this._asyncRunner.run(timeLimit, async);
-        }
-
-
-        kill(tfVerbose: boolean): void {
-            this._asyncRunner.kill(tfVerbose);
-        }
-
-
-        isWorking(): boolean {
-            return this._asyncRunner.isWorking();
-        }
-
-
-        executionTime(): number {
-            return this._asyncRunner.executionTime();
-        }
-    }
-
-
-
-    export type SyncWorker = () => void;
-
-    class MethodWrapperTask extends IAsyncTask {
-
-        run(onSuccess: TaskSuccessCallback, onFailure: TaskFailureCallback): void {
-            this._syncWorker();
-            onSuccess(null);
-        }
-
-        constructor(private _syncWorker: SyncWorker) {
-            super();
-        }
-    }
-
-
-
-    export class SyncMethodRunner extends ITaskRunner {
-        private _asyncRunner: AsyncTaskRunner;
-
-        constructor(
-            syncWorker: SyncWorker,
-            private _onSuccess: RunnerSuccessCallback,
-            private _onFailure: RunnerFailureCallback) {
-
-            super();
-            this._asyncRunner = new AsyncTaskRunner(new MethodWrapperTask(syncWorker), _onSuccess, _onFailure);
-        }
-
-
-        run(timeLimit: number, async: boolean): void {
-            this._asyncRunner.run(timeLimit, async);
-        }
-
-
-        kill(tfVerbose: boolean): void {
-            this._asyncRunner.kill(tfVerbose);
-        }
-
-
-        isWorking(): boolean {
-            return this._asyncRunner.isWorking();
-        }
-
-
-        executionTime(): number {
-            return this._asyncRunner.executionTime();
-        }
+            this.message = message;
+        };
     }
 }
