@@ -25,6 +25,7 @@
     <Folder Include="src\smartObject\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\core\Collection.ts" />
     <TypeScriptCompile Include="src\core\commons\AsyncTaskRunner.ts" />
     <TypeScriptCompile Include="src\core\Const.ts" />
     <TypeScriptCompile Include="src\core\rpc\IRpcController.ts" />

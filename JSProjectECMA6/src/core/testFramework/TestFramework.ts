@@ -6,18 +6,19 @@
 
 module testEC6 {
 
-    const ONE_MINUTE = 60 * 1000;
-    const TEN_SECONDS = 10 * 1000;
     const ONE_SECOND = 1 * 1000;
+    const FIVE_SECONDS = 5 * ONE_SECOND;
+    const TEN_SECONDS = 10 * ONE_SECOND;
+    const ONE_MINUTE = 60 * ONE_SECOND;
                   
 	/**
 	 *  Test
 	 */
     export abstract class AsyncTest<T> extends asyncUtils6.AsyncTask<T> {
 
-        timeLimit(): number { return TEN_SECONDS }; // 0 -unlimited
+        timeLimit(): number { return FIVE_SECONDS }; // 0 -unlimited
 
-        testId(): string { return Utils.getNameOfClass( this ) }
+        name(): string { return Utils.getNameOfClass( this ) }
 
         // Shared across all tests of the same group
         testContext: TestContext = null;
@@ -26,7 +27,7 @@ module testEC6 {
             super()
         }
 
-        abstract run( success: asyncUtils6.TaskSuccessCallback<T>, failure: asyncUtils6.TaskFailureCallback ): AsyncTest<T>;
+        abstract run( success: asyncUtils6.TaskSuccessCallback<T>, failure: asyncUtils6.TaskFailureCallback ): void;
 
         protected assertTrue( check: boolean, customErrorDesc: string ): void {
             if ( !check ) {
@@ -45,13 +46,13 @@ module testEC6 {
      */
     export class TestEngine {
 
-        private _groupMap: Utils.StringMap<GroupOfTests> = {};
+        private _groupMap: Collection.StringMap<GroupOfTests> = new Collection.StringMap<GroupOfTests>(); // <groupId, Group>
 
-        private _groupOfTestsList: GroupOfTests[] = [];
+        private _groupOfTestsList: GroupOfTests[] = []; // list of GroupOfTests
 
-        private _testEngineState: TestEngineState = null;
+        private _cursor: TestResultAndCursorHolder = null;
 
-        private _testEngineHandlers: TestEngineHandlers = new TestEngineHandlers( null, null );
+        private _handlers: ResultUpdateHandlers = new ResultUpdateHandlers();
 
         private _global_errors: string[] = [];
 
@@ -67,7 +68,7 @@ module testEC6 {
                 else if ( testClesses instanceof Array )
                     this._registerTestsInGroup( group, testClesses );
                 else
-                    throw new GlobalError( `Test must be an AsyncTest class. (${Utils.getNameOfClass( testClesses )})` );
+                    throw new GlobalError( `Test must be an AsyncTest<any> constructor. (${Utils.getNameOfClass( testClesses )})` );
 
             } catch ( error ) {
                 if ( error instanceof GlobalError )
@@ -85,48 +86,52 @@ module testEC6 {
 
 
         private _createGroupOfTests( groupId: string, contextFactory: ITestContextFactory ): GroupOfTests {
-            let result: GroupOfTests = this._groupMap[groupId];
-            if ( result )
+            if ( this._groupMap.has( groupId ) )
                 throw new GlobalError( `Group "${groupId}" is already registered.` );
 
-            result = new GroupOfTests( groupId, contextFactory, [] );
-            this._groupMap[groupId] = null;
+            let result: GroupOfTests = new GroupOfTests( groupId, contextFactory, [] );
+            this._groupMap.put( groupId, null );
             this._groupOfTestsList.push( result );
             return result;
         }
 
 
-        run( resultUpdater: IResultUpdater ): void {
+        run( resultUpdater: IResultUpdateListener ): void {
             this._testRunner && this._testRunner.killSilently();
             this._cleanGlobalErrorMessages();
-            this._testEngineState = new TestEngineState( this._testEngineHandlers, this._groupOfTestsList, this._global_errors );
-            this._testEngineHandlers.testEngineState = this._testEngineState;
-            this._testEngineHandlers.resultUpdater = resultUpdater;
-            this._testEngineHandlers.callResultUpdateHandler( null );
+
+            this._cursor = new TestResultAndCursorHolder( this._handlers, this._groupOfTestsList, this._global_errors );
+            this._handlers.result = this._cursor.result;
+            this._handlers.resultUpdater = resultUpdater;
+
+            this._handlers.callResultUpdate( null );
             this._runNextTest();
         }
 
 
         stop(): void {
             this._testRunner && this._testRunner.killAndCallFailure();
-            this._testEngineState.skipAllUnfinishedTestsAndMoveGroupCursor();
+            this._cursor.skipAllUnfinishedTestsAndMoveCursor();
         }
 
 
         private _runNextTest(): void {
-            let testInstanceAndProto: TestInstanceAndProto = this._testEngineState.getNextTestInstanceAndProto();
-            if ( testInstanceAndProto === null )
-                return;
-
+            let testInstanceAndProto: TestInstanceAndProto = null;
             try {
-                this._testRunner = new asyncUtils6.AsyncTaskRunner<any>( testInstanceAndProto.instance )
+                this._cursor.moveCursorToTheNextTest();
+                testInstanceAndProto = this._cursor.getCurrentTestInstanceAndProto();
+                if ( !testInstanceAndProto )
+                    return;
+
+                this._testRunner = new asyncUtils6.AsyncTaskRunner<any>( testInstanceAndProto.instance );
+                this._testRunner
                     .success( this._runnerOnSuccessHandler )
                     .failure( this._runnerOnFailureHandler )
                     .run( testInstanceAndProto.proto.timeLimit || 0 );
 
-                this._testEngineHandlers.updateTestState_Running( this._testEngineState.getCurrentTestResult() );
+                this._handlers.updateTestState_Running( this._cursor.getCurrentTestResult() );
             } catch ( error ) {
-                this._testEngineHandlers.onFailureHandler( this._testEngineState.getCurrentTestResult(), asyncUtils6.TaskFailureCode.ERROR, error );
+                this._onFailureHandler( this._cursor.getCurrentTestResult(), asyncUtils6.TaskFailureCode.ERROR, error );
 
                 this._runNextTest();
             }
@@ -134,49 +139,37 @@ module testEC6 {
 
 
         private _runnerOnSuccessHandler = ( testExecutionInfo: asyncUtils6.TaskAndExecutionInfo<any>, result: any ): void => {
-            this._onSuccessHandler( testExecutionInfo );
+            this._handlers.updateTestState_Success( this._cursor.getCurrentTestResult(), testExecutionInfo );
             this._runNextTest();
         };
 
 
         private _runnerOnFailureHandler = ( testExecutionInfo: asyncUtils6.TaskAndExecutionInfo<any>, code: asyncUtils6.TaskFailureCode, error: Error ): void => {
-            //this._onFailureHandler(testExecutionInfo, code, error);
-            //this._runNextGroup();
+            this._onFailureHandler( this._cursor.getCurrentTestResult(), asyncUtils6.TaskFailureCode.ERROR, error );
+            //            this._onFailureHandler(testExecutionInfo, code, error);
+            this._runNextTest();
         };
 
 
-        private _onSuccessHandler( testExecutionInfo: asyncUtils6.TaskAndExecutionInfo<any> ): void {
-            this._testEngineHandlers.updateTestState_Success( this._testEngineState.getCurrentTestResult(), testExecutionInfo );
-        }
+        private _onFailureHandler( test_or_group: Result_Test | Result_Group, code: asyncUtils6.TaskFailureCode, error: Error ): void {
+            console.error( error );
+            error = error || new Error( 'Unknown error.' );
 
+            if ( test_or_group instanceof Result_Test )
+                this._handlers.updateTestState_Failure( test_or_group, code, error );
 
-        //        private _onFailureHandler(test_or_group: AsyncTest<any> | GroupOfTests | TestPrototypeAndMetadata, code: asyncUtils6.TaskFailureCode, error: Error): void {
-        //            console.error(error);
-        //            error = error || new Error('Unknown error.');
-        //
-        //            if (test_or_group instanceof AsyncTest)
-        //                this._testEngineState.updateTestState_Failure(code, error);
-        //
-        //            else if (test_or_group instanceof GroupOfTests)
-        //                this._testEngineState.updateGroupState_Failure(task_or_group, code, error);
-        //
-        //            else if (test_or_group instanceof TestPrototypeAndMetadata)
-        //                this._testEngineState.updateTestCaseState_Failure(task_or_group, code, error);
-        //        }
+            else if ( test_or_group instanceof Result_Group )
+                this._handlers.updateGroupState_Failure( test_or_group, code, error );
 
-
-        private _buildTest( group: GroupOfTests, testCaseIdx: number, testCase: TestPrototypeAndMetadata ): AsyncTest<void> {
-            try {
-                return <AsyncTest<void>>Object.create( testCase.testClassPrototype );
-            } catch ( error ) {
-                throw new Error( `Error! Creating TestCase ${testCase.testId} of group: ${group.groupId} failed: ${error.message}` );
-            }
+            this._cursor.skipUnfinishedTestsOfCurrentGroup();
+            this._cursor.moveCursorToTheNextGroup();
         }
 
 
         private _addGlobalErrorMessage( msg: string ): void {
             this._global_errors.push( msg );
         }
+
 
         private _cleanGlobalErrorMessages(): void {
             this._global_errors = [];
@@ -185,43 +178,36 @@ module testEC6 {
 
 
 
-    class TestEngineState {
+    /**
+     *  TestResultAndCursorHolder
+     */
+    class TestResultAndCursorHolder {
 
         private _groupIdxCursor: number = 0;
+
         private _testIdxCursor: number = -1;
 
-        //private currentTestCase: TestPrototypeAndMetadata = null;
+        result: Result_Root;
 
-        [key: string]: any;
-
-        result: TestResult;
-        //private _groupResultMap: Utils.StringMap<TestGroupResult> = {};
-        private _testResultMap: Utils.NumberMap<Utils.NumberMap<TestCaseResult>> = {};
+        private _testResultMap: Collection.INumberMap<Collection.INumberMap<Result_Test>> = {};
 
         private _groupOfTests: GroupOfTests[];
-        private _resultUpdater: IResultUpdater;
 
         private _testContextOfGroup: TestContext[] = [];
 
 
-        constructor( private testEngineHandlers: TestEngineHandlers, private groupOfTests: GroupOfTests[], global_errors: string[] ) {
+
+        constructor( private handlers: ResultUpdateHandlers, private groupOfTests: GroupOfTests[], global_errors: string[] ) {
             this._groupOfTests = groupOfTests;
 
-            this.result = new TestResult();
+            this.result = new Result_Root();
             this._initTestResultObjectWith( groupOfTests );
             this.result.global_errors = global_errors;
         }
 
-        getNextTestInstanceAndProto(): TestInstanceAndProto {
-            let result: TestInstanceAndProto = this._buildTestInstanceAndProto( this._groupIdxCursor, ++this._testIdxCursor );
-            if ( result === null ) {
-                this._testIdxCursor = 0;
-                result = this._buildTestInstanceAndProto( ++this._groupIdxCursor, this._testIdxCursor );
-            }
-            return result;
 
-            //            this.onFailureHandler(testPrototype || currentGroup, asyncUtils6.TaskFailureCode.ERROR, error);
-            //            this._skipCurrentGroup();
+        getCurrentTestInstanceAndProto(): TestInstanceAndProto {
+            return this._buildTestInstanceAndProto( this._groupIdxCursor, this._testIdxCursor );
         }
 
 
@@ -250,13 +236,14 @@ module testEC6 {
 
 
         skipUnfinishedTestsOfCurrentGroup(): void {
-            let changes: TestCaseResult[] = this._skipTestsOfGroup( this._groupIdxCursor, this._testIdxCursor );
+            let changes: Result_Test[] = this._skipTestsOfGroup( this._groupIdxCursor, this._testIdxCursor );
 
-            this.testEngineHandlers.callResultUpdateHandler( changes );
+            this.handlers.callResultUpdate( changes );
         }
 
-        skipAllUnfinishedTestsAndMoveGroupCursor(): void {
-            let changes: TestCaseResult[] = [];
+
+        skipAllUnfinishedTestsAndMoveCursor(): void {
+            let changes: Result_Test[] = [];
 
             changes.concat( this._skipTestsOfGroup( this._groupIdxCursor, this._testIdxCursor ) );
             for ( let i = this._groupIdxCursor + 1; i <= this._groupOfTests.length; i++ )
@@ -264,7 +251,7 @@ module testEC6 {
 
             this.moveGroupCursorTo( this._groupOfTests.length + 1 );
 
-            this.testEngineHandlers.callResultUpdateHandler( changes );
+            this.handlers.callResultUpdate( changes );
         }
 
 
@@ -279,139 +266,130 @@ module testEC6 {
         }
 
 
-        private _skipTestsOfGroup( groupIdx: number, firstToBeSkipped: number ): TestCaseResult[] {
-            let groupResult: TestGroupResult = this.result.groupResults[groupIdx];
-            let skipped: TestCaseResult[] = []
+        moveCursorToTheNextTest(): void {
+            let group: GroupOfTests = this._groupOfTests[this._groupIdxCursor] || null;
 
-            for ( let i = firstToBeSkipped; i < groupResult.testCaseResults.length; i++ ) {
-                if ( groupResult.testCaseResults[i].state === TestState.PENDING
-                    || groupResult.testCaseResults[i].state === TestState.WORKING ) {
-                    groupResult.testCaseResults[i].state = TestState.SKIPPED;
-                    skipped.push( groupResult.testCaseResults[i] );
-                }
+            if ( group === null )
+                return null;
+            else if ( group.testPrototypes.length > this._testIdxCursor + 1 )
+                ++this._testIdxCursor;
+            else {
+                this.moveCursorToTheNextGroup();
+                this.moveCursorToTheNextTest();
             }
+        }
 
+
+        private _skipTestsOfGroup( groupIdx: number, firstToBeSkipped: number ): Result_Test[] {
+            let groupResult: Result_Group = this.result.resultOfGroups[groupIdx] || null;
+            let skipped: Result_Test[] = []
+
+            if ( groupResult )
+                for ( let i = firstToBeSkipped; i < groupResult.resultOfTests.length; i++ ) {
+                    if ( groupResult.resultOfTests[i].state in [TestState.PENDING, TestState.WORKING] ) {
+                        groupResult.resultOfTests[i].state = TestState.SKIPPED;
+                        skipped.push( groupResult.resultOfTests[i] );
+                    }
+                }
             return skipped;
         }
 
 
-        destroy(): void {
-            for ( let key in this )
-                this[key] = null;
-        }
-
-
-        getCurrentTestResult(): TestCaseResult {
+        getCurrentTestResult(): Result_Test {
             return ( this._testResultMap[this._groupIdxCursor] || {})[this._testIdxCursor] || null;
         }
-
 
 
         private _initTestResultObjectWith( groups: GroupOfTests[] ): void {
             if ( groups )
                 for ( let i = 0; i < groups.length; i++ ) {
                     let group: GroupOfTests = groups[i];
-                    let groupResult: TestGroupResult = new TestGroupResult();
+                    let groupResult: Result_Group = new Result_Group();
                     groupResult.groupId = group.groupId;
                     groupResult.parent = this.result;
+                    this._testResultMap[i] = this._testResultMap[i] || [];
 
-                    this.result.groupResults.push( groupResult );
-                    //this._groupResultMap[i] = groupResult;
+                    this.result.resultOfGroups.push( groupResult );
 
                     if ( group.testPrototypes )
                         for ( let j = 0; j < group.testPrototypes.length; j++ ) {
                             let testCase: TestPrototypeAndMetadata = group.testPrototypes[j];
-                            let testResult: TestCaseResult = new TestCaseResult();
-                            testResult.testId = testCase.testId;
+                            let testResult: Result_Test = new Result_Test();
+                            testResult.name = testCase.name;
                             testResult.parent = groupResult;
                             testResult.timeLimit = testCase.timeLimit;
-                            groupResult.testCaseResults.push( testResult );
+                            groupResult.resultOfTests.push( testResult );
 
                             this._testResultMap[i][j] = testResult;
                             this.result.allTestCount++;
-                            groupResult.allTestCount++;
                         }
                 }
         }
 
-
     }
 
 
-    class TestEngineHandlers {
 
-        constructor( public testEngineState: TestEngineState, public resultUpdater: IResultUpdater ) { }
+	/**
+	 *
+	 */
+    class ResultUpdateHandlers {
 
-        callResultUpdateHandler( changes: TestGroupResult | TestCaseResult | TestCaseResult[] ): void {
+        result: Result_Root;
+        resultUpdater: IResultUpdateListener = null;
+
+
+
+        callResultUpdate( changes: Result_Group | Result_Test | Result_Test[] ): void {
             setTimeout(() => {
-                this.resultUpdater && this.resultUpdater.update( this.testEngineState.result, changes );
+                this.resultUpdater && this.resultUpdater.update( this.result, changes );
             }, Const.DEFAULT_ASYNC_DELAY );
         }
 
 
-
-
-        updateTestState_Running( testResult: TestCaseResult ): void {
+        updateTestState_Running( testResult: Result_Test ): void {
             if ( testResult ) {
                 testResult.state = TestState.WORKING;
                 testResult.parent.state = testResult.state;
             }
-            this.callResultUpdateHandler( testResult );
+            this.callResultUpdate( testResult );
         }
 
-        updateTestState_Success( testResult: TestCaseResult, taskInfo: asyncUtils6.TaskAndExecutionInfo<any> ): void {
+
+        updateTestState_Success( testResult: Result_Test, taskInfo: asyncUtils6.TaskAndExecutionInfo<any> ): void {
             if ( testResult ) {
                 testResult.state = TestState.SUCCESS;
                 this._updateDetails( testResult, taskInfo.executionTime );
             }
 
-            this.callResultUpdateHandler( testResult );
+            this.callResultUpdate( testResult );
         }
 
 
-        onFailureHandler( test_or_group: TestCaseResult | TestGroupResult, code: asyncUtils6.TaskFailureCode, error: Error ): void {
-            console.error( error );
-            error = error || new Error( 'Unknown error.' );
-
-            if ( test_or_group instanceof TestCaseResult )
-                this.updateTestState_Failure( test_or_group, code, error );
-
-            else if ( test_or_group instanceof TestGroupResult )
-                this.updateGroupState_Failure( test_or_group, code, error );
-
-            this.testEngineState.skipUnfinishedTestsOfCurrentGroup();
-            this.testEngineState.moveCursorToTheNextGroup();
-        }
-
-        updateTestState_Failure( testResult: TestCaseResult, code: asyncUtils6.TaskFailureCode, error: Error ): void {
+        updateTestState_Failure( testResult: Result_Test, code: asyncUtils6.TaskFailureCode, error: Error ): void {
             if ( testResult ) {
-                testResult.state = this._taskFailureCode2TestResultState( code );
+                testResult.state = this._taskFailureCode2TestResultState( code, error );
                 testResult.errorMsg = error.message;
                 this._updateDetails( testResult, 0 );
             }
 
-            this.callResultUpdateHandler( testResult );
-
-            if ( code === asyncUtils6.TaskFailureCode.KILLED )
-                this.testEngineState.destroy();
+            this.callResultUpdate( testResult );
         }
 
-        updateGroupState_Failure( groupResult: TestGroupResult, code: asyncUtils6.TaskFailureCode, error: Error ): void {
+
+        updateGroupState_Failure( groupResult: Result_Group, code: asyncUtils6.TaskFailureCode, error: Error ): void {
             if ( groupResult ) {
-                groupResult.state = this._taskFailureCode2TestResultState( code );
+                groupResult.state = this._taskFailureCode2TestResultState( code, error );
                 groupResult.errorMsg = error.message;
                 groupResult.failedCount++;
                 groupResult.parent.failedCount++;
             }
 
-            this.callResultUpdateHandler( groupResult );
-
-            if ( code === asyncUtils6.TaskFailureCode.KILLED )
-                this.testEngineState.destroy();
+            this.callResultUpdate( groupResult );
         }
 
 
-        private _updateDetails( testResult: TestCaseResult, executionTime: number ): void {
+        private _updateDetails( testResult: Result_Test, executionTime: number ): void {
             testResult.executionTime = executionTime;
             testResult.parent.executionTime += executionTime;
             testResult.parent.parent.executionTime += executionTime;
@@ -420,7 +398,7 @@ module testEC6 {
                 testResult.parent.succeedCount++;
                 testResult.parent.parent.succeedCount++;
 
-                if ( testResult.parent.allTestCount === testResult.parent.succeedCount )
+                if ( testResult.parent.resultOfTests.length === testResult.parent.succeedCount )
                     testResult.parent.state = TestState.SUCCESS;
             } else {
                 testResult.parent.failedCount++;
@@ -429,15 +407,18 @@ module testEC6 {
             }
         }
 
-        private _taskFailureCode2TestResultState( code: asyncUtils6.TaskFailureCode ): TestState {
+
+        private _taskFailureCode2TestResultState( code: asyncUtils6.TaskFailureCode, error: Error ): TestState {
             if ( code === asyncUtils6.TaskFailureCode.TIMEOUT )
                 return TestState.TIMEOUT;
 
             else if ( code === asyncUtils6.TaskFailureCode.KILLED )
                 return TestState.KILLED;
 
+            else if ( code === asyncUtils6.TaskFailureCode.ERROR && error instanceof AssertError )
+                return TestState.FAILURE_ASSERTION
             else
-                return TestState.FAILURE;
+                return TestState.FAILURE_EXCEPTION;
         }
     }
 
@@ -453,8 +434,9 @@ module testEC6 {
 
 
     class TestPrototypeAndMetadata {
-        public testId: string;
+        public name: string;
         public timeLimit: number;
+
 
         createInstance( testContext: TestContext ): AsyncTest<any> {
             try {
@@ -462,13 +444,14 @@ module testEC6 {
                 test.testContext = testContext;
                 return test;
             } catch ( error ) {
-                throw new Error( `Error! Creating instance of ${this.testId} failed.\n Error message: ${error.message}` );
+                throw new Error( `Error! Creating instance of ${this.name} failed.\n Error message: ${error.message}` );
             }
         }
 
+
         constructor( public testClassPrototype: Function ) {
             let instance: AsyncTest<any> = this.createInstance( null );
-            this.testId = instance.testId();
+            this.name = instance.name();
             this.timeLimit = instance.timeLimit();
         }
     }
@@ -482,11 +465,10 @@ module testEC6 {
                 throw new GlobalError( `Test class has to be an AsyncTest!` )
         }
 
+
         registerTest( testClass: Function ): void {
-            let testId: string = 'unknown';
             try {
                 let meta: TestPrototypeAndMetadata = new TestPrototypeAndMetadata( testClass.prototype );
-                testId = meta.testId;
                 this._checkClass( meta );
                 this.testPrototypes.push( meta );
             } catch ( error ) {
@@ -494,12 +476,13 @@ module testEC6 {
             }
         }
 
+
         constructor( public groupId: string, public contextFactory: ITestContextFactory, public testPrototypes: TestPrototypeAndMetadata[] ) { }
     }
 
 
     class TestInstanceAndProto {
-        constructor( public proto: TestPrototypeAndMetadata, public instance: AsyncTest<void> ) { };
+        constructor( public proto: TestPrototypeAndMetadata, public instance: AsyncTest<any> ) { };
     }
 
 }
