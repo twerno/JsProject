@@ -28,6 +28,7 @@
     <TypeScriptCompile Include="src\core\Collection.ts" />
     <TypeScriptCompile Include="src\core\commons\AsyncTaskRunner.ts" />
     <TypeScriptCompile Include="src\core\Const.ts" />
+    <TypeScriptCompile Include="src\core\PromisesUtil.ts" />
     <TypeScriptCompile Include="src\core\rpc\IRpcController.ts" />
     <TypeScriptCompile Include="src\core\rpc\RpcController.ts" />
     <TypeScriptCompile Include="src\core\testFramework\Commons.ts" />

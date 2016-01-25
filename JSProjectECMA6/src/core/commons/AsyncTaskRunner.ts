@@ -22,16 +22,20 @@ namespace asyncUtils6 {
 
 
 
-    export type SuccessCallback<T> = (executionInfo: TaskAndExecutionInfo<T>, result: T) => void;
+    export type SuccessCallback<T> = (executionInfo: TaskAndExecutionInfo<T>, result?: T) => void;
     export type FailureCallback<T> = (executionInfo: TaskAndExecutionInfo<T>, code: TaskFailureCode, error: Error) => void;
 
 
-    export type AsyncWorker<T> = (success: TaskSuccessCallback<T>, failure: TaskFailureCallback) => void;
+    export type AsyncWorker<T> = (success?: TaskSuccessCallback<T>, failure?: TaskFailureCallback) => void;
     export type TaskSuccessCallback<T> = (result: T) => void;
     export type TaskFailureCallback = (error: Error) => void;
 
     export abstract class AsyncTask<T> {
         abstract run(success: TaskSuccessCallback < T >, failure: TaskFailureCallback): void;
+
+        buildRunner(): AsyncTaskRunner<T> {
+            return new AsyncTaskRunner<T>(this);
+        }
     }
 
 
@@ -203,8 +207,7 @@ namespace asyncUtils6 {
             if (this._task === null)
                 return;
 
-            let error: AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[TIMEOUT] ${this._timeLimit} milliseconds.`);
-            error.timeLimit = this._timeLimit;
+            let error: AsyncTaskTimeoutError = new AsyncTaskTimeoutError(`[TIMEOUT] ${this._timeLimit} milliseconds.`, this._timeLimit);
 
             this._internalOnFailure(TaskFailureCode.TIMEOUT, error, VERBOSE);
         }
@@ -238,9 +241,8 @@ namespace asyncUtils6 {
 
 
     export class AsyncTaskTimeoutError extends Error {
-        timeLimit: number;
 
-        constructor(message: string) {
+        constructor(message: string, public timeLimit: number) {
             super();
             this.message = message;
         };

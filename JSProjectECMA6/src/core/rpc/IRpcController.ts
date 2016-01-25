@@ -19,7 +19,7 @@ namespace rpc6 {
 
 
     export class RpcToken {
-        get id(): RequestID { return this.id };
+        get id(): RequestID { return this._id };
 
         onSuccess: TokenSuccessCallback;
         onFailure: TokenFailureCallback;
