@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace Collection {
 
@@ -10,19 +10,19 @@ namespace Collection {
 
         private _map: IStringMap<T> = {};
 
-        put( key: string, val: T ): void {
+        put(key: string, val: T): void {
             this._map[key] = val;
         }
 
-        get( key: string ): T {
+        get(key: string): T {
             return this._map[key] || null;
         }
 
-        has( key: string ): boolean {
-            return this._map.hasOwnProperty( key );
+        has(key: string): boolean {
+            return this._map.hasOwnProperty(key);
         }
 
-        delete( key: string ): void {
+        delete(key: string): void {
             delete this._map[key];
         }
 
@@ -36,19 +36,19 @@ namespace Collection {
 
         private _map: INumberMap<T> = {};
 
-        put( key: number, val: T ): void {
+        put(key: number, val: T): void {
             this._map[key] = val;
         }
 
-        get( key: number ): T {
+        get(key: number): T {
             return this._map[key] || null;
         }
 
-        has( key: number ): boolean {
-            return this._map.hasOwnProperty( key );
+        has(key: number): boolean {
+            return this._map.hasOwnProperty(key);
         }
 
-        delete( key: number ): void {
+        delete(key: number): void {
             delete this._map[key];
         }
 
@@ -58,4 +58,42 @@ namespace Collection {
     }
 
 
+//    export class StringMapWithOrder<T> extends StringMap<T> {
+//
+//        private _keyList: string[];
+//
+//        put(key: string, val: T): void {
+//            if (!this.has(key))
+//                this._keyList.push(key);
+//
+//            super.put(key, val);
+//        }
+//
+//        delete(key: string): void {
+//
+//            super.delete(key);
+//        }
+//
+//        //        get(key: string): T {
+//        //            return this._map[key] || null;
+//        //        }
+//        //
+//        //        has(key: string): boolean {
+//        //            return this._map.hasOwnProperty(key);
+//        //        }
+//        //
+//        //        delete(key: string): void {
+//        //            delete this._map[key];
+//        //        }
+//        //
+//        //        clear(): void {
+//        //            this._map = {};
+//        //        }
+//
+//    }
+
+
+    export function removeFrom(array: Object[], element: Object): void {
+        array.splice(array.indexOf(element));
+    }
 }

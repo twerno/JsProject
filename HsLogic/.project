@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>HsLogic</name>
+	<comment></comment>
+	<projects>
+		<project>JSProjectECMA6</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.palantir.typescript.typeScriptBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.palantir.typescript.typeScriptNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>std-lib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>std-lib/lib.d.ts</name>
+			<type>1</type>
+			<locationURI>std_lib_ES6</locationURI>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>std_lib_ES6</name>
+			<value>$%7BPROJECT_LOC%7D/std-lib/lib.d.ts</value>
+		</variable>
+	</variableList>
+</projectDescription>

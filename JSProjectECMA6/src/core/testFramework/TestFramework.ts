@@ -114,6 +114,7 @@ module testEC6 {
             this._cursor.skipAllUnfinishedTestsAndMoveCursor();
         }
 
+
         private _runNextTest(): void {
             let testInstanceAndProto: TestInstanceAndProto = null;
             try {
@@ -122,7 +123,7 @@ module testEC6 {
                 if (!testInstanceAndProto)
                     return;
 
-                this._testRunner = testInstanceAndProto.instance.buildRunner();// new asyncUtils6.AsyncTaskRunner<any>(testInstanceAndProto.instance);
+                this._testRunner = testInstanceAndProto.instance.buildRunner();
                 this._testRunner
                     .success(this._runnerOnSuccessHandler)
                     .failure(this._runnerOnFailureHandler)
