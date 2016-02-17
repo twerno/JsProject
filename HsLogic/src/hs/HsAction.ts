@@ -1,12 +1,14 @@
-///<reference path="../core/Action.ts"/>
+///<reference path="../core/action/IAction.ts"/>
 
 
 "use strict";
 
 namespace HSLogic {
 
-    export abstract class HsAction<T> extends jsLogic.IAction<T> { };
-    	
-    export abstract class HsBaseAction<T> extends jsLogic.BaseAction<T> { };
+    export type PromiseOfActions = Promise<jsLogic.IAction<HsActionParam>[]>;
+
+    export abstract class HsAction extends jsLogic.IAction<HsActionParam> { };
+
+    export abstract class HsBaseAction extends jsLogic.BaseAction<HsActionParam> { };
 
 }

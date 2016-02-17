@@ -70,14 +70,14 @@ class WebRtcProducer {
                 self.log('configure - Step1', data);
 
             this.connection.createOffer(
-                function(sdp: RTCSessionDescription): void {
+                function (sdp: RTCSessionDescription): void {
                     if (self._debugMode)
                         self.log('onOfferCreated', sdp);
 
                     self.connection.setLocalDescription(sdp, null);
                     self._onPassDataToPeer({ 'RTCSessionDescription': sdp });
                 },
-                function(errorInformation: DOMError): void {
+                function (errorInformation: DOMError): void {
                     console.error('onOfferError', errorInformation);
                 });
         } else
@@ -98,11 +98,11 @@ class WebRtcProducer {
                         this.log('configure - Step3', data);
 
                     this.connection.addIceCandidate(data['RTCIceCandidate'],
-                        function(): void {
+                        function (): void {
                             if (self._debugMode)
                                 self.log('onAddIceCandidateSuccess');
                         },
-                        function(error): void {
+                        function (error): void {
                             if (self._debugMode)
                                 self.log('onAddIceCandidateError');
                         });
@@ -172,27 +172,27 @@ class WebRtcProducer {
 
 
         this.connection.onicecandidate =
-        function(event: RTCIceCandidateEvent): void {
-            if (event.candidate) {
+            function (event: RTCIceCandidateEvent): void {
+                if (event.candidate) {
 
-                if (this._debugMode)
-                    this.log('onIceCandidate', event.candidate);
+                    if (this._debugMode)
+                        this.log('onIceCandidate', event.candidate);
 
-                this._onPassDataToPeer({ 'RTCIceCandidate': event.candidate });
-            }
+                    this._onPassDataToPeer({ 'RTCIceCandidate': event.candidate });
+                }
 
-            this.tryCallSuccess();
-        }.bind(this);
+                this.tryCallSuccess();
+            }.bind(this);
 
 
         this.connection.oniceconnectionstatechange =
-        function(event: Event): void {
+            function (event: Event): void {
 
-            if (this._debugMode)
-                this.log('onIceConnectionStateChange: ' + this.connection.iceConnectionState, event);
+                if (this._debugMode)
+                    this.log('onIceConnectionStateChange: ' + this.connection.iceConnectionState, event);
 
-            this.tryCallSuccess();
-        }.bind(this);
+                this.tryCallSuccess();
+            }.bind(this);
     }
 
 
@@ -200,7 +200,7 @@ class WebRtcProducer {
     /**
      *  onReceiveChannelStateChange
      */
-    private onReceiveChannelStateChange = function(event: Event): void {
+    private onReceiveChannelStateChange = function (event: Event): void {
         if (this._debugMode)
             this.log('onReceiveChannelStateChange', event);
 
@@ -212,7 +212,7 @@ class WebRtcProducer {
     /**
      *  tryCallSuccess
      */
-    private tryCallSuccess = function(): void {
+    private tryCallSuccess = function (): void {
         if (!this._successCalled && this.isConnected()) {
             if (this._debugMode)
                 this.log('triggering onConnectionSucces callback');

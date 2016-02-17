@@ -53,11 +53,11 @@ class testMethod implements rpc6.ICustomControllerMethod {
     }
 }
 
-let onSuccess = function(result: Object): void {
+let onSuccess = function (result: Object): void {
     console.log(result, result);
 }
 
-let onError = function(error: Error): void {
+let onError = function (error: Error): void {
     throw error;
 }
 

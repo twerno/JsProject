@@ -23,7 +23,7 @@ namespace PromiseUtil {
                     .then((value: T): T | PromiseLike<T> => {
                         clearTimeout(timeoutHandler);
                         return value;
-                    }, (reason: PromiseRejectError|Error): void => {
+                    }, (reason: PromiseRejectError | Error): void => {
                         clearTimeout(timeoutHandler);
                         throw reason;
                     });

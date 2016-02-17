@@ -22,22 +22,41 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="dist\" />
+    <Folder Include="src\core\ZoneAction\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\core\Action.ts" />
+    <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
+    <TypeScriptCompile Include="src\core\action\eventAction\CancellableAction.ts" />
+    <TypeScriptCompile Include="src\core\action\eventAction\DispatchEvent.ts" />
+    <TypeScriptCompile Include="src\core\action\IAction.ts" />
+    <TypeScriptCompile Include="src\core\action\zoneAction\AddEntityToZone.ts" />
+    <TypeScriptCompile Include="src\core\action\zoneAction\RandomizeZone.ts" />
+    <TypeScriptCompile Include="src\core\action\zoneAction\RemoveEntityFromZone.ts" />
+    <TypeScriptCompile Include="src\core\Counter.ts" />
     <TypeScriptCompile Include="src\core\Entity.ts" />
+    <TypeScriptCompile Include="src\core\event\Event.ts" />
+    <TypeScriptCompile Include="src\core\event\EventHandler.ts" />
+    <TypeScriptCompile Include="src\core\event\EventHandlers.ts" />
     <TypeScriptCompile Include="src\core\helper\MathHelper.ts" />
-    <TypeScriptCompile Include="src\core\Trigger.ts" />
     <TypeScriptCompile Include="src\core\Zone.ts" />
-    <TypeScriptCompile Include="src\core\ZoneAction\AddEntityToZone.ts" />
     <TypeScriptCompile Include="src\core\Marker.ts" />
-    <TypeScriptCompile Include="src\core\ZoneAction\RandomizeZone.ts" />
-    <TypeScriptCompile Include="src\core\ZoneAction\RemoveEntityFromZone.ts" />
+    <TypeScriptCompile Include="src\hs\Event\CardDrawnEvent.ts" />
     <TypeScriptCompile Include="src\hs\HsAction.ts" />
+    <TypeScriptCompile Include="src\hs\HsActionEvent.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\AddGeneratedCardIntoHand.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\Damage.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\DrawCard.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\Fatigue.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\MarkAsDestroyed.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\MillCard.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\PutCardIntoHand.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\ReturnCardIntoHandFromPlayZone.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\ShuffleDeck.ts" />
+    <TypeScriptCompile Include="src\hs\HsActions\ShuffleGeneratedCardIntoDeck.ts" />
     <TypeScriptCompile Include="src\hs\HsCard.ts" />
-    <TypeScriptCompile Include="src\hs\HsZone\HsMarker.ts" />
-    <TypeScriptCompile Include="src\hs\HsZone\HsZoneActions.ts" />
+    <TypeScriptCompile Include="src\hs\HsCounter.ts" />
+    <TypeScriptCompile Include="src\hs\HsGameEvent.ts" />
+    <TypeScriptCompile Include="src\hs\HsMarker.ts" />
     <TypeScriptCompile Include="src\hs\HsZone\HsZones.ts" />
     <TypeScriptCompile Include="src\core\ZoneExceptions.ts" />
   </ItemGroup>

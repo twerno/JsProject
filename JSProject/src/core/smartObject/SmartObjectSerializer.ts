@@ -143,7 +143,7 @@ namespace smartObj {
 
 
 
-        private smartCollection2Data(collection: SmartObject[]| ISmartObjectMap): internal.ISmartObjectData {
+        private smartCollection2Data(collection: SmartObject[] | ISmartObjectMap): internal.ISmartObjectData {
             if (collection === null || collection === undefined)
                 return this.getEmptySmartObjData(collection, SmartObjectType.SMART_OBJECT_COLLECTION);
 
@@ -169,7 +169,7 @@ namespace smartObj {
 
 
 
-        private collection2Data(collection: any[]| Object): internal.ISmartObjectData {
+        private collection2Data(collection: any[] | Object): internal.ISmartObjectData {
             if (collection === null || collection === undefined)
                 return this.getEmptySmartObjData(collection, SmartObjectType.COLLECTION);
 

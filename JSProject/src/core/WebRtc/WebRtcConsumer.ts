@@ -74,14 +74,14 @@ class WebRtcConsumer {
 
             this.connection.setRemoteDescription(data['RTCSessionDescription']);
             this.connection.createAnswer(
-                function(sdp: RTCSessionDescription): void {
+                function (sdp: RTCSessionDescription): void {
                     if (self._debugMode)
                         self.log('onAnswerCreated', sdp);
 
                     self.connection.setLocalDescription(sdp);
                     self._onPassDataToPeer({ 'RTCSessionDescription': sdp });
                 },
-                function(errorInformation: DOMError): void {
+                function (errorInformation: DOMError): void {
                     console.error('onOfferError', errorInformation);
                 });
         } else 
@@ -93,11 +93,11 @@ class WebRtcConsumer {
                     this.log('configure - Step2', data);
 
                 this.connection.addIceCandidate(data['RTCIceCandidate'],
-                    function(): void {
+                    function (): void {
                         if (self._debugMode)
                             self.log('onAddIceCandidateSuccess');
                     },
-                    function(error): void {
+                    function (error): void {
                         if (self._debugMode)
                             self.log('onAddIceCandidateError');
                     });
@@ -172,7 +172,7 @@ class WebRtcConsumer {
 
         this.connection.oniceconnectionstatechange = (event: Event): void => {
             if (this._debugMode)
-                this.log(`onIceConnectionStateChange: ${this.connection.iceConnectionState} [connected: ${+this.isConnected() } ]`, event);
+                this.log(`onIceConnectionStateChange: ${this.connection.iceConnectionState} [connected: ${+this.isConnected()} ]`, event);
 
             this.tryCallSuccess();
         };
@@ -183,7 +183,7 @@ class WebRtcConsumer {
     /**
      *  onReceiveMessage
      */
-    private onReceiveMessage = function(event: RTCMessageEvent): void {
+    private onReceiveMessage = function (event: RTCMessageEvent): void {
         if (this._debugMode)
             this.log(`onReceiveMessage ${event.data}`, event);
 
@@ -195,7 +195,7 @@ class WebRtcConsumer {
     /**
      *  onReceiveChannelStateChange
      */
-    private onReceiveChannelStateChange = function(event: Event): void {
+    private onReceiveChannelStateChange = function (event: Event): void {
         if (this._debugMode)
             this.log('onReceiveChannelStateChange', event);
 
@@ -207,7 +207,7 @@ class WebRtcConsumer {
     /**
      *  tryCallSuccess
      */
-    private tryCallSuccess = function(): void {
+    private tryCallSuccess = function (): void {
         if (!this._successCalled && this.isConnected()) {
             if (this._debugMode)
                 this.log('triggering onConnectionSucces callback');

@@ -55,6 +55,6 @@ module testEC6 {
 
 
     export abstract class IResultUpdateListener {
-        abstract update( result: Result_Root, changes: Result_Group | Result_Test | Result_Test[] ): void;
+        abstract update(result: Result_Root, changes: Result_Group | Result_Test | Result_Test[]): void;
     }
 }

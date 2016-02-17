@@ -1,4 +1,4 @@
-///<reference path="../Action.ts"/>
+///<reference path="../IAction.ts"/>
 
 "use strict";
 
@@ -15,8 +15,8 @@ namespace jsLogic {
             this.zone.addEntity(this.entity);
         }
 
-        constructor(public entity: Entity, public zone: Zone<Entity>) {
-            super();
+        constructor(source: IAction<T>, public entity: Entity, public zone: Zone<Entity>) {
+            super(source);
         };
     }
 

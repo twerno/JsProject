@@ -1,4 +1,4 @@
-///<reference path="../Action.ts"/>
+///<reference path="../IAction.ts"/>
 
 "use strict";
 
@@ -12,11 +12,11 @@ namespace jsLogic {
 
         protected baseActionResolver(param: T): void {
             //super.baseActionResolver(param);
-            randomizeArray(this.zone.entities);
+            randomizeArray(this.zone.getRawArray());
         }
 
-        constructor(public zone: Zone<Entity>) {
-            super();
+        constructor(source: IAction<T>, public zone: Zone<Entity>) {
+            super(source);
         };
     }
 

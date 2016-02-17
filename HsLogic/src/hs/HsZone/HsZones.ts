@@ -27,6 +27,10 @@ namespace HSLogic {
                 return this.count >= this.maxElements;
         }
 
+        isEmpty(): boolean {
+            return this._entities.length === 0;
+        }
+
         constructor(owner: jsLogic.Entity, zoneId: string, maxElements: number) {
             super(owner, zoneId);
             this.maxElements = ((maxElements || 0) >= 0) ? (maxElements || 0) : -1;
@@ -46,7 +50,7 @@ namespace HSLogic {
         minion: HsZone;
         secret: HsZone;
 
-        constructor(public owner: jsLogic.Entity) {
+        constructor(public owner: Player) {
             this.hand = new HsZone(owner, ZoneConsts.HAND_ZONE, 10);
             this.deck = new HsZone(owner, ZoneConsts.DECK_ZONE, 80);
             this.minion = new HsZone(owner, ZoneConsts.GAME_ZONE, 7);

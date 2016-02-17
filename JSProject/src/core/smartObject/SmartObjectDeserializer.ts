@@ -29,7 +29,7 @@ namespace smartObj {
             if (!this.areAllSmartObjectFilled())
                 throw new Error(`Not all smart objects has been filled properly!`);
 
-            return <T> result;
+            return <T>result;
         }
 
 
@@ -153,8 +153,8 @@ namespace smartObj {
 
 
 
-        private getAsSmartObjectCollection(data: internal.ISmartObjectData): SmartObject[]| ISmartObjectMap {
-            let result: SmartObject[]| ISmartObjectMap;
+        private getAsSmartObjectCollection(data: internal.ISmartObjectData): SmartObject[] | ISmartObjectMap {
+            let result: SmartObject[] | ISmartObjectMap;
 
             if (data.clazz === 'Array')
                 result = [];
@@ -168,8 +168,8 @@ namespace smartObj {
 
 
 
-        private getAsCollection(data: internal.ISmartObjectData): Object[]| Object {
-            let result: Object[]| Object = JSON.parse(data.jsonData);
+        private getAsCollection(data: internal.ISmartObjectData): Object[] | Object {
+            let result: Object[] | Object = JSON.parse(data.jsonData);
 
             if (data.clazz === 'Array' && !(result instanceof Array))
                 throw new Error(`Array expected, ${typeof result} received.`);

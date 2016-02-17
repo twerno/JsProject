@@ -37,7 +37,7 @@ interface ITaskResult {
 class TaskRunner implements ITaskRunner {
 
 
-    
+
 
 
     private _task: ITask = null;
@@ -87,7 +87,7 @@ class TaskRunner implements ITaskRunner {
     }
 
 
-    private _internalOnSuccess = function(result: ITaskResult): void {
+    private _internalOnSuccess = function (result: ITaskResult): void {
         clearTimeout(this._timeoutHandler);
         this._task.applyResult(result);
         this._onSuccess === null || setTimeout(this._onSuccess, 1, this._task, result);
@@ -95,14 +95,14 @@ class TaskRunner implements ITaskRunner {
     }.bind(this);
 
 
-    private _internalOnError = function(error: Error): void {
+    private _internalOnError = function (error: Error): void {
         clearTimeout(this._timeoutHandler);
         this._onError === null || setTimeout(this._onError, 1, this._task, error);
         this.dispose();
     }.bind(this);
 
 
-    private _internalOnTimeout = function(): void {
+    private _internalOnTimeout = function (): void {
         clearTimeout(this._timeoutHandler);
         this._onTimeout === null || setTimeout(this._onTimeout, 1, this._task);
         this.dispose();

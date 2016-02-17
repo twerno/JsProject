@@ -27,7 +27,7 @@ module testEC6 {
             super()
         }
 
-        abstract run(success: asyncUtils6.TaskSuccessCallback < T >, failure: asyncUtils6.TaskFailureCallback): void;
+        abstract run(success: asyncUtils6.TaskSuccessCallback<T>, failure: asyncUtils6.TaskFailureCallback): void;
 
         protected assertTrue(check: boolean, customErrorDesc: string): void {
             if (!check) {
@@ -68,7 +68,7 @@ module testEC6 {
                 else if (testClesses instanceof Array)
                     this._registerTestsInGroup(group, testClesses);
                 else
-                    throw new GlobalError(`Test must be an AsyncTest<any> constructor. (${Utils.getNameOfClass(testClesses) })`);
+                    throw new GlobalError(`Test must be an AsyncTest<any> constructor. (${Utils.getNameOfClass(testClesses)})`);
 
             } catch (error) {
                 if (error instanceof GlobalError)

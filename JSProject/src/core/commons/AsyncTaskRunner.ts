@@ -42,7 +42,7 @@ namespace asyncRunner {
 
 
 
-	export abstract class ITaskRunner {
+    export abstract class ITaskRunner {
 
         abstract runAsync(timeLimit: number): void;
         abstract kill(): void;
@@ -127,9 +127,9 @@ namespace asyncRunner {
 
         private internalOnFailure(code: AsyncTaskFailureCode, message?: string, details?: Object): void {
             clearTimeout(this.timeoutHandler);
-            if (this.task === null && !this.emergencyThrowError(code, message, details)) 
+            if (this.task === null && !this.emergencyThrowError(code, message, details))
                 return;
-            
+
             let task: IAsyncTask = this.task;
             let onFailure: AsyncRunnerFailure = this.onFailure;
 
@@ -143,7 +143,7 @@ namespace asyncRunner {
         private emergencyThrowError(code: AsyncTaskFailureCode, message?: string, details?: Object): boolean {
             if (code === AsyncTaskFailureCode.ERROR) {
                 if (details && details['error'] instanceof Error)
-                    throw  details['error'];
+                    throw details['error'];
                 else if (message && message != '')
                     throw new Error(message);
                 else

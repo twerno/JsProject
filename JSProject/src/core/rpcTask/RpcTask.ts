@@ -15,7 +15,7 @@ abstract class RpcTask extends smartObj.SmartObject implements IRpcTask {
     //asyncTaskState: AsyncTaskState = AsyncTaskState.NEW;
     name: string;
 
-    abstract getNextMethod(): IRpcMethod; 
+    abstract getNextMethod(): IRpcMethod;
     abstract run(): void;
 
     getMetadata(): smartObj.ISmartObjectMemberMap {

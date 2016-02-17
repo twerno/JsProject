@@ -61,13 +61,13 @@ namespace rpc {
 
     export class JsonRpcParser<T extends smartObj.SmartObject> implements IJsonRpcParser<smartObj.SmartObject> {
 
-        constructor (private serializer: smartObj.SmartObjectSerializer, 
-            private deserializer: smartObj.SmartObjectDeserializer<T>) {}
+        constructor(private serializer: smartObj.SmartObjectSerializer,
+            private deserializer: smartObj.SmartObjectDeserializer<T>) { }
 
         stringify(data: T | Error | string): string {
             if (typeof data === 'string')
                 return JSON.stringify(data);
-            
+
             else if (data instanceof Error)
                 return JSON.stringify(data);
 

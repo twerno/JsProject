@@ -30,7 +30,7 @@
 	<variableList>
 		<variable>
 			<name>std_lib_ES6</name>
-			<value>$%7BPROJECT_LOC%7D/std-lib/lib.d.ts</value>
+			<value>$%7BPARENT-1-PROJECT_LOC%7D/lib/lib.d.ts</value>
 		</variable>
 	</variableList>
 </projectDescription>

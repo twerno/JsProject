@@ -31,7 +31,7 @@ namespace asyncUtils6 {
     export type TaskFailureCallback = (error: Error) => void;
 
     export abstract class AsyncTask<T> {
-        abstract run(success: TaskSuccessCallback < T >, failure: TaskFailureCallback): void;
+        abstract run(success: TaskSuccessCallback<T>, failure: TaskFailureCallback): void;
 
         buildRunner(): AsyncTaskRunner<T> {
             return new AsyncTaskRunner<T>(this);
@@ -144,12 +144,12 @@ namespace asyncUtils6 {
 
 
 
-                    let task: AsyncTask<T> = <AsyncTask<T>> this._taskExecutionInfo.task;
+                    let task: AsyncTask<T> = <AsyncTask<T>>this._taskExecutionInfo.task;
                     task.run(
                         (result: T): void => this._internalOnSuccess(result || null),
                         (error: Error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, VERBOSE));
                 } else {
-                    let worker: AsyncWorker<T> = <AsyncWorker<T>> this._taskExecutionInfo.task;
+                    let worker: AsyncWorker<T> = <AsyncWorker<T>>this._taskExecutionInfo.task;
                     worker.call(null,
                         (result: T): void => { this._internalOnSuccess(result || null) },
                         (error: Error): void => this._internalOnFailure(TaskFailureCode.ERROR, error || null, VERBOSE));

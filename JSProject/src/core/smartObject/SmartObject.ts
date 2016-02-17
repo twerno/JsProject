@@ -23,7 +23,7 @@ namespace smartObj {
             throw new Error(`getNewObj(): not implemented yet.`)
         }
     }
-                                          
+
 
     export namespace internal {
 
@@ -41,7 +41,7 @@ namespace smartObj {
 
 
         export class SmartObjectHelper {
-        
+
             static validateSmartObjId(smartObjId: string): void {
                 if (smartObjId === '' || smartObjId === null || smartObjId === undefined)
                     throw new Error(`SmartObj id can't be empty!`);
@@ -63,10 +63,10 @@ namespace smartObj {
                         continue;
 
                     if (!(key in metadata))
-                        throw new Error(`Metadata of "${smartObject.getClazz() }" does not describe member "${key}".`);
+                        throw new Error(`Metadata of "${smartObject.getClazz()}" does not describe member "${key}".`);
 
                     if (SmartObjectType[metadata[key]] === undefined)
-                        throw new Error(`Metadata of "${smartObject.getClazz() }" contains unknown code "${metadata[key]}".`);
+                        throw new Error(`Metadata of "${smartObject.getClazz()}" contains unknown code "${metadata[key]}".`);
                 }
             }
         }

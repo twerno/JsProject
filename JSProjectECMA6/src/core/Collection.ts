@@ -58,39 +58,39 @@ namespace Collection {
     }
 
 
-//    export class StringMapWithOrder<T> extends StringMap<T> {
-//
-//        private _keyList: string[];
-//
-//        put(key: string, val: T): void {
-//            if (!this.has(key))
-//                this._keyList.push(key);
-//
-//            super.put(key, val);
-//        }
-//
-//        delete(key: string): void {
-//
-//            super.delete(key);
-//        }
-//
-//        //        get(key: string): T {
-//        //            return this._map[key] || null;
-//        //        }
-//        //
-//        //        has(key: string): boolean {
-//        //            return this._map.hasOwnProperty(key);
-//        //        }
-//        //
-//        //        delete(key: string): void {
-//        //            delete this._map[key];
-//        //        }
-//        //
-//        //        clear(): void {
-//        //            this._map = {};
-//        //        }
-//
-//    }
+    //    export class StringMapWithOrder<T> extends StringMap<T> {
+    //
+    //        private _keyList: string[];
+    //
+    //        put(key: string, val: T): void {
+    //            if (!this.has(key))
+    //                this._keyList.push(key);
+    //
+    //            super.put(key, val);
+    //        }
+    //
+    //        delete(key: string): void {
+    //
+    //            super.delete(key);
+    //        }
+    //
+    //        //        get(key: string): T {
+    //        //            return this._map[key] || null;
+    //        //        }
+    //        //
+    //        //        has(key: string): boolean {
+    //        //            return this._map.hasOwnProperty(key);
+    //        //        }
+    //        //
+    //        //        delete(key: string): void {
+    //        //            delete this._map[key];
+    //        //        }
+    //        //
+    //        //        clear(): void {
+    //        //            this._map = {};
+    //        //        }
+    //
+    //    }
 
 
     export function removeFrom(array: Object[], element: Object): void {

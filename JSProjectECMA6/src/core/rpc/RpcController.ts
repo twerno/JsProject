@@ -102,7 +102,7 @@ namespace rpc6 {
 
             let errors: string[] = rpcMethod.validate(messageData);
             if (errors && errors.length > 0)
-                throw new Error(`[Controller: ${rpcControllerName}; rpcMethod: ${rpcMethodName}]\n ${errors.join(';') }`);
+                throw new Error(`[Controller: ${rpcControllerName}; rpcMethod: ${rpcMethodName}]\n ${errors.join(';')}`);
 
             return rpcMethod;
         }
@@ -163,7 +163,7 @@ namespace rpc6 {
             request.state = RpcRequestState.FAILED_ERROR;
 
             let token: RpcToken = request.token;
-            let error: Error = <Error> JSON.parse(message.serializedContent);
+            let error: Error = <Error>JSON.parse(message.serializedContent);
 
             token.onFailure(token, TokenFailureCode.ERROR, error);
         }
@@ -210,7 +210,7 @@ namespace rpc6 {
 
         registerController(controller: ICustomController): void {
             if (controller.getControllerName() in this.controllerMap)
-                throw new Error(`Controller ${controller.getControllerName() } is already registered.`);
+                throw new Error(`Controller ${controller.getControllerName()} is already registered.`);
 
             this.controllerMap[controller.getControllerName()] = controller;
         };
@@ -218,7 +218,7 @@ namespace rpc6 {
         getControllerByName(name: string): ICustomController {
             let result: ICustomController = this.controllerMap[name] || null;
             if (result === null)
-                throw new Error(`Controller ${result.getControllerName() } not found.`);
+                throw new Error(`Controller ${result.getControllerName()} not found.`);
 
             return result;
         };

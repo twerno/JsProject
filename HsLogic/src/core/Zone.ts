@@ -10,8 +10,8 @@ namespace jsLogic {
 	 *
 	 */
     export class Zone<T extends Entity> {
-        entities: T[] = [];
-        private _uuidMap: Collection.StringMap<T> = new Collection.StringMap<T>();
+        protected _entities: T[] = [];
+        protected _uuidMap: Collection.StringMap<T> = new Collection.StringMap<T>();
 
 
         removeEntity(entity: T): void {
@@ -19,7 +19,14 @@ namespace jsLogic {
                 throw new EntityDoesNotExistInZoneException(entity, this);
 
             this._uuidMap.delete(entity.id);
-            Collection.removeFrom(this.entities, entity);
+            Collection.removeFrom(this._entities, entity);
+        }
+
+
+        pop(): T {
+            let result: T = this._entities[this._entities.length - 1];
+            this.removeEntity(result);
+            return result;
         }
 
 
@@ -28,10 +35,12 @@ namespace jsLogic {
                 throw new EntityDuplicationException(entity, this);
 
             this._uuidMap.put(entity.id, entity);
-            this.entities.push(entity);
+            this._entities.push(entity);
         }
 
-        get count(): number { return this.entities.length; }
+        getRawArray(): T[] { return this._entities };
+
+        get count(): number { return this._entities.length; }
 
         constructor(public owner: Entity, public zoneId: string) { }
     }

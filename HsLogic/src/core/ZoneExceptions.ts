@@ -8,7 +8,7 @@ namespace jsLogic {
      *
      */
     export class ZoneNotFoundException extends Error {
-        constructor( public zoneId: string ) {
+        constructor(public zoneId: string) {
             super();
             this.message = `Zone "${zoneId}" not found.`;
         }
@@ -20,7 +20,7 @@ namespace jsLogic {
 	 *
 	 */
     export class ZoneDuplicationException extends Error {
-        constructor( public zoneId: string ) {
+        constructor(public zoneId: string) {
             super();
             this.message = `Zone "${zoneId}" has been already registered.`;
         }
@@ -32,7 +32,7 @@ namespace jsLogic {
 	 *
 	 */
     export class EntityDoesNotExistInZoneException extends Error {
-        constructor( public entity: Entity, public zone: Zone<Entity> ) {
+        constructor(public entity: Entity, public zone: Zone<Entity>) {
             super();
             this.message = `Entity "${entity}" does not exist in zone ${zone.zoneId}.`;
         }
@@ -44,7 +44,7 @@ namespace jsLogic {
 	 *
 	 */
     export class EntityDuplicationException extends Error {
-        constructor( public entity: Entity, public zone: Zone<Entity> ) {
+        constructor(public entity: Entity, public zone: Zone<Entity>) {
             super();
             this.message = `Entity "${entity}" has been already registered into ${zone.zoneId}.`;
         }

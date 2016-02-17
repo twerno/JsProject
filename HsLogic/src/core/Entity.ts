@@ -9,9 +9,10 @@ namespace jsLogic {
     export class Entity {
         id: string = generateNewId();
         markers: MarkersList = new MarkersList();
+        counters: CounterMap = {};
 
         toString(): string {
-            return `[${Utils.getNameOfClass(this) }:${this.id }]`;
+            return `[${Utils.getNameOfClass(this)}:${this.id}]`;
         }
 
         constructor(public owner: Entity) { }

@@ -53,7 +53,7 @@ class WebRtcCommunicator {
 
 
         this._consumer.setCallbacks(
-            function(data: IWebRtcConnectionData): void {
+            function (data: IWebRtcConnectionData): void {
                 var newData: IWebRtcCommunicatorData = { 'pass2': 'producer' };
                 //for (var key in data)
                 //	newData[key] = data[key]; 
@@ -65,7 +65,7 @@ class WebRtcCommunicator {
 
 
         this._producer.setCallbacks(
-            function(data: IWebRtcConnectionData): void {
+            function (data: IWebRtcConnectionData): void {
                 var newData: IWebRtcCommunicatorData = { 'pass2': 'consumer' };
                 //for (var key in data)
                 //	newData[key] = data[key]; 
@@ -118,7 +118,7 @@ class WebRtcCommunicator {
         if (data === null || data['pass2'] === 'producer') {
 
             if (data === null)
-                this._timer = setTimeout(function() {
+                this._timer = setTimeout(function () {
                     //if (!this.isConnected()) {
                     //	this._onConnectionError(new EWebRtcConfigureTimeout('configure timeout'));
                     //}
@@ -147,7 +147,7 @@ class WebRtcCommunicator {
 	/*
 	 *  _onConnectionError
 	 */
-    private _onConnectionError = function(error: Error): void {
+    private _onConnectionError = function (error: Error): void {
         if (this._debugMode)
             this.log(error.message, error);
         this.close();
@@ -159,7 +159,7 @@ class WebRtcCommunicator {
 	/*
 	 *  _onConnectionSucces
 	 */
-    private _onConnectionSucces = function(): void {
+    private _onConnectionSucces = function (): void {
         if (this.isConnected())
             this._onConnectionSuccesCallback();
     }.bind(this);
