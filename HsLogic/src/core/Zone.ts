@@ -38,6 +38,10 @@ namespace jsLogic {
             this._entities.push(entity);
         }
 
+        has(entity: T): boolean {
+            return this._entities.indexOf(entity) !== -1;
+        }
+
         getRawArray(): T[] { return this._entities };
 
         get count(): number { return this._entities.length; }

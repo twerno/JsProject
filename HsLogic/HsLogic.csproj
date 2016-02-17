@@ -23,11 +23,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\core\ZoneAction\" />
+    <Folder Include="src\hs\Event\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
     <TypeScriptCompile Include="src\core\action\eventAction\CancellableAction.ts" />
-    <TypeScriptCompile Include="src\core\action\eventAction\DispatchEvent.ts" />
+    <TypeScriptCompile Include="src\core\action\eventAction\DispatchEventAction.ts" />
     <TypeScriptCompile Include="src\core\action\IAction.ts" />
     <TypeScriptCompile Include="src\core\action\zoneAction\AddEntityToZone.ts" />
     <TypeScriptCompile Include="src\core\action\zoneAction\RandomizeZone.ts" />
@@ -40,7 +41,8 @@
     <TypeScriptCompile Include="src\core\helper\MathHelper.ts" />
     <TypeScriptCompile Include="src\core\Zone.ts" />
     <TypeScriptCompile Include="src\core\Marker.ts" />
-    <TypeScriptCompile Include="src\hs\Event\CardDrawnEvent.ts" />
+    <TypeScriptCompile Include="src\hsTest\DrawTest.ts" />
+    <TypeScriptCompile Include="src\hs\helpers\Target.ts" />
     <TypeScriptCompile Include="src\hs\HsAction.ts" />
     <TypeScriptCompile Include="src\hs\HsActionEvent.ts" />
     <TypeScriptCompile Include="src\hs\HsActions\AddGeneratedCardIntoHand.ts" />
@@ -94,7 +96,7 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>None</TypeScriptModuleKind>
-    <TypeScriptOutFile>dist\GameLogicEngine.js</TypeScriptOutFile>
+    <TypeScriptOutFile>dist\HsLogic.js</TypeScriptOutFile>
     <TypeScriptOutDir>dist\</TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>

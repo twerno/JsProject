@@ -8,7 +8,7 @@ namespace HSLogic {
 
     export interface DamageParam {
         source: jsLogic.IAction<HsActionParam>,
-        target: jsLogic.Entity,
+        target: Target,
         amount: number
     }
 
@@ -53,14 +53,14 @@ namespace HSLogic {
 
         protected doResolveMainAction(param: HsActionParam): boolean {
             return super.doResolveMainAction(param)
-                && this.damageParam.amount !== 0;
-            // && target in play
+                && this.damageParam.amount !== 0
+                && this.damageParam.target.targetInRightZone();
         }
 
 
         mainActionResolver(param: HsActionParam): HsAction {
 
-            let targetCounters: jsLogic.CounterMap = this.damageParam.target.counters;
+            let targetCounters: jsLogic.CounterMap = this.damageParam.target.target.counters;
 
             if (targetCounters[DivineShieldCounter.type]) {
                 delete targetCounters[DivineShieldCounter.type];

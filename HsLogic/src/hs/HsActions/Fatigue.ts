@@ -18,7 +18,7 @@ namespace HSLogic {
                     let dealDamageAction: Damage = new Damage(
                         {
                             source: this,
-                            target: this.target,
+                            target: new TargetPlayer(this.target),
                             amount: counters
                         });
 

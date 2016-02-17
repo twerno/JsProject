@@ -50,13 +50,19 @@ namespace jsLogic {
             this._resolvingAction = action;
 
             this._onActionResolving && this._onActionResolving(action);
+            let self: ActionStack<T> = this;
 
             if (action.timelimit > UNLIMITED)
-                this._timeoutHandler = setTimeout(action.timelimit, this._onTimeout);
+                this._timeoutHandler = setTimeout(action.timelimit, () => self._onTimeout());
+
 
             action.resolve(actionParam)
-                .then(this._onSuccess)
-                .catch(this._onFail);
+                .then((consequences: IAction<T>[]) => {
+                    self._onSuccess(consequences)
+                })
+                .catch((error: Error) => {
+                    self._onFail(error)
+                });
         }
 
 
@@ -80,7 +86,7 @@ namespace jsLogic {
         }
 
 
-        private _onSuccess = (consequences: IAction<T>[]): void => {
+        private _onSuccess(consequences: IAction<T>[]): void {
             this._clearTimeout();
 
             if (consequences instanceof Array)
@@ -94,7 +100,7 @@ namespace jsLogic {
         }
 
 
-        private _onFail = (error: Error): void => {
+        private _onFail(error: Error): void {
             this._clearTimeout();
             let action: IAction<T> = this._resolvingAction;
             let onActionRejectedTmp: OnActionRejected<T> = this._onActionRejected;
@@ -106,7 +112,7 @@ namespace jsLogic {
         }
 
 
-        private _onTimeout = (): void => {
+        private _onTimeout(): void {
             this._clearTimeout();
             this._onFail(new Error(`[Action: ${this._resolvingAction}] Timeout error: ${this._resolvingAction.timelimit}ms.`));
         }

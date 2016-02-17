@@ -4,6 +4,14 @@
 
 namespace HSLogic {
 
+    export class CardDrawnEvent extends HsActionEvent {
+
+        constructor(source: jsLogic.IAction<HsActionParam>, public target: DrawTarget, public card: Card) {
+            super(source);
+        };
+
+    }
+
     /**
      * DrawCard
      *
@@ -11,31 +19,35 @@ namespace HSLogic {
     export class DrawCard extends HsAction {
 
         resolve(param: HsActionParam): PromiseOfActions {
+            let self: DrawCard = this;
+
             return new Promise<HsAction[]>(
-                (resolve, reject): void => {
+                (resolve: any, reject: any): void => {
 
                     // fatigue
-                    if (this.zones.deck.isEmpty()) {
-                        resolve([new Fatigue(this.source, this.zones.owner)]);
+                    if (self.target.zones.deck.isEmpty()) {
+                        resolve([new Fatigue(self.source, self.target.player)]);
                     } else {
 
-                        let card: Card = this.zones.deck.pop();
+                        let card: Card = self.target.zones.deck.pop();
 
                         // addCard to hand if not full
-                        if (!this.zones.hand.isFull) {
-                            this.zones.hand.addEntity(card);
+                        if (!self.target.zones.hand.isFull) {
+                            self.target.zones.hand.addEntity(card);
 
                             // dispatch event if drawn
-                            resolve([new jsLogic.DispatchEvent(new CardDrawnEvent(this, this.zones.owner, card))]);
+                            let event: CardDrawnEvent = new CardDrawnEvent(self, self.target, card);
+                            resolve([new jsLogic.DispatchEventAction(event)]);
                         } else {
                             // mill card if hand is full
-                            resolve([new MillCard(this.source, card, this.zones.graveyard)]);
+                            resolve([new MillCard(self.source, card, self.target.zones.graveyard)]);
                         }
                     }
                 });
+
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public zones: HsZones) {
+        constructor(source: jsLogic.IAction<HsActionParam>, public target: DrawTarget) {
             super(source);
         };
     }

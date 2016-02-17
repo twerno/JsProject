@@ -38,13 +38,15 @@ namespace jsLogic {
     export abstract class BaseAction<T> extends IAction<T> {
 
         resolve(param: T): PromiseOfActions<T> {
-            return new Promise<IAction<T>[]>(
+            var self: BaseAction<T> = this;
 
-                (resolve, reject): void => {
-                    this.baseActionResolver(param);
+            return new Promise<IAction<T>[]>((resolve: any, reject: any): void => {
+                self.baseActionResolver(param);
 
-                    resolve(NO_CONSEQUENCES);
-                });
+                resolve(NO_CONSEQUENCES);
+            });
+
+
         }
 
         protected abstract baseActionResolver(param: T): void;
