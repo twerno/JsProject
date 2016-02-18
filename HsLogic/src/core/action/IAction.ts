@@ -26,7 +26,7 @@ namespace jsLogic {
 
         // actions in natural order
         // first on results list are first to resolve
-        abstract resolve(param: T): PromiseOfActions<T>;
+        abstract resolve(thisAction: IAction<T>, param: T): PromiseOfActions<T>;
     }
 
 
@@ -37,11 +37,11 @@ namespace jsLogic {
      */
     export abstract class BaseAction<T> extends IAction<T> {
 
-        resolve(param: T): PromiseOfActions<T> {
+        resolve(_this_: IAction<T>, param: T): PromiseOfActions<T> {
             var self: BaseAction<T> = this;
 
             return new Promise<IAction<T>[]>((resolve: any, reject: any): void => {
-                self.baseActionResolver(param);
+                self.baseActionResolver(_this_, param);
 
                 resolve(NO_CONSEQUENCES);
             });
@@ -49,7 +49,7 @@ namespace jsLogic {
 
         }
 
-        protected abstract baseActionResolver(param: T): void;
+        protected abstract baseActionResolver(_this_: IAction<T>, param: T): void;
 
     }
 

@@ -10,9 +10,9 @@ namespace jsLogic {
 	 */
     export class RandomizeZone<T> extends BaseAction<T> {
 
-        protected baseActionResolver(param: T): void {
+        protected baseActionResolver(_this_: RandomizeZone<T>, param: T): void {
             //super.baseActionResolver(param);
-            randomizeArray(this.zone.getRawArray());
+            randomizeArray(_this_.zone.getRawArray());
         }
 
         constructor(source: IAction<T>, public zone: Zone<Entity>) {

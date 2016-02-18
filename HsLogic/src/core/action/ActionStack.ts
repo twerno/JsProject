@@ -56,13 +56,9 @@ namespace jsLogic {
                 this._timeoutHandler = setTimeout(action.timelimit, () => self._onTimeout());
 
 
-            action.resolve(actionParam)
-                .then((consequences: IAction<T>[]) => {
-                    self._onSuccess(consequences)
-                })
-                .catch((error: Error) => {
-                    self._onFail(error)
-                });
+            action.resolve(action, actionParam)
+                .then((consequences: IAction<T>[]) => self._onSuccess(consequences))
+                .catch((error: Error) => self._onFail(error));
         }
 
 
@@ -89,9 +85,12 @@ namespace jsLogic {
         private _onSuccess(consequences: IAction<T>[]): void {
             this._clearTimeout();
 
+            let action: IAction<T>;
             if (consequences instanceof Array)
-                while (consequences.length > 0)
-                    this.putOnTop(consequences.pop());
+                while (consequences.length > 0) {
+                    action = consequences.pop();
+                    action && this.putOnTop(action);
+                }
 
             let actionTmp: IAction<T> = this._resolvingAction;
             this._resolvingAction = null;

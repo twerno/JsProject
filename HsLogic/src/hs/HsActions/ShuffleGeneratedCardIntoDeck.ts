@@ -15,21 +15,21 @@ namespace HSLogic {
  	 */
     export class ShuffleGeneratedCardIntoDeck extends HsAction {
 
-        resolve(param: HsActionParam): PromiseOfActions {
+        resolve(_this_: ShuffleGeneratedCardIntoDeck, param: HsActionParam): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
                     let added: boolean = false;
 
-                    for (let card in this.cards) {
-                        if (!this.deck.isFull) {
-                            this.deck.addEntity(card);
+                    for (let card in _this_.cards) {
+                        if (!_this_.deck.isFull) {
+                            _this_.deck.addEntity(card);
                             added = true;
                         }
                     }
 
                     if (added)
-                        resolve([new ShuffleDeck(this.source, this.deck)]);
+                        resolve([new ShuffleDeck(_this_.source, _this_.deck)]);
                     else
                         resolve(null);
                 });

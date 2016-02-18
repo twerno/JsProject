@@ -13,15 +13,15 @@ namespace HSLogic {
  	 */
     export class PutCardIntoHand extends HsAction {
 
-        resolve(param: HsActionParam): PromiseOfActions {
+        resolve(_this_: PutCardIntoHand, param: HsActionParam): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
-                    if (!this.zones.hand.isFull) {
-                        this.zones.hand.addEntity(this.card);
+                    if (!_this_.zones.hand.isFull) {
+                        _this_.zones.hand.addEntity(_this_.card);
                         resolve(null);
                     } else {
-                        resolve([new MillCard(this.source, this.card, this.zones.graveyard)]);
+                        resolve([new MillCard(_this_.source, _this_.card, _this_.zones.graveyard)]);
                     }
                 });
 

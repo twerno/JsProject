@@ -13,16 +13,16 @@ namespace HSLogic {
  	 */
     export class ReturnCardIntoHandFromPlayZone extends HsAction {
 
-        resolve(param: HsActionParam): PromiseOfActions {
+        resolve(_this_: ReturnCardIntoHandFromPlayZone, param: HsActionParam): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
-                    if (this.hand.isFull) {
-                        resolve([new MarkAsDestroyed(this.source, this.card)]);
+                    if (_this_.hand.isFull) {
+                        resolve([new MarkAsDestroyed(_this_.source, _this_.card)]);
                     }
                     else {
-                        this.sourceZone.removeEntity(this.card);
-                        this.hand.addEntity(this.card);
+                        _this_.sourceZone.removeEntity(_this_.card);
+                        _this_.hand.addEntity(_this_.card);
                         resolve(null);
                     }
                 });

@@ -11,11 +11,11 @@ namespace jsLogic {
  	 */
     export class DispatchEventAction<T extends IActionParam> extends IAction<T> {
 
-        resolve(param: T): PromiseOfActions<T> {
+        resolve(_this_: DispatchEventAction<T>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
 
-                    let consequences: IAction<T>[] = param.handlers.collectResponsesOf(this.event);
+                    let consequences: IAction<T>[] = param.handlers.collectResponsesOf(_this_.event);
 
                     // first action returned will be the first action to resolve
                     resolve(consequences);

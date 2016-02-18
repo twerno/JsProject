@@ -10,15 +10,15 @@ namespace HSLogic {
  	 */
     export class Fatigue extends HsAction {
 
-        resolve(param: HsActionParam): PromiseOfActions {
+        resolve(_this_: Fatigue, param: HsActionParam): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
-                    let counters: number = (++this.target.counters[FatigueCounter.type].value);
-                    let dealDamageAction: Damage = new Damage(
+                    let counters: number = (++_this_.target.counters[FatigueCounter.type].value);
+                    let dealDamageAction: DamageWrapper = new DamageWrapper(
                         {
-                            source: this,
-                            target: new TargetPlayer(this.target),
+                            source: _this_,
+                            target: new TargetPlayer(_this_.target),
                             amount: counters
                         });
 

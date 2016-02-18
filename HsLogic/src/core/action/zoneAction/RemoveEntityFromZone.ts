@@ -10,9 +10,9 @@ namespace jsLogic {
 	 */
     export class RemoveEntityFromZone<T> extends BaseAction<T> {
 
-        protected baseActionResolver(param: T): void {
+        protected baseActionResolver(_this_: RemoveEntityFromZone<T>, param: T): void {
             //super.baseActionResolver(param);
-            this.zone.removeEntity(this.entity);
+            _this_.zone.removeEntity(_this_.entity);
         }
 
         constructor(source: IAction<T>, public entity: Entity, public zone: Zone<Entity>) {
