@@ -1,6 +1,6 @@
-///<reference path="../../core/Entity.ts"/>
-///<reference path="../../core/Zone.ts"/>
-///<reference path="../HsCard.ts"/>
+///<reference path="../core/Entity.ts"/>
+///<reference path="../core/Zone.ts"/>
+///<reference path="HsCard.ts"/>
 
 "use strict";
 
@@ -24,7 +24,7 @@ namespace HSLogic {
             if (this.maxElements === -1)
                 return false;
             else
-                return this.count >= this.maxElements;
+                return this.length >= this.maxElements;
         }
 
         isEmpty(): boolean {

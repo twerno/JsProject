@@ -16,6 +16,10 @@ namespace jsLogic {
         abstract isRespondingTo(event: ActionEvent<IActionParam>): boolean;
 
         abstract trigger(event: ActionEvent<IActionParam>): IAction<IActionParam>;
+
+        toString(): string {
+            return ClassUtils.getNameOfClass(this);
+        }
     }
 
 }

@@ -1,3 +1,6 @@
+///<reference path="Marker.ts"/>
+///<reference path="Counter.ts"/>
+
 "use strict";
 
 namespace jsLogic {
@@ -12,7 +15,7 @@ namespace jsLogic {
         counters: CounterMap = {};
 
         toString(): string {
-            return `[${Utils.getNameOfClass(this)}:${this.id}]`;
+            return `[${ClassUtils.getNameOfClass(this)}:${this.id}]`;
         }
 
         constructor(public owner: Entity) { }

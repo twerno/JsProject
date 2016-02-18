@@ -1,12 +1,9 @@
 ///<reference path="../core/event/Event.ts"/>
+///<reference path="HsActionParam.ts"/>
 
 "use strict";
 
 namespace HSLogic {
-
-    export interface HsActionParam extends jsLogic.IActionParam {
-
-    }
 
     export class HsActionEvent extends jsLogic.ActionEvent<HsActionParam> {
         constructor(source: jsLogic.IAction<HsActionParam>) {

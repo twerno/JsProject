@@ -13,9 +13,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProjectECMA6", "JSProjectECMA6\JSProjectECMA6.csproj", "{974F47B9-2B2B-47B1-8060-17655826A1E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HsLogic", "HsLogic\HsLogic.csproj", "{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{974F47B9-2B2B-47B1-8060-17655826A1E2} = {974F47B9-2B2B-47B1-8060-17655826A1E2}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

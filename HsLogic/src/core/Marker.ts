@@ -4,7 +4,7 @@ namespace jsLogic {
 
     export class Marker {
 
-        type: string = Utils.getNameOfClass(this);
+        type: string = ClassUtils.getNameOfClass(this);
 
         constructor() { }
     }

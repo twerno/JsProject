@@ -1,4 +1,5 @@
 ///<reference path="../HsAction.ts"/>
+///<reference path="../HsActionEvent.ts"/> 
 ///<reference path="../../core/action/eventAction/CancellableAction.ts"/>
 
 "use strict";
@@ -8,17 +9,23 @@ namespace HSLogic {
 
     export interface DamageParam {
         source: jsLogic.IAction<HsActionParam>,
-        target: Target,
+        target: LivingTarget,
         amount: number
     }
 
     export class OnBeforeDamageEvent extends jsLogic.OnBeforeMainActionEvent<HsActionParam> {
+
+        static get type(): string { return (new OnBeforeDamageEvent({ target: null, source: null, amount: null })).type; }
+
         constructor(public damageParam: DamageParam) {
             super(damageParam.source);
         }
     }
 
     export class OnAfterDamageEvent extends HsActionEvent {
+
+        static get type(): string { return (new OnAfterDamageEvent(null, null)).type; }
+
         constructor(source: DamageMainAction, public damageParam: DamageParam) {
             super(source);
         }
@@ -29,7 +36,7 @@ namespace HSLogic {
      * Damage
      *
  	 */
-    export class Damage extends jsLogic.CancellableAction<HsActionParam, OnBeforeDamageEvent> {
+    export class DamageWrapper extends jsLogic.CancellableAction<HsActionParam, OnBeforeDamageEvent> {
 
 
         getMainAction(param: HsActionParam, onBeforeEvent: OnBeforeDamageEvent): DamageMainAction {
@@ -66,6 +73,8 @@ namespace HSLogic {
                 delete targetCounters[DivineShieldCounter.type];
                 this.damageParam.amount = 0;
             }
+
+            this.damageParam.target.target.counters[HpCounter.type].value -= this.damageParam.amount;
 
             return null;
         }

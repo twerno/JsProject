@@ -1,27 +1,45 @@
-﻿"use strict";
+"use strict";
 
 namespace HSLogic {
 
-    export class Target {
+    export interface ITarget {
+        targetInRightZone(): boolean;
+    }
+
+
+    export class Target implements ITarget {
 
         targetInRightZone(): boolean {
-            return this.zoneOfTarget.has(this.target);
+            return this.targetZone.has(this.target);
         }
 
-        constructor(public target: jsLogic.Entity, public zoneOfTarget: HsZone) {
+        constructor(public target: jsLogic.Entity, public targetZone: HsZone) {
         }
     }
 
-    export class TargetPlayer extends Target {
+
+    export class LivingTarget implements ITarget {
+
+        targetInRightZone(): boolean {
+            return this.targetZone.has(this.target);
+        }
+
+        constructor(public target: LivingEntity, public targetZone: HsZone) {
+        }
+    }
+
+
+    export class TargetPlayer extends LivingTarget {
 
         targetInRightZone(): boolean {
             return true;
         }
 
-        constructor(target: jsLogic.Entity) {
+        constructor(target: LivingEntity) {
             super(target, null);
         }
     }
+
 
     export class DrawTarget {
 

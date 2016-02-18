@@ -7,11 +7,11 @@ namespace jsLogic {
         type: string;
 
         toString(): string {
-            return Utils.getNameOfClass(this);
+            return ClassUtils.getNameOfClass(this);
         }
 
         constructor(public value: number) {
-            this.type = Utils.getNameOfClass(this);
+            this.type = ClassUtils.getNameOfClass(this);
         };
     }
 

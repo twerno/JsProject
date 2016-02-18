@@ -2,12 +2,6 @@
 
 namespace jsLogic {
 
-
-    export interface IActionParam {
-        handlers: EventHandlers<IActionParam>;
-    }
-
-
 	/**
 	 * EventHandlers
 	 *

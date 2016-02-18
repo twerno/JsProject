@@ -12,7 +12,7 @@ namespace jsLogic {
 
         protected baseActionResolver(_this_: RandomizeZone<T>, param: T): void {
             //super.baseActionResolver(param);
-            randomizeArray(_this_.zone.getRawArray());
+            MathUtils.randomizeArray(_this_.zone.getRawArray());
         }
 
         constructor(source: IAction<T>, public zone: Zone<Entity>) {

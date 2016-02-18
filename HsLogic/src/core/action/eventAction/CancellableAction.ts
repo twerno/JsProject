@@ -17,17 +17,17 @@ namespace jsLogic {
      */
     export abstract class CancellableAction<T extends IActionParam, E extends OnBeforeMainActionEvent<IActionParam>> extends IAction<T> {
 
-        resolve(_this_: CancellableAction<T, E>, param: T): PromiseOfActions<T> {
+        resolve(thisAction: CancellableAction<T, E>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {
-                    let onBeforeMainActionEvent: OnBeforeMainActionEvent<T> = _this_.getOnBeforeMainActionResolveEvent(param);
+                    let onBeforeMainActionEvent: OnBeforeMainActionEvent<T> = thisAction.getOnBeforeMainActionResolveEvent(param);
 
                     if (onBeforeMainActionEvent) {
                         let actions: IAction<T>[] = [];
 
                         actions.push(new DispatchEventAction<T>(onBeforeMainActionEvent));
-                        actions.push(_this_.getMainAction(param, onBeforeMainActionEvent));
+                        actions.push(thisAction.getMainAction(param, onBeforeMainActionEvent));
 
                         resolve(actions);
                     } else
@@ -47,18 +47,18 @@ namespace jsLogic {
      */
     export abstract class MainAction<T extends IActionParam, E extends OnBeforeMainActionEvent<IActionParam>> extends IAction<T> {
 
-        resolve(_this_: MainAction<T, E>, param: T): PromiseOfActions<T> {
+        resolve(thisAction: MainAction<T, E>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {
 
                     let actions: IAction<T>[] = [];
 
-                    if (_this_.doResolveMainAction(param)) {
-                        actions.push(_this_.mainActionResolver(param));
+                    if (thisAction.doResolveMainAction(param)) {
+                        actions.push(thisAction.mainActionResolver(param));
 
-                        if (_this_.doDispatchOnAfterEvent(param)) {
-                            let onAfterMainActionEvent: ActionEvent<T> = _this_.onAfterMainActionEvent(param);
+                        if (thisAction.doDispatchOnAfterEvent(param)) {
+                            let onAfterMainActionEvent: ActionEvent<T> = thisAction.onAfterMainActionEvent(param);
                             actions.push(new DispatchEventAction<T>(onAfterMainActionEvent));
                         }
                     }

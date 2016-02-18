@@ -6,7 +6,7 @@ namespace jsLogic {
 
     export class ActionEvent<T extends IActionParam> {
 
-        eventName: string = Utils.getNameOfClass(this);
+        type: string = ClassUtils.getNameOfClass(this);
 
         constructor(public source: IAction<T>) {
         }

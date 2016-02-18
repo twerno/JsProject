@@ -1,14 +1,21 @@
 ///<reference path="../core/Entity.ts"/>
-////////<reference path="../core/Zone.ts"/>
+///<reference path="HsCounter.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
-    export class Player extends jsLogic.Entity {
-
+    export class LivingEntity extends jsLogic.Entity {
         constructor() {
             super(null);
+            this.counters[HpCounter.type] = new HpCounter(30);
+        }
+    }
+
+    export class Player extends LivingEntity {
+
+        constructor() {
+            super();
             this.counters[FatigueCounter.type] = new FatigueCounter(0);
         }
     }

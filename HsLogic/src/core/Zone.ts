@@ -1,4 +1,3 @@
-///<reference path="../../../JSProjectECMA6/dist/jsProject6.d.ts"/>
 ///<reference path="Entity.ts"/>
 
 "use strict";
@@ -44,7 +43,7 @@ namespace jsLogic {
 
         getRawArray(): T[] { return this._entities };
 
-        get count(): number { return this._entities.length; }
+        get length(): number { return this._entities.length; }
 
         constructor(public owner: Entity, public zoneId: string) { }
     }

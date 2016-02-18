@@ -17,7 +17,7 @@ namespace jsLogic {
     export abstract class IAction<T> {
 
         toString(): string {
-            return Utils.getNameOfClass(this);
+            return ClassUtils.getNameOfClass(this);
         }
 
         get timelimit(): number { return _30_SECONDS; }
