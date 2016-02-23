@@ -3,7 +3,7 @@
 "use strict";
 
 namespace HSLogic {
-	
+
     /**
      * ShuffleGeneratedCardIntoDeck
      *
@@ -21,9 +21,9 @@ namespace HSLogic {
 
                     let added: boolean = false;
 
-                    for (let card in _this_.cards) {
+                    for (let id in _this_.cards) {
                         if (!_this_.deck.isFull) {
-                            _this_.deck.addEntity(card);
+                            _this_.deck.addEntity(_this_.cards[id]);
                             added = true;
                         }
                     }

@@ -1,3 +1,5 @@
+///<reference path="IAction.ts"/>
+
 "use strict";
 
 namespace jsLogic {
