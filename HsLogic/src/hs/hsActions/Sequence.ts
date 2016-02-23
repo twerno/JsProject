@@ -19,15 +19,17 @@ namespace HSLogic {
                 (resolve, reject): void => {
                     let actions: jsLogic.IAction<HsActionParam>[] = [];
 
-                    actions.push(_this_.innerAction);
-                    actions.push(new AuraUpdateStep(_this_));
-                    actions.push(new DeathCreationStep(_this_));
+                    while (_this_.innerActions && _this_.innerActions.length > 0)
+                        actions.push(_this_.innerActions.shift());
+
+                    actions.push(new AuraUpdateStep(_this_.source));
+                    actions.push(new DeathCreationStep(_this_.source));
 
                     resolve(actions);
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public innerAction: jsLogic.IAction<HsActionParam>) {
+        constructor(source: jsLogic.IAction<HsActionParam>, public innerActions: jsLogic.IAction<HsActionParam>[]) {
             super(source);
         };
 

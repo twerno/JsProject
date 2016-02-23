@@ -1,3 +1,5 @@
+///<reference path="../commons/ClassUtils.ts"/>
+
 "use strict";
 
 namespace jsLogic {

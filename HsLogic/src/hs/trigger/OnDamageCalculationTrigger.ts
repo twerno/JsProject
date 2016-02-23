@@ -5,14 +5,14 @@
 
 namespace HSLogic {
 
-    export class OnBeforeDamageTrigger extends jsLogic.EventHandler {
+    export class OnDamageCalculationTrigger extends jsLogic.EventHandler {
 
         isRespondingTo(event: HsActionEvent): boolean {
-            return event.type === OnBeforeDamageEvent.type;
+            return event.type === OnDamageCalculationEvent.type;
         };
 
         trigger(event: HsActionEvent): jsLogic.IAction<HsActionParam> {
-            return new EmptyAction(`${this}: action`);
+            return new EmptyAction(event.source, `${this}: action`);
         };
     }
 }

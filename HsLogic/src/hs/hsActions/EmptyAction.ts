@@ -14,8 +14,8 @@ namespace HSLogic {
             //console.log(`Empty action resolver: ${this.message}`);
         }
 
-        constructor(public message: string) {
-            super(null);
+        constructor(source: jsLogic.IAction<HsActionParam>, public message: string) {
+            super(source);
         };
     }
 }

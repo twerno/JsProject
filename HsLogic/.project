@@ -3,7 +3,6 @@
 	<name>HsLogic</name>
 	<comment></comment>
 	<projects>
-		<project>JSProjectECMA6</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

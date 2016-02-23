@@ -7,6 +7,8 @@ namespace jsLogic {
 
     export const UNLIMITED: number = 0;
     export const _30_SECONDS: number = 30 * 1000;
+    export const _10_SECONDS: number = 10 * 1000;
+    export const _5_SECONDS: number = 5 * 1000;
 
 
 
@@ -20,7 +22,7 @@ namespace jsLogic {
             return ClassUtils.getNameOfClass(this);
         }
 
-        get timelimit(): number { return _30_SECONDS; }
+        get timelimit(): number { return 1; }
 
         constructor(public source: IAction<T>) { }
 
@@ -37,11 +39,10 @@ namespace jsLogic {
      */
     export abstract class BaseAction<T> extends IAction<T> {
 
-        resolve(_this_: IAction<T>, param: T): PromiseOfActions<T> {
-            var self: BaseAction<T> = this;
+        resolve(_this_: BaseAction<T>, param: T): PromiseOfActions<T> {
 
             return new Promise<IAction<T>[]>((resolve: any, reject: any): void => {
-                self.baseActionResolver(_this_, param);
+                _this_.baseActionResolver(_this_, param);
 
                 resolve(NO_CONSEQUENCES);
             });

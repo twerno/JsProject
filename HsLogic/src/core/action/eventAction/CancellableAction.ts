@@ -17,17 +17,17 @@ namespace jsLogic {
      */
     export abstract class CancellableAction<T extends IActionParam, E extends OnBeforeMainActionEvent<IActionParam>> extends IAction<T> {
 
-        resolve(thisAction: CancellableAction<T, E>, param: T): PromiseOfActions<T> {
+        resolve(_this_: CancellableAction<T, E>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {
-                    let onBeforeMainActionEvent: OnBeforeMainActionEvent<T> = thisAction.getOnBeforeMainActionResolveEvent(param);
+                    let onBeforeMainActionEvent: OnBeforeMainActionEvent<T> = _this_.buildOnBeforeEvent(param);
 
                     if (onBeforeMainActionEvent) {
-                        let actions: IAction<T>[] = [];
-
-                        actions.push(new DispatchEventAction<T>(onBeforeMainActionEvent));
-                        actions.push(thisAction.getMainAction(param, onBeforeMainActionEvent));
+                        let actions: IAction<T>[] = [
+                            new DispatchEventAction<T>(onBeforeMainActionEvent),
+                            _this_.buildMainAction(param, onBeforeMainActionEvent)
+                        ];
 
                         resolve(actions);
                     } else
@@ -36,8 +36,8 @@ namespace jsLogic {
         }
 
 
-        abstract getMainAction(param: T, onBeforeEvent: OnBeforeMainActionEvent<T>): MainAction<T, E>;
-        abstract getOnBeforeMainActionResolveEvent(param: T): OnBeforeMainActionEvent<T>;
+        abstract buildMainAction(param: T, onBeforeEvent: OnBeforeMainActionEvent<T>): MainAction<T, E>;
+        abstract buildOnBeforeEvent(param: T): OnBeforeMainActionEvent<T>;
     }
 
 
@@ -47,18 +47,18 @@ namespace jsLogic {
      */
     export abstract class MainAction<T extends IActionParam, E extends OnBeforeMainActionEvent<IActionParam>> extends IAction<T> {
 
-        resolve(thisAction: MainAction<T, E>, param: T): PromiseOfActions<T> {
+        resolve(_this_: MainAction<T, E>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {
 
                     let actions: IAction<T>[] = [];
 
-                    if (thisAction.doResolveMainAction(param)) {
-                        actions.push(thisAction.mainActionResolver(param));
+                    if (_this_.mainActionToBeResolvedCheck(param)) {
+                        actions.push(_this_.mainActionResolver(param));
 
-                        if (thisAction.doDispatchOnAfterEvent(param)) {
-                            let onAfterMainActionEvent: ActionEvent<T> = thisAction.onAfterMainActionEvent(param);
+                        if (_this_.doDispatchOnAfterEvent(param)) {
+                            let onAfterMainActionEvent: ActionEvent<T> = _this_.buildOnAfterEvent(param);
                             actions.push(new DispatchEventAction<T>(onAfterMainActionEvent));
                         }
                     }
@@ -70,14 +70,14 @@ namespace jsLogic {
 
         abstract mainActionResolver(param: T): IAction<T>;
 
-        abstract onAfterMainActionEvent(param: T): ActionEvent<T>;
+        abstract buildOnAfterEvent(param: T): ActionEvent<T>;
 
 
         constructor(protected onBeforeEvent: E) {
             super(onBeforeEvent.source);
         }
 
-        protected doResolveMainAction(param: T): boolean {
+        protected mainActionToBeResolvedCheck(param: T): boolean {
             return !this.onBeforeEvent.cancelMainAction;
         }
 

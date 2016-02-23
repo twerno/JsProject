@@ -1,4 +1,4 @@
-﻿///<reference path="../HsAction.ts"/>
+///<reference path="../HsAction.ts"/>
 ///<reference path="../HsActionEvent.ts"/> 
 ///<reference path="../../core/action/eventAction/CancellableAction.ts"/>
 
@@ -9,7 +9,7 @@ namespace HSLogic {
 
 
     /**
-     * Sequence
+     * DestroyCardInPlay
      *
  	 */
     export class DestroyCardInPlay extends jsLogic.IAction<HsActionParam> {
@@ -20,5 +20,9 @@ namespace HSLogic {
 
                 });
         }
+
+        constructor(source: jsLogic.IAction<HsActionParam>, public card: Card) {
+            super(source);
+        };
     }
 }

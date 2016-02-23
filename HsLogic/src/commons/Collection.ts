@@ -58,7 +58,7 @@ namespace Collection {
     }
 
 
-	
+
     export function removeFrom(array: Object[], element: Object): void {
         array.splice(array.indexOf(element));
     }

@@ -1,4 +1,4 @@
-﻿///<reference path="../HsAction.ts"/>
+///<reference path="../HsAction.ts"/>
 ///<reference path="../HsActionEvent.ts"/> 
 ///<reference path="../../core/action/eventAction/CancellableAction.ts"/>
 
@@ -17,7 +17,7 @@ namespace HSLogic {
         resolve(_this_: AuraUpdateStep, param: HsActionParam): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-
+                    resolve(null);
                 });
         }
     }

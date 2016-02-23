@@ -3,7 +3,7 @@
 namespace MathUtils {
 
 	/**
-	 * randomInt
+	 * randomInt; min (included) and max (included)
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 	 *
 	 */
@@ -29,22 +29,4 @@ namespace MathUtils {
         }
     }
 
-
-    //    export function test_RandomizeArray(source: number[], n: number): Object[][] {
-    //        let result: number[][] = [];
-    //        let tmp: number[] = [];
-    //
-    //
-    //        for (let i = 0; i < n; i++) {
-    //            randomizeArray(source);
-    //
-    //            for (let j = 0; j < source.length; j++) {
-    //                tmp = (result[source[j]] || []);
-    //                tmp[j] = (tmp[j] || 0) + 1;
-    //                result[source[j]] = tmp;
-    //            }
-    //        }
-    //
-    //        return result;
-    //    }
 }

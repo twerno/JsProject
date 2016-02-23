@@ -15,11 +15,14 @@ namespace HSLogic {
                 (resolve, reject): void => {
 
                     let counters: number = (++_this_.target.counters[FatigueCounter.type].value);
-                    let dealDamageAction: DamageWrapper = new DamageWrapper(
+                    let dealDamageAction: Damage = new Damage(
                         {
-                            source: _this_,
+                            source: null,
                             target: new TargetPlayer(_this_.target),
-                            amount: counters
+                            sourceAction: _this_,
+                            amount: counters,
+                            type: HEALTH_MOD_TYPE.DIRECT,
+                            sourceType: SOURCE_TYPE.FATIGUE
                         });
 
                     resolve([dealDamageAction]);

@@ -38,7 +38,7 @@ namespace HSLogic {
                             _this_.target.zones.hand.addEntity(card);
 
                             // dispatch event if drawn
-                            let event: HsActionEvent = new OnAfterDrawCardEvent(_this_, _this_.target, card);
+                            let event: HsActionEvent = new OnAfterDrawCardEvent(_this_.source, _this_.target, card);
                             resolve([new jsLogic.DispatchEventAction(event)]);
                         } else {
                             // mill card if hand is full

@@ -4,7 +4,7 @@
 ///<reference path="../hs/HsActionParam.ts"/>
 ///<reference path="../core/action/ActionStack.ts"/>
 ///<reference path="../hs/trigger/OnAfterDamageTrigger.ts"/>
-///<reference path="../hs/trigger/OnBeforeDamageTrigger.ts"/>
+///<reference path="../hs/trigger/OnDamageCalculationTrigger.ts"/>
 ///<reference path="../hs/trigger/OnAfterCardDrawTrigger.ts"/>
 
 
@@ -40,23 +40,23 @@ namespace HSLogic {
             let self: DrawTest<T> = this;
             this.stack = new jsLogic.ActionStack<T>(
                 (action) => { self._onResolving(action); },
-                (action, isStackEmpty) => { self._onResolved(action, isStackEmpty); },
+                (action) => { self._onResolved(action); },
                 (action, error) => { self._onRejected(action, error); });
 
             this.param = new HSLogic.HsActionParam();
             this.param.handlers.registerTrigger(new OnAfterDamageTrigger());
-            this.param.handlers.registerTrigger(new OnBeforeDamageTrigger());
+            this.param.handlers.registerTrigger(new OnDamageCalculationTrigger());
             this.param.handlers.registerTrigger(new OnAfterCardDrawTrigger());
         }
 
 
         private _onResolving = (action: jsLogic.IAction<T>): void => {
-            console.log(`${action}`, action);
+            console.log(`${action}`, action, `${action.source}`);
         }
 
 
-        private _onResolved = (action: jsLogic.IAction<T>, isStackEmpty: boolean): void => {
-            if (!isStackEmpty)
+        private _onResolved = (action: jsLogic.IAction<T>): void => {
+            if (!this.stack.isEmpty())
                 this.stack.resolveTopAction(this.param);
             else
                 console.log(`Cards in hand: ${this.zones.hand.length}; Cards in deck: ${this.zones.deck.length}; Cards in graveyard: ${this.zones.graveyard.length}; Players health: ${this.player.counters[HpCounter.type].value}`);
@@ -67,13 +67,45 @@ namespace HSLogic {
             console.error(`${action}`, error);
         }
 
-
-        draw(): void {
-            let target: DrawTarget = new DrawTarget(this.player, this.zones);
-            let action: DrawCard = new DrawCard(null, target);
+        private _resolve(innerAction: jsLogic.IAction<T>[]): void {
+            let action: Sequence = new Sequence(new EmptyAction(null, 'PlayerAction'), innerAction);
 
             this.stack.putOnTop(action);
             this.stack.resolveTopAction(this.param);
+        }
+
+
+
+
+        draw(): void {
+            let target: DrawTarget = new DrawTarget(this.player, this.zones);
+            let action: DrawCard = new DrawCard(new EmptyAction(null, 'PlayerAction'), target);
+
+            this._resolve([action]);
+        }
+
+
+        discard(): void {
+            let action: Discard = new Discard(new EmptyAction(null, 'PlayerAction'), this.zones.hand.getRawArray()[0], this.zones);
+
+            this._resolve([action]);
+        }
+
+
+        pickAtRandom(): void {
+            let resultSet: Card[] = [];
+            let selectorParam: jsLogic.SelectorParam<Card> = {
+                options: this.zones.deck.getRawArray(),
+                amount: 1,
+                removeSelectedFromOptions: false
+            };
+            let source: jsLogic.IAction<T> = new EmptyAction(null, 'PlayerAction');
+            let actions: jsLogic.IAction<T>[] = [];
+
+            actions.push(new jsLogic.RandomSelector<T, Card>(source, selectorParam, resultSet));
+            actions.push(new SelectorResultToConsole(source, resultSet));
+
+            this._resolve(actions);
         }
 
     }

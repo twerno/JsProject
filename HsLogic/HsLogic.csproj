@@ -26,10 +26,12 @@
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
     <TypeScriptCompile Include="src\commons\MathUtils.ts" />
+    <TypeScriptCompile Include="src\core\action\ActionBuilder.ts" />
     <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
     <TypeScriptCompile Include="src\core\action\eventAction\CancellableAction.ts" />
     <TypeScriptCompile Include="src\core\action\eventAction\DispatchEventAction.ts" />
     <TypeScriptCompile Include="src\core\action\IAction.ts" />
+    <TypeScriptCompile Include="src\core\action\selector\Selector.ts" />
     <TypeScriptCompile Include="src\core\action\zoneAction\AddEntityToZone.ts" />
     <TypeScriptCompile Include="src\core\action\zoneAction\RandomizeZone.ts" />
     <TypeScriptCompile Include="src\core\action\zoneAction\RemoveEntityFromZone.ts" />
@@ -42,21 +44,29 @@
     <TypeScriptCompile Include="src\core\Zone.ts" />
     <TypeScriptCompile Include="src\core\Marker.ts" />
     <TypeScriptCompile Include="src\hsTest\DrawTest.ts" />
+    <TypeScriptCompile Include="src\hsTest\SelectorTest.ts" />
     <TypeScriptCompile Include="src\hs\helpers\Target.ts" />
     <TypeScriptCompile Include="src\hs\HsAction.ts" />
     <TypeScriptCompile Include="src\hs\HsActionEvent.ts" />
     <TypeScriptCompile Include="src\hs\HsActionParam.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\AddGeneratedCardIntoHand.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\Damage.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\DrawCard.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\EmptyAction.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\Fatigue.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\MarkAsDestroyed.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\MillCard.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\PutCardIntoHand.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\ReturnCardIntoHandFromPlayZone.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\ShuffleDeck.ts" />
-    <TypeScriptCompile Include="src\hs\HsActions\ShuffleGeneratedCardIntoDeck.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\AddGeneratedCardIntoHand.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\AuraUpdateStep.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\DamageHealing.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\DestroyCardInPlay.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\DeathCreationStep.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\Discard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\Heal.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\Sequence.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\Damage.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\DrawCard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\EmptyAction.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\Fatigue.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\MarkAsDestroyed.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\MillCard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\PutCardIntoHand.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\ReturnCardIntoHandFromPlayZone.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\ShuffleDeck.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\ShuffleGeneratedCardIntoDeck.ts" />
     <TypeScriptCompile Include="src\hs\HsCard.ts" />
     <TypeScriptCompile Include="src\hs\HsCounter.ts" />
     <TypeScriptCompile Include="src\hs\HsMarker.ts" />
@@ -64,7 +74,7 @@
     <TypeScriptCompile Include="src\hs\HsZone.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnAfterCardDrawTrigger.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnAfterDamageTrigger.ts" />
-    <TypeScriptCompile Include="src\hs\trigger\OnBeforeDamageTrigger.ts" />
+    <TypeScriptCompile Include="src\hs\trigger\OnDamageCalculationTrigger.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

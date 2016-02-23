@@ -13,7 +13,7 @@ namespace HSLogic {
         };
 
         trigger(event: HsActionEvent): jsLogic.IAction<HsActionParam> {
-            return new EmptyAction(`${this}: action`);
+            return new EmptyAction(event.source, `${this}: action`);
         };
     }
 }
