@@ -1,7 +1,7 @@
-///<reference path="../hs/HsAction.ts"/>
+///<reference path="../hs/core/HsAction.ts"/>
 ///<reference path="../hs/HsCard.ts"/>
-///<reference path="../hs/HsZone.ts"/>
-///<reference path="../hs/HsActionParam.ts"/>
+///<reference path="../hs/core/HsZone.ts"/>
+///<reference path="../hs/core/HsActionParam.ts"/>
 ///<reference path="../core/action/ActionStack.ts"/>
 ///<reference path="../hs/trigger/OnAfterDamageTrigger.ts"/>
 ///<reference path="../hs/trigger/OnDamageCalculationTrigger.ts"/>
@@ -10,7 +10,9 @@
 
 "use strict";
 
-namespace HSLogic { 
+namespace HSLogic {
+
+
 
     /*
      *  compiler error

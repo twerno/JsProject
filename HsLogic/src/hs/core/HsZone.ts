@@ -1,6 +1,6 @@
-///<reference path="../core/Entity.ts"/>
-///<reference path="../core/Zone.ts"/>
-///<reference path="HsCard.ts"/>
+///<reference path="../../core/Entity.ts"/>
+///<reference path="../../core/Zone.ts"/>
+///<reference path="../HsCard.ts"/>
 
 "use strict";
 
@@ -19,7 +19,7 @@ namespace HSLogic {
 
     export class HsZone extends jsLogic.Zone<Card> {
         maxElements: number = -1; // -1 - unlimited
-        
+
         isFull(): boolean {
             if (this.maxElements === -1)
                 return false;

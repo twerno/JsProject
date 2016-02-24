@@ -25,7 +25,7 @@ namespace jsLogic {
 
 
     var _entityIdGenerator: number = 0;
-    
+
 	/**
 	 *  generateNewId
 	 *

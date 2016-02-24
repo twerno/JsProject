@@ -1,4 +1,4 @@
-///<reference path="../core/Counter.ts"/>
+///<reference path="../../core/Counter.ts"/>
 
 "use strict";
 

@@ -1,6 +1,6 @@
-///<reference path="../HsAction.ts"/>
-///<reference path="../HsActionEvent.ts"/> 
-///<reference path="../../core/action/eventAction/CancellableAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
+///<reference path="../core/HsActionEvent.ts"/> 
+///<reference path="../../core/action/helperActions/CancellableAction.ts"/>
 
 "use strict";
 
@@ -24,7 +24,7 @@ namespace HSLogic {
     export enum SOURCE_TYPE {
         MINION, SPELL, HERO_POWER, HERO, FATIGUE
     }
-    
+
     /*
      * MINION     + COMBAT
      * MINION     + DIRECT = battlecry, event base effect 
@@ -80,8 +80,8 @@ namespace HSLogic {
             super(source);
         }
     }
-	
-	
+
+
     /**
      * Damage
      *

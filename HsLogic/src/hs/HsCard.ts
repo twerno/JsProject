@@ -1,5 +1,5 @@
 ///<reference path="../core/Entity.ts"/>
-///<reference path="HsCounter.ts"/>
+///<reference path="core/HsCounter.ts"/>
 
 "use strict";
 

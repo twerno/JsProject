@@ -6,17 +6,17 @@ namespace jsLogic {
 	 * EventHandlers
 	 *
 	 */
-    export class EventHandlers<T extends IActionParam> {
+    export class EventHandlers<T extends IHasHandlersAndBuilder> {
 
-        private _handlers: EventHandler[] = [];
+        private _handlers: EventHandler<T>[] = [];
 
 
-        registerTrigger(trigger: EventHandler): void {
+        registerTrigger(trigger: EventHandler<T>): void {
             this._handlers.push(trigger);
         }
 
 
-        unregisterTrigger(trigger: EventHandler): void {
+        unregisterTrigger(trigger: EventHandler<T>): void {
             Collection.removeFrom(this._handlers, trigger);
         }
 
@@ -30,10 +30,10 @@ namespace jsLogic {
         }
 
 
-        private _getResponsesByQueueLevel(event: ActionEvent<T>): Array<IAction<IActionParam>[]> {
-            let result: Array<IAction<IActionParam>[]> = [];
-            let responses: IAction<IActionParam>[] = [];
-            let handler: EventHandler;
+        private _getResponsesByQueueLevel(event: ActionEvent<T>): Array<IAction<T>[]> {
+            let result: Array<IAction<T>[]> = [];
+            let responses: IAction<T>[] = [];
+            let handler: EventHandler<T>;
 
             for (let i = 0; i < this._handlers.length; i++) {
                 handler = this._handlers[i];
@@ -52,9 +52,9 @@ namespace jsLogic {
         }
 
 
-        private _flatResponsesByQueueLevel(actionsByQueueLevel: Array<IAction<IActionParam>[]>): IAction<IActionParam>[] {
-            let result: IAction<IActionParam>[] = [];
-            let actions: IAction<IActionParam>[] = [];
+        private _flatResponsesByQueueLevel(actionsByQueueLevel: Array<IAction<T>[]>): IAction<T>[] {
+            let result: IAction<T>[] = [];
+            let actions: IAction<T>[] = [];
             let j: number;
 
             for (let i = 0; i < actionsByQueueLevel.length; i++) {

@@ -1,4 +1,4 @@
-///<reference path="../HsAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
 
 "use strict";
 
@@ -29,7 +29,7 @@ namespace HSLogic {
                     }
 
                     if (added)
-                        resolve([new ShuffleDeck(_this_.source, _this_.deck)]);
+                        resolve([param.actionBuilder.shuffleDeck(_this_.source, _this_.deck)]);
                     else
                         resolve(null);
                 });

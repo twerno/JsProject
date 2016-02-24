@@ -1,9 +1,9 @@
-///<reference path="../HsAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
 
 "use strict";
 
 namespace HSLogic {
-	
+
     /**
      * ReturnCardIntoHandFromPlayZone
      *
@@ -18,7 +18,7 @@ namespace HSLogic {
                 (resolve, reject): void => {
 
                     if (_this_.hand.isFull) {
-                        resolve([new MarkAsDestroyed(_this_.source, _this_.card)]);
+                        resolve([param.actionBuilder.markAsDestroyed(_this_.source, _this_.card)]);
                     }
                     else {
                         _this_.sourceZone.removeEntity(_this_.card);

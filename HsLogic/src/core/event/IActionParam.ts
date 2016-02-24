@@ -3,8 +3,8 @@
 namespace jsLogic {
 
 
-    export interface IActionParam {
-        handlers: EventHandlers<IActionParam>;
+    export interface IHasHandlersAndBuilder extends IHasActionBuilder {
+        handlers: EventHandlers<IHasHandlersAndBuilder>;
     }
 
 }

@@ -1,17 +1,20 @@
-///<reference path="../../core/action/ZoneAction/RandomizeZone.ts"/>
-
 "use strict";
 
 namespace HSLogic {
-	
+
     /**
      * ShuffleDeck
 	 *
  	 */
-    export class ShuffleDeck extends jsLogic.RandomizeZone<HsActionParam> {
+    export class ShuffleDeck extends HsBaseAction {
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public deck: jsLogic.Zone<jsLogic.Entity>) {
-            super(source, deck);
+        protected baseActionResolver(_this_: ShuffleDeck, param: HsActionParam): void {
+            //super.baseActionResolver(param);
+            MathUtils.randomizeArray(_this_.zone.getRawArray());
+        }
+
+        constructor(source: jsLogic.IAction<HsActionParam>, public zone: HsZone) {
+            super(source);
         };
     }
 }

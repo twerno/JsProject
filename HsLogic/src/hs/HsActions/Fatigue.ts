@@ -1,9 +1,9 @@
-///<reference path="../HsAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
 
 "use strict";
 
 namespace HSLogic {
-	
+
     /**
      * Fatigue
      *
@@ -15,17 +15,16 @@ namespace HSLogic {
                 (resolve, reject): void => {
 
                     let counters: number = (++_this_.target.counters[FatigueCounter.type].value);
-                    let dealDamageAction: Damage = new Damage(
-                        {
-                            source: null,
-                            target: new TargetPlayer(_this_.target),
-                            sourceAction: _this_,
-                            amount: counters,
-                            type: HEALTH_MOD_TYPE.DIRECT,
-                            sourceType: SOURCE_TYPE.FATIGUE
-                        });
+                    let damageParam: HealthModParam = {
+                        source: null,
+                        target: new TargetPlayer(_this_.target),
+                        sourceAction: _this_,
+                        amount: counters,
+                        type: HEALTH_MOD_TYPE.DIRECT,
+                        sourceType: SOURCE_TYPE.FATIGUE
+                    };
 
-                    resolve([dealDamageAction]);
+                    resolve([param.actionBuilder.damage(damageParam)]);
                 });
         }
 

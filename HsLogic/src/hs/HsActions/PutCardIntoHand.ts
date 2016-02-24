@@ -1,9 +1,9 @@
-///<reference path="../HsAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
 
 "use strict";
 
 namespace HSLogic {
-	
+
     /**
      * AddGeneratedCardIntoHand
      *
@@ -21,7 +21,7 @@ namespace HSLogic {
                         _this_.zones.hand.addEntity(_this_.card);
                         resolve(null);
                     } else {
-                        resolve([new MillCard(_this_.source, _this_.card, _this_.zones.graveyard)]);
+                        resolve([param.actionBuilder.millCard(_this_.source, _this_.card, _this_.zones.graveyard)]);
                     }
                 });
 

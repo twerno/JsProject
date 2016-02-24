@@ -2,7 +2,12 @@
 
 namespace jsLogic {
 
-    export type PromiseOfActions<T> = Promise<IAction<T>[]>;
+    export interface IHasActionBuilder {
+        actionBuilder: ActionBuilder;
+    }
+
+
+    export type PromiseOfActions<T> = Promise<IAction<IHasActionBuilder>[]>;
     export const NO_CONSEQUENCES: any = null;
 
     export const UNLIMITED: number = 0;
@@ -11,18 +16,17 @@ namespace jsLogic {
     export const _5_SECONDS: number = 5 * 1000;
 
 
-
-    /**
+	/**
      *  IAction<T>
      * 
      */
-    export abstract class IAction<T> {
+    export abstract class IAction<T extends IHasActionBuilder> {
 
         toString(): string {
             return ClassUtils.getNameOfClass(this);
         }
 
-        get timelimit(): number { return 1; }
+        get timelimit(): number { return _5_SECONDS; }
 
         constructor(public source: IAction<T>) { }
 
@@ -32,12 +36,12 @@ namespace jsLogic {
     }
 
 
-    
+
     /**
      *  BaseAction<T>
      *   action with no consequences
      */
-    export abstract class BaseAction<T> extends IAction<T> {
+    export abstract class BaseAction<T extends IHasActionBuilder> extends IAction<T> {
 
         resolve(_this_: BaseAction<T>, param: T): PromiseOfActions<T> {
 

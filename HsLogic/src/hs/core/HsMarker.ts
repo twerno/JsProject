@@ -1,4 +1,4 @@
-///<reference path="../core/Marker.ts"/>
+///<reference path="../../core/Marker.ts"/>
 
 "use strict";
 

@@ -7,12 +7,12 @@ namespace jsLogic {
         amount: number,
         removeSelectedFromOptions: boolean
     }
-    
+
     /**
      * Selector 
      *
      */
-    export class RandomSelector<T extends IActionParam, O> extends IAction<T> {
+    export class RandomSelector<T extends IHasHandlersAndBuilder, O> extends IAction<T> {
 
 
         resolve(_this_: RandomSelector<T, O>, param: T): PromiseOfActions<T> {

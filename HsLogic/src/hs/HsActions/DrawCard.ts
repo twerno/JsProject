@@ -1,5 +1,5 @@
-///<reference path="../HsAction.ts"/>
-///<reference path="../HsActionEvent.ts"/>
+///<reference path="../core/HsAction.ts"/>
+///<reference path="../core/HsActionEvent.ts"/>
 
 "use strict";
 
@@ -28,7 +28,7 @@ namespace HSLogic {
 
                     // fatigue
                     if (_this_.target.zones.deck.isEmpty()) {
-                        resolve([new Fatigue(_this_.source, _this_.target.player)]);
+                        resolve([param.actionBuilder.fatigue(_this_.source, _this_.target.player)]);
                     } else {
 
                         let card: Card = _this_.target.zones.deck.pop();
@@ -39,10 +39,10 @@ namespace HSLogic {
 
                             // dispatch event if drawn
                             let event: HsActionEvent = new OnAfterDrawCardEvent(_this_.source, _this_.target, card);
-                            resolve([new jsLogic.DispatchEventAction(event)]);
+                            resolve([param.actionBuilder.dispatchEvent(event)]);
                         } else {
                             // mill card if hand is full
-                            resolve([new MillCard(_this_.source, card, _this_.target.zones.graveyard)]);
+                            resolve([param.actionBuilder.millCard(_this_.source, card, _this_.target.zones.graveyard)]);
                         }
                     }
                 });

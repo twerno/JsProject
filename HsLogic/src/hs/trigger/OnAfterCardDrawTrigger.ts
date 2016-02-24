@@ -1,12 +1,12 @@
 ///<reference path="../../core/event/EventHandler.ts"/>
-///<reference path="../HsActionParam.ts"/>
+///<reference path="../core/HsActionParam.ts"/>
 ///<reference path="../HsActions/DrawCard.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
-    export class OnAfterCardDrawTrigger extends jsLogic.EventHandler {
+    export class OnAfterCardDrawTrigger extends HsEventHandler {
 
         isRespondingTo(event: HsActionEvent): boolean {
             return event.type === OnAfterDrawCardEvent.type;

@@ -1,9 +1,9 @@
-///<reference path="../HsAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
 
 "use strict";
 
 namespace HSLogic {
-	
+
     /**
      * MillCard
      *

@@ -1,9 +1,18 @@
+///<reference path="IAction.ts"/>
+///<reference path="helperActions/DispatchEventAction.ts"/>
+///<reference path="helperActions/Selector.ts"/>
+
 namespace jsLogic {
 
-    export class ActionBuilder<T> {
+    export class ActionBuilder {
 
-        addEntityToZone(source: IAction<T>, entity: Entity, zone: Zone<Entity>): AddEntityToZone<T> {
-            return new AddEntityToZone<T>(source, entity, zone);
+        dispatchEvent<T extends IHasHandlersAndBuilder>(event: ActionEvent<T>): DispatchEventAction<T> {
+            return new DispatchEventAction<T>(event);
+        }
+
+
+        randomSelector<T extends IHasHandlersAndBuilder, O>(source: IAction<T>, selectorParam: SelectorParam<O>, resultSet: O[]): RandomSelector<T, O> {
+            return new RandomSelector<T, O>(source, selectorParam, resultSet);
         }
     }
 }

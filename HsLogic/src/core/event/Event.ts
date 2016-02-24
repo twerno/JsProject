@@ -4,7 +4,7 @@
 
 namespace jsLogic {
 
-    export class ActionEvent<T extends IActionParam> {
+    export class ActionEvent<T extends IHasHandlersAndBuilder> {
 
         type: string = ClassUtils.getNameOfClass(this);
 

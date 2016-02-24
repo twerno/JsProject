@@ -1,11 +1,11 @@
 ///<reference path="../../core/event/EventHandler.ts"/>
-///<reference path="../HsActionParam.ts"/>
+///<reference path="../core/HsActionParam.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
-    export class OnAfterDamageTrigger extends jsLogic.EventHandler {
+    export class OnAfterDamageTrigger extends HsEventHandler {
 
         isRespondingTo(event: HsActionEvent): boolean {
             return event.type === OnAfterDamageEvent.type;

@@ -1,6 +1,6 @@
-///<reference path="../HsAction.ts"/>
-///<reference path="../HsActionEvent.ts"/> 
-///<reference path="../../core/action/eventAction/CancellableAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
+///<reference path="../core/HsActionEvent.ts"/> 
+///<reference path="../../core/action/helperActions/CancellableAction.ts"/>
 
 "use strict";
 
@@ -17,10 +17,7 @@ namespace HSLogic {
         resolve(_this_: DeathCreationStep, param: HsActionParam): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-                    for (let i = 0; i < 1e8; i++) {
-                        () => { new Object };
-                    }
-                    reject(null);
+                    resolve(null);
                 });
         }
     }

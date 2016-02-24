@@ -4,12 +4,12 @@
 "use strict";
 
 namespace jsLogic {
-	
+
     /**
      * Collect actions from handlers which respond to event 
      *
  	 */
-    export class DispatchEventAction<T extends IActionParam> extends IAction<T> {
+    export class DispatchEventAction<T extends IHasHandlersAndBuilder> extends IAction<T> {
 
         resolve(_this_: DispatchEventAction<T>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(

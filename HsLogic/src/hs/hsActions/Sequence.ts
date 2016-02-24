@@ -1,6 +1,6 @@
-///<reference path="../HsAction.ts"/>
-///<reference path="../HsActionEvent.ts"/> 
-///<reference path="../../core/action/eventAction/CancellableAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
+///<reference path="../core/HsActionEvent.ts"/> 
+///<reference path="../../core/action/helperActions/CancellableAction.ts"/>
 
 "use strict";
 
@@ -22,8 +22,8 @@ namespace HSLogic {
                     while (_this_.innerActions && _this_.innerActions.length > 0)
                         actions.push(_this_.innerActions.shift());
 
-                    actions.push(new AuraUpdateStep(_this_.source));
-                    actions.push(new DeathCreationStep(_this_.source));
+                    actions.push(param.actionBuilder.auraUpdateStep(_this_.source));
+                    actions.push(param.actionBuilder.deathCreationStep(_this_.source));
 
                     resolve(actions);
                 });

@@ -1,4 +1,4 @@
-///<reference path="../HsAction.ts"/>
+///<reference path="../core/HsAction.ts"/>
 
 "use strict";
 
@@ -13,7 +13,7 @@ namespace HSLogic {
             super(source);
         }
     }
-	
+
     /**
      * DiscardCard
      *
@@ -34,9 +34,8 @@ namespace HSLogic {
                     let event: OnAfterDiscardEvent = new OnAfterDiscardEvent(_this_.source, _this_.card);
 
                     _this_.zones.hand.removeEntity(_this_.card);
-
-                    actions.push(new jsLogic.DispatchEventAction<HsActionParam>(event));
-                    actions.push(new jsLogic.AddEntityToZone(_this_.source, _this_.card, _this_.zones.graveyard));
+                    actions.push(param.actionBuilder.dispatchEvent(event));
+                    //                    actions.push(new jsLogic.AddEntityToZone(_this_.source, _this_.card, _this_.zones.graveyard));
 
                     resolve(actions);
                 });

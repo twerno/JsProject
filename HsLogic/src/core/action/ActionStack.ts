@@ -4,12 +4,12 @@
 
 namespace jsLogic {
 
-    export type OnActionResolving<T> = (action: IAction<T>, executionTime?: number) => void;
-    export type OnActionResolved<T> = (action: IAction<T>, executionTime?: number) => void;
-    export type OnActionRejected<T> = (action: IAction<T>, error: Error, executionTime?: number) => void;
+    export type OnActionResolving<T extends IHasActionBuilder> = (action: IAction<T>, executionTime?: number) => void;
+    export type OnActionResolved<T extends IHasActionBuilder> = (action: IAction<T>, executionTime?: number) => void;
+    export type OnActionRejected<T extends IHasActionBuilder> = (action: IAction<T>, error: Error, executionTime?: number) => void;
 
 
-    export class ActionTimeoutError<T> extends Error {
+    export class ActionTimeoutError<T extends IHasActionBuilder> extends Error {
         constructor(message: string, public action: IAction<T>) {
             super(message);
         }
@@ -19,7 +19,7 @@ namespace jsLogic {
      *  ActionStack<T>
      * 
      */
-    export class ActionStack<T> {
+    export class ActionStack<T extends IHasActionBuilder> {
 
 
         private _stackFILO: IAction<T>[] = []; // first in - last out
@@ -96,7 +96,7 @@ namespace jsLogic {
             return this._resolving !== null;
         }
 
-        private static _postMortemLog<T>(resolving: Resolving<T>, result: Object): void {
+        private static _postMortemLog<T extends IHasActionBuilder>(resolving: Resolving<T>, result: Object): void {
             resolving.stopTimer();
 
             console.error(`Postmortem action log (executionTime: ${resolving.executionTime()}ms, timelimit: ${resolving.action.timelimit}ms)`,
@@ -150,7 +150,7 @@ namespace jsLogic {
     }
 
 
-    class Resolving<T> {
+    class Resolving<T extends IHasActionBuilder> {
 
         startTime: number = null;
         finishTime: number = null;

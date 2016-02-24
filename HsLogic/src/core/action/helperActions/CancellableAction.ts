@@ -6,7 +6,7 @@
 
 namespace jsLogic {
 
-    export class OnBeforeMainActionEvent<T extends IActionParam> extends ActionEvent<T> {
+    export class OnBeforeMainActionEvent<T extends IHasHandlersAndBuilder> extends ActionEvent<T> {
         cancelMainAction: boolean = false;
     }
 
@@ -15,7 +15,7 @@ namespace jsLogic {
      *  CancellableAction<T>
      * 
      */
-    export abstract class CancellableAction<T extends IActionParam, E extends OnBeforeMainActionEvent<IActionParam>> extends IAction<T> {
+    export abstract class CancellableAction<T extends IHasHandlersAndBuilder, E extends OnBeforeMainActionEvent<T>> extends IAction<T> {
 
         resolve(_this_: CancellableAction<T, E>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
@@ -45,7 +45,7 @@ namespace jsLogic {
      *  MainActionWrapper<T>
      * 
      */
-    export abstract class MainAction<T extends IActionParam, E extends OnBeforeMainActionEvent<IActionParam>> extends IAction<T> {
+    export abstract class MainAction<T extends IHasHandlersAndBuilder, E extends OnBeforeMainActionEvent<T>> extends IAction<T> {
 
         resolve(_this_: MainAction<T, E>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
