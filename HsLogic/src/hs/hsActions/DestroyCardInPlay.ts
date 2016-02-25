@@ -1,6 +1,6 @@
 ///<reference path="../core/HsAction.ts"/>
 ///<reference path="../core/HsActionEvent.ts"/> 
-///<reference path="../../core/action/helperActions/CancellableAction.ts"/>
+
 
 "use strict";
 

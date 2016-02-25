@@ -7,7 +7,9 @@ namespace HSLogic {
 
     export class HsActionParam implements jsLogic.IHasHandlersAndBuilder {
 
-        handlers: jsLogic.EventHandlers<HsActionParam> = new jsLogic.EventHandlers<HsActionParam>();
+        zones: HsZones;
+
+        handlers: jsLogic.EventHandlers<HsActionParam, HsEventParam> = new jsLogic.EventHandlers<HsActionParam, HsEventParam>();
 
         actionBuilder: HsActionBuilder<HsActionParam> = new HsActionBuilder<HsActionParam>();
     }

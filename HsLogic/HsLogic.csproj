@@ -21,18 +21,16 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\core\action\eventAction\" />
-    <Folder Include="src\core\action\selector\" />
-    <Folder Include="src\core\action\zoneAction\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
     <TypeScriptCompile Include="src\commons\MathUtils.ts" />
     <TypeScriptCompile Include="src\core\action\ActionBuilder.ts" />
     <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
-    <TypeScriptCompile Include="src\core\action\helperActions\CancellableAction.ts" />
+    <TypeScriptCompile Include="src\core\action\helperActions\BroadcastableAction.ts" />
+    <TypeScriptCompile Include="src\core\action\helperActions\BroadcastAction.ts" />
+    <TypeScriptCompile Include="src\core\action\helperActions\CancelableAction.ts" />
     <TypeScriptCompile Include="src\core\action\helperActions\DispatchEventAction.ts" />
     <TypeScriptCompile Include="src\core\action\helperActions\Selector.ts" />
     <TypeScriptCompile Include="src\core\action\IAction.ts" />

@@ -4,7 +4,7 @@ namespace jsLogic {
 
 
     export interface IHasHandlersAndBuilder extends IHasActionBuilder {
-        handlers: EventHandlers<IHasHandlersAndBuilder>;
+        handlers: EventHandlers<IHasHandlersAndBuilder, IEventParam<IHasHandlersAndBuilder>>;
     }
 
 }

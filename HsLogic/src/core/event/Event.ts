@@ -4,11 +4,16 @@
 
 namespace jsLogic {
 
-    export class ActionEvent<T extends IHasHandlersAndBuilder> {
+    export class IEventParam<T extends IHasHandlersAndBuilder> {
+        sourceAction: IAction<T>
+    }
+
+
+
+    export abstract class ActionEvent<T extends IHasHandlersAndBuilder, P extends IEventParam<T>> {
 
         type: string = ClassUtils.getNameOfClass(this);
 
-        constructor(public source: IAction<T>) {
-        }
+        constructor(public param: P) { }
     }
 }

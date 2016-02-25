@@ -6,17 +6,17 @@ namespace jsLogic {
 	 * EventHandlers
 	 *
 	 */
-    export class EventHandlers<T extends IHasHandlersAndBuilder> {
+    export class EventHandlers<T extends IHasHandlersAndBuilder, P extends IEventParam<T>> {
 
-        private _handlers: EventHandler<T>[] = [];
+        private _handlers: EventHandler<T, P>[] = [];
 
 
-        registerTrigger(trigger: EventHandler<T>): void {
+        registerTrigger(trigger: EventHandler<T, P>): void {
             this._handlers.push(trigger);
         }
 
 
-        unregisterTrigger(trigger: EventHandler<T>): void {
+        unregisterTrigger(trigger: EventHandler<T, P>): void {
             Collection.removeFrom(this._handlers, trigger);
         }
 
@@ -25,15 +25,18 @@ namespace jsLogic {
 		 *  return consequences of event in natural order (the lowest queue_level will be first)
 		 *
 		 */
-        collectResponsesOf(event: ActionEvent<T>): IAction<T>[] {
-            return this._flatResponsesByQueueLevel(this._getResponsesByQueueLevel(event));
+        collectResponsesOf(event: ActionEvent<T, P>): IAction<T>[] {
+            if (event instanceof Array)
+                return this._flatterResponsesOrderedByQueueLevel(this._getResponsesByQueueLevel(event));
+            else
+                return [];
         }
 
 
-        private _getResponsesByQueueLevel(event: ActionEvent<T>): Array<IAction<T>[]> {
+        private _getResponsesByQueueLevel(event: ActionEvent<T, P>): Array<IAction<T>[]> {
             let result: Array<IAction<T>[]> = [];
             let responses: IAction<T>[] = [];
-            let handler: EventHandler<T>;
+            let handler: EventHandler<T, P>;
 
             for (let i = 0; i < this._handlers.length; i++) {
                 handler = this._handlers[i];
@@ -52,7 +55,7 @@ namespace jsLogic {
         }
 
 
-        private _flatResponsesByQueueLevel(actionsByQueueLevel: Array<IAction<T>[]>): IAction<T>[] {
+        private _flatterResponsesOrderedByQueueLevel(actionsByQueueLevel: Array<IAction<T>[]>): IAction<T>[] {
             let result: IAction<T>[] = [];
             let actions: IAction<T>[] = [];
             let j: number;

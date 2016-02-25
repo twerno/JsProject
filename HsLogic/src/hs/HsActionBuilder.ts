@@ -46,8 +46,8 @@ namespace HSLogic {
             return new DestroyCardInPlay(source, card);
         }
 
-        discard(source: jsLogic.IAction<T>, card: Card, zones: HsZones): Discard {
-            return new Discard(source, card, zones);
+        discard(discardParam: DiscardParam): Discard {
+            return new Discard(discardParam);
         }
 
         drawCard(source: jsLogic.IAction<T>, target: DrawTarget): DrawCard {

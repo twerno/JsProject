@@ -1,30 +1,33 @@
 ///<reference path="../core/HsAction.ts"/>
 ///<reference path="../core/HsActionEvent.ts"/> 
-///<reference path="../../core/action/helperActions/CancellableAction.ts"/>
+///<reference path="../../core/action/helperActions/CancelableAction.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
+    export interface HealParam extends HsEventParam {
+        source: Card,
+        cancelHeal: boolean,
+        amount: number,
+        target: LivingTarget,
+    }
 
-    export class HealCalculationEvent extends jsLogic.OnBeforeMainActionEvent<HsActionParam> {
+
+    export class HealCalculationEvent extends HsActionEvent<HealParam> {
 
         static get type(): string { return HealCalculationEvent.name }
 
-        constructor(public healParam: HealthModParam) {
-            super(healParam.sourceAction);
-        }
+        //constructor(public healParam: HealParam) {
+        //    super(healParam);
+        //}
     }
 
 
 
-    export class OnAfterHealEvent extends HsActionEvent {
+    export class OnAfterHealEvent extends HsActionEvent<HealParam> {
 
         static get type(): string { return OnAfterHealEvent.name }
-
-        constructor(source: jsLogic.IAction<HsActionParam>, public healParam: HealthModParam) {
-            super(source);
-        }
     }
 
 
@@ -34,56 +37,40 @@ namespace HSLogic {
      * Heal
      *
      */
-    export class Heal extends jsLogic.CancellableAction<HsActionParam, HealCalculationEvent> {
+    export class Heal extends jsLogic.CancelableAction<HsActionParam, HealParam> {
 
-
-        buildMainAction(param: HsActionParam, onBeforeEvent: HealCalculationEvent): HealMainAction {
-            return new HealMainAction(onBeforeEvent);
+        buildOnBeforeEvent(eventParam: HealParam): HsActionEvent<HealParam> {
+            return new HealCalculationEvent(eventParam);
         }
 
-        buildOnBeforeEvent(param: HsActionParam): HealCalculationEvent {
-            return new HealCalculationEvent(this.healParam);
+        buildOnAfterEvent(eventParam: HealParam): HsActionEvent<HealParam> {
+            return new OnAfterHealEvent(eventParam);
         }
 
-        constructor(protected healParam: HealthModParam) {
-            super(healParam.sourceAction);
-        }
-    }
-
-
-    export class HealMainAction extends jsLogic.MainAction<HsActionParam, HealCalculationEvent> {
-
-        protected healParam: HealthModParam;
-
-
-
-        protected mainActionToBeResolvedCheck(param: HsActionParam): boolean {
-            return super.mainActionToBeResolvedCheck(param)
-                && this.healParam.amount !== 0
-                && this.healParam.target.targetInRightZone();
+        doCancelAction(eventParam: HealParam): boolean {
+            return eventParam.cancelHeal;
         }
 
-
-        mainActionResolver(param: HsActionParam): HsAction {
-
-            let targetCounters: jsLogic.CounterMap = this.healParam.target.target.counters;
-
-            if (targetCounters[DivineShieldCounter.type]) {
-                delete targetCounters[DivineShieldCounter.type];
-                this.healParam.amount = 0;
-            }
-
-            this.healParam.target.target.counters[HpCounter.type].value -= this.healParam.amount;
-
-            return null;
+        doCancelOnAfterEvent(eventParam: HealParam): boolean {
+            return false;
         }
 
+        resolve(_this_: Heal, param: HsActionParam): PromiseOfActions {
+            return new Promise<HsAction[]>(
 
-        buildOnAfterEvent(param: HsActionParam): HsActionEvent {
-            return new OnAfterHealEvent(this.source, this.healParam);
+                (resolve, reject): void => {
+                    let targetCounters: jsLogic.CounterMap = _this_.eventParam.target.target.counters;
+
+                    if (targetCounters[DivineShieldCounter.type]) {
+                        delete targetCounters[DivineShieldCounter.type];
+                        _this_.eventParam.amount = 0;
+                    }
+
+                    _this_.eventParam.target.target.counters[HpCounter.type].value -= _this_.eventParam.amount;
+
+                    return null;
+                }
+            );
         }
-
-
-
     }
 }

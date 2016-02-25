@@ -1,6 +1,6 @@
 ///<reference path="../core/HsAction.ts"/>
 ///<reference path="../core/HsActionEvent.ts"/> 
-///<reference path="../../core/action/helperActions/CancellableAction.ts"/>
+///<reference path="../../core/action/helperActions/CancelableAction.ts"/>
 
 "use strict";
 
@@ -37,24 +37,24 @@ namespace HSLogic {
 
 
 
-    export class HealthModEvent extends jsLogic.ActionEvent<HsActionParam> {
+    //export class HealthModEvent extends jsLogic.ActionEvent<HsActionParam> {
 
-        constructor(sourceAction: jsLogic.IAction<HsActionParam>) {
-            super(sourceAction);
-        }
-    }
+    //    constructor(sourceAction: jsLogic.IAction<HsActionParam>) {
+    //        super(sourceAction);
+    //    }
+    //}
 
 	/**
 	 *  positive numbers - healing
 	 *  negative - damage
 	 */
-    export interface HealthModParam {
-        sourceAction: jsLogic.IAction<HsActionParam>,
+    export interface DamageParam extends HsEventParam {
         source: Card,
         type: HEALTH_MOD_TYPE,
         sourceType: SOURCE_TYPE,
         target: LivingTarget,
-        amount: number
+        amount: number,
+        cancelDamage: boolean
     }
 
 
@@ -63,22 +63,14 @@ namespace HSLogic {
      *  DEFAULT_TRIGGER_LEVEL - Spell Damage/Fallen Heros
      *  QUEUE_TRIGGER_LAST    - Prophet Velens 
      */
-    export class OnDamageCalculationEvent extends jsLogic.OnBeforeMainActionEvent<HsActionParam> {
+    export class OnDamageCalculationEvent extends HsActionEvent<DamageParam> {
 
         static get type(): string { return OnDamageCalculationEvent.name }
-
-        constructor(public damageParam: HealthModParam) {
-            super(damageParam.sourceAction);
-        }
     }
 
-    export class OnAfterDamageEvent extends HsActionEvent {
+    export class OnAfterDamageEvent extends HsActionEvent<DamageParam> {
 
         static get type(): string { return OnAfterDamageEvent.name }
-
-        constructor(source: jsLogic.IAction<HsActionParam>, public damageParam: HealthModParam) {
-            super(source);
-        }
     }
 
 
@@ -86,58 +78,82 @@ namespace HSLogic {
      * Damage
      *
  	 */
-    export class Damage extends jsLogic.CancellableAction<HsActionParam, OnDamageCalculationEvent> {
+    export class Damage extends jsLogic.CancelableAction<HsActionParam, DamageParam> {
 
 
-        buildMainAction(param: HsActionParam, onBeforeEvent: OnDamageCalculationEvent): DamageMainAction {
-            return new DamageMainAction(onBeforeEvent);
+        buildOnBeforeEvent(eventParam: DamageParam): HsActionEvent<DamageParam> {
+            return new OnDamageCalculationEvent(eventParam);
         }
 
-        buildOnBeforeEvent(param: HsActionParam): OnDamageCalculationEvent {
-            return new OnDamageCalculationEvent(this.damageParam);
+        buildOnAfterEvent(eventParam: DamageParam): HsActionEvent<DamageParam> {
+            return new OnAfterDamageEvent(eventParam);
         }
 
-        constructor(protected damageParam: HealthModParam) {
-            super(damageParam.sourceAction);
-        }
-    }
-
-
-    export class DamageMainAction extends jsLogic.MainAction<HsActionParam, OnDamageCalculationEvent> {
-
-        protected damageParam: HealthModParam;
-
-
-        protected mainActionToBeResolvedCheck(param: HsActionParam): boolean {
-            return super.mainActionToBeResolvedCheck(param)
-                && this.damageParam.amount !== 0
-                && this.damageParam.target.targetInRightZone();
+        doCancelAction(eventParam: DamageParam): boolean {
+            return eventParam.cancelDamage
+                //|| eventParam.amount === 0
+                || !eventParam.target.targetInRightZone();
         }
 
-
-        mainActionResolver(param: HsActionParam): HsAction {
-
-            let targetCounters: jsLogic.CounterMap = this.damageParam.target.target.counters;
-
-            if (targetCounters[DivineShieldCounter.type]) {
-                delete targetCounters[DivineShieldCounter.type];
-                this.damageParam.amount = 0;
-            }
-
-            this.damageParam.target.target.counters[HpCounter.type].value -= this.damageParam.amount;
-
-            return null;
+        doCancelOnAfterEvent(eventParam: DamageParam): boolean {
+            return false;
         }
 
+        resolve(_this_: Heal, param: HsActionParam): PromiseOfActions {
+            return new Promise<HsAction[]>(
 
-        buildOnAfterEvent(param: HsActionParam): HsActionEvent {
-            return new OnAfterDamageEvent(this.source, this.damageParam);
-        }
+                (resolve, reject): void => {
+                    let targetCounters: jsLogic.CounterMap = _this_.eventParam.target.target.counters;
 
+                    if (targetCounters[DivineShieldCounter.type]) {
+                        delete targetCounters[DivineShieldCounter.type];
+                        _this_.eventParam.amount = 0;
+                    }
 
-        constructor(/* protected */ onBeforeEvent: OnDamageCalculationEvent) {
-            super(onBeforeEvent);
-            this.damageParam = onBeforeEvent.damageParam;
+                    _this_.eventParam.target.target.counters[HpCounter.type].value -= _this_.eventParam.amount;
+
+                    return null;
+                }
+            );
         }
     }
+
+
+    //export class DamageMainAction extends jsLogic.MainAction<HsActionParam, OnDamageCalculationEvent> {
+
+    //    protected damageParam: HealthModParam;
+
+
+    //    protected mainActionToBeResolvedCheck(param: HsActionParam): boolean {
+    //        return super.mainActionToBeResolvedCheck(param)
+    //            && this.damageParam.amount !== 0
+    //            && this.damageParam.target.targetInRightZone();
+    //    }
+
+
+    //    mainActionResolver(param: HsActionParam): HsAction {
+
+    //        let targetCounters: jsLogic.CounterMap = this.damageParam.target.target.counters;
+
+    //        if (targetCounters[DivineShieldCounter.type]) {
+    //            delete targetCounters[DivineShieldCounter.type];
+    //            this.damageParam.amount = 0;
+    //        }
+
+    //        this.damageParam.target.target.counters[HpCounter.type].value -= this.damageParam.amount;
+
+    //        return null;
+    //    }
+
+
+    //    buildOnAfterEvent(param: HsActionParam): HsActionEvent {
+    //        return new OnAfterDamageEvent(this.source, this.damageParam);
+    //    }
+
+
+    //    constructor(/* protected */ onBeforeEvent: OnDamageCalculationEvent) {
+    //        super(onBeforeEvent);
+    //        this.damageParam = onBeforeEvent.damageParam;
+    //    }
+    //}
 }

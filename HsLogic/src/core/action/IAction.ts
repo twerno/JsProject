@@ -7,7 +7,7 @@ namespace jsLogic {
     }
 
 
-    export type PromiseOfActions<T> = Promise<IAction<IHasActionBuilder>[]>;
+    export type PromiseOfActions<T> = Promise<IAction<T>[]>;
     export const NO_CONSEQUENCES: any = null;
 
     export const UNLIMITED: number = 0;
@@ -20,7 +20,7 @@ namespace jsLogic {
      *  IAction<T>
      * 
      */
-    export abstract class IAction<T extends IHasActionBuilder> {
+    export abstract class IAction<T> {
 
         toString(): string {
             return ClassUtils.getNameOfClass(this);
@@ -41,7 +41,7 @@ namespace jsLogic {
      *  BaseAction<T>
      *   action with no consequences
      */
-    export abstract class BaseAction<T extends IHasActionBuilder> extends IAction<T> {
+    export abstract class BaseAction<T> extends IAction<T> {
 
         resolve(_this_: BaseAction<T>, param: T): PromiseOfActions<T> {
 

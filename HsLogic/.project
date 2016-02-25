@@ -23,13 +23,7 @@
 		<link>
 			<name>std-lib/lib.d.ts</name>
 			<type>1</type>
-			<locationURI>std_lib_ES6</locationURI>
+			<location>C:/twerno/eclipse/eclipse/plugins/com.axmor.eclipse.typescript.core_4.0.0.201508061529/lib/typescript-bridge/ts/lib.d.ts</location>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>std_lib_ES6</name>
-			<value>$%7BPARENT-1-PROJECT_LOC%7D/lib/lib.d.ts</value>
-		</variable>
-	</variableList>
 </projectDescription>

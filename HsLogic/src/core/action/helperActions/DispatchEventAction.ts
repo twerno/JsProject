@@ -9,9 +9,9 @@ namespace jsLogic {
      * Collect actions from handlers which respond to event 
      *
  	 */
-    export class DispatchEventAction<T extends IHasHandlersAndBuilder> extends IAction<T> {
+    export class DispatchEventAction<T extends IHasHandlersAndBuilder, P extends IEventParam<T>> extends IAction<T> {
 
-        resolve(_this_: DispatchEventAction<T>, param: T): PromiseOfActions<T> {
+        resolve(_this_: DispatchEventAction<T, P>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
 
@@ -23,8 +23,8 @@ namespace jsLogic {
         }
 
 
-        constructor(public event: ActionEvent<T>) {
-            super(event.source);
+        constructor(public event: ActionEvent<T, P>) {
+            super(event.param.sourceAction);
         };
     }
 

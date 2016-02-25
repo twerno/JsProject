@@ -6,16 +6,23 @@
 
 namespace HSLogic {
 
-    export abstract class HsActionEvent extends jsLogic.ActionEvent<HsActionParam> {
+    export interface HsEventParam extends jsLogic.IEventParam<HsActionParam> {
 
-        constructor(source: jsLogic.IAction<HsActionParam>) {
-            super(source);
+    }
+
+
+
+    export abstract class HsActionEvent<P extends HsEventParam> extends jsLogic.ActionEvent<HsActionParam, P> {
+
+        constructor(param: P) {
+            super(param);
         }
 
     }
 
 
-    export abstract class HsEventHandler extends jsLogic.EventHandler<HsActionParam> {
+
+    export abstract class HsEventHandler extends jsLogic.EventHandler<HsActionParam, HsEventParam> {
 
     }
 }
