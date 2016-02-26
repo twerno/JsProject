@@ -34,7 +34,7 @@ namespace HSLogic {
             return new AuraUpdateStep(source);
         }
 
-        damage(damageParam: HealthModParam): Damage {
+        damage(damageParam: DamageParam): Damage {
             return new Damage(damageParam);
         }
 
@@ -50,8 +50,8 @@ namespace HSLogic {
             return new Discard(discardParam);
         }
 
-        drawCard(source: jsLogic.IAction<T>, target: DrawTarget): DrawCard {
-            return new DrawCard(source, target);
+        drawCard(drawParam: DrawParam): DrawCard {
+            return new DrawCard(drawParam);
         }
 
         emptyAction(source: jsLogic.IAction<T>, message: string): EmptyAction {
@@ -62,7 +62,7 @@ namespace HSLogic {
             return new Fatigue(source, target);
         }
 
-        heal(healParam: HealthModParam): Heal {
+        heal(healParam: HealParam): Heal {
             return new Heal(healParam);
         }
 

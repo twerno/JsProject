@@ -12,13 +12,9 @@ namespace HSLogic {
     }
 
 
-    export class OnAfterDiscardEvent extends HsActionEvent {
+    export class OnAfterDiscardEvent extends HsActionEvent<DiscardParam> {
 
         static get type(): string { return OnAfterDiscardEvent.name }
-
-        constructor(public param: DiscardParam) {
-            super(param);
-        }
     }
 
 

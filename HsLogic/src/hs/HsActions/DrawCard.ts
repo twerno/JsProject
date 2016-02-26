@@ -5,14 +5,15 @@
 
 namespace HSLogic {
 
-    export class OnAfterDrawCardEvent extends HsActionEvent {
 
-        static get type(): string { return new OnAfterDrawCardEvent(null, null, null).type; }
+    export interface DrawParam extends HsEventParam {
+        target: DrawTarget,
+        card: Card
+    }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public target: DrawTarget, public card: Card) {
-            super(source);
-        };
+    export class OnAfterDrawEvent extends HsActionEvent<DrawParam> {
 
+        static get type(): string { return OnAfterDrawEvent.name }
     }
 
     /**
@@ -26,31 +27,35 @@ namespace HSLogic {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
+                    let target: DrawTarget = _this_.drawParam.target;
+
                     // fatigue
-                    if (_this_.target.zones.deck.isEmpty()) {
-                        resolve([param.actionBuilder.fatigue(_this_.source, _this_.target.player)]);
+                    if (target.zones.deck.isEmpty()) {
+                        resolve([param.actionBuilder.fatigue(_this_.source, target.player)]);
                     } else {
 
-                        let card: Card = _this_.target.zones.deck.pop();
+                        let card: Card = _this_.drawParam.target.zones.deck.pop();
 
                         // addCard to hand if not full
-                        if (!_this_.target.zones.hand.isFull()) {
-                            _this_.target.zones.hand.addEntity(card);
+                        if (!target.zones.hand.isFull()) {
+                            target.zones.hand.addEntity(card);
 
                             // dispatch event if drawn
-                            let event: HsActionEvent = new OnAfterDrawCardEvent(_this_.source, _this_.target, card);
-                            resolve([param.actionBuilder.dispatchEvent(event)]);
+                            resolve([
+                                param.actionBuilder.dispatch(
+                                    new OnAfterDrawEvent(_this_.drawParam))
+                            ]);
                         } else {
                             // mill card if hand is full
-                            resolve([param.actionBuilder.millCard(_this_.source, card, _this_.target.zones.graveyard)]);
+                            resolve([param.actionBuilder.millCard(_this_.source, card, target.zones.graveyard)]);
                         }
                     }
                 });
 
         }
 
-        constructor(source: HsAction, public target: DrawTarget) {
-            super(source);
+        constructor(public drawParam: DrawParam) {
+            super(drawParam.sourceAction);
         };
     }
 }

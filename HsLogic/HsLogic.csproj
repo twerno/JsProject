@@ -54,7 +54,6 @@
     <TypeScriptCompile Include="src\hs\HsActionBuilder.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\AddGeneratedCardIntoHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\AuraUpdateStep.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\DamageHealing.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DestroyCardInPlay.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DeathCreationStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Discard.ts" />

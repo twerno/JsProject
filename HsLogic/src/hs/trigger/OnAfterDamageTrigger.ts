@@ -7,11 +7,11 @@ namespace HSLogic {
 
     export class OnAfterDamageTrigger extends HsEventHandler {
 
-        isRespondingTo(event: HsActionEvent): boolean {
+        isRespondingTo(event: HsActionEvent<DamageParam>): boolean {
             return event.type === OnAfterDamageEvent.type;
         };
 
-        trigger(event: HsActionEvent): jsLogic.IAction<HsActionParam> {
+        trigger(event: HsActionEvent<DamageParam>): jsLogic.IAction<HsActionParam> {
             return new EmptyAction(event.param.sourceAction, `${this}: action`);
         };
     }

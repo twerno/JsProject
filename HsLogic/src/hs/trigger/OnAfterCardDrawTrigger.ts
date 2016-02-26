@@ -8,11 +8,11 @@ namespace HSLogic {
 
     export class OnAfterCardDrawTrigger extends HsEventHandler {
 
-        isRespondingTo(event: HsActionEvent): boolean {
-            return event.type === OnAfterDrawCardEvent.type;
+        isRespondingTo(event: HsActionEvent<DrawParam>): boolean {
+            return event.type === OnAfterDrawEvent.type;
         };
 
-        trigger(event: HsActionEvent): jsLogic.IAction<HsActionParam> {
+        trigger(event: HsActionEvent<DrawParam>): jsLogic.IAction<HsActionParam> {
             return new EmptyAction(event.param.sourceAction, `${this}: action`);
         };
     }

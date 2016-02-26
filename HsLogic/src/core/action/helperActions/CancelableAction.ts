@@ -6,14 +6,6 @@
 
 namespace jsLogic {
 
-    //    export interface ICancellableAction<T extends IHasHandlersAndBuilder, P extends IEventParam<T>> {
-    //        sourceAction: IAction<T>,
-    //        action: IAction<T>,
-    //        onBeforeEvent: OnBeforeCancallableActionEvent<P, T>,
-    //        onAfterEvent: ActionEvent<P, T>
-    //    }
-
-
     /**
      *  CancelableAction<T>
      * 

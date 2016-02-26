@@ -17,10 +17,6 @@ namespace HSLogic {
     export class HealCalculationEvent extends HsActionEvent<HealParam> {
 
         static get type(): string { return HealCalculationEvent.name }
-
-        //constructor(public healParam: HealParam) {
-        //    super(healParam);
-        //}
     }
 
 
