@@ -24,8 +24,8 @@ namespace HSLogic {
         static get type(): string { return (new DivineShieldCounter()).type; }
     }
 
-    export class HpCounter extends HsCounter {
-        static get type(): string { return (new HpCounter(0)).type; }
-    }
+    //export class HpCounter extends HsCounter {
+    //    static get type(): string { return (new HpCounter(0)).type; }
+    //}
 
 }

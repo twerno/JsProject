@@ -19,12 +19,12 @@
 ///<reference path="core/HsZone.ts"/>
 ///<reference path="HsCard.ts"/>
 ///<reference path="core/HsAction.ts"/>
-///<reference path="core/HsActionParam.ts"/>
+///<reference path="core/HsGameEnv.ts"/>
 
 
 namespace HSLogic {
 
-    export class HsActionBuilder<T extends HsActionParam> extends jsLogic.ActionBuilder {
+    export class HsActionBuilder<T extends HsGameEnv> extends jsLogic.ActionBuilder {
 
         addGeneratedCardIntoHand(source: jsLogic.IAction<T>, card: Card, hand: HsZone): AddGeneratedCardIntoHand {
             return new AddGeneratedCardIntoHand(source, card, hand);

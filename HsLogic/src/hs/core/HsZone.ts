@@ -59,18 +59,4 @@ namespace HSLogic {
         }
 
     }
-
-
-    //    export function buildHsZoneMap(owner: jsLogic.Entity): jsLogic.ZoneMap<Card> {
-    //        let result: jsLogic.ZoneMap<Card> = new jsLogic.ZoneMap<Card>();
-    //
-    //        result.register();
-    //        result.register(new HsZone(owner, ZoneConsts., 7));
-    //        result.register(new HsZone(owner, ZoneConsts., ));
-    //        result.register(new HsZone(owner, ZoneConsts.REMOVED_ZONE, ZoneConsts.UNLIMITED));
-    //        result.register(new HsZone(owner, ZoneConsts., ZoneConsts.UNLIMITED));
-    //        result.register();
-    //
-    //        return result;
-    //    }
 }

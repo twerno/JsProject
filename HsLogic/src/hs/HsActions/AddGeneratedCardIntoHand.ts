@@ -15,12 +15,12 @@ namespace HSLogic {
  	 */
     export class AddGeneratedCardIntoHand extends HsBaseAction {
 
-        protected baseActionResolver(_this_: AddGeneratedCardIntoHand, param: HsActionParam): void {
+        protected baseActionResolver(_this_: AddGeneratedCardIntoHand, gameEnv: HsGameEnv): void {
             if (!_this_.hand.isFull)
                 _this_.hand.addEntity(_this_.card);
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public card: Card, public hand: HsZone) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card, public hand: HsZone) {
             super(source);
         };
     }

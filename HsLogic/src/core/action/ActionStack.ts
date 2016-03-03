@@ -99,8 +99,9 @@ namespace jsLogic {
         private static _postMortemLog<T>(resolving: Resolving<T>, result: Object): void {
             resolving.stopTimer();
 
-            console.error(`Postmortem action log (executionTime: ${resolving.executionTime()}ms, timelimit: ${resolving.action.timelimit}ms)`,
+            console.error(`Postmortem action log (executionTime: ${resolving.executionTimeStr()}, timelimit: ${StringUtils.msPrettyPrint(resolving.action.timelimit)})`,
                 resolving.action, result);
+            console.error(result);
         }
 
         private _onSuccess(resolving: Resolving<T>, consequences: IAction<T>[]): void {
@@ -116,7 +117,7 @@ namespace jsLogic {
 
             this._resolving = null;
             !this._onActionResolved && ActionStack._postMortemLog<T>(resolving, consequences);
-            this._onActionResolved && this._onActionResolved(resolving.action, resolving.executionTime());
+            this._onActionResolved && this._onActionResolved.call(null, resolving.action, resolving.executionTime());
         }
 
 
@@ -126,7 +127,7 @@ namespace jsLogic {
 
             this._resolving = null;
             !this._onActionRejected && ActionStack._postMortemLog<T>(resolving, error);
-            this._onActionRejected && this._onActionRejected(resolving.action, error, resolving.executionTime());
+            this._onActionRejected && this._onActionRejected.call(null, resolving.action, error, resolving.executionTime());
         }
 
 
@@ -159,6 +160,10 @@ namespace jsLogic {
 
         executionTime(): number {
             return (this.finishTime ? this.finishTime : performance.now()) - this.startTime;
+        }
+
+        executionTimeStr(): string {
+            return StringUtils.msPrettyPrint(this.executionTime());
         }
 
         startTimer(): void { this.startTime = performance.now() }

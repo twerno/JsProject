@@ -47,7 +47,7 @@ namespace jsLogic {
                         reject(new Error(`[${_this_.mainAction}] 'onBeforeEvent' had not beed created.`));
 
                     resolve([
-                        param.actionBuilder.dispatch(onBeforeEvent),
+                        param.actionFactory.dispatch(onBeforeEvent),
                         new CancellableActionInternalWrapper(_this_.mainAction)
                     ]);
 
@@ -83,7 +83,7 @@ namespace jsLogic {
                     if (!_this_.mainAction.doCancelOnAfterEvent(eventParam)) {
                         let onAfterEvent: ActionEvent<T, P> = _this_.mainAction.buildOnAfterEvent(eventParam);
 
-                        actions.push(param.actionBuilder.dispatch(onAfterEvent));
+                        actions.push(param.actionFactory.dispatch(onAfterEvent));
                     }
 
                     resolve(actions);

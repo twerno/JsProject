@@ -42,9 +42,9 @@ namespace jsLogic {
                     let eventParam: P = innerAction.eventParam;
 
                     resolve([
-                        param.actionBuilder.dispatch(innerAction.buildOnBeforeEvent(eventParam)),
+                        param.actionFactory.dispatch(innerAction.buildOnBeforeEvent(eventParam)),
                         innerAction,
-                        param.actionBuilder.dispatch(innerAction.buildOnAfterEvent(eventParam))
+                        param.actionFactory.dispatch(innerAction.buildOnAfterEvent(eventParam))
                     ]);
                 });
         }

@@ -16,7 +16,7 @@ namespace jsLogic {
 
         abstract isRespondingTo(event: ActionEvent<T, P>): boolean;
 
-        abstract trigger(event: ActionEvent<T, P>): IAction<T>;
+        abstract trigger(event: ActionEvent<T, P>, param: T): IAction<T>;
 
         toString(): string {
             return ClassUtils.getNameOfClass(this);

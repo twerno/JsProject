@@ -33,7 +33,7 @@ namespace HSLogic {
      * Heal
      *
      */
-    export class Heal extends jsLogic.CancelableAction<HsActionParam, HealParam> {
+    export class Heal extends jsLogic.CancelableAction<HsGameEnv, HealParam> {
 
         buildOnBeforeEvent(eventParam: HealParam): HsActionEvent<HealParam> {
             return new HealCalculationEvent(eventParam);
@@ -51,7 +51,7 @@ namespace HSLogic {
             return false;
         }
 
-        resolve(_this_: Heal, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: Heal, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
 
                 (resolve, reject): void => {
@@ -62,7 +62,7 @@ namespace HSLogic {
                         _this_.eventParam.amount = 0;
                     }
 
-                    _this_.eventParam.target.target.counters[HpCounter.type].value -= _this_.eventParam.amount;
+                    _this_.eventParam.target.target.hp -= _this_.eventParam.amount;
 
                     return null;
                 }

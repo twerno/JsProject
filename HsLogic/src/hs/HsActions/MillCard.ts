@@ -10,11 +10,11 @@ namespace HSLogic {
  	 */
     export class MillCard extends HsBaseAction {
 
-        protected baseActionResolver(_this_: MillCard, param: HsActionParam): void {
+        protected baseActionResolver(_this_: MillCard, gameEnv: HsGameEnv): void {
             _this_.graveyard.addEntity(_this_.card);
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public card: Card, public graveyard: HsZone) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card, public graveyard: HsZone) {
             super(source);
         };
     }

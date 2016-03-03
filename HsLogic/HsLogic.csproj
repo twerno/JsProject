@@ -46,7 +46,7 @@
     <TypeScriptCompile Include="src\hsTest\SelectorTest.ts" />
     <TypeScriptCompile Include="src\hs\core\HsAction.ts" />
     <TypeScriptCompile Include="src\hs\core\HsActionEvent.ts" />
-    <TypeScriptCompile Include="src\hs\core\HsActionParam.ts" />
+    <TypeScriptCompile Include="src\hs\core\HsGameEnv.ts" />
     <TypeScriptCompile Include="src\hs\core\HsCounter.ts" />
     <TypeScriptCompile Include="src\hs\core\HsMarker.ts" />
     <TypeScriptCompile Include="src\hs\core\HsZone.ts" />

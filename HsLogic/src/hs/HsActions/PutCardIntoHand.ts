@@ -13,7 +13,7 @@ namespace HSLogic {
  	 */
     export class PutCardIntoHand extends HsAction {
 
-        resolve(_this_: PutCardIntoHand, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: PutCardIntoHand, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
@@ -21,13 +21,13 @@ namespace HSLogic {
                         _this_.zones.hand.addEntity(_this_.card);
                         resolve(null);
                     } else {
-                        resolve([param.actionBuilder.millCard(_this_.source, _this_.card, _this_.zones.graveyard)]);
+                        resolve([gameEnv.actionFactory.millCard(_this_.source, _this_.card, _this_.zones.graveyard)]);
                     }
                 });
 
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public card: Card, public zones: HsZones) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card, public zones: HsZones) {
             super(source);
         };
     }

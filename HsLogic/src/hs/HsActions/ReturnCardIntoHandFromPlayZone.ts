@@ -13,12 +13,12 @@ namespace HSLogic {
  	 */
     export class ReturnCardIntoHandFromPlayZone extends HsAction {
 
-        resolve(_this_: ReturnCardIntoHandFromPlayZone, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: ReturnCardIntoHandFromPlayZone, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
                     if (_this_.hand.isFull) {
-                        resolve([param.actionBuilder.markAsDestroyed(_this_.source, _this_.card)]);
+                        resolve([gameEnv.actionFactory.markAsDestroyed(_this_.source, _this_.card)]);
                     }
                     else {
                         _this_.sourceZone.removeEntity(_this_.card);
@@ -28,7 +28,7 @@ namespace HSLogic {
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public card: Card, public sourceZone: HsZone, public hand: HsZone) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card, public sourceZone: HsZone, public hand: HsZone) {
             super(source);
         };
     }

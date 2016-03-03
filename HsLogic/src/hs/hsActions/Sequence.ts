@@ -11,24 +11,24 @@ namespace HSLogic {
      * Sequence
      *
  	 */
-    export class Sequence extends jsLogic.IAction<HsActionParam> {
+    export class Sequence extends jsLogic.IAction<HsGameEnv> {
 
-        resolve(_this_: Sequence, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: Sequence, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-                    let actions: jsLogic.IAction<HsActionParam>[] = [];
+                    let actions: jsLogic.IAction<HsGameEnv>[] = [];
 
                     while (_this_.innerActions && _this_.innerActions.length > 0)
                         actions.push(_this_.innerActions.shift());
 
-                    actions.push(param.actionBuilder.auraUpdateStep(_this_.source));
-                    actions.push(param.actionBuilder.deathCreationStep(_this_.source));
+                    actions.push(gameEnv.actionFactory.auraUpdateStep(_this_.source));
+                    actions.push(gameEnv.actionFactory.deathCreationStep(_this_.source));
 
                     resolve(actions);
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public innerActions: jsLogic.IAction<HsActionParam>[]) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public innerActions: jsLogic.IAction<HsGameEnv>[]) {
             super(source);
         };
 

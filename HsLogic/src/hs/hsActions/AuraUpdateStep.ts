@@ -12,9 +12,9 @@ namespace HSLogic {
      * AuraUpdateStep
      *
  	 */
-    export class AuraUpdateStep extends jsLogic.IAction<HsActionParam> {
+    export class AuraUpdateStep extends jsLogic.IAction<HsGameEnv> {
 
-        resolve(_this_: AuraUpdateStep, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: AuraUpdateStep, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
                     resolve(null);

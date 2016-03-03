@@ -25,15 +25,15 @@ namespace jsLogic {
 		 *  return consequences of event in natural order (the lowest queue_level will be first)
 		 *
 		 */
-        collectResponsesOf(event: ActionEvent<T, P>): IAction<T>[] {
+        collectResponsesOf(event: ActionEvent<T, P>, param: T): IAction<T>[] {
             if (event instanceof Array)
-                return this._flatterResponsesOrderedByQueueLevel(this._getResponsesByQueueLevel(event));
+                return this._flatterResponsesOrderedByQueueLevel(this._getResponsesByQueueLevel(event, param));
             else
                 return [];
         }
 
 
-        private _getResponsesByQueueLevel(event: ActionEvent<T, P>): Array<IAction<T>[]> {
+        private _getResponsesByQueueLevel(event: ActionEvent<T, P>, param: T): Array<IAction<T>[]> {
             let result: Array<IAction<T>[]> = [];
             let responses: IAction<T>[] = [];
             let handler: EventHandler<T, P>;
@@ -47,7 +47,7 @@ namespace jsLogic {
                     if (handler.queue_level < 0)
                         throw new Error(`queue_level of ${handler} has to be a positive number.`);
 
-                    responses.push(handler.trigger(event));
+                    responses.push(handler.trigger(event, param));
                 }
             }
 

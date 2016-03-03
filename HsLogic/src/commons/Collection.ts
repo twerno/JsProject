@@ -60,6 +60,6 @@ namespace Collection {
 
 
     export function removeFrom(array: Object[], element: Object): void {
-        array.splice(array.indexOf(element));
+        array.splice(array.indexOf(element), 1); // fix for Chrome: deleteCount param is necessary
     }
 }

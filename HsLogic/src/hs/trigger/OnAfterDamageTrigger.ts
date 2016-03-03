@@ -1,5 +1,5 @@
-///<reference path="../../core/event/EventHandler.ts"/>
-///<reference path="../core/HsActionParam.ts"/>
+///<reference path="../core/HsActionEvent.ts"/>
+///<reference path="../core/HsGameEnv.ts"/>
 
 "use strict";
 
@@ -11,8 +11,8 @@ namespace HSLogic {
             return event.type === OnAfterDamageEvent.type;
         };
 
-        trigger(event: HsActionEvent<DamageParam>): jsLogic.IAction<HsActionParam> {
-            return new EmptyAction(event.param.sourceAction, `${this}: action`);
+        trigger(event: HsActionEvent<DamageParam>, gameEnv: HsGameEnv): jsLogic.IAction<HsGameEnv> {
+            return gameEnv.actionFactory.emptyAction(event.param.sourceAction, `${this}: action`);
         };
     }
 }

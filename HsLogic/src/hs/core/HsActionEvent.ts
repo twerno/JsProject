@@ -1,18 +1,18 @@
 ///<reference path="../../core/event/Event.ts"/>
 ///<reference path="../../core/event/EventHandler.ts"/>
-///<reference path="HsActionParam.ts"/>
+///<reference path="HsGameEnv.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
-    export interface HsEventParam extends jsLogic.IEventParam<HsActionParam> {
+    export interface HsEventParam extends jsLogic.IEventParam<HsGameEnv> {
 
     }
 
 
 
-    export abstract class HsActionEvent<P extends HsEventParam> extends jsLogic.ActionEvent<HsActionParam, P> {
+    export abstract class HsActionEvent<P extends HsEventParam> extends jsLogic.ActionEvent<HsGameEnv, P> {
 
         constructor(param: P) {
             super(param);
@@ -22,7 +22,7 @@ namespace HSLogic {
 
 
 
-    export abstract class HsEventHandler extends jsLogic.EventHandler<HsActionParam, HsEventParam> {
+    export abstract class HsEventHandler extends jsLogic.EventHandler<HsGameEnv, HsEventParam> {
 
     }
 }

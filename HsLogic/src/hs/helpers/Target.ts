@@ -35,20 +35,8 @@ namespace HSLogic {
             return true;
         }
 
-        constructor(target: LivingEntity) {
-            super(target, null);
+        constructor(public player: Player) {
+            super(player, null);
         }
     }
-
-
-    export class DrawTarget {
-
-        targetInRightZone(): boolean {
-            return true;
-        }
-
-        constructor(public player: Player, public zones: HsZones) {
-        }
-    }
-
 }

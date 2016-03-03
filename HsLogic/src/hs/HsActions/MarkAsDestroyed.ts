@@ -10,11 +10,11 @@ namespace HSLogic {
  	 */
     export class MarkAsDestroyed extends HsBaseAction {
 
-        protected baseActionResolver(_this_: MarkAsDestroyed, param: HsActionParam): void {
+        protected baseActionResolver(_this_: MarkAsDestroyed, gameEnv: HsGameEnv): void {
             _this_.card.markers.put(new DestroyMarker());
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public card: Card) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card) {
             super(source);
         };
     }

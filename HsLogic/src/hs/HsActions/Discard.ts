@@ -8,6 +8,7 @@ namespace HSLogic {
 
 
     export interface DiscardParam extends HsEventParam {
+        target: Player,
         card: Card;
     }
 
@@ -24,21 +25,23 @@ namespace HSLogic {
  	 */
     export class Discard extends HsAction {
 
-        resolve(_this_: Discard, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: Discard, gameEnv: HsGameEnv): PromiseOfActions {
 
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
+
+                    let zones: HsZones = gameEnv.zonesOf(_this_.discardParam.target);
 
                     if (!_this_.discardParam || !_this_.discardParam.card) {
                         reject(new Error(`No card to discard!`));
                         return;
                     }
 
-                    param.zones.hand.removeEntity(_this_.discardParam.card);
-                    param.zones.graveyard.addEntity(_this_.discardParam.card);
+                    zones.hand.removeEntity(_this_.discardParam.card);
+                    zones.graveyard.addEntity(_this_.discardParam.card);
 
                     resolve([
-                        param.actionBuilder.dispatch(new OnAfterDiscardEvent(_this_.discardParam))
+                        gameEnv.actionFactory.dispatch(new OnAfterDiscardEvent(_this_.discardParam))
                     ]);
                 });
         }

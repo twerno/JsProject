@@ -3,7 +3,7 @@
 namespace jsLogic {
 
     export interface IHasActionBuilder {
-        actionBuilder: ActionBuilder;
+        actionFactory: ActionBuilder;
     }
 
 
@@ -32,7 +32,7 @@ namespace jsLogic {
 
         // actions in natural order
         // first on results list are first to resolve
-        abstract resolve(thisAction: IAction<T>, param: T): PromiseOfActions<T>;
+        abstract resolve(_this_: IAction<T>, param: T): PromiseOfActions<T>;
     }
 
 

@@ -7,11 +7,14 @@ namespace HSLogic {
 
 
     export interface DrawParam extends HsEventParam {
-        target: DrawTarget,
+        target: Player
+    }
+
+    export interface AfterDrawParam extends DrawParam {
         card: Card
     }
 
-    export class OnAfterDrawEvent extends HsActionEvent<DrawParam> {
+    export class OnAfterDrawEvent extends HsActionEvent<AfterDrawParam> {
 
         static get type(): string { return OnAfterDrawEvent.name }
     }
@@ -22,32 +25,37 @@ namespace HSLogic {
  	 */
     export class DrawCard extends HsAction {
 
-        resolve(_this_: DrawCard, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: DrawCard, gameEnv: HsGameEnv): PromiseOfActions {
 
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
-                    let target: DrawTarget = _this_.drawParam.target;
+                    let targetPlayer: Player = _this_.drawParam.target;
+                    let zones: HsZones = gameEnv.zonesOf(targetPlayer);
 
                     // fatigue
-                    if (target.zones.deck.isEmpty()) {
-                        resolve([param.actionBuilder.fatigue(_this_.source, target.player)]);
+                    if (zones.deck.isEmpty()) {
+                        resolve([gameEnv.actionFactory.fatigue(_this_.source, targetPlayer)]);
                     } else {
 
-                        let card: Card = _this_.drawParam.target.zones.deck.pop();
+                        let card: Card = zones.deck.pop();;
 
                         // addCard to hand if not full
-                        if (!target.zones.hand.isFull()) {
-                            target.zones.hand.addEntity(card);
+                        if (!zones.hand.isFull()) {
+                            zones.hand.addEntity(card);
 
                             // dispatch event if drawn
                             resolve([
-                                param.actionBuilder.dispatch(
-                                    new OnAfterDrawEvent(_this_.drawParam))
+                                gameEnv.actionFactory.dispatch(
+                                    new OnAfterDrawEvent({
+                                        target: targetPlayer,
+                                        card: card,
+                                        sourceAction: _this_.drawParam.sourceAction
+                                    }))
                             ]);
                         } else {
                             // mill card if hand is full
-                            resolve([param.actionBuilder.millCard(_this_.source, card, target.zones.graveyard)]);
+                            resolve([gameEnv.actionFactory.millCard(_this_.source, card, zones.graveyard)]);
                         }
                     }
                 });

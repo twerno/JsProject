@@ -15,7 +15,7 @@ namespace HSLogic {
  	 */
     export class ShuffleGeneratedCardIntoDeck extends HsAction {
 
-        resolve(_this_: ShuffleGeneratedCardIntoDeck, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: ShuffleGeneratedCardIntoDeck, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
@@ -29,14 +29,14 @@ namespace HSLogic {
                     }
 
                     if (added)
-                        resolve([param.actionBuilder.shuffleDeck(_this_.source, _this_.deck)]);
+                        resolve([gameEnv.actionFactory.shuffleDeck(_this_.source, _this_.deck)]);
                     else
                         resolve(null);
                 });
 
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public cards: Card[], public deck: HsZone) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public cards: Card[], public deck: HsZone) {
             super(source);
         };
     }

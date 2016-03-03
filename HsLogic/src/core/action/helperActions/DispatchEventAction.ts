@@ -15,7 +15,7 @@ namespace jsLogic {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
 
-                    let consequences: IAction<T>[] = param.handlers.collectResponsesOf(_this_.event);
+                    let consequences: IAction<T>[] = param.handlers.collectResponsesOf(_this_.event, param);
 
                     // first action returned will be the first action to resolve
                     resolve(consequences);

@@ -12,16 +12,16 @@ namespace HSLogic {
      * DestroyCardInPlay
      *
  	 */
-    export class DestroyCardInPlay extends jsLogic.IAction<HsActionParam> {
+    export class DestroyCardInPlay extends jsLogic.IAction<HsGameEnv> {
 
-        resolve(_this_: DestroyCardInPlay, param: HsActionParam): PromiseOfActions {
+        resolve(_this_: DestroyCardInPlay, param: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsActionParam>, public card: Card) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card) {
             super(source);
         };
     }
