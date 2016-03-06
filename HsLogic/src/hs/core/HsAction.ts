@@ -11,6 +11,6 @@ namespace HSLogic {
         abstract resolve(_this_: jsLogic.IAction<HsGameEnv>, gameEnv: HsGameEnv): PromiseOfActions;
     };
 
-    export abstract class HsBaseAction extends jsLogic.BaseAction<HsGameEnv> { };
+    export abstract class HsBaseAction extends jsLogic.SimpleAction<HsGameEnv> { };
 
 }

@@ -26,11 +26,12 @@
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
     <TypeScriptCompile Include="src\commons\MathUtils.ts" />
-    <TypeScriptCompile Include="src\core\action\ActionBuilder.ts" />
+    <TypeScriptCompile Include="src\commons\StringUtils.ts" />
+    <TypeScriptCompile Include="src\core\action\ActionFactory.ts" />
     <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
-    <TypeScriptCompile Include="src\core\action\helperActions\BroadcastableAction.ts" />
+    <TypeScriptCompile Include="src\core\action\abstractActions\BroadcastableAction.ts" />
     <TypeScriptCompile Include="src\core\action\helperActions\BroadcastAction.ts" />
-    <TypeScriptCompile Include="src\core\action\helperActions\CancelableAction.ts" />
+    <TypeScriptCompile Include="src\core\action\abstractActions\CancelableAction.ts" />
     <TypeScriptCompile Include="src\core\action\helperActions\DispatchEventAction.ts" />
     <TypeScriptCompile Include="src\core\action\helperActions\Selector.ts" />
     <TypeScriptCompile Include="src\core\action\IAction.ts" />
@@ -51,7 +52,7 @@
     <TypeScriptCompile Include="src\hs\core\HsMarker.ts" />
     <TypeScriptCompile Include="src\hs\core\HsZone.ts" />
     <TypeScriptCompile Include="src\hs\helpers\Target.ts" />
-    <TypeScriptCompile Include="src\hs\HsActionBuilder.ts" />
+    <TypeScriptCompile Include="src\hs\HsActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\AddGeneratedCardIntoHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\AuraUpdateStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DestroyCardInPlay.ts" />
@@ -108,13 +109,15 @@
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptModuleKind>
+    </TypeScriptModuleKind>
     <TypeScriptOutFile>dist\HsLogic.js</TypeScriptOutFile>
     <TypeScriptOutDir>dist\</TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
-    <TypeScriptSourceRoot />
+    <TypeScriptSourceRoot>
+    </TypeScriptSourceRoot>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>

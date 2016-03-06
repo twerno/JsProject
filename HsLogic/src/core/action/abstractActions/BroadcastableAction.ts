@@ -10,7 +10,7 @@ namespace jsLogic {
      * BroadcastableAction 
      *
      */
-    export abstract class BroadcastableAction<T extends IHasHandlersAndBuilder, P extends IEventParam<T>> extends IAction<T> {
+    export abstract class BroadcastableAction<T extends IHasHandlersAndFactory, P extends IEventParam<T>> extends IAction<T> {
 
         abstract buildOnBeforeEvent(eventParam: P): ActionEvent<T, P>;
         abstract buildOnAfterEvent(eventParam: P): ActionEvent<T, P>;
@@ -32,7 +32,7 @@ namespace jsLogic {
      * BroadcastableActionWrapper 
      *
      */
-    export class BroadcastableActionWrapper<T extends IHasHandlersAndBuilder, P extends IEventParam<T>> extends IAction<T> {
+    export class BroadcastableActionWrapper<T extends IHasHandlersAndFactory, P extends IEventParam<T>> extends IAction<T> {
 
         resolve(_this_: BroadcastableActionWrapper<T, P>, param: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(

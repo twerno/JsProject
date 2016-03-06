@@ -11,24 +11,25 @@ namespace HSLogic {
 	 * If the hand is full DESTROY IT (deathrattle etc)
  	 *
  	 */
-    export class ReturnCardIntoHandFromPlayZone extends HsAction {
+    export class ReturnCardIntoOwnersHandFrom extends HsAction {
 
-        resolve(_this_: ReturnCardIntoHandFromPlayZone, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: ReturnCardIntoOwnersHandFrom, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
+                    let hand: HsZone = gameEnv.zonesOf(_this_.card.owner).hand;
 
-                    if (_this_.hand.isFull) {
+                    if (hand.isFull) {
                         resolve([gameEnv.actionFactory.markAsDestroyed(_this_.source, _this_.card)]);
                     }
                     else {
                         _this_.sourceZone.removeEntity(_this_.card);
-                        _this_.hand.addEntity(_this_.card);
+                        hand.addEntity(_this_.card);
                         resolve(null);
                     }
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card, public sourceZone: HsZone, public hand: HsZone) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public sourceZone: HsZone, public card: Card) {
             super(source);
         };
     }

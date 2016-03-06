@@ -2,8 +2,8 @@
 
 namespace jsLogic {
 
-    export interface IHasActionBuilder {
-        actionFactory: ActionBuilder;
+    export interface IHasActionFactory {
+        actionFactory: ActionFactory;
     }
 
 
@@ -32,7 +32,7 @@ namespace jsLogic {
 
         // actions in natural order
         // first on results list are first to resolve
-        abstract resolve(_this_: IAction<T>, param: T): PromiseOfActions<T>;
+        abstract resolve(_this_: IAction<T>, environment: T): PromiseOfActions<T>;
     }
 
 
@@ -41,12 +41,12 @@ namespace jsLogic {
      *  BaseAction<T>
      *   action with no consequences
      */
-    export abstract class BaseAction<T> extends IAction<T> {
+    export abstract class SimpleAction<T> extends IAction<T> {
 
-        resolve(_this_: BaseAction<T>, param: T): PromiseOfActions<T> {
+        resolve(_this_: SimpleAction<T>, environment: T): PromiseOfActions<T> {
 
             return new Promise<IAction<T>[]>((resolve: any, reject: any): void => {
-                _this_.baseActionResolver(_this_, param);
+                _this_.baseActionResolver(_this_, environment);
 
                 resolve(NO_CONSEQUENCES);
             });
@@ -54,7 +54,7 @@ namespace jsLogic {
 
         }
 
-        protected abstract baseActionResolver(_this_: IAction<T>, param: T): void;
+        protected abstract baseActionResolver(_this_: IAction<T>, environment: T): void;
 
     }
 

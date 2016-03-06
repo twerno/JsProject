@@ -15,7 +15,7 @@
 ///<reference path="hsActions/Sequence.ts"/>
 ///<reference path="hsActions/ShuffleDeck.ts"/>
 ///<reference path="hsActions/ShuffleGeneratedCardIntoDeck.ts"/>
-///<reference path="../core/action/ActionBuilder.ts"/>
+///<reference path="../core/action/ActionFactory.ts"/>
 ///<reference path="core/HsZone.ts"/>
 ///<reference path="HsCard.ts"/>
 ///<reference path="core/HsAction.ts"/>
@@ -24,10 +24,10 @@
 
 namespace HSLogic {
 
-    export class HsActionBuilder<T extends HsGameEnv> extends jsLogic.ActionBuilder {
+    export class HsActionFactory<T extends HsGameEnv> extends jsLogic.ActionFactory {
 
-        addGeneratedCardIntoHand(source: jsLogic.IAction<T>, card: Card, hand: HsZone): AddGeneratedCardIntoHand {
-            return new AddGeneratedCardIntoHand(source, card, hand);
+        addGeneratedCardIntoHand(source: jsLogic.IAction<T>, player: Player, card: Card): AddGeneratedCardIntoHand {
+            return new AddGeneratedCardIntoHand(source, player, card);
         }
 
         auraUpdateStep(source: jsLogic.IAction<T>): AuraUpdateStep {
@@ -58,8 +58,8 @@ namespace HSLogic {
             return new EmptyAction(source, message);
         }
 
-        fatigue(source: jsLogic.IAction<T>, target: Player): Fatigue {
-            return new Fatigue(source, target);
+        fatigue(source: jsLogic.IAction<T>, player: Player): Fatigue {
+            return new Fatigue(source, player);
         }
 
         heal(healParam: HealParam): Heal {
@@ -70,28 +70,28 @@ namespace HSLogic {
             return new MarkAsDestroyed(source, card);
         }
 
-        millCard(source: jsLogic.IAction<T>, card: Card, graveyard: HsZone): MillCard {
-            return new MillCard(source, card, graveyard);
+        millCard(source: jsLogic.IAction<T>, card: Card): MillCard {
+            return new MillCard(source, card);
         }
 
-        putCardIntoHand(source: jsLogic.IAction<T>, card: Card, zones: HsZones): PutCardIntoHand {
-            return new PutCardIntoHand(source, card, zones);
+        putCardIntoHand(source: jsLogic.IAction<T>, player: Player, card: Card): PutCardIntoHand {
+            return new PutCardIntoHand(source, player, card);
         }
 
-        returnCardIntoHandFromPlayZone(source: jsLogic.IAction<T>, card: Card, sourceZone: HsZone, hand: HsZone): ReturnCardIntoHandFromPlayZone {
-            return new ReturnCardIntoHandFromPlayZone(source, card, sourceZone, hand);
+        returnCardIntoOwnersHandFrom(source: jsLogic.IAction<T>, sourceZone: HsZone, card: Card): ReturnCardIntoOwnersHandFrom {
+            return new ReturnCardIntoOwnersHandFrom(source, sourceZone, card);
         }
 
         sequence(source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[]): Sequence {
             return new Sequence(source, innerActions);
         }
 
-        shuffleDeck(source: jsLogic.IAction<T>, zone: HsZone): ShuffleDeck {
-            return new ShuffleDeck(source, zone);
+        shuffleDeck(source: jsLogic.IAction<T>, deckOwner: Player): ShuffleDeck {
+            return new ShuffleDeck(source, deckOwner);
         }
 
-        shuffleGeneratedCardIntoDeck(source: jsLogic.IAction<T>, cards: Card[], deck: HsZone): ShuffleGeneratedCardIntoDeck {
-            return new ShuffleGeneratedCardIntoDeck(source, cards, deck);
+        shuffleGeneratedCardIntoDeck(source: jsLogic.IAction<T>, cards: Card[], deckOwner: Player): ShuffleGeneratedCardIntoDeck {
+            return new ShuffleGeneratedCardIntoDeck(source, cards, deckOwner);
         }
     }
 }

@@ -29,7 +29,6 @@ namespace HSLogic {
 
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-
                     let targetPlayer: Player = _this_.drawParam.target;
                     let zones: HsZones = gameEnv.zonesOf(targetPlayer);
 
@@ -55,7 +54,7 @@ namespace HSLogic {
                             ]);
                         } else {
                             // mill card if hand is full
-                            resolve([gameEnv.actionFactory.millCard(_this_.source, card, zones.graveyard)]);
+                            resolve([gameEnv.actionFactory.millCard(_this_.source, card)]);
                         }
                     }
                 });

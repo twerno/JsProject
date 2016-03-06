@@ -18,25 +18,25 @@ namespace HSLogic {
         resolve(_this_: ShuffleGeneratedCardIntoDeck, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-
+                    let deck: HsZone = gameEnv.zonesOf(_this_.deckOwner).deck;
                     let added: boolean = false;
 
                     for (let id in _this_.cards) {
-                        if (!_this_.deck.isFull) {
-                            _this_.deck.addEntity(_this_.cards[id]);
+                        if (!deck.isFull) {
+                            deck.addEntity(_this_.cards[id]);
                             added = true;
                         }
                     }
 
                     if (added)
-                        resolve([gameEnv.actionFactory.shuffleDeck(_this_.source, _this_.deck)]);
+                        resolve([gameEnv.actionFactory.shuffleDeck(_this_.source, _this_.deckOwner)]);
                     else
                         resolve(null);
                 });
 
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public cards: Card[], public deck: HsZone) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public cards: Card[], public deckOwner: Player) {
             super(source);
         };
     }

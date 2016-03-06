@@ -16,18 +16,19 @@ namespace HSLogic {
         resolve(_this_: PutCardIntoHand, gameEnv: HsGameEnv): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
+                    let zones: HsZones = gameEnv.zonesOf(_this_.player);
 
-                    if (!_this_.zones.hand.isFull) {
-                        _this_.zones.hand.addEntity(_this_.card);
+
+                    if (!zones.hand.isFull) {
+                        zones.hand.addEntity(_this_.card);
                         resolve(null);
                     } else {
-                        resolve([gameEnv.actionFactory.millCard(_this_.source, _this_.card, _this_.zones.graveyard)]);
+                        resolve([gameEnv.actionFactory.millCard(_this_.source, _this_.card)]);
                     }
                 });
-
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public card: Card, public zones: HsZones) {
+        constructor(source: jsLogic.IAction<HsGameEnv>, public player: Player, public card: Card) {
             super(source);
         };
     }

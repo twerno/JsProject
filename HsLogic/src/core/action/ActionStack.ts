@@ -42,7 +42,7 @@ namespace jsLogic {
         }
 
 
-        resolveTopAction(actionParam: T): void {
+        resolveTopAction(environment: T): void {
             if (this._resolving)
                 throw new Error(`You can not resolve an action while another action ${this._resolving.action} is beeing resolved.`);
 
@@ -50,11 +50,11 @@ namespace jsLogic {
                 throw new Error('There is no action left to resolve!');
 
             this._resolving = new Resolving<T>(this._stackFILO.pop());
-            this._resolveAction(this._resolving, actionParam);
+            this._resolveAction(this._resolving, environment);
         }
 
 
-        private _resolveAction(resolving: Resolving<T>, actionParam: T): void {
+        private _resolveAction(resolving: Resolving<T>, environment: T): void {
             let self: ActionStack<T> = this;
 
             this._onActionResolving && this._onActionResolving(resolving.action);
@@ -63,7 +63,7 @@ namespace jsLogic {
                 this._timeoutHandler = setTimeout(() => self._onTimeout(resolving), resolving.action.timelimit);
 
             resolving.startTimer();
-            resolving.action.resolve(resolving.action, actionParam)
+            resolving.action.resolve(resolving.action, environment)
                 .then(
                 (consequences: IAction<T>[]) => {
                     self._resolving !== resolving && ActionStack._postMortemLog<T>(resolving, consequences);
@@ -117,7 +117,7 @@ namespace jsLogic {
 
             this._resolving = null;
             !this._onActionResolved && ActionStack._postMortemLog<T>(resolving, consequences);
-            this._onActionResolved && this._onActionResolved.call(null, resolving.action, resolving.executionTime());
+            this._onActionResolved && this._onActionResolved.call(undefined, resolving.action, resolving.executionTime());
         }
 
 
@@ -127,7 +127,7 @@ namespace jsLogic {
 
             this._resolving = null;
             !this._onActionRejected && ActionStack._postMortemLog<T>(resolving, error);
-            this._onActionRejected && this._onActionRejected.call(null, resolving.action, error, resolving.executionTime());
+            this._onActionRejected && this._onActionRejected.call(undefined, resolving.action, error, resolving.executionTime());
         }
 
 

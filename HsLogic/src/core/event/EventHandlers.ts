@@ -6,7 +6,7 @@ namespace jsLogic {
 	 * EventHandlers
 	 *
 	 */
-    export class EventHandlers<T extends IHasHandlersAndBuilder, P extends IEventParam<T>> {
+    export class EventHandlers<T extends IHasHandlersAndFactory, P extends IEventParam<T>> {
 
         private _handlers: EventHandler<T, P>[] = [];
 
