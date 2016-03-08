@@ -1,5 +1,5 @@
 ///<reference path="../core/HsActionEvent.ts"/>
-///<reference path="../core/HsGameEnv.ts"/>
+///<reference path="../core/HsgameCtx.ts"/>
 ///<reference path="../HsActions/DrawCard.ts"/>
 
 "use strict";
@@ -12,8 +12,8 @@ namespace HSLogic {
             return event.type === OnAfterDrawEvent.type;
         };
 
-        trigger(event: HsActionEvent<DrawParam>, gameEnv: HsGameEnv): jsLogic.IAction<HsGameEnv> {
-            return gameEnv.actionFactory.emptyAction(event.param.sourceAction, `${this}: action`);
+        trigger(event: HsActionEvent<DrawParam>, gameCtx: HsGameCtx): jsLogic.IAction<HsGameCtx> {
+            return gameCtx.actionFactory.emptyAction(event.param.sourceAction, `${this}: action`);
         };
     }
 }

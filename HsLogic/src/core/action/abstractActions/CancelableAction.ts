@@ -10,12 +10,20 @@ namespace jsLogic {
      *  CancelableAction<T>
      * 
      */
-    export abstract class CancelableAction<T extends IHasHandlersAndFactory, P extends IEventParam<T>> extends IAction<T> {
+    export abstract class CancelableAction<T extends IActionContext, P extends IActionParam<T>> extends IAction<T> {
 
-        abstract buildOnBeforeEvent(eventParam: P): ActionEvent<T, P>;
-        abstract buildOnAfterEvent(eventParam: P): ActionEvent<T, P>;
-        abstract doCancelAction(eventParam: P): boolean;
-        abstract doCancelOnAfterEvent(eventParam: P): boolean;
+        abstract cancelAction(eventParam: P): boolean;
+        abstract cancelOnAfterEvent(eventParam: P): boolean;
+
+        buildOnBeforeEvent(param: P): ActionEvent<T, P> {
+            return new ActionEvent<T, P>(
+                ActionEvent.onBeforeEventName(this.className), param);
+        }
+
+        buildOnAfterEvent(param: P): ActionEvent<T, P> {
+            return new ActionEvent<T, P>(
+                ActionEvent.onAfterEventName(this.className), param);
+        }
 
 
         wrapIt(): CancellableActionExternalWrapper<T, P> {
@@ -23,8 +31,8 @@ namespace jsLogic {
         }
 
 
-        constructor(public eventParam: P) {
-            super(eventParam.sourceAction);
+        constructor(public param: P) {
+            super(param.sourceAction);
         };
     }
 
@@ -34,20 +42,20 @@ namespace jsLogic {
      * CancellableActionExternalWrapper 
      *
      */
-    export class CancellableActionExternalWrapper<T extends IHasHandlersAndFactory, P extends IEventParam<T>> extends IAction<T> {
-        resolve(_this_: CancellableActionExternalWrapper<T, P>, param: T): PromiseOfActions<T> {
+    export class CancellableActionExternalWrapper<T extends IActionContext, P extends IActionParam<T>> extends IAction<T> {
+        resolve(_this_: CancellableActionExternalWrapper<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {
 
-                    let eventParam: P = _this_.mainAction.eventParam;
-                    let onBeforeEvent: ActionEvent<T, P> = _this_.mainAction.buildOnBeforeEvent(eventParam);
+                    let param: P = _this_.mainAction.param;
+                    let onBeforeEvent: ActionEvent<T, P> = _this_.mainAction.buildOnBeforeEvent(param);
 
                     if (!onBeforeEvent)
                         reject(new Error(`[${_this_.mainAction}] 'onBeforeEvent' had not beed created.`));
 
                     resolve([
-                        param.actionFactory.dispatch(onBeforeEvent),
+                        context.actionFactory.dispatch(onBeforeEvent),
                         new CancellableActionInternalWrapper(_this_.mainAction)
                     ]);
 
@@ -56,7 +64,7 @@ namespace jsLogic {
 
 
         constructor(public mainAction: CancelableAction<T, P>) {
-            super(mainAction.eventParam.sourceAction);
+            super(mainAction.param.sourceAction);
         };
     }
 
@@ -66,24 +74,24 @@ namespace jsLogic {
      * CancellableActionInternalWrapper 
      *
      */
-    class CancellableActionInternalWrapper<T extends IHasHandlersAndFactory, P extends IEventParam<T>> extends IAction<T> {
-        resolve(_this_: CancellableActionInternalWrapper<T, P>, param: T): PromiseOfActions<T> {
+    class CancellableActionInternalWrapper<T extends IActionContext, P extends IActionParam<T>> extends IAction<T> {
+        resolve(_this_: CancellableActionInternalWrapper<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {
-                    let eventParam: P = _this_.mainAction.eventParam;
+                    let param: P = _this_.mainAction.param;
 
-                    if (_this_.mainAction.doCancelAction(eventParam)) {
+                    if (_this_.mainAction.cancelAction(param)) {
                         resolve(NO_CONSEQUENCES);
                         return;
                     }
 
                     let actions: IAction<T>[] = [_this_.mainAction];
 
-                    if (!_this_.mainAction.doCancelOnAfterEvent(eventParam)) {
-                        let onAfterEvent: ActionEvent<T, P> = _this_.mainAction.buildOnAfterEvent(eventParam);
+                    if (!_this_.mainAction.cancelOnAfterEvent(param)) {
+                        let onAfterEvent: ActionEvent<T, P> = _this_.mainAction.buildOnAfterEvent(param);
 
-                        actions.push(param.actionFactory.dispatch(onAfterEvent));
+                        actions.push(context.actionFactory.dispatch(onAfterEvent));
                     }
 
                     resolve(actions);
@@ -93,7 +101,7 @@ namespace jsLogic {
 
 
         constructor(public mainAction: CancelableAction<T, P>) {
-            super(mainAction.eventParam.sourceAction);
+            super(mainAction.param.sourceAction);
         };
     }
 }

@@ -6,7 +6,7 @@
 namespace HSLogic {
 
 
-    export interface DrawParam extends HsEventParam {
+    export interface DrawParam extends HsActionParam {
         target: Player
     }
 
@@ -25,16 +25,16 @@ namespace HSLogic {
  	 */
     export class DrawCard extends HsAction {
 
-        resolve(_this_: DrawCard, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: DrawCard, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
                     let targetPlayer: Player = _this_.drawParam.target;
-                    let zones: HsZones = gameEnv.zonesOf(targetPlayer);
+                    let zones: HsZones = gameCtx.zonesOf(targetPlayer);
 
                     // fatigue
                     if (zones.deck.isEmpty()) {
-                        resolve([gameEnv.actionFactory.fatigue(_this_.source, targetPlayer)]);
+                        resolve([gameCtx.actionFactory.fatigue(_this_.source, targetPlayer)]);
                     } else {
 
                         let card: Card = zones.deck.pop();;
@@ -45,7 +45,7 @@ namespace HSLogic {
 
                             // dispatch event if drawn
                             resolve([
-                                gameEnv.actionFactory.dispatch(
+                                gameCtx.actionFactory.dispatch(
                                     new OnAfterDrawEvent({
                                         target: targetPlayer,
                                         card: card,
@@ -54,7 +54,7 @@ namespace HSLogic {
                             ]);
                         } else {
                             // mill card if hand is full
-                            resolve([gameEnv.actionFactory.millCard(_this_.source, card)]);
+                            resolve([gameCtx.actionFactory.millCard(_this_.source, card)]);
                         }
                     }
                 });

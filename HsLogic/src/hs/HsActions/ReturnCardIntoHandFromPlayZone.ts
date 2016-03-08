@@ -13,13 +13,13 @@ namespace HSLogic {
  	 */
     export class ReturnCardIntoOwnersHandFrom extends HsAction {
 
-        resolve(_this_: ReturnCardIntoOwnersHandFrom, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: ReturnCardIntoOwnersHandFrom, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-                    let hand: HsZone = gameEnv.zonesOf(_this_.card.owner).hand;
+                    let hand: HsZone = gameCtx.zonesOf(_this_.card.owner).hand;
 
                     if (hand.isFull) {
-                        resolve([gameEnv.actionFactory.markAsDestroyed(_this_.source, _this_.card)]);
+                        resolve([gameCtx.actionFactory.markAsDestroyed(_this_.source, _this_.card)]);
                     }
                     else {
                         _this_.sourceZone.removeEntity(_this_.card);
@@ -29,7 +29,7 @@ namespace HSLogic {
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public sourceZone: HsZone, public card: Card) {
+        constructor(source: jsLogic.IAction<HsGameCtx>, public sourceZone: HsZone, public card: Card) {
             super(source);
         };
     }

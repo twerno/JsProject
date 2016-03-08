@@ -6,7 +6,7 @@
 namespace jsLogic {
 
 
-    export interface IActionToBroadcast<T extends IHasHandlersAndFactory, P extends IEventParam<T>> {
+    export interface IActionToBroadcast<T extends IActionContext, P extends IActionParam<T>> {
         eventParam: P,
         action: IAction<T>,
         onBeforeEvent: ActionEvent<T, P>,
@@ -18,7 +18,7 @@ namespace jsLogic {
      * BroadcastAction 
      *
      */
-    export class BroadcastAction<T extends IHasHandlersAndFactory, P extends IEventParam<T>> extends BroadcastableActionWrapper<T, P> {
+    export class BroadcastAction<T extends IActionContext, P extends IActionParam<T>> extends BroadcastableActionWrapper<T, P> {
 
         constructor(public action2Broadcast: IActionToBroadcast<T, P>) {
             super(new BroadcastableInnerAction(action2Broadcast));
@@ -31,9 +31,9 @@ namespace jsLogic {
      * BroadcastableInnerAction 
      *
      */
-    class BroadcastableInnerAction<T extends IHasHandlersAndFactory, P extends IEventParam<T>> extends BroadcastableAction<T, P> {
+    class BroadcastableInnerAction<T extends IActionContext, P extends IActionParam<T>> extends BroadcastableAction<T, P> {
 
-        resolve(_this_: BroadcastableInnerAction<T, P>, param: T): PromiseOfActions<T> {
+        resolve(_this_: BroadcastableInnerAction<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
                     resolve([

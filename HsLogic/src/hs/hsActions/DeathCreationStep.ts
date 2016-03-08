@@ -12,9 +12,9 @@ namespace HSLogic {
      * Sequence
      *
  	 */
-    export class DeathCreationStep extends jsLogic.IAction<HsGameEnv> {
+    export class DeathCreationStep extends jsLogic.IAction<HsGameCtx> {
 
-        resolve(_this_: DeathCreationStep, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: DeathCreationStep, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
                     resolve(null);

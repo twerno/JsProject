@@ -22,9 +22,9 @@ namespace jsLogic {
      */
     export abstract class IAction<T> {
 
-        toString(): string {
-            return ClassUtils.getNameOfClass(this);
-        }
+        get className(): string { return ClassUtils.getNameOfClass(this) }
+
+        toString(): string { return this.className }
 
         get timelimit(): number { return _5_SECONDS; }
 
@@ -32,7 +32,7 @@ namespace jsLogic {
 
         // actions in natural order
         // first on results list are first to resolve
-        abstract resolve(_this_: IAction<T>, environment: T): PromiseOfActions<T>;
+        abstract resolve(_this_: IAction<T>, context: T): PromiseOfActions<T>;
     }
 
 
@@ -43,10 +43,10 @@ namespace jsLogic {
      */
     export abstract class SimpleAction<T> extends IAction<T> {
 
-        resolve(_this_: SimpleAction<T>, environment: T): PromiseOfActions<T> {
+        resolve(_this_: SimpleAction<T>, context: T): PromiseOfActions<T> {
 
             return new Promise<IAction<T>[]>((resolve: any, reject: any): void => {
-                _this_.baseActionResolver(_this_, environment);
+                _this_.baseActionResolver(_this_, context);
 
                 resolve(NO_CONSEQUENCES);
             });
@@ -54,7 +54,7 @@ namespace jsLogic {
 
         }
 
-        protected abstract baseActionResolver(_this_: IAction<T>, environment: T): void;
+        protected abstract baseActionResolver(_this_: IAction<T>, context: T): void;
 
     }
 

@@ -1,6 +1,6 @@
 ///<reference path="../../core/Entity.ts"/>
 ///<reference path="../../core/Zone.ts"/>
-///<reference path="../HsCard.ts"/>
+///<reference path="../entities/Card.ts"/>
 
 "use strict";
 
@@ -15,7 +15,7 @@ namespace HSLogic {
         export const DECK_ZONE = 'DECK_ZONE';
         export const HERO_ZONE = 'HERO_ZONE';
         export const WEAPON_ZONE = 'WEAPON_ZONE';
-        export const HERO_POWER_ZONE = 'WEAPON_ZONE';
+        export const HERO_POWER_ZONE = 'HERO_POWER_ZONE';
 
 
         export const UNLIMITED = -1;
@@ -35,13 +35,14 @@ namespace HSLogic {
             return this._entities.length === 0;
         }
 
-        constructor(owner: jsLogic.Entity, zoneId: string, maxElements: number) {
-            super(owner, zoneId);
+        constructor(public zones: HsZones, zoneId: string, maxElements: number) {
+            super(zones, zoneId);
             this.maxElements = ((maxElements || 0) >= 0) ? (maxElements || 0) : -1;
+            zones.register(this);
         }
     }
 
-    export class HsZones {
+    export class HsZones extends jsLogic.ZoneMap<Card, HsZone>{
 
         hand: HsZone;
         deck: HsZone;
@@ -56,18 +57,19 @@ namespace HSLogic {
         secret: HsZone;
 
         constructor(public owner: Player) {
-            this.hand = new HsZone(owner, ZoneConsts.HAND_ZONE, 10);
-            this.deck = new HsZone(owner, ZoneConsts.DECK_ZONE, 80);
-            this.graveyard = new HsZone(owner, ZoneConsts.GRAVEYARD_ZONE, ZoneConsts.UNLIMITED);
-            this.removed_from_play = new HsZone(owner, ZoneConsts.REMOVED_FROM_PLAY_ZONE, ZoneConsts.UNLIMITED);
+            super(owner);
 
-            this.hero = new HsZone(owner, ZoneConsts.HERO_ZONE, 1);
-            this.weapon = new HsZone(owner, ZoneConsts.WEAPON_ZONE, 1);
-            this.heroPower = new HsZone(owner, ZoneConsts.HERO_POWER_ZONE, 1);
+            this.hand = new HsZone(this, ZoneConsts.HAND_ZONE, 10);
+            this.deck = new HsZone(this, ZoneConsts.DECK_ZONE, 80);
+            this.graveyard = new HsZone(this, ZoneConsts.GRAVEYARD_ZONE, ZoneConsts.UNLIMITED);
+            this.removed_from_play = new HsZone(this, ZoneConsts.REMOVED_FROM_PLAY_ZONE, ZoneConsts.UNLIMITED);
 
-            this.battlefield = new HsZone(owner, ZoneConsts.GAME_ZONE, 7);
-            this.secret = new HsZone(owner, ZoneConsts.SECRET_ZONE, 5);
+            this.hero = new HsZone(this, ZoneConsts.HERO_ZONE, 1);
+            this.weapon = new HsZone(this, ZoneConsts.WEAPON_ZONE, 1);
+            this.heroPower = new HsZone(this, ZoneConsts.HERO_POWER_ZONE, 1);
+
+            this.battlefield = new HsZone(this, ZoneConsts.GAME_ZONE, 7);
+            this.secret = new HsZone(this, ZoneConsts.SECRET_ZONE, 5);
         }
-
     }
 }

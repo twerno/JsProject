@@ -37,9 +37,9 @@ namespace HSLogic {
 
 
 
-    //export class HealthModEvent extends jsLogic.ActionEvent<HsGameEnv> {
+    //export class HealthModEvent extends jsLogic.ActionEvent<HsgameCtx> {
 
-    //    constructor(sourceAction: jsLogic.IAction<HsGameEnv>) {
+    //    constructor(sourceAction: jsLogic.IAction<HsgameCtx>) {
     //        super(sourceAction);
     //    }
     //}
@@ -48,7 +48,7 @@ namespace HSLogic {
 	 *  positive numbers - healing
 	 *  negative - damage
 	 */
-    export interface DamageParam extends HsEventParam {
+    export interface DamageParam extends HsActionParam {
         source: Card,
         type: HEALTH_MOD_TYPE,
         sourceType: SOURCE_TYPE,
@@ -78,7 +78,7 @@ namespace HSLogic {
      * Damage
      *
  	 */
-    export class Damage extends jsLogic.CancelableAction<HsGameEnv, DamageParam> {
+    export class Damage extends jsLogic.CancelableAction<HsGameCtx, DamageParam> {
 
 
         buildOnBeforeEvent(eventParam: DamageParam): HsActionEvent<DamageParam> {
@@ -99,18 +99,18 @@ namespace HSLogic {
             return false;
         }
 
-        resolve(_this_: Heal, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: Heal, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
 
                 (resolve, reject): void => {
-                    let targetCounters: jsLogic.CounterMap = _this_.eventParam.target.target.counters;
+                    let targetCounters: jsLogic.CounterMap = _this_.param.target.target.counters;
 
                     if (targetCounters[DivineShieldCounter.type]) {
                         delete targetCounters[DivineShieldCounter.type];
-                        _this_.eventParam.amount = 0;
+                        _this_.param.amount = 0;
                     }
 
-                    _this_.eventParam.target.target.hp -= _this_.eventParam.amount;
+                    _this_.param.target.target.hp -= _this_.param.amount;
 
                     resolve([]);
                 }
@@ -119,19 +119,19 @@ namespace HSLogic {
     }
 
 
-    //export class DamageMainAction extends jsLogic.MainAction<HsGameEnv, OnDamageCalculationEvent> {
+    //export class DamageMainAction extends jsLogic.MainAction<HsgameCtx, OnDamageCalculationEvent> {
 
     //    protected damageParam: HealthModParam;
 
 
-    //    protected mainActionToBeResolvedCheck(param: HsGameEnv): boolean {
+    //    protected mainActionToBeResolvedCheck(param: HsgameCtx): boolean {
     //        return super.mainActionToBeResolvedCheck(param)
     //            && this.damageParam.amount !== 0
     //            && this.damageParam.target.targetInRightZone();
     //    }
 
 
-    //    mainActionResolver(param: HsGameEnv): HsAction {
+    //    mainActionResolver(param: HsgameCtx): HsAction {
 
     //        let targetCounters: jsLogic.CounterMap = this.damageParam.target.target.counters;
 
@@ -146,7 +146,7 @@ namespace HSLogic {
     //    }
 
 
-    //    buildOnAfterEvent(param: HsGameEnv): HsActionEvent {
+    //    buildOnAfterEvent(param: HsgameCtx): HsActionEvent {
     //        return new OnAfterDamageEvent(this.source, this.damageParam);
     //    }
 

@@ -15,10 +15,10 @@ namespace HSLogic {
  	 */
     export class ShuffleGeneratedCardIntoDeck extends HsAction {
 
-        resolve(_this_: ShuffleGeneratedCardIntoDeck, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: ShuffleGeneratedCardIntoDeck, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-                    let deck: HsZone = gameEnv.zonesOf(_this_.deckOwner).deck;
+                    let deck: HsZone = gameCtx.zonesOf(_this_.deckOwner).deck;
                     let added: boolean = false;
 
                     for (let id in _this_.cards) {
@@ -29,14 +29,14 @@ namespace HSLogic {
                     }
 
                     if (added)
-                        resolve([gameEnv.actionFactory.shuffleDeck(_this_.source, _this_.deckOwner)]);
+                        resolve([gameCtx.actionFactory.shuffleDeck(_this_.source, _this_.deckOwner)]);
                     else
                         resolve(null);
                 });
 
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public cards: Card[], public deckOwner: Player) {
+        constructor(source: jsLogic.IAction<HsGameCtx>, public cards: Card[], public deckOwner: Player) {
             super(source);
         };
     }

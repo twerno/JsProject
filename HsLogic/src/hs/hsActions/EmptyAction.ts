@@ -10,11 +10,11 @@ namespace HSLogic {
  	 */
     export class EmptyAction extends HsBaseAction {
 
-        protected baseActionResolver(_this_: MillCard, gameEnv: HsGameEnv): void {
+        protected baseActionResolver(_this_: MillCard, gameCtx: HsGameCtx): void {
             //console.log(`Empty action resolver: ${this.message}`);
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public message: string) {
+        constructor(source: jsLogic.IAction<HsGameCtx>, public message: string) {
             super(source);
         };
     }

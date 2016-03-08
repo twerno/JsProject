@@ -42,7 +42,7 @@ namespace jsLogic {
         }
 
 
-        resolveTopAction(environment: T): void {
+        resolveTopAction(context: T): void {
             if (this._resolving)
                 throw new Error(`You can not resolve an action while another action ${this._resolving.action} is beeing resolved.`);
 
@@ -50,11 +50,11 @@ namespace jsLogic {
                 throw new Error('There is no action left to resolve!');
 
             this._resolving = new Resolving<T>(this._stackFILO.pop());
-            this._resolveAction(this._resolving, environment);
+            this._resolveAction(this._resolving, context);
         }
 
 
-        private _resolveAction(resolving: Resolving<T>, environment: T): void {
+        private _resolveAction(resolving: Resolving<T>, context: T): void {
             let self: ActionStack<T> = this;
 
             this._onActionResolving && this._onActionResolving(resolving.action);
@@ -63,7 +63,7 @@ namespace jsLogic {
                 this._timeoutHandler = setTimeout(() => self._onTimeout(resolving), resolving.action.timelimit);
 
             resolving.startTimer();
-            resolving.action.resolve(resolving.action, environment)
+            resolving.action.resolve(resolving.action, context)
                 .then(
                 (consequences: IAction<T>[]) => {
                     self._resolving !== resolving && ActionStack._postMortemLog<T>(resolving, consequences);

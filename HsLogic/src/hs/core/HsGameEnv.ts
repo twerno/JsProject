@@ -1,16 +1,16 @@
-///<reference path="../../core/event/IActionParam.ts"/>
+///<reference path="../../core/event/IHasHandlersAndFactory.ts"/>
 ///<reference path="../../core/event/EventHandlers.ts"/>
-///<reference path="../HsActionFactory.ts"/>
+///<reference path="../factories/HsActionFactory.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
-    export class HsGameEnv implements jsLogic.IHasHandlersAndFactory {
+    export class HsGameCtx implements jsLogic.IActionContext {
 
-        actionFactory: HsActionFactory<HsGameEnv> = new HsActionFactory<HsGameEnv>();
+        actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
 
-        handlers: jsLogic.EventHandlers<HsGameEnv, HsEventParam> = new jsLogic.EventHandlers<HsGameEnv, HsEventParam>();
+        handlers: jsLogic.EventHandlers<HsGameCtx, HsActionParam> = new jsLogic.EventHandlers<HsGameCtx, HsActionParam>();
 
         activePlayer: Player = null;
 
@@ -31,6 +31,11 @@ namespace HSLogic {
                 return result;
             else
                 throw new Error(`No zones defined for player: ${player}.`);
+        }
+
+
+        zoneOf(player: jsLogic.Entity | TargetPlayer, zoneId: string): HsZone {
+            return this.zonesOf(player).get(zoneId);
         }
 
 

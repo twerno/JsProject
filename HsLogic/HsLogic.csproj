@@ -21,7 +21,9 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
@@ -40,25 +42,36 @@
     <TypeScriptCompile Include="src\core\event\Event.ts" />
     <TypeScriptCompile Include="src\core\event\EventHandler.ts" />
     <TypeScriptCompile Include="src\core\event\EventHandlers.ts" />
-    <TypeScriptCompile Include="src\core\event\IActionParam.ts" />
+    <TypeScriptCompile Include="src\core\event\IHasHandlersAndFactory.ts" />
     <TypeScriptCompile Include="src\core\Zone.ts" />
     <TypeScriptCompile Include="src\core\Marker.ts" />
+    <TypeScriptCompile Include="src\hsTest\Cards.ts" />
     <TypeScriptCompile Include="src\hsTest\DrawTest.ts" />
     <TypeScriptCompile Include="src\hsTest\SelectorTest.ts" />
+    <TypeScriptCompile Include="src\hs\entities\CardSet.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\ICard.ts" />
     <TypeScriptCompile Include="src\hs\core\HsAction.ts" />
     <TypeScriptCompile Include="src\hs\core\HsActionEvent.ts" />
+    <TypeScriptCompile Include="src\hs\core\HsEntity.ts" />
     <TypeScriptCompile Include="src\hs\core\HsGameEnv.ts" />
     <TypeScriptCompile Include="src\hs\core\HsCounter.ts" />
     <TypeScriptCompile Include="src\hs\core\HsMarker.ts" />
     <TypeScriptCompile Include="src\hs\core\HsZone.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\IHsEntity.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\IMinion.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\IPlayer.ts" />
+    <TypeScriptCompile Include="src\hs\entities\Player.ts" />
+    <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
     <TypeScriptCompile Include="src\hs\helpers\Target.ts" />
-    <TypeScriptCompile Include="src\hs\HsActionFactory.ts" />
+    <TypeScriptCompile Include="src\hs\factories\HsActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\AddGeneratedCardIntoHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\AuraUpdateStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DestroyCardInPlay.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DeathCreationStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Discard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Heal.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\minor.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Sequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Damage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DrawCard.ts" />
@@ -70,11 +83,17 @@
     <TypeScriptCompile Include="src\hs\hsActions\ReturnCardIntoHandFromPlayZone.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\ShuffleDeck.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\ShuffleGeneratedCardIntoDeck.ts" />
-    <TypeScriptCompile Include="src\hs\HsCard.ts" />
+    <TypeScriptCompile Include="src\hs\entities\Card.ts" />
     <TypeScriptCompile Include="src\core\ZoneExceptions.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnAfterCardDrawTrigger.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnAfterDamageTrigger.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnDamageCalculationTrigger.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\hs\hsActions\main\" />
+    <Folder Include="src\hs\hsActions\minor\" />
+    <Folder Include="src\hs\hsActions\phase\" />
+    <Folder Include="src\hs\hsActions\technical\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

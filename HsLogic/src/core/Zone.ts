@@ -1,4 +1,5 @@
 ///<reference path="Entity.ts"/>
+///<reference path="ZoneExceptions.ts"/>
 
 "use strict";
 
@@ -45,19 +46,21 @@ namespace jsLogic {
 
         get length(): number { return this._entities.length; }
 
-        constructor(public owner: Entity, public zoneId: string) { }
+        get owner(): Entity { return this.zoneMap.owner; }
+
+        constructor(public zoneMap: ZoneMap<T, Zone<T>>, public zoneId: string) { }
     }
 
 
-	/**
-	 * ZoneMap<T extends Entity>
-	 *
-	 */
-    export class ZoneMap<T extends Entity> {
-        private _map: Collection.StringMap<Zone<T>> = new Collection.StringMap<Zone<T>>();
+    /**
+     * ZoneMap<T extends Entity>
+     *
+     */
+    export class ZoneMap<T extends Entity, Z extends Zone<T>> {
+        private _map: Collection.StringMap<Z> = new Collection.StringMap<Z>();
 
 
-        get(zoneId: string): Zone<T> {
+        get(zoneId: string): Z {
             if (!this._map.has(zoneId))
                 throw new ZoneNotFoundException(zoneId);
 
@@ -65,11 +68,13 @@ namespace jsLogic {
         }
 
 
-        register(zone: Zone<T>): void {
+        register(zone: Z): void {
             if (this._map.has(zone.zoneId))
                 throw new ZoneDuplicationException(zone.zoneId);
 
             this._map.put(zone.zoneId, zone);
         }
+
+        constructor(public owner: Entity) { }
     }
 }

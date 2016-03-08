@@ -7,24 +7,29 @@ namespace HSLogic {
     }
 
 
+
     export class Target implements ITarget {
 
         targetInRightZone(): boolean {
-            return this.targetZone.has(this.target);
+            return this.targetZone.has(<Card>this.target);
         }
 
-        constructor(public target: jsLogic.Entity, public targetZone: HsZone) {
+        constructor(public target: Card, public targetZone: HsZone) {
         }
     }
+
 
 
     export class LivingTarget implements ITarget {
 
         targetInRightZone(): boolean {
-            return this.targetZone.has(this.target);
+            if (this.target instanceof Player)
+                return true;
+            else
+                return this.targetZone.has(<Minion>this.target);
         }
 
-        constructor(public target: LivingEntity, public targetZone: HsZone) {
+        constructor(public target: Minion | Player, public targetZone: HsZone) {
         }
     }
 

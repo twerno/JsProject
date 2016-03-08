@@ -1,30 +1,34 @@
-///<reference path="hsActions/AddGeneratedCardIntoHand.ts"/>
-///<reference path="hsActions/AuraUpdateStep.ts"/>
-///<reference path="hsActions/Damage.ts"/>
-///<reference path="hsActions/DeathCreationStep.ts"/>
-///<reference path="hsActions/DestroyCardInPlay.ts"/>
-///<reference path="hsActions/Discard.ts"/>
-///<reference path="hsActions/DrawCard.ts"/>
-///<reference path="hsActions/EmptyAction.ts"/>
-///<reference path="hsActions/Fatigue.ts"/>
-///<reference path="hsActions/Heal.ts"/>
-///<reference path="hsActions/MarkAsDestroyed.ts"/>
-///<reference path="hsActions/MillCard.ts"/>
-///<reference path="hsActions/PutCardIntoHand.ts"/>
-///<reference path="hsActions/ReturnCardIntoHandFromPlayZone.ts"/>
-///<reference path="hsActions/Sequence.ts"/>
-///<reference path="hsActions/ShuffleDeck.ts"/>
-///<reference path="hsActions/ShuffleGeneratedCardIntoDeck.ts"/>
-///<reference path="../core/action/ActionFactory.ts"/>
-///<reference path="core/HsZone.ts"/>
-///<reference path="HsCard.ts"/>
-///<reference path="core/HsAction.ts"/>
-///<reference path="core/HsGameEnv.ts"/>
+///<reference path="../hsActions/AddGeneratedCardIntoHand.ts"/>
+///<reference path="../hsActions/AuraUpdateStep.ts"/>
+///<reference path="../hsActions/Damage.ts"/>
+///<reference path="../hsActions/DeathCreationStep.ts"/>
+///<reference path="../hsActions/DestroyCardInPlay.ts"/>
+///<reference path="../hsActions/Discard.ts"/>
+///<reference path="../hsActions/DrawCard.ts"/>
+///<reference path="../hsActions/EmptyAction.ts"/>
+///<reference path="../hsActions/Fatigue.ts"/>
+///<reference path="../hsActions/Heal.ts"/>
+///<reference path="../hsActions/MarkAsDestroyed.ts"/>
+///<reference path="../hsActions/MillCard.ts"/>
+///<reference path="../hsActions/PutCardIntoHand.ts"/>
+///<reference path="../hsActions/ReturnCardIntoHandFromPlayZone.ts"/>
+///<reference path="../hsActions/Sequence.ts"/>
+///<reference path="../hsActions/ShuffleDeck.ts"/>
+///<reference path="../hsActions/ShuffleGeneratedCardIntoDeck.ts"/>
+///<reference path="../../core/action/ActionFactory.ts"/>
+///<reference path="../core/HsZone.ts"/>
+///<reference path="../entities/Card.ts"/>
+///<reference path="../core/HsAction.ts"/>
+///<reference path="../core/HsgameCtx.ts"/>
+///<reference path="../hsActions/main/PayCostAndRemoveFromHand.ts"/>
+///<reference path="../hsActions/main/PlayMinion.ts"/>
 
+
+"use strict";
 
 namespace HSLogic {
 
-    export class HsActionFactory<T extends HsGameEnv> extends jsLogic.ActionFactory {
+    export class HsActionFactory<T extends HsGameCtx> extends jsLogic.ActionFactory {
 
         addGeneratedCardIntoHand(source: jsLogic.IAction<T>, player: Player, card: Card): AddGeneratedCardIntoHand {
             return new AddGeneratedCardIntoHand(source, player, card);
@@ -92,6 +96,26 @@ namespace HSLogic {
 
         shuffleGeneratedCardIntoDeck(source: jsLogic.IAction<T>, cards: Card[], deckOwner: Player): ShuffleGeneratedCardIntoDeck {
             return new ShuffleGeneratedCardIntoDeck(source, cards, deckOwner);
+        }
+
+        payCostAndRemoveFromHand(param: PlayCardParam): PayCostAndRemoveFromHand {
+            return new PayCostAndRemoveFromHand(param);
+        }
+
+        playCard(param: PlayCardParam): jsLogic.IAction<T> {
+            return new PlayCard(param);
+        }
+
+        playMinion(param: PlayMinionParam): jsLogic.IAction<T> {
+            return new PlayMinion(param).wrapIt();
+        }
+
+        playSpell(param: PlayCardParam): jsLogic.IAction<T> {
+            return new PlaySpell(param).wrapIt();
+        }
+
+        playWeapon(param: PlayCardParam): jsLogic.IAction<T> {
+            return new PlayWeapon(param).wrapIt();
         }
     }
 }

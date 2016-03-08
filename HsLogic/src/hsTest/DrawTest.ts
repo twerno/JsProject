@@ -1,7 +1,8 @@
 ///<reference path="../hs/core/HsAction.ts"/>
-///<reference path="../hs/HsCard.ts"/>
+///<reference path="../hs/entities/Card.ts"/>
+///<reference path="../hs/entities/Player.ts"/>
 ///<reference path="../hs/core/HsZone.ts"/>
-///<reference path="../hs/core/HsGameEnv.ts"/>
+///<reference path="../hs/core/HsgameCtx.ts"/>
 ///<reference path="../core/action/ActionStack.ts"/>
 ///<reference path="../hs/trigger/OnAfterDamageTrigger.ts"/>
 ///<reference path="../hs/trigger/OnDamageCalculationTrigger.ts"/>
@@ -27,10 +28,10 @@ namespace HSLogic {
     const CARDS_IN_DECK: number = 20;
 
 
-    export class DrawTest<T extends HsGameEnv> {
+    export class DrawTest<T extends HsGameCtx> {
 
-        gameEnv: HsGameEnv = null;
-        stack: jsLogic.ActionStack<HsGameEnv> = null;
+        gameCtx: HsGameCtx = null;
+        stack: jsLogic.ActionStack<HsGameCtx> = null;
 
         constructor() {
             let self: DrawTest<T> = this;
@@ -43,23 +44,23 @@ namespace HSLogic {
         }
 
         public init(): void {
-            this.gameEnv = new HsGameEnv();
-            this.gameEnv.activePlayer = this.initPlayer('player_1', this.gameEnv);
-            this.initPlayer('player_2', this.gameEnv);
-            this.gameEnv.handlers.registerTrigger(new OnAfterDamageTrigger());
-            this.gameEnv.handlers.registerTrigger(new OnDamageCalculationTrigger());
-            this.gameEnv.handlers.registerTrigger(new OnAfterCardDrawTrigger());
+            this.gameCtx = new HsGameCtx();
+            this.gameCtx.activePlayer = this.initPlayer('player_1', this.gameCtx);
+            this.initPlayer('player_2', this.gameCtx);
+            this.gameCtx.handlers.registerTrigger(new OnAfterDamageTrigger());
+            this.gameCtx.handlers.registerTrigger(new OnDamageCalculationTrigger());
+            this.gameCtx.handlers.registerTrigger(new OnAfterCardDrawTrigger());
         }
 
 
-        public initPlayer(name: string, gameEnv: HsGameEnv): Player {
+        public initPlayer(name: string, gameCtx: HsGameCtx): Player {
             let player: Player = new Player(name);
             let zones: HsZones = new HsZones(player);
-            gameEnv.players.push(player);
-            gameEnv.zonesMap[player.id] = zones;
+            gameCtx.players.push(player);
+            gameCtx.zonesMap[player.id] = zones;
 
             for (let i = 0; i < CARDS_IN_DECK; i++)
-                zones.deck.addEntity(new Card(player));
+                zones.deck.addEntity(new Minion(player, Bloodfen_Raptor));
 
             return player;
         }
@@ -71,11 +72,11 @@ namespace HSLogic {
 
 
         private _onResolved = (action: jsLogic.IAction<T>): void => {
-            let zones: HsZones = this.gameEnv.zonesOfActivePlayer();
+            let zones: HsZones = this.gameCtx.zonesOfActivePlayer();
             if (!this.stack.isEmpty())
-                this.stack.resolveTopAction(this.gameEnv);
+                this.stack.resolveTopAction(this.gameCtx);
             else
-                console.log(`Cards in hand: ${zones.hand.length}; Cards in deck: ${zones.deck.length}; Cards in graveyard: ${zones.graveyard.length}; Players health: ${this.gameEnv.activePlayer.hp}`);
+                console.log(`Cards in hand: ${zones.hand.length}; Cards in deck: ${zones.deck.length}; Cards in graveyard: ${zones.graveyard.length}; Players health: ${this.gameCtx.activePlayer.hp}`);
         }
 
 
@@ -87,7 +88,7 @@ namespace HSLogic {
             let action: Sequence = new Sequence(new EmptyAction(null, 'PlayerAction'), innerAction);
 
             this.stack.putOnTop(action);
-            this.stack.resolveTopAction(this.gameEnv);
+            this.stack.resolveTopAction(this.gameCtx);
         }
 
 
@@ -97,7 +98,7 @@ namespace HSLogic {
             let action: DrawCard = new DrawCard(
                 {
                     sourceAction: new EmptyAction(null, 'PlayerAction'),
-                    target: this.gameEnv.activePlayer
+                    target: this.gameCtx.activePlayer
                 });
 
             this._resolve([action]);
@@ -108,8 +109,8 @@ namespace HSLogic {
             let action: Discard = new Discard(
                 {
                     sourceAction: new EmptyAction(null, 'PlayerAction'),
-                    card: this.gameEnv.zonesOfActivePlayer().hand.getRawArray()[0],
-                    target: this.gameEnv.activePlayer
+                    card: this.gameCtx.zonesOfActivePlayer().hand.getRawArray()[0],
+                    target: this.gameCtx.activePlayer
                 });
 
             // new EmptyAction(null, 'PlayerAction'), this.zones.hand.getRawArray()[0], this.zones);
@@ -121,7 +122,7 @@ namespace HSLogic {
         pickAtRandom(): void {
             let resultSet: Card[] = [];
             let selectorParam: jsLogic.SelectorParam<Card> = {
-                options: this.gameEnv.zonesOfActivePlayer().deck.getRawArray(),
+                options: this.gameCtx.zonesOfActivePlayer().deck.getRawArray(),
                 amount: 1,
                 removeSelectedFromOptions: false
             };
@@ -136,5 +137,5 @@ namespace HSLogic {
 
     }
 
-    export var d: DrawTest<HsGameEnv> = new DrawTest<HsGameEnv>();
+    export var d: DrawTest<HsGameCtx> = new DrawTest<HsGameCtx>();
 }

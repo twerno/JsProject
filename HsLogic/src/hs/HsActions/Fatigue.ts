@@ -10,7 +10,7 @@ namespace HSLogic {
  	 */
     export class Fatigue extends HsAction {
 
-        resolve(_this_: Fatigue, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: Fatigue, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
 
@@ -25,11 +25,11 @@ namespace HSLogic {
                         cancelDamage: false
                     };
 
-                    resolve([gameEnv.actionFactory.damage(damageParam)]);
+                    resolve([gameCtx.actionFactory.damage(damageParam)]);
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public target: Player) {
+        constructor(source: jsLogic.IAction<HsGameCtx>, public target: Player) {
             super(source);
         };
     }

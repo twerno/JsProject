@@ -6,7 +6,7 @@
 
 namespace HSLogic {
 
-    export interface HealParam extends HsEventParam {
+    export interface HealParam extends HsActionParam {
         source: Card,
         cancelHeal: boolean,
         amount: number,
@@ -33,7 +33,7 @@ namespace HSLogic {
      * Heal
      *
      */
-    export class Heal extends jsLogic.CancelableAction<HsGameEnv, HealParam> {
+    export class Heal extends jsLogic.CancelableAction<HsGameCtx, HealParam> {
 
         buildOnBeforeEvent(eventParam: HealParam): HsActionEvent<HealParam> {
             return new HealCalculationEvent(eventParam);
@@ -51,18 +51,18 @@ namespace HSLogic {
             return false;
         }
 
-        resolve(_this_: Heal, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: Heal, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
 
                 (resolve, reject): void => {
-                    let targetCounters: jsLogic.CounterMap = _this_.eventParam.target.target.counters;
+                    let targetCounters: jsLogic.CounterMap = _this_.param.target.target.counters;
 
                     if (targetCounters[DivineShieldCounter.type]) {
                         delete targetCounters[DivineShieldCounter.type];
-                        _this_.eventParam.amount = 0;
+                        _this_.param.amount = 0;
                     }
 
-                    _this_.eventParam.target.target.hp -= _this_.eventParam.amount;
+                    _this_.param.target.target.hp -= _this_.param.amount;
 
                     return null;
                 }

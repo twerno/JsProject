@@ -13,22 +13,22 @@ namespace HSLogic {
  	 */
     export class PutCardIntoHand extends HsAction {
 
-        resolve(_this_: PutCardIntoHand, gameEnv: HsGameEnv): PromiseOfActions {
+        resolve(_this_: PutCardIntoHand, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
                 (resolve, reject): void => {
-                    let zones: HsZones = gameEnv.zonesOf(_this_.player);
+                    let zones: HsZones = gameCtx.zonesOf(_this_.player);
 
 
                     if (!zones.hand.isFull) {
                         zones.hand.addEntity(_this_.card);
                         resolve(null);
                     } else {
-                        resolve([gameEnv.actionFactory.millCard(_this_.source, _this_.card)]);
+                        resolve([gameCtx.actionFactory.millCard(_this_.source, _this_.card)]);
                     }
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsGameEnv>, public player: Player, public card: Card) {
+        constructor(source: jsLogic.IAction<HsGameCtx>, public player: Player, public card: Card) {
             super(source);
         };
     }
