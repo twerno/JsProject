@@ -10,10 +10,10 @@ namespace jsLogic {
      * BroadcastableAction 
      *
      */
-    export abstract class BroadcastableAction<T extends IActionContext, P extends IActionParam<T>> extends IAction<T> {
+    export abstract class BroadcastableAction<T extends IContext, P extends IActionParam<T>> extends IAction<T> {
 
-        abstract buildOnBeforeEvent(eventParam: P): ActionEvent<T, P>;
-        abstract buildOnAfterEvent(eventParam: P): ActionEvent<T, P>;
+        abstract onBeforeEventBuilder(eventParam: P): ActionEvent<T, P>;
+        abstract onAfterEventBuilder(eventParam: P): ActionEvent<T, P>;
 
 
         wrapIt(): BroadcastableActionWrapper<T, P> {
@@ -32,7 +32,7 @@ namespace jsLogic {
      * BroadcastableActionWrapper 
      *
      */
-    export class BroadcastableActionWrapper<T extends IActionContext, P extends IActionParam<T>> extends IAction<T> {
+    export class BroadcastableActionWrapper<T extends IContext, P extends IActionParam<T>> extends IAction<T> {
 
         resolve(_this_: BroadcastableActionWrapper<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
@@ -42,9 +42,9 @@ namespace jsLogic {
                     let eventParam: P = innerAction.eventParam;
 
                     resolve([
-                        context.actionFactory.dispatch(innerAction.buildOnBeforeEvent(eventParam)),
+                        context.actionFactory.dispatch(innerAction.onBeforeEventBuilder(eventParam)),
                         innerAction,
-                        context.actionFactory.dispatch(innerAction.buildOnAfterEvent(eventParam))
+                        context.actionFactory.dispatch(innerAction.onAfterEventBuilder(eventParam))
                     ]);
                 });
         }

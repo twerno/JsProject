@@ -2,7 +2,6 @@
 ///<reference path="../hs/entities/Card.ts"/>
 ///<reference path="../hs/entities/Player.ts"/>
 ///<reference path="../hs/core/HsZone.ts"/>
-///<reference path="../hs/core/HsgameCtx.ts"/>
 ///<reference path="../core/action/ActionStack.ts"/>
 ///<reference path="../hs/trigger/OnAfterDamageTrigger.ts"/>
 ///<reference path="../hs/trigger/OnDamageCalculationTrigger.ts"/>
@@ -47,9 +46,9 @@ namespace HSLogic {
             this.gameCtx = new HsGameCtx();
             this.gameCtx.activePlayer = this.initPlayer('player_1', this.gameCtx);
             this.initPlayer('player_2', this.gameCtx);
-            this.gameCtx.handlers.registerTrigger(new OnAfterDamageTrigger());
-            this.gameCtx.handlers.registerTrigger(new OnDamageCalculationTrigger());
-            this.gameCtx.handlers.registerTrigger(new OnAfterCardDrawTrigger());
+            //this.gameCtx.handlers.registerTrigger(new OnAfterDamageTrigger());
+            //this.gameCtx.handlers.registerTrigger(new OnDamageCalculationTrigger());
+            //this.gameCtx.handlers.registerTrigger(new OnAfterCardDrawTrigger());
         }
 
 

@@ -1,5 +1,4 @@
 ///<reference path="../core/HsAction.ts"/>
-///<reference path="../core/HsActionEvent.ts"/> 
 ///<reference path="../../core/action/abstractActions/CancelableAction.ts"/>
 
 "use strict";
@@ -35,21 +34,12 @@ namespace HSLogic {
      */
     export class Heal extends jsLogic.CancelableAction<HsGameCtx, HealParam> {
 
-        buildOnBeforeEvent(eventParam: HealParam): HsActionEvent<HealParam> {
-            return new HealCalculationEvent(eventParam);
-        }
+        cancelAction(eventParam: HealParam): boolean { return eventParam.cancelHeal }
+        cancelOnAfterEvent(eventParam: HealParam): boolean { return false }
 
-        buildOnAfterEvent(eventParam: HealParam): HsActionEvent<HealParam> {
-            return new OnAfterHealEvent(eventParam);
-        }
+        onBeforeEventBuilder(eventParam: HealParam): HsActionEvent<HealParam> { return new HealCalculationEvent(eventParam) }
+        onAfterEventBuilder(eventParam: HealParam): HsActionEvent<HealParam> { return new OnAfterHealEvent(eventParam) }
 
-        doCancelAction(eventParam: HealParam): boolean {
-            return eventParam.cancelHeal;
-        }
-
-        doCancelOnAfterEvent(eventParam: HealParam): boolean {
-            return false;
-        }
 
         resolve(_this_: Heal, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(

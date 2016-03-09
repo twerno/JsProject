@@ -1,29 +1,36 @@
 ///<reference path="../../core/HsAction.ts"/>
-///<reference path="../../core/HsActionEvent.ts"/> 
 ///<reference path="../../../core/action/abstractActions/CancelableAction.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
+    export class OnMinionPlaying<P extends PlayCardParam> extends HsActionEvent<P> {
+        static get type(): string { return OnMinionPlaying.name }
+    }
+
+    export class OnMinionSummoned<P extends PlayCardParam> extends HsActionEvent<P> {
+        static get type(): string { return OnMinionSummoned.name }
+    }
+
+    //export class OnSpellTargetingPhase extends HsActionEvent<PlayCardParam> {
+    //    static get type(): string { return OnSpellTargetingPhase.name }
+    //}
 
     /**
      * PlayCard
      *
  	 */
-    export class PlayMinion extends jsLogic.CancelableAction<HsGameCtx, PlayMinionParam> {
+    export class PlayMinion<P extends PlayMinionParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: PlayMinionParam): boolean {
-            return eventParam.cancelAction;
-        }
+        cancelAction(eventParam: P): boolean { return eventParam.cancelAction }
+        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction }
 
-
-        cancelOnAfterEvent(eventParam: PlayMinionParam): boolean {
-            return eventParam.cancelAction;
-        }
+        onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnMinionPlaying(param) }
+        onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnMinionSummoned(param) }
 
 
-        resolve(_this_: PlayMinion, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve(_this_: PlayMinion<P>, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
 
                 (resolve, reject): void => {

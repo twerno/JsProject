@@ -1,5 +1,4 @@
 ///<reference path="../../core/HsAction.ts"/>
-///<reference path="../../core/HsActionEvent.ts"/> 
 ///<reference path="../../../core/action/abstractActions/CancelableAction.ts"/>
 
 "use strict";
@@ -7,37 +6,37 @@
 namespace HSLogic {
 
 
+    export class OnWeaponPlaying<P extends PlayCardParam> extends HsActionEvent<P> {
+        static get type(): string { return OnWeaponPlaying.name }
+    }
+
+    export class OnWeaponPlayed<P extends PlayCardParam> extends HsActionEvent<P> {
+        static get type(): string { return OnWeaponPlayed.name }
+    }
+
     /**
      * PlayCard
      * http://hearthstone.gamepedia.com/Advanced_rulebook#Playing_a_weapon
      *
  	 */
-    export class PlayWeapon extends jsLogic.CancelableAction<HsGameCtx, PlayCardParam> {
+    export class PlayWeapon<P extends PlayCardParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: PlayCardParam): boolean {
-            return eventParam.cancelAction;
-        }
+        cancelAction(eventParam: P): boolean { return eventParam.cancelAction }
+        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction }
 
-
-        cancelOnAfterEvent(eventParam: PlayCardParam): boolean {
-            return eventParam.cancelAction;
-        }
+        onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnWeaponPlaying(param) }
+        onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnWeaponPlayed(param) }
 
 
-        resolve(_this_: PlayWeapon, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve(_this_: PlayWeapon<P>, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
 
                 (resolve, reject): void => {
                     let weapon: Weapon = <Weapon>_this_.param.card;
 
-                    let actions: jsLogic.IAction<HsGameCtx>[] = [
-                        gameCtx.actionFactory.dispatchEvent<HsGameCtx, PlayCardParam>(PlaySpell.ON_TARGETING_PHASE, _this_.param)
-                    ];
+                    // equiping phase
 
-                    for (let i = 0; i < spell.spellActions.length; i++)
-                        actions.push(spell.spellActions[i].build(_this_.param, gameCtx));
-
-                    resolve(actions);
+                    resolve(null);
                 }
             );
         }

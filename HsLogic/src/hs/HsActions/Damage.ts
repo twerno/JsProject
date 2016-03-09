@@ -1,5 +1,4 @@
 ///<reference path="../core/HsAction.ts"/>
-///<reference path="../core/HsActionEvent.ts"/> 
 ///<reference path="../../core/action/abstractActions/CancelableAction.ts"/>
 
 "use strict";
@@ -64,13 +63,11 @@ namespace HSLogic {
      *  QUEUE_TRIGGER_LAST    - Prophet Velens 
      */
     export class OnDamageCalculationEvent extends HsActionEvent<DamageParam> {
-
         static get type(): string { return OnDamageCalculationEvent.name }
     }
 
-    export class OnAfterDamageEvent extends HsActionEvent<DamageParam> {
-
-        static get type(): string { return OnAfterDamageEvent.name }
+    export class OnDamageDealt extends HsActionEvent<DamageParam> {
+        static get type(): string { return OnDamageDealt.name }
     }
 
 
@@ -80,24 +77,16 @@ namespace HSLogic {
  	 */
     export class Damage extends jsLogic.CancelableAction<HsGameCtx, DamageParam> {
 
-
-        buildOnBeforeEvent(eventParam: DamageParam): HsActionEvent<DamageParam> {
-            return new OnDamageCalculationEvent(eventParam);
-        }
-
-        buildOnAfterEvent(eventParam: DamageParam): HsActionEvent<DamageParam> {
-            return new OnAfterDamageEvent(eventParam);
-        }
-
-        doCancelAction(eventParam: DamageParam): boolean {
+        cancelAction(eventParam: DamageParam): boolean {
             return eventParam.cancelDamage
                 //|| eventParam.amount === 0
                 || !eventParam.target.targetInRightZone();
         }
+        cancelOnAfterEvent(eventParam: DamageParam): boolean { return false }
 
-        doCancelOnAfterEvent(eventParam: DamageParam): boolean {
-            return false;
-        }
+        onBeforeEventBuilder(param: DamageParam): HsActionEvent<DamageParam> { return new OnDamageCalculationEvent(param) }
+        onAfterEventBuilder(param: DamageParam): HsActionEvent<DamageParam> { return new OnDamageDealt(param) }
+
 
         resolve(_this_: Heal, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(

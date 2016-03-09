@@ -35,6 +35,7 @@
     <TypeScriptCompile Include="src\core\action\helperActions\BroadcastAction.ts" />
     <TypeScriptCompile Include="src\core\action\abstractActions\CancelableAction.ts" />
     <TypeScriptCompile Include="src\core\action\helperActions\DispatchEventAction.ts" />
+    <TypeScriptCompile Include="src\core\action\helperActions\MoveEntityBetweenZones.ts" />
     <TypeScriptCompile Include="src\core\action\helperActions\Selector.ts" />
     <TypeScriptCompile Include="src\core\action\IAction.ts" />
     <TypeScriptCompile Include="src\core\Counter.ts" />
@@ -42,23 +43,29 @@
     <TypeScriptCompile Include="src\core\event\Event.ts" />
     <TypeScriptCompile Include="src\core\event\EventHandler.ts" />
     <TypeScriptCompile Include="src\core\event\EventHandlers.ts" />
-    <TypeScriptCompile Include="src\core\event\IHasHandlersAndFactory.ts" />
+    <TypeScriptCompile Include="src\core\action\IActionContext.ts" />
     <TypeScriptCompile Include="src\core\Zone.ts" />
     <TypeScriptCompile Include="src\core\Marker.ts" />
-    <TypeScriptCompile Include="src\hsTest\Cards.ts" />
+    <TypeScriptCompile Include="src\hsTest\Defs.ts" />
     <TypeScriptCompile Include="src\hsTest\DrawTest.ts" />
     <TypeScriptCompile Include="src\hsTest\SelectorTest.ts" />
     <TypeScriptCompile Include="src\hs\entities\CardSet.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\DefActions.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\IDefActionFactory.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\IDefAction.ts" />
     <TypeScriptCompile Include="src\hs\entities\def\ICard.ts" />
     <TypeScriptCompile Include="src\hs\core\HsAction.ts" />
-    <TypeScriptCompile Include="src\hs\core\HsActionEvent.ts" />
+    <TypeScriptCompile Include="src\hs\core\HsGameContext.ts" />
     <TypeScriptCompile Include="src\hs\core\HsEntity.ts" />
-    <TypeScriptCompile Include="src\hs\core\HsGameEnv.ts" />
     <TypeScriptCompile Include="src\hs\core\HsCounter.ts" />
     <TypeScriptCompile Include="src\hs\core\HsMarker.ts" />
     <TypeScriptCompile Include="src\hs\core\HsZone.ts" />
     <TypeScriptCompile Include="src\hs\entities\def\IHsEntity.ts" />
     <TypeScriptCompile Include="src\hs\entities\def\IMinion.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\ITargetChoiceMode.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\ITarget.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\IWeapon.ts" />
+    <TypeScriptCompile Include="src\hs\entities\def\ISpell.ts" />
     <TypeScriptCompile Include="src\hs\entities\def\IPlayer.ts" />
     <TypeScriptCompile Include="src\hs\entities\Player.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
@@ -70,8 +77,12 @@
     <TypeScriptCompile Include="src\hs\hsActions\DeathCreationStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Discard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Heal.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\minor.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PayCostAndRemoveFromHand.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlayWeapon.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlaySpell.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlayMinion.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlayCard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\phase\EquippingPhase.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Sequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Damage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DrawCard.ts" />
@@ -90,9 +101,7 @@
     <TypeScriptCompile Include="src\hs\trigger\OnDamageCalculationTrigger.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\hs\hsActions\main\" />
     <Folder Include="src\hs\hsActions\minor\" />
-    <Folder Include="src\hs\hsActions\phase\" />
     <Folder Include="src\hs\hsActions\technical\" />
   </ItemGroup>
   <PropertyGroup>

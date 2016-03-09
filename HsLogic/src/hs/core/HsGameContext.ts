@@ -1,12 +1,14 @@
-///<reference path="../../core/event/IHasHandlersAndFactory.ts"/>
-///<reference path="../../core/event/EventHandlers.ts"/>
-///<reference path="../factories/HsActionFactory.ts"/>
+///<reference path="../../core/action/IActionContext.ts"/>
+
 
 "use strict";
 
 namespace HSLogic {
 
-    export class HsGameCtx implements jsLogic.IActionContext {
+    export interface HsActionParam extends jsLogic.IActionParam<HsGameCtx> { }
+
+
+    export class HsGameCtx implements jsLogic.IContext {
 
         actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
 

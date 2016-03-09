@@ -57,22 +57,22 @@ namespace jsLogic {
      *
      */
     export class ZoneMap<T extends Entity, Z extends Zone<T>> {
-        private _map: Collection.StringMap<Z> = new Collection.StringMap<Z>();
+        _map: Collection.IStringMap<Z> = {};
 
 
         get(zoneId: string): Z {
-            if (!this._map.has(zoneId))
+            if (!this._map.hasOwnProperty(zoneId))
                 throw new ZoneNotFoundException(zoneId);
 
-            return this._map.get(zoneId);
+            return this._map[zoneId];
         }
 
 
         register(zone: Z): void {
-            if (this._map.has(zone.zoneId))
+            if (this._map.hasOwnProperty(zone.zoneId))
                 throw new ZoneDuplicationException(zone.zoneId);
 
-            this._map.put(zone.zoneId, zone);
+            this._map[zone.zoneId] = zone;
         }
 
         constructor(public owner: Entity) { }

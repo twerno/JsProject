@@ -9,7 +9,7 @@ namespace jsLogic {
      * Collect actions from handlers which respond to event 
      *
  	 */
-    export class DispatchEventAction<T extends IActionContext, P extends IActionParam<T>> extends IAction<T> {
+    export class DispatchEventAction<T extends IContext, P extends IActionParam<T>> extends IAction<T> {
 
         resolve(_this_: DispatchEventAction<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(

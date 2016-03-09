@@ -6,11 +6,11 @@
 namespace jsLogic {
 
 
-    export interface IActionToBroadcast<T extends IActionContext, P extends IActionParam<T>> {
+    export interface IActionToBroadcast<T extends IContext, P extends IActionParam<T>> {
         eventParam: P,
         action: IAction<T>,
-        onBeforeEvent: ActionEvent<T, P>,
-        onAfterEvent: ActionEvent<T, P>
+        onBeforeEventBuilder: EventBuilder<T, P>,
+        onAfterEventBuilder: EventBuilder<T, P>
     }
 
 
@@ -18,7 +18,7 @@ namespace jsLogic {
      * BroadcastAction 
      *
      */
-    export class BroadcastAction<T extends IActionContext, P extends IActionParam<T>> extends BroadcastableActionWrapper<T, P> {
+    export class BroadcastAction<T extends IContext, P extends IActionParam<T>> extends BroadcastableActionWrapper<T, P> {
 
         constructor(public action2Broadcast: IActionToBroadcast<T, P>) {
             super(new BroadcastableInnerAction(action2Broadcast));
@@ -31,7 +31,7 @@ namespace jsLogic {
      * BroadcastableInnerAction 
      *
      */
-    class BroadcastableInnerAction<T extends IActionContext, P extends IActionParam<T>> extends BroadcastableAction<T, P> {
+    class BroadcastableInnerAction<T extends IContext, P extends IActionParam<T>> extends BroadcastableAction<T, P> {
 
         resolve(_this_: BroadcastableInnerAction<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
@@ -42,13 +42,9 @@ namespace jsLogic {
                 });
         }
 
-        buildOnBeforeEvent(eventParam: P): ActionEvent<T, P> {
-            return this.action2Broadcast.onBeforeEvent;
-        }
+        onBeforeEventBuilder(eventParam: P): ActionEvent<T, P> { return this.action2Broadcast.onBeforeEventBuilder(eventParam) }
 
-        buildOnAfterEvent(eventParam: P): ActionEvent<T, P> {
-            return this.action2Broadcast.onAfterEvent;
-        }
+        onAfterEventBuilder(eventParam: P): ActionEvent<T, P> { return this.action2Broadcast.onAfterEventBuilder(eventParam) }
 
         constructor(public action2Broadcast: IActionToBroadcast<T, P>) {
             super(action2Broadcast.eventParam);

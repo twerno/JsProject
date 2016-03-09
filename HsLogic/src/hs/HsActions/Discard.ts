@@ -1,5 +1,4 @@
 ///<reference path="../core/HsAction.ts"/>
-///<reference path="../core/HsActionEvent.ts"/>
 
 
 "use strict";
@@ -14,7 +13,6 @@ namespace HSLogic {
 
 
     export class OnAfterDiscardEvent extends HsActionEvent<DiscardParam> {
-
         static get type(): string { return OnAfterDiscardEvent.name }
     }
 

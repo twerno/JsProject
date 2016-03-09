@@ -1,11 +1,22 @@
 ///<reference path="../../core/HsAction.ts"/>
-///<reference path="../../core/HsActionEvent.ts"/> 
 ///<reference path="../../../core/action/abstractActions/CancelableAction.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
+
+    export class OnSpellPlaying<P extends PlayCardParam> extends HsActionEvent<P> {
+        static get type(): string { return OnSpellPlaying.name }
+    }
+
+    export class OnSpellPlayed<P extends PlayCardParam> extends HsActionEvent<P> {
+        static get type(): string { return OnSpellPlayed.name }
+    }
+
+    export class OnSpellTargetingPhase extends HsActionEvent<PlayCardParam> {
+        static get type(): string { return OnSpellTargetingPhase.name }
+    }
 
     /**
      * PlaySpell
@@ -18,28 +29,23 @@ namespace HSLogic {
      *    onAfterPlaySpell  - automatic event, after resolve is executed
      *    win/loss check    - inside outer wrapper?
  	 */
-    export class PlaySpell extends jsLogic.CancelableAction<HsGameCtx, PlayCardParam> {
+    export class PlaySpell<P extends PlayCardParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        static ON_TARGETING_PHASE = 'onTargetingPhase';
+        cancelAction(eventParam: P): boolean { return eventParam.cancelAction }
+        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction }
 
-        cancelAction(eventParam: PlayCardParam): boolean {
-            return eventParam.cancelAction;
-        }
-
-
-        cancelOnAfterEvent(eventParam: PlayCardParam): boolean {
-            return eventParam.cancelAction;
-        }
+        onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnSpellPlaying(param) }
+        onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnSpellPlayed(param) }
 
 
-        resolve(_this_: PlaySpell, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve(_this_: PlaySpell<P>, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<HsAction[]>(
 
                 (resolve, reject): void => {
                     let spell: Spell = <Spell>_this_.param.card;
 
                     let actions: jsLogic.IAction<HsGameCtx>[] = [
-                        gameCtx.actionFactory.dispatchEvent<HsGameCtx, PlayCardParam>(PlaySpell.ON_TARGETING_PHASE, _this_.param)
+                        gameCtx.actionFactory.dispatch<HsGameCtx, PlayCardParam>(new OnSpellTargetingPhase(_this_.param))
                     ];
 
                     for (let i = 0; i < spell.spellActions.length; i++)

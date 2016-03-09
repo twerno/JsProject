@@ -19,7 +19,6 @@
 ///<reference path="../core/HsZone.ts"/>
 ///<reference path="../entities/Card.ts"/>
 ///<reference path="../core/HsAction.ts"/>
-///<reference path="../core/HsgameCtx.ts"/>
 ///<reference path="../hsActions/main/PayCostAndRemoveFromHand.ts"/>
 ///<reference path="../hsActions/main/PlayMinion.ts"/>
 
