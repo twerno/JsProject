@@ -27,7 +27,7 @@ namespace HSLogic {
 
 
 
-    export type IDefAltActions = DefAction | DefAction[] | DefTargetedAction | DefTargetedAction[];
+    export type IDefActions = DefAction | DefAction[] | DefTargetedAction | DefTargetedAction[];
 
 
 

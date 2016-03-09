@@ -14,7 +14,7 @@ namespace HSLogic {
 
     export interface IHsEntity {
         name: string;
-        type: CARD_TYPE;
+        card_type: CARD_TYPE;
     }
 
 }

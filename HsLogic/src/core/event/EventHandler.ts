@@ -8,7 +8,7 @@ namespace jsLogic {
     export const UI_LISTENER = QUEUE_TRIGGER_LAST + 1;
 
 
-    export abstract class EventHandler<T extends IContext, P extends IActionParam<T>> {
+    export abstract class EventHandler<T extends IExtContext, P extends IActionParam> {
         // triggers will trigger in order from the lowest level to the higest
         // triggers with equals level: trigger registered first will trigger first
         // queue_level has to be a positive number

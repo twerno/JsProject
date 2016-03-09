@@ -13,7 +13,7 @@ namespace HSLogic {
     export class Sequence extends jsLogic.IAction<HsGameCtx> {
 
         resolve(_this_: Sequence, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
                     let actions: jsLogic.IAction<HsGameCtx>[] = [];
 

@@ -9,26 +9,26 @@ namespace HSLogic {
      * PayCostAndRemoveFromHand
      *
  	 */
-    export class PayCostAndRemoveFromHand extends jsLogic.SimpleAction<HsGameCtx> {
+    export class PayCostAndRemoveFromHand<P extends PlayCardParam> extends HsAction<P> {
 
-        baseActionResolver(_this_: PayCostAndRemoveFromHand, gameCtx: HsGameCtx): void {
+        resolve(_this_: PayCostAndRemoveFromHand<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            return new Promise<HsAction<P>[]>(
+                (resolve, reject): void => {
+                    let param: P = _this_.param,
+                        player: Player = param.player,
+                        card: Card = param.card;
 
-            let player: Player = _this_.param.player;
-            let card: Card = _this_.param.card;
+                    if (player.filled_mana_crystals < card.cost)
+                        throw new Error(`NOT enough mana to play ${card}.`);
 
-            if (player.filled_mana_crystals < card.cost)
-                throw new Error(`NOT enough mana to play ${card}.`);
-
-            player.filled_mana_crystals -= card.cost;
-
-
-            gameCtx.zonesOf(player).hand.removeEntity(card);
-            gameCtx.zonesOf(player).graveyard.addEntity(card);
-        }
+                    player.filled_mana_crystals -= card.cost;
 
 
-        constructor(public param: PlayCardParam) {
-            super(param.sourceAction);
+                    gameCtx.zonesOf(player).hand.removeEntity(card);
+                    gameCtx.zonesOf(player).graveyard.addEntity(card);
+
+                    resolve(jsLogic.NO_CONSEQUENCES);
+                });
         }
     }
 }

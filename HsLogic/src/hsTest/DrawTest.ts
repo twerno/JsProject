@@ -1,6 +1,6 @@
 ///<reference path="../hs/core/HsAction.ts"/>
-///<reference path="../hs/entities/Card.ts"/>
-///<reference path="../hs/entities/Player.ts"/>
+///<reference path="../hs/entity/Card.ts"/>
+///<reference path="../hs/entity/Player.ts"/>
 ///<reference path="../hs/core/HsZone.ts"/>
 ///<reference path="../core/action/ActionStack.ts"/>
 ///<reference path="../hs/trigger/OnAfterDamageTrigger.ts"/>

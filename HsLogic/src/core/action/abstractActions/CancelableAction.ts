@@ -10,7 +10,7 @@ namespace jsLogic {
      *  CancelableAction<T>
      * 
      */
-    export abstract class CancelableAction<T extends IContext, P extends IActionParam<T>> extends IAction<T> {
+    export abstract class CancelableAction<T extends IExtContext, P extends IActionParam> extends IAction<T> {
 
         abstract cancelAction(eventParam: P): boolean;
         abstract cancelOnAfterEvent(eventParam: P): boolean;
@@ -34,7 +34,7 @@ namespace jsLogic {
      * CancellableActionExternalWrapper 
      *
      */
-    export class CancellableActionExternalWrapper<T extends IContext, P extends IActionParam<T>> extends IAction<T> {
+    export class CancellableActionExternalWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
         resolve(_this_: CancellableActionExternalWrapper<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 
@@ -66,7 +66,7 @@ namespace jsLogic {
      * CancellableActionInternalWrapper 
      *
      */
-    class CancellableActionInternalWrapper<T extends IContext, P extends IActionParam<T>> extends IAction<T> {
+    class CancellableActionInternalWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
         resolve(_this_: CancellableActionInternalWrapper<T, P>, context: T): PromiseOfActions<T> {
             return new Promise<IAction<T>[]>(
 

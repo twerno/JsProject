@@ -14,7 +14,7 @@ namespace HSLogic {
     export class DestroyCardInPlay extends jsLogic.IAction<HsGameCtx> {
 
         resolve(_this_: DestroyCardInPlay, param: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
 
                 });

@@ -13,9 +13,9 @@ namespace HSLogic {
     export interface IMinion extends ICard {
         hp: number;
         attack: number;
-        sub_type: MINION_TYPE,
+        minion_type: MINION_TYPE,
 
-        battlecry?: IDefAltActions
+        battlecry?: IDefActions
 
     }
 }

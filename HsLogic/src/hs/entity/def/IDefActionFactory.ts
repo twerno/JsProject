@@ -2,19 +2,19 @@
 
 namespace HSLogic {
 
-    export interface IActionFactory<T extends jsLogic.IContext, P extends jsLogic.IActionParam<T>> {
+    export interface IActionFactory<T extends jsLogic.IExtContext, P extends jsLogic.IActionParam> {
         build(param: P, gameCtx: T): jsLogic.IAction<T>;
     }
 
     export interface ParamWithTargetFilter extends HsActionParam {
-        altTargets: DefTargetFilter[]
+        altTargets: DefTargetSetBuilder[]
     }
 
     //export interface ITargetedActionFactory<T extends jsLogic.IActionContext, P extends ParamWithTargets> {
     //    build(param: P, gameCtx: T): jsLogic.IAction<T>;
     //}
 
-    export type ITargetedActionFactory<T extends jsLogic.IContext, P extends ParamWithTargetFilter>
+    export type ITargetedActionFactory<T extends jsLogic.IExtContext, P extends ParamWithTargetFilter>
         = (sourceAction: jsLogic.IAction<T>, param: P, gameCtx: T) => jsLogic.IAction<T>;
 
 }

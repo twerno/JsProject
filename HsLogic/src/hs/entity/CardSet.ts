@@ -1,5 +1,5 @@
 ﻿///<reference path="../core/HsEntity.ts"/>
-///<reference path="def/ICard.ts"/>
+///<reference path="def/entity/ICard.ts"/>
 
 "use strict";
 

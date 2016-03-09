@@ -13,7 +13,7 @@ namespace HSLogic {
     export class AuraUpdateStep extends jsLogic.IAction<HsGameCtx> {
 
         resolve(_this_: AuraUpdateStep, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
                     resolve(null);
                 });

@@ -14,7 +14,7 @@ namespace HSLogic {
     export class PutCardIntoHand extends HsAction {
 
         resolve(_this_: PutCardIntoHand, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
                     let zones: HsZones = gameCtx.zonesOf(_this_.player);
 

@@ -17,7 +17,7 @@
 ///<reference path="../hsActions/ShuffleGeneratedCardIntoDeck.ts"/>
 ///<reference path="../../core/action/ActionFactory.ts"/>
 ///<reference path="../core/HsZone.ts"/>
-///<reference path="../entities/Card.ts"/>
+///<reference path="../entity/Card.ts"/>
 ///<reference path="../core/HsAction.ts"/>
 ///<reference path="../hsActions/main/PayCostAndRemoveFromHand.ts"/>
 ///<reference path="../hsActions/main/PlayMinion.ts"/>
@@ -53,7 +53,7 @@ namespace HSLogic {
             return new Discard(discardParam);
         }
 
-        drawCard(drawParam: DrawParam): DrawCard {
+        drawCard(drawParam: DrawParam): DrawCard<DrawParam> {
             return new DrawCard(drawParam);
         }
 
@@ -61,8 +61,8 @@ namespace HSLogic {
             return new EmptyAction(source, message);
         }
 
-        fatigue(source: jsLogic.IAction<T>, player: Player): Fatigue {
-            return new Fatigue(source, player);
+        fatigue(fatigueParam: FatigueParam): Fatigue<FatigueParam> {
+            return new Fatigue(fatigueParam);
         }
 
         heal(healParam: HealParam): Heal {
@@ -81,8 +81,8 @@ namespace HSLogic {
             return new PutCardIntoHand(source, player, card);
         }
 
-        returnCardIntoOwnersHandFrom(source: jsLogic.IAction<T>, sourceZone: HsZone, card: Card): ReturnCardIntoOwnersHandFrom {
-            return new ReturnCardIntoOwnersHandFrom(source, sourceZone, card);
+        returnCardIntoOwnersHandFrom(param: ReturnCardIntoOwnersHandParam): ReturnCardIntoOwnersHandFrom<ReturnCardIntoOwnersHandParam> {
+            return new ReturnCardIntoOwnersHandFrom(param);
         }
 
         sequence(source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[]): Sequence {

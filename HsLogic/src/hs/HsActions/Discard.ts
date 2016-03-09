@@ -25,7 +25,7 @@ namespace HSLogic {
 
         resolve(_this_: Discard, gameCtx: HsGameCtx): PromiseOfActions {
 
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
 
                     let zones: HsZones = gameCtx.zonesOf(_this_.discardParam.target);

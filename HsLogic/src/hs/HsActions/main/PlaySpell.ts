@@ -39,7 +39,7 @@ namespace HSLogic {
 
 
         resolve(_this_: PlaySpell<P>, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
 
                 (resolve, reject): void => {
                     let spell: Spell = <Spell>_this_.param.card;

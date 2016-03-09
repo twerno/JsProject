@@ -22,18 +22,23 @@ namespace HSLogic {
      * DrawCard
      *
  	 */
-    export class DrawCard extends HsAction {
+    export class DrawCard<P extends DrawParam> extends HsAction<P> {
 
-        resolve(_this_: DrawCard, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve(_this_: DrawCard<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
-                    let targetPlayer: Player = _this_.drawParam.target;
+                    let targetPlayer: Player = _this_.param.target;
                     let zones: HsZones = gameCtx.zonesOf(targetPlayer);
 
                     // fatigue
                     if (zones.deck.isEmpty()) {
-                        resolve([gameCtx.actionFactory.fatigue(_this_.source, targetPlayer)]);
+                        resolve([gameCtx.actionFactory.fatigue(
+                            {
+                                sourceAction: _this_.source,
+                                target: targetPlayer
+
+                            })]);
                     } else {
 
                         let card: Card = zones.deck.pop();;
@@ -43,25 +48,20 @@ namespace HSLogic {
                             zones.hand.addEntity(card);
 
                             // dispatch event if drawn
-                            resolve([
-                                gameCtx.actionFactory.dispatch(
-                                    new OnAfterDrawEvent({
-                                        target: targetPlayer,
-                                        card: card,
-                                        sourceAction: _this_.drawParam.sourceAction
-                                    }))
-                            ]);
+                            //resolve([
+                            //    gameCtx.actionFactory.dispatch(
+                            //        new OnAfterDrawEvent({
+                            //            target: targetPlayer,
+                            //            card: card,
+                            //            sourceAction: _this_.drawParam.sourceAction
+                            //        }))
+                            //]);
                         } else {
                             // mill card if hand is full
-                            resolve([gameCtx.actionFactory.millCard(_this_.source, card)]);
+                            //resolve([gameCtx.actionFactory.millCard(_this_.source, card)]);
                         }
                     }
                 });
-
         }
-
-        constructor(public drawParam: DrawParam) {
-            super(drawParam.sourceAction);
-        };
     }
 }

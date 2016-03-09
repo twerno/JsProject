@@ -1,6 +1,6 @@
 ///<reference path="../../core/Entity.ts"/>
 ///<reference path="../../core/Zone.ts"/>
-///<reference path="../entities/Card.ts"/>
+///<reference path="../entity/Card.ts"/>
 
 "use strict";
 

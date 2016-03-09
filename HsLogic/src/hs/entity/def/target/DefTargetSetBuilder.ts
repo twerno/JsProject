@@ -6,69 +6,66 @@ namespace HSLogic {
     export type ICustomTargetFilter = (caller: Player, entity: HsEntity, gameCtx: HsGameCtx) => boolean;
     export type ICustomTargetSetBuilder = (caller: Player, gameCtx: HsGameCtx, filters: ICustomTargetFilter[]) => HsEntity[];
 
-    export type DefProperTarget = DefTargetFilter | DefTargetFilter[];
+    export type DefProperTarget = DefTargetSetBuilder | DefTargetSetBuilder[];
 
-    export interface IOptionHasAttack {
-        attack: number
+
+    export abstract class IDefTargetSetBuilder {
+        abstract buildSet(caller: Player, gameCtx: HsGameCtx): HsEntity[];
     }
 
-    export class DefTargetFilter {
+    export class DefTargetSetBuilder extends IDefTargetSetBuilder {
 
         protected _setBuilder: ICustomTargetSetBuilder = StandardSetBuilder.all;
         protected _filters: ICustomTargetFilter[] = [];
 
 
-        returnSet(caller: Player, gameCtx: HsGameCtx): HsEntity[] {
+        buildSet(caller: Player, gameCtx: HsGameCtx): HsEntity[] {
             return this._setBuilder(caller, gameCtx, this._filters);
         }
 
 
-        addFilter(filter: ICustomTargetFilter): DefTargetFilter {
+        addFilter(filter: ICustomTargetFilter): DefTargetSetBuilder {
             this._filters.push(filter);
             return this;
         }
 
-        protected static NEW(): DefTargetFilter {
-            return new DefTargetFilter();
+
+        static get MINION(): DefTargetSetBuilder { return new DefTargetSetBuilder().MINION }
+        get MINION(): DefTargetSetBuilder { return this.addFilter(StandardFilters.minion) }
+
+
+        static get HERO(): DefTargetSetBuilder { return new DefTargetSetBuilder().HERO }
+        get HERO(): DefTargetSetBuilder { return this.addFilter(StandardFilters.hero) }
+
+
+        static get WAEPON(): DefTargetSetBuilder { return new DefTargetSetBuilder().WAEPON }
+        get WAEPON(): DefTargetSetBuilder { return this.addFilter(StandardFilters.waepon) }
+
+
+        static get CHARACTER(): DefTargetSetBuilder { return new DefTargetSetBuilder().CHARACTER }
+        get CHARACTER(): DefTargetSetBuilder { return this.addFilter(StandardFilters.character) }
+
+
+        static get CARD_IN_HAND(): DefTargetSetBuilder { return new DefTargetSetBuilder().CARD_IN_HAND }
+        get CARD_IN_HAND(): DefTargetSetBuilder { return this.addFilter(StandardFilters.cardInHand) }
+
+
+        static get FRIENDLY(): DefTargetSetBuilder { return new DefTargetSetBuilder().FRIENDLY }
+        get FRIENDLY(): DefTargetSetBuilder { return this.addFilter(StandardFilters.friendly) }
+
+
+        static get ENEMY(): DefTargetSetBuilder { return new DefTargetSetBuilder().ENEMY }
+        get ENEMY(): DefTargetSetBuilder { return this.addFilter(StandardFilters.enemy) }
+
+
+        static MINION_WITH_ATTACK_GREATER_THAN_OR_EQAUL_TO(attackValue: number): DefTargetSetBuilder {
+            return new DefTargetSetBuilder().ATTACK_GREATER_THAN_OR_EQAUL_TO(attackValue);
         }
-
-
-        static get MINION(): DefTargetFilter { return new DefTargetFilter().MINION }
-        get MINION(): DefTargetFilter { return this.addFilter(StandardFilters.minion) }
-
-
-        static get HERO(): DefTargetFilter { return new DefTargetFilter().HERO }
-        get HERO(): DefTargetFilter { return this.addFilter(StandardFilters.hero) }
-
-
-        static get WAEPON(): DefTargetFilter { return new DefTargetFilter().WAEPON }
-        get WAEPON(): DefTargetFilter { return this.addFilter(StandardFilters.waepon) }
-
-
-        static get CHARACTER(): DefTargetFilter { return new DefTargetFilter().CHARACTER }
-        get CHARACTER(): DefTargetFilter { return this.addFilter(StandardFilters.character) }
-
-
-        static get CARD_IN_HAND(): DefTargetFilter { return new DefTargetFilter().CARD_IN_HAND }
-        get CARD_IN_HAND(): DefTargetFilter { return this.addFilter(StandardFilters.cardInHand) }
-
-
-        static get FRIENDLY(): DefTargetFilter { return new DefTargetFilter().FRIENDLY }
-        get FRIENDLY(): DefTargetFilter { return this.addFilter(StandardFilters.friendly) }
-
-
-        static get ENEMY(): DefTargetFilter { return new DefTargetFilter().ENEMY }
-        get ENEMY(): DefTargetFilter { return this.addFilter(StandardFilters.enemy) }
-
-
-        static MINION_WITH_ATTACK_GREATER_THAN_OR_EQAUL_TO(attackValue: number): DefTargetFilter {
-            return new DefTargetFilter().ATTACK_GREATER_THAN_OR_EQAUL_TO(attackValue);
-        }
-        ATTACK_GREATER_THAN_OR_EQAUL_TO(attackValue: number): DefTargetFilter {
+        ATTACK_GREATER_THAN_OR_EQAUL_TO(attackValue: number): DefTargetSetBuilder {
             return this.addFilter(new MinionByAttackFilter(attackValue).greatThenOrEqualTo);
         }
 
-        OTHER_THAN(target: HsEntity): DefTargetFilter {
+        OTHER_THAN(target: HsEntity): DefTargetSetBuilder {
             return this.addFilter(
                 (caller: Player, entity: HsEntity, gameCtx: HsGameCtx): boolean => { return target !== entity }
             )
@@ -119,19 +116,19 @@ namespace HSLogic {
     class StandardFilters {
 
         static minion: ICustomTargetFilter = (caller: Player, entity: HsEntity, gameCtx: HsGameCtx): boolean => {
-            return entity.type === CARD_TYPE.MINION;
+            return entity.card_type === CARD_TYPE.MINION;
         }
 
         static hero: ICustomTargetFilter = (caller: Player, entity: HsEntity, gameCtx: HsGameCtx): boolean => {
-            return entity.type === CARD_TYPE.HERO;
+            return entity.card_type === CARD_TYPE.HERO;
         }
 
         static waepon: ICustomTargetFilter = (caller: Player, entity: HsEntity, gameCtx: HsGameCtx): boolean => {
-            return entity.type === CARD_TYPE.WEAPON;
+            return entity.card_type === CARD_TYPE.WEAPON;
         }
 
         static character: ICustomTargetFilter = (caller: Player, entity: HsEntity, gameCtx: HsGameCtx): boolean => {
-            return entity.type in [CARD_TYPE.HERO, CARD_TYPE.MINION];
+            return entity.card_type in [CARD_TYPE.HERO, CARD_TYPE.MINION];
         }
 
         static friendly: ICustomTargetFilter = (caller: Player, entity: HsEntity, gameCtx: HsGameCtx): boolean => {
@@ -147,12 +144,9 @@ namespace HSLogic {
             return entity instanceof Card
                 && gameCtx.zonesOf(entity.owner).hand.has(entity);
         }
-
-        //static otherThan: ICustomTargetFilter = (caller: Player, entity: HsEntity, gameCtx: HsGameCtx): boolean => {
-        //    return entity instanceof Card
-        //        && gameCtx.zonesOf(entity.owner).hand.has(entity);
-        //}
     }
+
+
 
     class MinionByAttackFilter {
 

@@ -31,7 +31,7 @@ namespace HSLogic {
 
 
         resolve(_this_: PlayMinion<P>, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
 
                 (resolve, reject): void => {
                     let actions: jsLogic.IAction<HsGameCtx>[] = [

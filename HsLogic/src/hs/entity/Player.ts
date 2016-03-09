@@ -1,5 +1,5 @@
 ﻿///<reference path="../core/HsEntity.ts"/>
-///<reference path="def/IPlayer.ts"/>
+///<reference path="def/entity/IPlayer.ts"/>
 
 "use strict";
 

@@ -42,7 +42,7 @@ namespace HSLogic {
 
 
         resolve(_this_: Heal, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
 
                 (resolve, reject): void => {
                     let targetCounters: jsLogic.CounterMap = _this_.param.target.target.counters;

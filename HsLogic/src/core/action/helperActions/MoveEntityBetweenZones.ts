@@ -2,7 +2,7 @@
 
 namespace jsLogic {
 
-    export interface MoveEntityBetweenZonesParam extends IActionParam<IContext> {
+    export interface MoveEntityBetweenZonesParam extends IActionParam {
         entity: Entity,
         sourceZone: Zone<Entity>,
         targetZone: Zone<Entity>
@@ -12,10 +12,10 @@ namespace jsLogic {
      * MoveEntityBetweenZones
      *
      */
-    export class MoveEntityBetweenZones<T extends IContext> extends jsLogic.IAction<T> {
+    export class MoveEntityBetweenZones<T extends IExtContext> extends jsLogic.IAction<T> {
 
 
-        resolve(_this_: MoveEntityBetweenZones<T>, context: T): PromiseOfActions<T> {
+        resolve(_this_: MoveEntityBetweenZones<T>, context: T): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
 

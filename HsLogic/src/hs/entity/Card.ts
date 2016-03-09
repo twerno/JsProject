@@ -1,5 +1,5 @@
 ///<reference path="../core/HsEntity.ts"/>
-///<reference path="def/ICard.ts"/>
+///<reference path="def/entity/ICard.ts"/>
 
 "use strict";
 
@@ -31,7 +31,7 @@ namespace HSLogic {
 
         attack: number;
 
-        sub_type: MINION_TYPE;
+        minion_type: MINION_TYPE;
 
 
         initFromDefinition(def: IMinion): void {
@@ -40,7 +40,7 @@ namespace HSLogic {
             this.hp = def.hp;
             this.maxHp = def.hp;
             this.attack = def.attack;
-            this.sub_type = def.sub_type;
+            this.minion_type = def.minion_type;
         }
     }
 

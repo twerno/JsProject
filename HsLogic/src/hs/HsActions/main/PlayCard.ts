@@ -26,7 +26,7 @@ namespace HSLogic {
         constructor(public param: PlayCardParam) { super(param.sourceAction) }
 
         resolve(_this_: PlayCard, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
 
                 (resolve, reject): void => {
 
@@ -35,13 +35,13 @@ namespace HSLogic {
                     ];
 
                     // delegate to playSpell, playMinon or playWeapon action
-                    if (_this_.param.card.type === CARD_TYPE.MINION)
+                    if (_this_.param.card.card_type === CARD_TYPE.MINION)
                         actions.push(gameCtx.actionFactory.playMinion(<PlayMinionParam>_this_.param));
 
-                    if (_this_.param.card.type === CARD_TYPE.SPELL)
+                    if (_this_.param.card.card_type === CARD_TYPE.SPELL)
                         actions.push(gameCtx.actionFactory.playSpell(_this_.param));
 
-                    if (_this_.param.card.type === CARD_TYPE.WEAPON)
+                    if (_this_.param.card.card_type === CARD_TYPE.WEAPON)
                         actions.push(gameCtx.actionFactory.playWeapon(_this_.param));
 
                     resolve(actions);

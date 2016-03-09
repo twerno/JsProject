@@ -16,7 +16,8 @@ namespace HSLogic {
     export class ShuffleGeneratedCardIntoDeck extends HsAction {
 
         resolve(_this_: ShuffleGeneratedCardIntoDeck, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
                     let deck: HsZone = gameCtx.zonesOf(_this_.deckOwner).deck;
                     let added: boolean = false;
@@ -29,7 +30,7 @@ namespace HSLogic {
                     }
 
                     if (added)
-                        resolve([gameCtx.actionFactory.shuffleDeck(_this_.source, _this_.deckOwner)]);
+                        resolve([gameCtx.actionFactory.shuffleDeck(_this_., _this_.deckOwner)]);
                     else
                         resolve(null);
                 });

@@ -2,13 +2,14 @@
 
 namespace jsLogic {
 
+    //export interface IExtActionParam extends IActionParam {
 
-    export interface IContext extends IHasActionFactory {
-        handlers: EventHandlers<IContext, IActionParam<IContext>>;
+    //}
+
+    export interface IExtContext extends IContext {
+        handlers: EventHandlers<IExtContext, IActionParam>;
     }
 
-    export class IActionParam<T extends IContext> {
-        sourceAction: IAction<T>
-    }
+
 
 }

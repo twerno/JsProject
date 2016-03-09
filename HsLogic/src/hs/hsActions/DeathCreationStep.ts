@@ -14,7 +14,7 @@ namespace HSLogic {
     export class DeathCreationStep extends jsLogic.IAction<HsGameCtx> {
 
         resolve(_this_: DeathCreationStep, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction[]>(
+            return new Promise<HsAction<P>[]>(
                 (resolve, reject): void => {
                     resolve(null);
                 });

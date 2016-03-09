@@ -5,10 +5,10 @@
 
 namespace HSLogic {
 
-    export interface HsActionParam extends jsLogic.IActionParam<HsGameCtx> { }
 
 
-    export class HsGameCtx implements jsLogic.IContext {
+
+    export class HsGameCtx implements jsLogic.IExtContext {
 
         actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
 

@@ -12,7 +12,7 @@ namespace jsLogic {
      * Selector 
      *
      */
-    export class RandomSelector<T extends IContext, O> extends IAction<T> {
+    export class RandomSelector<T extends IExtContext, O> extends IAction<T> {
 
 
         resolve(_this_: RandomSelector<T, O>, context: T): PromiseOfActions<T> {
