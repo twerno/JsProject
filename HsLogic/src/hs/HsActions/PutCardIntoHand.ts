@@ -4,6 +4,8 @@
 
 namespace HSLogic {
 
+
+
     /**
      * AddGeneratedCardIntoHand
      *
@@ -11,25 +13,22 @@ namespace HSLogic {
 	 * If the hand is full move it to graveyard instead
  	 *
  	 */
-    export class PutCardIntoHand extends HsAction {
+    export class PutCardIntoHand<P extends PlayerAndCardParam> extends HsAction<P> {
 
-        resolve(_this_: PutCardIntoHand, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction<P>[]>(
+        resolve(_this_: PutCardIntoHand<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+
                 (resolve, reject): void => {
-                    let zones: HsZones = gameCtx.zonesOf(_this_.player);
-
+                    let param: P = _this_.param,
+                        zones: HsZones = gameCtx.zonesOf(param.player);
 
                     if (!zones.hand.isFull) {
-                        zones.hand.addEntity(_this_.card);
+                        zones.hand.addEntity(param.card);
                         resolve(null);
                     } else {
-                        resolve([gameCtx.actionFactory.millCard(_this_.source, _this_.card)]);
+                        resolve([gameCtx.actionFactory.millCard(param.sourceAction, param.card)]);
                     }
                 });
         }
-
-        constructor(source: jsLogic.IAction<HsGameCtx>, public player: Player, public card: Card) {
-            super(source);
-        };
     }
 }

@@ -83,56 +83,56 @@ namespace HSLogic {
             console.error(`${action}`, error);
         }
 
-        private _resolve(innerAction: jsLogic.IAction<T>[]): void {
-            let action: Sequence = new Sequence(new EmptyAction(null, 'PlayerAction'), innerAction);
+        //private _resolve(innerAction: jsLogic.IAction<T>[]): void {
+        //    let action: Sequence = new Sequence(new EmptyAction(null, 'PlayerAction'), innerAction);
 
-            this.stack.putOnTop(action);
-            this.stack.resolveTopAction(this.gameCtx);
-        }
-
-
+        //    this.stack.putOnTop(action);
+        //    this.stack.resolveTopAction(this.gameCtx);
+        //}
 
 
-        draw(): void {
-            let action: DrawCard = new DrawCard(
-                {
-                    sourceAction: new EmptyAction(null, 'PlayerAction'),
-                    target: this.gameCtx.activePlayer
-                });
-
-            this._resolve([action]);
-        }
 
 
-        discard(): void {
-            let action: Discard = new Discard(
-                {
-                    sourceAction: new EmptyAction(null, 'PlayerAction'),
-                    card: this.gameCtx.zonesOfActivePlayer().hand.getRawArray()[0],
-                    target: this.gameCtx.activePlayer
-                });
+        //draw(): void {
+        //    let action: DrawCard = new DrawCard(
+        //        {
+        //            sourceAction: new EmptyAction(null, 'PlayerAction'),
+        //            target: this.gameCtx.activePlayer
+        //        });
 
-            // new EmptyAction(null, 'PlayerAction'), this.zones.hand.getRawArray()[0], this.zones);
-
-            this._resolve([action]);
-        }
+        //    this._resolve([action]);
+        //}
 
 
-        pickAtRandom(): void {
-            let resultSet: Card[] = [];
-            let selectorParam: jsLogic.SelectorParam<Card> = {
-                options: this.gameCtx.zonesOfActivePlayer().deck.getRawArray(),
-                amount: 1,
-                removeSelectedFromOptions: false
-            };
-            let source: jsLogic.IAction<T> = new EmptyAction(null, 'PlayerAction');
-            let actions: jsLogic.IAction<T>[] = [];
+        //discard(): void {
+        //    let action: Discard = new Discard(
+        //        {
+        //            sourceAction: new EmptyAction(null, 'PlayerAction'),
+        //            card: this.gameCtx.zonesOfActivePlayer().hand.getRawArray()[0],
+        //            target: this.gameCtx.activePlayer
+        //        });
 
-            actions.push(new jsLogic.RandomSelector<T, Card>(source, selectorParam, resultSet));
-            actions.push(new SelectorResultToConsole(source, resultSet));
+        //    // new EmptyAction(null, 'PlayerAction'), this.zones.hand.getRawArray()[0], this.zones);
 
-            this._resolve(actions);
-        }
+        //    this._resolve([action]);
+        //}
+
+
+        //pickAtRandom(): void {
+        //    let resultSet: Card[] = [];
+        //    let selectorParam: jsLogic.SelectorParam<Card> = {
+        //        options: this.gameCtx.zonesOfActivePlayer().deck.getRawArray(),
+        //        amount: 1,
+        //        removeSelectedFromOptions: false
+        //    };
+        //    let source: jsLogic.IAction<T> = new EmptyAction(null, 'PlayerAction');
+        //    let actions: jsLogic.IAction<T>[] = [];
+
+        //    actions.push(new jsLogic.RandomSelector<T, Card>(source, selectorParam, resultSet));
+        //    actions.push(new SelectorResultToConsole(source, resultSet));
+
+        //    this._resolve(actions);
+        //}
 
     }
 

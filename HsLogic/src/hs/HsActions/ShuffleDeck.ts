@@ -6,15 +6,17 @@ namespace HSLogic {
      * ShuffleDeck
 	 *
  	 */
-    export class ShuffleDeck extends HsBaseAction {
+    export class ShuffleDeck<P extends PlayerParam> extends HsAction<P> {
 
-        protected baseActionResolver(_this_: ShuffleDeck, gameCtx: HsGameCtx): void {
-            let deck: HsZone = gameCtx.zonesOf(_this_.deckOwner).deck;
-            MathUtils.randomizeArray(deck.getRawArray());
+        resolve(_this_: ShuffleDeck<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+
+                (resolve, reject): void => {
+                    let param: P = _this_.param,
+                        deck: HsZone = gameCtx.zonesOf(param.player).deck;
+
+                    MathUtils.randomizeArray(deck.getRawArray());
+                });
         }
-
-        constructor(source: jsLogic.IAction<HsGameCtx>, public deckOwner: Player) {
-            super(source);
-        };
     }
 }

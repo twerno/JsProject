@@ -18,7 +18,7 @@ namespace HSLogic {
 
 
         resolve(_this_: EquippingPhase, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction<P>[]>(
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 (resolve, reject): void => {
                     let weapon: Weapon = <Weapon>_this_.param.card;

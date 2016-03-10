@@ -4,6 +4,8 @@
 
 namespace HSLogic {
 
+
+
     /**
      * ShuffleGeneratedCardIntoDeck
      *
@@ -13,33 +15,30 @@ namespace HSLogic {
  	 * http://hearthstone.gamepedia.com/Advanced_rulebook 
  	 *
  	 */
-    export class ShuffleGeneratedCardIntoDeck extends HsAction {
+    export class ShuffleGeneratedCardIntoDeck<P extends PlayerAndCardsParam> extends HsAction<P> {
 
-        resolve(_this_: ShuffleGeneratedCardIntoDeck, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve(_this_: ShuffleGeneratedCardIntoDeck<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
-            return new Promise<HsAction<P>[]>(
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 (resolve, reject): void => {
-                    let deck: HsZone = gameCtx.zonesOf(_this_.deckOwner).deck;
-                    let added: boolean = false;
+                    let param: P = _this_.param,
+                        deck: HsZone = gameCtx.zonesOf(param.player).deck,
+                        added: boolean = false;
 
-                    for (let id in _this_.cards) {
+                    for (let id in param.cards) {
                         if (!deck.isFull) {
-                            deck.addEntity(_this_.cards[id]);
+                            deck.addEntity(param.cards[id]);
                             added = true;
                         }
                     }
 
                     if (added)
-                        resolve([gameCtx.actionFactory.shuffleDeck(_this_., _this_.deckOwner)]);
+                        resolve([gameCtx.actionFactory.shuffleDeck(param)]);
                     else
                         resolve(null);
                 });
 
         }
-
-        constructor(source: jsLogic.IAction<HsGameCtx>, public cards: Card[], public deckOwner: Player) {
-            super(source);
-        };
     }
 
 }

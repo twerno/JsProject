@@ -6,7 +6,7 @@ namespace HSLogic {
 
 
     export interface DrawParam extends HsActionParam {
-        target: Player
+        player: Player
     }
 
     export interface AfterDrawParam extends DrawParam {
@@ -26,39 +26,35 @@ namespace HSLogic {
 
         resolve(_this_: DrawCard<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
-            return new Promise<HsAction<P>[]>(
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 (resolve, reject): void => {
-                    let targetPlayer: Player = _this_.param.target;
-                    let zones: HsZones = gameCtx.zonesOf(targetPlayer);
+                    let param: P = _this_.param,
+                        zones: HsZones = gameCtx.zonesOf(param.player);
 
                     // fatigue
                     if (zones.deck.isEmpty()) {
-                        resolve([gameCtx.actionFactory.fatigue(
-                            {
-                                sourceAction: _this_.source,
-                                target: targetPlayer
+                        resolve([gameCtx.actionFactory.fatigue(param)]);
 
-                            })]);
                     } else {
 
-                        let card: Card = zones.deck.pop();;
+                        let card: Card = zones.deck.pop();
 
                         // addCard to hand if not full
                         if (!zones.hand.isFull()) {
                             zones.hand.addEntity(card);
 
                             // dispatch event if drawn
-                            //resolve([
-                            //    gameCtx.actionFactory.dispatch(
-                            //        new OnAfterDrawEvent({
-                            //            target: targetPlayer,
-                            //            card: card,
-                            //            sourceAction: _this_.drawParam.sourceAction
-                            //        }))
-                            //]);
+                            resolve([
+                                gameCtx.actionFactory.dispatch(
+                                    new OnAfterDrawEvent({
+                                        player: param.player,
+                                        card: card,
+                                        sourceAction: param.sourceAction
+                                    }))
+                            ]);
                         } else {
                             // mill card if hand is full
-                            //resolve([gameCtx.actionFactory.millCard(_this_.source, card)]);
+                            resolve([gameCtx.actionFactory.millCard(_this_.source, card)]);
                         }
                     }
                 });

@@ -4,20 +4,21 @@
 
 namespace HSLogic {
 
+
     /**
      * MillCard
      *
  	 */
-    export class MillCard extends HsBaseAction {
+    export class MillCard<P extends CardParam> extends HsAction<P> {
 
-        protected baseActionResolver(_this_: MillCard, gameCtx: HsGameCtx): void {
-            let graveyard: HsZone = gameCtx.zonesOf(_this_.card.owner).graveyard;
+        resolve(_this_: MillCard<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+                (resolve, reject): void => {
+                    let param: P = _this_.param,
+                        graveyard: HsZone = gameCtx.zonesOf(param.card.owner).graveyard;
 
-            graveyard.addEntity(_this_.card);
+                    graveyard.addEntity(param.card);
+                });
         }
-
-        constructor(source: jsLogic.IAction<HsGameCtx>, public card: Card) {
-            super(source);
-        };
     }
 }

@@ -19,8 +19,6 @@ namespace HSLogic {
         abstract resolve(_this_: jsLogic.IAction<HsGameCtx>, gameCtx: HsGameCtx): PromiseOfActions;
     }
 
-    export abstract class HsBaseAction extends jsLogic.SimpleAction<HsGameCtx> { };
-
     export abstract class HsActionEvent<P extends HsActionParam> extends jsLogic.ActionEvent<HsGameCtx, P> { };
 
 }

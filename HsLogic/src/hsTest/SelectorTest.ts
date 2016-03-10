@@ -11,16 +11,16 @@
 
 namespace HSLogic {
 
-    export class SelectorResultToConsole<O> extends HsBaseAction {
+    //export class SelectorResultToConsole<O> extends HsBaseAction {
 
-        protected baseActionResolver(_this_: SelectorResultToConsole<O>, param: HsGameCtx): void {
-            console.log(`Selector result: ${_this_.selectorResult.join(', ')}`, _this_.selectorResult);
-        }
+    //    protected baseActionResolver(_this_: SelectorResultToConsole<O>, param: HsGameCtx): void {
+    //        console.log(`Selector result: ${_this_.selectorResult.join(', ')}`, _this_.selectorResult);
+    //    }
 
-        constructor(source: jsLogic.IAction<HsGameCtx>, public selectorResult: O[]) {
-            super(source);
-        };
+    //    constructor(source: jsLogic.IAction<HsGameCtx>, public selectorResult: O[]) {
+    //        super(source);
+    //    };
 
-    }
+    //}
 
 }

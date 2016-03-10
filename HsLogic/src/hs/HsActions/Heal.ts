@@ -13,15 +13,13 @@ namespace HSLogic {
     }
 
 
-    export class HealCalculationEvent extends HsActionEvent<HealParam> {
-
+    export class HealCalculationEvent<P extends HealParam> extends HsActionEvent<P> {
         static get type(): string { return HealCalculationEvent.name }
     }
 
 
 
-    export class OnAfterHealEvent extends HsActionEvent<HealParam> {
-
+    export class OnAfterHealEvent<P extends HealParam> extends HsActionEvent<P> {
         static get type(): string { return OnAfterHealEvent.name }
     }
 
@@ -32,31 +30,31 @@ namespace HSLogic {
      * Heal
      *
      */
-    export class Heal extends jsLogic.CancelableAction<HsGameCtx, HealParam> {
+    export class Heal<P extends HealParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: HealParam): boolean { return eventParam.cancelHeal }
-        cancelOnAfterEvent(eventParam: HealParam): boolean { return false }
+        cancelAction(eventParam: P): boolean { return eventParam.cancelHeal }
+        cancelOnAfterEvent(eventParam: P): boolean { return false }
 
-        onBeforeEventBuilder(eventParam: HealParam): HsActionEvent<HealParam> { return new HealCalculationEvent(eventParam) }
-        onAfterEventBuilder(eventParam: HealParam): HsActionEvent<HealParam> { return new OnAfterHealEvent(eventParam) }
+        onBeforeEventBuilder(eventParam: P): HsActionEvent<P> { return new HealCalculationEvent(eventParam) }
+        onAfterEventBuilder(eventParam: P): HsActionEvent<P> { return new OnAfterHealEvent(eventParam) }
 
 
-        resolve(_this_: Heal, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction<P>[]>(
+        resolve(_this_: Heal<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 (resolve, reject): void => {
-                    let targetCounters: jsLogic.CounterMap = _this_.param.target.target.counters;
+                    let param: P = _this_.param,
+                        targetCounters: jsLogic.CounterMap = param.target.target.counters;
 
                     if (targetCounters[DivineShieldCounter.type]) {
                         delete targetCounters[DivineShieldCounter.type];
-                        _this_.param.amount = 0;
+                        param.amount = 0;
                     }
 
-                    _this_.param.target.target.hp -= _this_.param.amount;
+                    param.target.target.hp -= param.amount;
 
                     return null;
-                }
-            );
+                });
         }
     }
 }

@@ -12,7 +12,7 @@ namespace HSLogic {
     export class PayCostAndRemoveFromHand<P extends PlayCardParam> extends HsAction<P> {
 
         resolve(_this_: PayCostAndRemoveFromHand<P>, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction<P>[]>(
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 (resolve, reject): void => {
                     let param: P = _this_.param,
                         player: Player = param.player,

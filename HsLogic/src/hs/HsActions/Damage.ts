@@ -62,11 +62,11 @@ namespace HSLogic {
      *  DEFAULT_TRIGGER_LEVEL - Spell Damage/Fallen Heros
      *  QUEUE_TRIGGER_LAST    - Prophet Velens 
      */
-    export class OnDamageCalculationEvent extends HsActionEvent<DamageParam> {
+    export class OnDamageCalculationEvent<P extends DamageParam> extends HsActionEvent<P> {
         static get type(): string { return OnDamageCalculationEvent.name }
     }
 
-    export class OnDamageDealt extends HsActionEvent<DamageParam> {
+    export class OnDamageDealt<P extends DamageParam> extends HsActionEvent<P> {
         static get type(): string { return OnDamageDealt.name }
     }
 
@@ -75,31 +75,32 @@ namespace HSLogic {
      * Damage
      *
  	 */
-    export class Damage extends jsLogic.CancelableAction<HsGameCtx, DamageParam> {
+    export class Damage<P extends DamageParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: DamageParam): boolean {
+        cancelAction(eventParam: P): boolean {
             return eventParam.cancelDamage
                 //|| eventParam.amount === 0
                 || !eventParam.target.targetInRightZone();
         }
-        cancelOnAfterEvent(eventParam: DamageParam): boolean { return false }
+        cancelOnAfterEvent(eventParam: P): boolean { return false }
 
-        onBeforeEventBuilder(param: DamageParam): HsActionEvent<DamageParam> { return new OnDamageCalculationEvent(param) }
-        onAfterEventBuilder(param: DamageParam): HsActionEvent<DamageParam> { return new OnDamageDealt(param) }
+        onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnDamageCalculationEvent(param) }
+        onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnDamageDealt(param) }
 
 
-        resolve(_this_: Heal, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction<P>[]>(
+        resolve(_this_: Damage<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 (resolve, reject): void => {
-                    let targetCounters: jsLogic.CounterMap = _this_.param.target.target.counters;
+                    let param: P = _this_.param,
+                        targetCounters: jsLogic.CounterMap = param.target.target.counters;
 
                     if (targetCounters[DivineShieldCounter.type]) {
                         delete targetCounters[DivineShieldCounter.type];
-                        _this_.param.amount = 0;
+                        param.amount = 0;
                     }
 
-                    _this_.param.target.target.hp -= _this_.param.amount;
+                    param.target.target.hp -= param.amount;
 
                     resolve([]);
                 }

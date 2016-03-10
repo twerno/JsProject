@@ -83,6 +83,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\main\PlaySpell.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\PlayMinion.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\PlayCard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\param\BasicParams.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\phase\EquippingPhase.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Sequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Damage.ts" />

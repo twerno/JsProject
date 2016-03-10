@@ -4,18 +4,24 @@
 
 namespace HSLogic {
 
+    export interface EmptyActionParam extends HsActionParam {
+        message: string
+    }
+
     /**
      * MillCard
      *
  	 */
-    export class EmptyAction extends HsBaseAction {
+    export class EmptyAction<P extends EmptyActionParam> extends HsAction<P> {
 
-        protected baseActionResolver(_this_: MillCard, gameCtx: HsGameCtx): void {
-            //console.log(`Empty action resolver: ${this.message}`);
+        resolve(_this_: EmptyAction<P>, gameCtx: HsGameCtx): PromiseOfActions {
+
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+                (resolve, reject): void => {
+                    let param: P = _this_.param;
+
+                    console.log(`Empty action resolver: ${param.message}`);
+                });
         }
-
-        constructor(source: jsLogic.IAction<HsGameCtx>, public message: string) {
-            super(source);
-        };
     }
 }

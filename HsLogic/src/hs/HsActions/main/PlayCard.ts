@@ -26,7 +26,7 @@ namespace HSLogic {
         constructor(public param: PlayCardParam) { super(param.sourceAction) }
 
         resolve(_this_: PlayCard, gameCtx: HsGameCtx): PromiseOfActions {
-            return new Promise<HsAction<P>[]>(
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 (resolve, reject): void => {
 
