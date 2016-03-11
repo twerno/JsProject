@@ -11,7 +11,7 @@ namespace HSLogic {
     //    };
 
     //    trigger(event: HsActionEvent<DrawParam>, gameCtx: HsGameCtx): jsLogic.IAction<HsGameCtx> {
-    //        return gameCtx.actionFactory.emptyAction(event.param.sourceAction, `${this}: action`);
+    //        return gameCtx.actionFactory.emptyAction(event.param.source, `${this}: action`);
     //    };
     //}
 }

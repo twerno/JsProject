@@ -24,7 +24,7 @@ namespace jsLogic {
 
 
         constructor(public param: P) {
-            super(param.sourceAction);
+            super(param.source.action);
         };
     }
 
@@ -56,7 +56,7 @@ namespace jsLogic {
 
 
         constructor(public mainAction: CancelableAction<T, P>) {
-            super(mainAction.param.sourceAction);
+            super(mainAction.param.source.action);
         };
     }
 
@@ -93,7 +93,7 @@ namespace jsLogic {
 
 
         constructor(public mainAction: CancelableAction<T, P>) {
-            super(mainAction.param.sourceAction);
+            super(mainAction.param.source.action);
         };
     }
 }

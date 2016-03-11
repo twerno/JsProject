@@ -7,10 +7,12 @@ namespace HSLogic {
         resultSet: HsEntity[]
     }
 
-    export abstract class CustomChooseAction<P extends ChooseActionParam> extends HsAction<P> { }
+    export abstract class ChooseAction<P extends ChooseActionParam> extends HsAction<P> {
+        //abstract sourceSet(param: P, gameCtx: HsGameCtx): HsEntity[];
+    }
 
     export type FChooseActionBuilder<P extends ChooseActionParam>
-        = (caller: Player, gameCtx: HsGameCtx) => CustomChooseAction<P>;
+        = (caller: Player, gameCtx: HsGameCtx) => ChooseAction<P>;
 
 
     //class ADVANCED_CHOOSE_METHOD {

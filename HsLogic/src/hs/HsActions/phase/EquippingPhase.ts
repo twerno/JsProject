@@ -14,7 +14,7 @@ namespace HSLogic {
  	 */
     export class EquippingPhase extends jsLogic.IAction<HsGameCtx> {
 
-        constructor(public param: PlayCardParam) { super(param.sourceAction) }
+        constructor(public param: PlayCardParam) { super(param.source.action) }
 
 
         resolve(_this_: EquippingPhase, gameCtx: HsGameCtx): PromiseOfActions {

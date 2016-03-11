@@ -49,12 +49,12 @@ namespace HSLogic {
                                     new OnAfterDrawEvent({
                                         player: param.player,
                                         card: card,
-                                        sourceAction: param.sourceAction
+                                        source: param.source
                                     }))
                             ]);
                         } else {
                             // mill card if hand is full
-                            resolve([gameCtx.actionFactory.millCard(_this_.source, card)]);
+                            resolve([gameCtx.actionFactory.millCard(param.source, card)]);
                         }
                     }
                 });

@@ -10,11 +10,17 @@ namespace HSLogic {
 
     export type PromiseOfActions = Promise<jsLogic.IAction<HsGameCtx>[]>;
 
-    export interface HsActionParam extends jsLogic.IActionParam { }
+    export interface IHsSource extends jsLogic.ISource {
+        card: Card
+    }
+
+    export interface HsActionParam extends jsLogic.IActionParam {
+        source: IHsSource
+    }
 
     export abstract class HsAction<P extends HsActionParam> extends jsLogic.IAction<HsGameCtx> {
 
-        constructor(public param: P) { super(param.sourceAction) }
+        constructor(public param: P) { super(param.source.action) }
 
         abstract resolve(_this_: jsLogic.IAction<HsGameCtx>, gameCtx: HsGameCtx): PromiseOfActions;
     }

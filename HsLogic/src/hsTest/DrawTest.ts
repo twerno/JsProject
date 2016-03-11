@@ -96,7 +96,7 @@ namespace HSLogic {
         //draw(): void {
         //    let action: DrawCard = new DrawCard(
         //        {
-        //            sourceAction: new EmptyAction(null, 'PlayerAction'),
+        //            source: new EmptyAction(null, 'PlayerAction'),
         //            target: this.gameCtx.activePlayer
         //        });
 
@@ -107,7 +107,7 @@ namespace HSLogic {
         //discard(): void {
         //    let action: Discard = new Discard(
         //        {
-        //            sourceAction: new EmptyAction(null, 'PlayerAction'),
+        //            source: new EmptyAction(null, 'PlayerAction'),
         //            card: this.gameCtx.zonesOfActivePlayer().hand.getRawArray()[0],
         //            target: this.gameCtx.activePlayer
         //        });

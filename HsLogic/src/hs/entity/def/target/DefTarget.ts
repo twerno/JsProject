@@ -19,7 +19,7 @@ namespace HSLogic {
                             || (card instanceof Minion && card.hp > 0);
                     }),
 
-                chooseActionBuilder: ChooseAtRandomAction.buildAction
+                chooseActionBuilder: ChooseAtRandomAction.buildAction,
             }
         }
     }

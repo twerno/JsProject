@@ -26,7 +26,7 @@ namespace HSLogic {
                         zones.hand.addEntity(param.card);
                         resolve(null);
                     } else {
-                        resolve([gameCtx.actionFactory.millCard(param.sourceAction, param.card)]);
+                        resolve([gameCtx.actionFactory.millCard(param.source, param.card)]);
                     }
                 });
         }

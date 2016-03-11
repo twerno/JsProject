@@ -25,7 +25,7 @@ namespace HSLogic {
                         hand: HsZone = gameCtx.zonesOf(param.card.owner).hand;
 
                     if (hand.isFull) {
-                        //resolve([gameCtx.actionFactory.markAsDestroyed(param.sourceAction, param.card)]);
+                        //resolve([gameCtx.actionFactory.markAsDestroyed(param.source, param.card)]);
                     }
                     else {
                         param.sourceZone.removeEntity(param.card);

@@ -16,7 +16,7 @@ namespace HSLogic {
 	 */
 
 
-    export enum HEALTH_MOD_TYPE {
+    export enum DAMAGE_TYPE {
         COMBAT, DIRECT, PAY_LIFE
     }
 
@@ -38,8 +38,8 @@ namespace HSLogic {
 
     //export class HealthModEvent extends jsLogic.ActionEvent<HsgameCtx> {
 
-    //    constructor(sourceAction: jsLogic.IAction<HsgameCtx>) {
-    //        super(sourceAction);
+    //    constructor(source: jsLogic.IAction<HsgameCtx>) {
+    //        super(source);
     //    }
     //}
 
@@ -48,10 +48,9 @@ namespace HSLogic {
 	 *  negative - damage
 	 */
     export interface DamageParam extends HsActionParam {
-        source: Card,
-        type: HEALTH_MOD_TYPE,
+        damageType: DAMAGE_TYPE,
         sourceType: SOURCE_TYPE,
-        target: LivingTarget,
+        target: HsEntity,
         amount: number,
         cancelDamage: boolean
     }
@@ -79,8 +78,8 @@ namespace HSLogic {
 
         cancelAction(eventParam: P): boolean {
             return eventParam.cancelDamage
-                //|| eventParam.amount === 0
-                || !eventParam.target.targetInRightZone();
+            //|| eventParam.amount === 0
+            //|| !eventParam.target.targetInRightZone();
         }
         cancelOnAfterEvent(eventParam: P): boolean { return false }
 
@@ -93,14 +92,18 @@ namespace HSLogic {
 
                 (resolve, reject): void => {
                     let param: P = _this_.param,
-                        targetCounters: jsLogic.CounterMap = param.target.target.counters;
+                        targetCounters: jsLogic.CounterMap = param.target.counters;
 
                     if (targetCounters[DivineShieldCounter.type]) {
                         delete targetCounters[DivineShieldCounter.type];
                         param.amount = 0;
                     }
 
-                    param.target.target.hp -= param.amount;
+                    //if (param.target instanceof Player) {
+                    //    param.target.hp -= param.amount;
+                    //} else if (param.target instanceof Minion) {
+                    //    param.target.hp -= param.amount;
+                    //}
 
                     resolve([]);
                 }

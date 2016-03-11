@@ -14,7 +14,8 @@ namespace HSLogic {
             hp: 30,
             manaCrystals: 1,
             hero: 'THRALL',
-            heroPower: null
+            heroPower: null,
+            flags: {}
         };
 
 

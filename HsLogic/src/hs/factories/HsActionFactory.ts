@@ -57,8 +57,8 @@ namespace HSLogic {
             return new DrawCard(drawParam);
         }
 
-        emptyAction(source: jsLogic.IAction<T>, message: string): EmptyAction<EmptyActionParam> {
-            return new EmptyAction({ sourceAction: source, message: message });
+        emptyAction(source: IHsSource, message: string): EmptyAction<EmptyActionParam> {
+            return new EmptyAction({ source: source, message: message });
         }
 
         fatigue(fatigueParam: PlayerParam): Fatigue<PlayerParam> {
@@ -73,17 +73,16 @@ namespace HSLogic {
         //    return new MarkAsDestroyed(source, card);
         //}
 
-        millCard(source: jsLogic.IAction<T>, card: Card): MillCard<CardParam> {
-            return new MillCard({ sourceAction: source, card: card });
+        millCard(source: IHsSource, card: Card): MillCard<CardParam> {
+            return new MillCard({ source: source, card: card });
         }
 
-        putCardIntoHand(source: jsLogic.IAction<T>, player: Player, card: Card): PutCardIntoHand<PlayerAndCardParam> {
-            return new PutCardIntoHand(
-                {
-                    sourceAction: source,
-                    player: player,
-                    card: card
-                });
+        putCardIntoHand(source: IHsSource, player: Player, card: Card): PutCardIntoHand<PlayerAndCardParam> {
+            return new PutCardIntoHand({
+                source: source,
+                player: player,
+                card: card
+            });
         }
 
         returnCardIntoOwnersHandFrom(param: ReturnCardIntoOwnersHandParam): ReturnCardIntoOwnersHandFrom<ReturnCardIntoOwnersHandParam> {
@@ -91,15 +90,15 @@ namespace HSLogic {
         }
 
         sequence(source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[]): Sequence {
-            return new Sequence(source, innerActions);
+            return new Sequence({ action: source, card: null }, innerActions);
         }
 
         shuffleDeck(param: PlayerParam): ShuffleDeck<PlayerParam> {
             return new ShuffleDeck(param);
         }
 
-        shuffleGeneratedCardIntoDeck(source: jsLogic.IAction<T>, cards: Card[], owner: Player): ShuffleGeneratedCardIntoDeck<PlayerAndCardsParam> {
-            return new ShuffleGeneratedCardIntoDeck({ sourceAction: source, cards: cards, player: owner });
+        shuffleGeneratedCardIntoDeck(source: IHsSource, cards: Card[], owner: Player): ShuffleGeneratedCardIntoDeck<PlayerAndCardsParam> {
+            return new ShuffleGeneratedCardIntoDeck({ source: source, cards: cards, player: owner });
         }
 
         payCostAndRemoveFromHand(param: PlayCardParam): PayCostAndRemoveFromHand<PlayCardParam> {

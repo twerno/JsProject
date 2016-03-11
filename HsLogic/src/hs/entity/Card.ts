@@ -8,7 +8,6 @@ namespace HSLogic {
 
     export class Card extends HsEntity implements ICard {
 
-
         cost: number;
 
         constructor(owner: Player, def?: ICard) {

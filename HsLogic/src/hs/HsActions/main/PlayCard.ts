@@ -23,7 +23,7 @@ namespace HSLogic {
  	 */
     export class PlayCard extends jsLogic.IAction<HsGameCtx> {
 
-        constructor(public param: PlayCardParam) { super(param.sourceAction) }
+        constructor(public param: PlayCardParam) { super(param.source.action) }
 
         resolve(_this_: PlayCard, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(

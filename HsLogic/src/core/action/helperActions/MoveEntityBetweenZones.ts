@@ -27,7 +27,7 @@ namespace jsLogic {
     //    }
 
     //    constructor(public param: MoveEntityBetweenZonesParam) {
-    //        super(param.sourceAction);
+    //        super(param.source);
     //    };
     //}
 }

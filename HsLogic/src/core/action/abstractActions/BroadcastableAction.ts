@@ -22,7 +22,7 @@ namespace jsLogic {
 
 
         constructor(public eventParam: P) {
-            super(eventParam.sourceAction);
+            super(eventParam.source.action);
         }
     }
 
@@ -51,7 +51,7 @@ namespace jsLogic {
 
 
         constructor(public broadcastableAction: BroadcastableAction<T, P>) {
-            super(broadcastableAction.eventParam.sourceAction);
+            super(broadcastableAction.eventParam.source.action);
         }
     }
 }

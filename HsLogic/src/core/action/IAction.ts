@@ -6,8 +6,12 @@ namespace jsLogic {
         actionFactory: ActionFactory;
     }
 
+    export interface ISource {
+        action: IAction<IContext>
+    }
+
     export interface IActionParam {
-        sourceAction: IAction<IContext>
+        source: ISource
     }
 
 

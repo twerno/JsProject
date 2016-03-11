@@ -24,7 +24,7 @@ namespace jsLogic {
 
 
         constructor(public event: ActionEvent<T, P>) {
-            super(event.param.sourceAction);
+            super(event.param.source.action);
         };
     }
 

@@ -15,6 +15,6 @@ namespace HSLogic {
     //}
 
     export type ITargetedActionFactory<T extends jsLogic.IExtContext, P extends ParamWithTargetFilter>
-        = (sourceAction: jsLogic.IAction<T>, param: P, gameCtx: T) => jsLogic.IAction<T>;
+        = (source: jsLogic.IAction<T>, param: P, gameCtx: T) => jsLogic.IAction<T>;
 
 }

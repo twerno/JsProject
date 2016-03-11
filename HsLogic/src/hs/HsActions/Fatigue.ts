@@ -14,17 +14,16 @@ namespace HSLogic {
         resolve(_this_: Fatigue<P>, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 (resolve, reject): void => {
-
-                    let counters: number = (++_this_.param.player.counters[FatigueCounter.type].value);
-                    let damageParam: DamageParam = {
-                        source: null,
-                        target: new TargetPlayer(_this_.param.player),
-                        sourceAction: _this_,
-                        amount: counters,
-                        type: HEALTH_MOD_TYPE.DIRECT,
-                        sourceType: SOURCE_TYPE.FATIGUE,
-                        cancelDamage: false
-                    };
+                    let param: P = _this_.param,
+                        counters: number = (++param.player.counters[FatigueCounter.type].value),
+                        damageParam: DamageParam = {
+                            source: param.source,
+                            sourceType: SOURCE_TYPE.FATIGUE,
+                            damageType: DAMAGE_TYPE.DIRECT,
+                            amount: counters,
+                            target: param.player,
+                            cancelDamage: false
+                        };
 
                     resolve([gameCtx.actionFactory.damage(damageParam)]);
                 });

@@ -21,14 +21,14 @@ namespace HSLogic {
                         actions.push(_this_.innerActions.shift());
 
                     //actions.push(gameCtx.actionFactory.auraUpdateStep(_this_.source));
-                    actions.push(gameCtx.actionFactory.deathCreationStep({ sourceAction: _this_.source }));
+                    actions.push(gameCtx.actionFactory.deathCreationStep({ source: _this_.hsSource }));
 
                     resolve(actions);
                 });
         }
 
-        constructor(source: jsLogic.IAction<HsGameCtx>, public innerActions: jsLogic.IAction<HsGameCtx>[]) {
-            super(source);
+        constructor(public hsSource: IHsSource, public innerActions: jsLogic.IAction<HsGameCtx>[]) {
+            super(hsSource.action);
         }
 
     }

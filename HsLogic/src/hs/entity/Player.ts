@@ -19,7 +19,7 @@ namespace HSLogic {
 
         heroPower: any;
 
-        immune: boolean = false;
+        flags: IFlags = {};
 
 
         constructor(public name: string, def?: IPlayer) {
