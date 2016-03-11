@@ -32,6 +32,8 @@ namespace HSLogic {
 
         minion_type: MINION_TYPE;
 
+        flags: IFlags;
+
 
         initFromDefinition(def: IMinion): void {
             super.initFromDefinition(def);

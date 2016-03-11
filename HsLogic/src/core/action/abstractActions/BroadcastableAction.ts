@@ -21,8 +21,8 @@ namespace jsLogic {
         }
 
 
-        constructor(public eventParam: P) {
-            super(eventParam.source.action);
+        constructor(public param: P) {
+            super(param.source.action);
         }
     }
 
@@ -34,24 +34,29 @@ namespace jsLogic {
      */
     export class BroadcastableActionWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
 
-        resolve(_this_: BroadcastableActionWrapper<T, P>, context: T): PromiseOfActions<T> {
+        resolve(_this_: BroadcastableActionWrapper<T, P>, context: T): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
 
                     let innerAction: BroadcastableAction<T, P> = _this_.broadcastableAction;
-                    let eventParam: P = innerAction.eventParam;
+                    let eventParam: P = innerAction.param;
 
                     resolve([
                         context.actionFactory.dispatch(innerAction.onBeforeEventBuilder(eventParam)),
                         innerAction,
-                        context.actionFactory.dispatch(innerAction.onAfterEventBuilder(eventParam))
+                        new InlineAction((resolve, reject): void => {
+                            resolve([
+                                context.actionFactory.dispatch(innerAction.onAfterEventBuilder(eventParam))
+                            ]);
+                        }
+                        )
                     ]);
                 });
         }
 
 
         constructor(public broadcastableAction: BroadcastableAction<T, P>) {
-            super(broadcastableAction.eventParam.source.action);
+            super(broadcastableAction.param.source.action);
         }
     }
 }

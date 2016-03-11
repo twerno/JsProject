@@ -33,7 +33,7 @@ namespace jsLogic {
      */
     class BroadcastableInnerAction<T extends IExtContext, P extends IActionParam> extends BroadcastableAction<T, P> {
 
-        resolve(_this_: BroadcastableInnerAction<T, P>, context: T): PromiseOfActions<T> {
+        resolve(_this_: BroadcastableInnerAction<T, P>, context: T): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
                     resolve([

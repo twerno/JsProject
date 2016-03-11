@@ -3,7 +3,9 @@
 namespace HSLogic {
 
     export interface IFlags {
-        immune?: boolean
+        immune?: boolean,
+        elusive?: boolean,
+        divine_shield?: boolean
     }
 
     export interface IPlayer extends IHsEntity {

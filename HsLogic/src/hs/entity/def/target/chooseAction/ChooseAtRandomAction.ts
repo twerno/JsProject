@@ -2,7 +2,7 @@
 
 namespace HSLogic {
 
-    export interface ChooseAtRandomParam extends ChooseActionParam {
+    export interface MakeAChoiceAtRandomParam extends ChooseActionParam {
         props: MathUtils.ISelectAtRandomProperties
     }
 
@@ -11,8 +11,8 @@ namespace HSLogic {
      * ChooseAtRandomMethod
      *
  	 */
-    export class ChooseAtRandomAction<P extends ChooseAtRandomParam> extends ChooseAction<P> {
-        resolve(_this_: ChooseAtRandomAction<P>, gameCtx: HsGameCtx): PromiseOfActions {
+    export class MakeAChoiceAtRandom<P extends MakeAChoiceAtRandomParam> extends ChooseAction<P> {
+        resolve(_this_: MakeAChoiceAtRandom<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 (resolve, reject): void => {
@@ -24,56 +24,47 @@ namespace HSLogic {
                 });
         }
 
-        static buildAction<P extends ChooseAtRandomParam>(param: P): ChooseAtRandomAction<P> {
-            return new ChooseAtRandomAction(param);
+        static buildAction<P extends MakeAChoiceAtRandomParam>(param: P): MakeAChoiceAtRandom<P> {
+            return new MakeAChoiceAtRandom(param);
         }
-    }
-
-    export abstract class Magic_MissileChooseTargetAction<P extends ChooseAtRandomParam> extends ChooseAtRandomAction<P> {
-    }
-
-
-
-    export interface Arcane_MissileParam extends ChooseActionParam {
-        caller: Player
     }
 
 
     // targetless action
-    export class Arcane_MissileAction<P extends Arcane_MissileParam> extends HsAction<P> {
+    export class Arcane_MissileAction<P extends HsActionParam> extends HsAction<P> {
+
+        static sourceSetBuilder(): IDefTargetSetBuilder {
+            return DefTargetSetBuilder.ENEMY.CHARACTER
+                .addFilter(
+                (caller, card, gameCtx): boolean => {
+                    return (card instanceof Player)
+                        || (card instanceof Minion && card.hp > 0);
+                });
+        }
 
         resolve(_this_: Arcane_MissileAction<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 (resolve, reject): void => {
-                    let param: P = _this_.param;
-
-                    let sourceSet: HsEntity[] = DefTargetSetBuilder.ENEMY.CHARACTER
-                        .addFilter(
-                        (caller, card, gameCtx): boolean => {
-                            return (card instanceof Player)
-                                || (card instanceof Minion && card.hp > 0);
-                        }).buildSet(param.caller, gameCtx);
-
-                    let chooseParam: ChooseAtRandomParam = {
-                        source: param.source,
-                        props: { amount: 1, withRepetitions: false },
-                        resultSet: [],
-                        sourceSet: sourceSet
-                    };
-
-                    //let actions: jsLogic.IAction<HsGameCtx>[] = [new ChooseAtRandomAction(chooseParam)];
-
-                    //for (let i = 0; i <
+                    let param: P = _this_.param,
+                        sourceSet: HsEntity[] = Arcane_MissileAction.sourceSetBuilder().buildSet(param.source, gameCtx),
+                        resultSet: HsEntity[];
 
                     resolve([
-                        new ChooseAtRandomAction(chooseParam),
-                        new Damage<DamageParam>({
+                        new MakeAChoiceAtRandom({
+                            source: param.source,
+                            props: { amount: 1, withRepetitions: false },
+                            resultSet: resultSet,
+                            sourceSet: sourceSet
+                        }),
+
+                        gameCtx.actionFactory.damage({
+                            //new Damage<DamageParam>({
                             source: param.source,
                             sourceType: SOURCE_TYPE.SPELL,
                             damageType: DAMAGE_TYPE.DIRECT,
                             amount: 1,
-                            target: chooseParam.resultSet[0],
+                            target: null, //resultSet[0], // blad!!! resultSet nie zostal jeszcze wybudowany
                             cancelDamage: false
                         })
                     ]);

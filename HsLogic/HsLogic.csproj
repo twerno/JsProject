@@ -51,8 +51,9 @@
     <TypeScriptCompile Include="src\hsTest\SelectorTest.ts" />
     <TypeScriptCompile Include="src\hs\entity\CardSet.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\action\DefActions.ts" />
-    <TypeScriptCompile Include="src\hs\entity\def\target\chooseMethod\ChooseAtRandomMethod.ts" />
-    <TypeScriptCompile Include="src\hs\entity\def\target\CustomChooseAction.ts" />
+    <TypeScriptCompile Include="src\hs\entity\def\target\chooseAction\ChooseAtRandomAction.ts" />
+    <TypeScriptCompile Include="src\hs\entity\def\target\DefTarget.ts" />
+    <TypeScriptCompile Include="src\hs\entity\def\target\chooseAction\ChooseAction.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\IDefActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\action\IDefAction.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\entity\ICard.ts" />
@@ -64,11 +65,11 @@
     <TypeScriptCompile Include="src\hs\core\HsZone.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\entity\IHsEntity.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\entity\IMinion.ts" />
-    <TypeScriptCompile Include="src\hs\entity\def\target\ITargetChoiceMode.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\target\DefTargetSetBuilder.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\entity\IWeapon.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\entity\ISpell.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\entity\IPlayer.ts" />
+    <TypeScriptCompile Include="src\hs\entity\def\target\target\ArcaneMissileDefTarget.ts" />
     <TypeScriptCompile Include="src\hs\entity\Player.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
     <TypeScriptCompile Include="src\hs\helpers\Target.ts" />

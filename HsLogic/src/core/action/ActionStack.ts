@@ -4,12 +4,12 @@
 
 namespace jsLogic {
 
-    export type OnActionResolving<T> = (action: IAction<T>, executionTime?: number) => void;
-    export type OnActionResolved<T> = (action: IAction<T>, executionTime?: number) => void;
-    export type OnActionRejected<T> = (action: IAction<T>, error: Error, executionTime?: number) => void;
+    export type OnActionResolving<T extends IContext> = (action: IAction<T>, executionTime?: number) => void;
+    export type OnActionResolved<T extends IContext> = (action: IAction<T>, executionTime?: number) => void;
+    export type OnActionRejected<T extends IContext> = (action: IAction<T>, error: Error, executionTime?: number) => void;
 
 
-    export class ActionTimeoutError<T> extends Error {
+    export class ActionTimeoutError<T extends IContext> extends Error {
         constructor(message: string, public action: IAction<T>) {
             super(message);
         }
@@ -19,12 +19,12 @@ namespace jsLogic {
      *  ActionStack<T>
      * 
      */
-    export class ActionStack<T> {
+    export class ActionStack<T extends IContext> {
 
 
         private _stackFILO: IAction<T>[] = []; // first in - last out
         private _timeoutHandler: number = null;
-        private _resolving: Resolving<T>;
+        private _resolving: Resolving;
 
 
         constructor(
@@ -49,12 +49,12 @@ namespace jsLogic {
             if (this.isEmpty())
                 throw new Error('There is no action left to resolve!');
 
-            this._resolving = new Resolving<T>(this._stackFILO.pop());
+            this._resolving = new Resolving(this._stackFILO.pop());
             this._resolveAction(this._resolving, context);
         }
 
 
-        private _resolveAction(resolving: Resolving<T>, context: T): void {
+        private _resolveAction(resolving: Resolving, context: T): void {
             let self: ActionStack<T> = this;
 
             this._onActionResolving && this._onActionResolving(resolving.action);
@@ -96,7 +96,7 @@ namespace jsLogic {
             return this._resolving !== null;
         }
 
-        private static _postMortemLog<T>(resolving: Resolving<T>, result: Object): void {
+        private static _postMortemLog<T extends IContext>(resolving: Resolving, result: Object): void {
             resolving.stopTimer();
 
             console.error(`Postmortem action log (executionTime: ${resolving.executionTimeStr()}, timelimit: ${StringUtils.msPrettyPrint(resolving.action.timelimit)})`,
@@ -104,7 +104,7 @@ namespace jsLogic {
             console.error(result);
         }
 
-        private _onSuccess(resolving: Resolving<T>, consequences: IAction<T>[]): void {
+        private _onSuccess(resolving: Resolving, consequences: IAction<T>[]): void {
             resolving.stopTimer();
             this._clearTimeout();
 
@@ -121,7 +121,7 @@ namespace jsLogic {
         }
 
 
-        private _onFail(resolving: Resolving<T>, error: Error): void {
+        private _onFail(resolving: Resolving, error: Error): void {
             resolving.stopTimer();
             this._clearTimeout();
 
@@ -131,7 +131,7 @@ namespace jsLogic {
         }
 
 
-        private _onTimeout(resolving: Resolving<T>): void {
+        private _onTimeout(resolving: Resolving): void {
             resolving.stopTimer();
             this._clearTimeout();
 
@@ -151,12 +151,12 @@ namespace jsLogic {
     }
 
 
-    class Resolving<T> {
+    class Resolving {
 
         startTime: number = null;
         finishTime: number = null;
 
-        constructor(public action: IAction<T>) { }
+        constructor(public action: IAction<IContext>) { }
 
         executionTime(): number {
             return (this.finishTime ? this.finishTime : performance.now()) - this.startTime;

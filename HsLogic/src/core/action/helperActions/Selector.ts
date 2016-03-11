@@ -15,7 +15,7 @@ namespace jsLogic {
     export class RandomSelector<T extends IExtContext, O> extends IAction<T> {
 
 
-        resolve(_this_: RandomSelector<T, O>, context: T): PromiseOfActions<T> {
+        resolve(_this_: RandomSelector<T, O>, context: T): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
 

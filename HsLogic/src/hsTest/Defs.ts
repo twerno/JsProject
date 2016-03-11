@@ -28,7 +28,8 @@ namespace HSLogic {
             minion_type: MINION_TYPE.BEAST,
 
             hp: 2,
-            attack: 3
+            attack: 3,
+            flags: {}
         }
 
     export
@@ -40,6 +41,7 @@ namespace HSLogic {
 
             attack: 2,
             durability: 2,
+
             battlecry: DEF_TARGETED_ACTION({
                 altTargets: DefTargetSetBuilder.CHARACTER,
                 actions: null
@@ -56,6 +58,8 @@ namespace HSLogic {
 
             attack: 4,
             hp: 2,
+            flags: {},
+
             battlecry: [
                 //DEF_TARGETED_ACTION({
                 //    altTargets: DefTargetFilter.MINION.addFilter(

@@ -35,7 +35,7 @@ namespace jsLogic {
      *
      */
     export class CancellableActionExternalWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
-        resolve(_this_: CancellableActionExternalWrapper<T, P>, context: T): PromiseOfActions<T> {
+        resolve(_this_: CancellableActionExternalWrapper<T, P>, context: T): PromiseOfActions {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {
@@ -67,7 +67,7 @@ namespace jsLogic {
      *
      */
     class CancellableActionInternalWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
-        resolve(_this_: CancellableActionInternalWrapper<T, P>, context: T): PromiseOfActions<T> {
+        resolve(_this_: CancellableActionInternalWrapper<T, P>, context: T): PromiseOfActions {
             return new Promise<IAction<T>[]>(
 
                 (resolve, reject): void => {

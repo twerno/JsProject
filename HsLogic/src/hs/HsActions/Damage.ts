@@ -34,15 +34,6 @@ namespace HSLogic {
      */
 
 
-
-
-    //export class HealthModEvent extends jsLogic.ActionEvent<HsgameCtx> {
-
-    //    constructor(source: jsLogic.IAction<HsgameCtx>) {
-    //        super(source);
-    //    }
-    //}
-
 	/**
 	 *  positive numbers - healing
 	 *  negative - damage
@@ -50,9 +41,16 @@ namespace HSLogic {
     export interface DamageParam extends HsActionParam {
         damageType: DAMAGE_TYPE,
         sourceType: SOURCE_TYPE,
-        target: HsEntity,
+        target: Player | Minion,
         amount: number,
         cancelDamage: boolean
+    }
+
+    export interface DealDamageParam extends HsActionParam {
+        damageType: DAMAGE_TYPE,
+        sourceType: SOURCE_TYPE,
+        targets: (Player | Minion)[],
+        amount: number
     }
 
 
@@ -74,17 +72,15 @@ namespace HSLogic {
      * Damage
      *
  	 */
-    export class Damage<P extends DamageParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
-
-        cancelAction(eventParam: P): boolean {
-            return eventParam.cancelDamage
-            //|| eventParam.amount === 0
-            //|| !eventParam.target.targetInRightZone();
-        }
-        cancelOnAfterEvent(eventParam: P): boolean { return false }
+    export class Damage<P extends DamageParam> extends jsLogic.BroadcastableAction<HsGameCtx, P> {
 
         onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnDamageCalculationEvent(param) }
-        onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnDamageDealt(param) }
+        onAfterEventBuilder(param: P): HsActionEvent<P> {
+            if (!this.param.target.flags.immune)
+                return new OnDamageDealt(param);
+            else
+                return null;
+        }
 
 
         resolve(_this_: Damage<P>, gameCtx: HsGameCtx): PromiseOfActions {
@@ -92,18 +88,19 @@ namespace HSLogic {
 
                 (resolve, reject): void => {
                     let param: P = _this_.param,
-                        targetCounters: jsLogic.CounterMap = param.target.counters;
+                        target: Player | Minion = param.target;
 
-                    if (targetCounters[DivineShieldCounter.type]) {
-                        delete targetCounters[DivineShieldCounter.type];
+                    if (target.flags.immune) {
+                        resolve([]);
+                        return;
+                    }
+
+                    if (target.flags.divine_shield) {
+                        target.flags.divine_shield = false;
                         param.amount = 0;
                     }
 
-                    //if (param.target instanceof Player) {
-                    //    param.target.hp -= param.amount;
-                    //} else if (param.target instanceof Minion) {
-                    //    param.target.hp -= param.amount;
-                    //}
+                    target.hp -= param.amount;
 
                     resolve([]);
                 }
@@ -111,42 +108,30 @@ namespace HSLogic {
         }
     }
 
+    export class DealDamage<P extends DealDamageParam> extends HsAction<P> {
 
-    //export class DamageMainAction extends jsLogic.MainAction<HsgameCtx, OnDamageCalculationEvent> {
+        resolve(_this_: DealDamage<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-    //    protected damageParam: HealthModParam;
+                (resolve, reject): void => {
+                    let param: P = _this_.param,
+                        actions: Damage<DamageParam>[] = [];
 
+                    for (let i = 0; i < param.targets.length; i++) {
+                        actions.push(
+                            gameCtx.actionFactory.damage({
+                                source: param.source,
+                                damageType: param.damageType,
+                                sourceType: param.sourceType,
+                                target: param.targets[i],
+                                amount: param.amount,
+                                cancelDamage: false
+                            })
+                        );
+                    }
 
-    //    protected mainActionToBeResolvedCheck(param: HsgameCtx): boolean {
-    //        return super.mainActionToBeResolvedCheck(param)
-    //            && this.damageParam.amount !== 0
-    //            && this.damageParam.target.targetInRightZone();
-    //    }
-
-
-    //    mainActionResolver(param: HsgameCtx): HsAction {
-
-    //        let targetCounters: jsLogic.CounterMap = this.damageParam.target.target.counters;
-
-    //        if (targetCounters[DivineShieldCounter.type]) {
-    //            delete targetCounters[DivineShieldCounter.type];
-    //            this.damageParam.amount = 0;
-    //        }
-
-    //        this.damageParam.target.target.counters[HpCounter.type].value -= this.damageParam.amount;
-
-    //        return null;
-    //    }
-
-
-    //    buildOnAfterEvent(param: HsgameCtx): HsActionEvent {
-    //        return new OnAfterDamageEvent(this.source, this.damageParam);
-    //    }
-
-
-    //    constructor(/* protected */ onBeforeEvent: OnDamageCalculationEvent) {
-    //        super(onBeforeEvent);
-    //        this.damageParam = onBeforeEvent.damageParam;
-    //    }
-    //}
+                    resolve(actions);
+                });
+        }
+    }
 }

@@ -11,7 +11,8 @@ namespace HSLogic {
     export type PromiseOfActions = Promise<jsLogic.IAction<HsGameCtx>[]>;
 
     export interface IHsSource extends jsLogic.ISource {
-        card: Card
+        card: Card,
+        caller: Player
     }
 
     export interface HsActionParam extends jsLogic.IActionParam {

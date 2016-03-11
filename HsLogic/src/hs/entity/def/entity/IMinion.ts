@@ -14,6 +14,7 @@ namespace HSLogic {
         hp: number;
         attack: number;
         minion_type: MINION_TYPE,
+        flags: IFlags,
 
         battlecry?: IDefActions
 

@@ -10,7 +10,7 @@ namespace HSLogic {
 
     export class DefTargetBuilder {
 
-        static get ARCANE_MISSILE_TARGET(): IDefTarget<ChooseAtRandomParam> {
+        static get ARCANE_MISSILE_TARGET(): IDefTarget<MakeAChoiceAtRandomParam> {
             return {
                 setBuilder: DefTargetSetBuilder.ENEMY.CHARACTER
                     .addFilter(
@@ -19,7 +19,7 @@ namespace HSLogic {
                             || (card instanceof Minion && card.hp > 0);
                     }),
 
-                chooseActionBuilder: ChooseAtRandomAction.buildAction,
+                chooseActionBuilder: MakeAChoiceAtRandom.buildAction,
             }
         }
     }

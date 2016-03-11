@@ -12,7 +12,10 @@ namespace jsLogic {
     export class ActionFactory {
 
         dispatch<T extends IExtContext, P extends IActionParam>(event: ActionEvent<T, P>): DispatchEventAction<T, P> {
-            return new DispatchEventAction<T, P>(event);
+            if (event)
+                return new DispatchEventAction<T, P>(event)
+            else
+                return null;
         }
 
 

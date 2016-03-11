@@ -11,7 +11,7 @@ namespace jsLogic {
  	 */
     export class DispatchEventAction<T extends IExtContext, P extends IActionParam> extends IAction<T> {
 
-        resolve(_this_: DispatchEventAction<T, P>, context: T): PromiseOfActions<T> {
+        resolve(_this_: DispatchEventAction<T, P>, context: T): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 (resolve, reject): void => {
 

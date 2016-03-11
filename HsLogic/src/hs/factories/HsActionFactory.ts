@@ -90,7 +90,7 @@ namespace HSLogic {
         }
 
         sequence(source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[]): Sequence {
-            return new Sequence({ action: source, card: null }, innerActions);
+            return new Sequence({ action: source, card: null, caller: null }, innerActions);
         }
 
         shuffleDeck(param: PlayerParam): ShuffleDeck<PlayerParam> {

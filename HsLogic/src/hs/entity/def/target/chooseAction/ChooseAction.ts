@@ -12,7 +12,7 @@ namespace HSLogic {
     }
 
     export type FChooseActionBuilder<P extends ChooseActionParam>
-        = (caller: Player, gameCtx: HsGameCtx) => ChooseAction<P>;
+        = (source: IHsSource, gameCtx: HsGameCtx) => ChooseAction<P>;
 
 
     //class ADVANCED_CHOOSE_METHOD {
