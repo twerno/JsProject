@@ -3,12 +3,14 @@
 namespace HSLogic {
 
     export interface IPlayer extends IHsEntity {
-        hp: number;
+        hp: number,
 
-        manaCrystals: number;
+        manaCrystals: number,
 
-        hero: any;
+        hero: any,
 
-        heroPower: any;
+        heroPower: any
+
+        immune: boolean,
     }
 }

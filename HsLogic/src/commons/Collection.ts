@@ -58,8 +58,14 @@ namespace Collection {
     }
 
 
-
-    export function removeFrom(array: Object[], element: Object): void {
-        array.splice(array.indexOf(element), 1); // fix for Chrome: deleteCount param is necessary
+    export function removeFrom(array: Object[], element: Object): void;
+    export function removeFrom(array: Object[], idx: number): void;
+    export function removeFrom(array: Object[], x: any): void {
+        if (typeof (x) === typeof (1)) {
+            array.splice(x, 1); // fix for Chrome: deleteCount param is necessary
+        }
+        else if (typeof (x) === typeof ({})) {
+            array.splice(array.indexOf(x), 1); // fix for Chrome: deleteCount param is necessary
+        }
     }
 }

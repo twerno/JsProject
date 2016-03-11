@@ -19,6 +19,8 @@ namespace HSLogic {
 
         heroPower: any;
 
+        immune: boolean = false;
+
 
         constructor(public name: string, def?: IPlayer) {
             super(null, def);

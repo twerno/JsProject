@@ -51,7 +51,8 @@
     <TypeScriptCompile Include="src\hsTest\SelectorTest.ts" />
     <TypeScriptCompile Include="src\hs\entity\CardSet.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\action\DefActions.ts" />
-    <TypeScriptCompile Include="src\hs\entity\def\target\DefTarget.ts" />
+    <TypeScriptCompile Include="src\hs\entity\def\target\chooseMethod\ChooseAtRandomMethod.ts" />
+    <TypeScriptCompile Include="src\hs\entity\def\target\CustomChooseAction.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\IDefActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\action\IDefAction.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\entity\ICard.ts" />

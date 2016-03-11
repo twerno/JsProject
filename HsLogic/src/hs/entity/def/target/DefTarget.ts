@@ -2,33 +2,25 @@
 
 namespace HSLogic {
 
-    export enum BASIC_CHOOSE_METHOD {
-        ONE,
-        ALL,
-        ONE_AT_RANDOM
+    export interface IDefTarget<P extends ChooseActionParam> {
+        setBuilder: IDefTargetSetBuilder,
+        chooseActionBuilder: FChooseActionBuilder<P>
     }
 
-    interface IOption<T> {
-        option: T,
-        weight: number
-    }
 
-    export interface CustomChooseActionParam extends HsActionParam {
-    }
+    export class DefTargetBuilder {
 
-    export abstract class CustomChooseAction<P extends CustomChooseActionParam> extends HsAction<P> { }
+        static get ARCANE_MISSILE_TARGET(): IDefTarget<ChooseAtRandomParam> {
+            return {
+                setBuilder: DefTargetSetBuilder.ENEMY.CHARACTER
+                    .addFilter(
+                    (caller, card, gameCtx): boolean => {
+                        return (card instanceof Player)
+                            || (card instanceof Minion && card.hp > 0);
+                    }),
 
-    export type FCustomChooseMethod = (set: HsEntity[], properties?: Object) => Promise<HsEntity[]>;
-
-    class ADVANCED_CHOOSE_METHOD {
-
-        arcane_Missiles_Method(param: CustomChooseActionParam): CustomChooseAction<CustomChooseActionParam> {
-            return null;
+                chooseActionBuilder: ChooseAtRandomAction.buildAction
+            }
         }
     }
-
-    //interface DefTarget {
-    //    set: IDefTargetSetBuilder,
-    //    choose_method: BASIC_CHOOSE_METHOD | customChooseMethod
-    //}
 }
