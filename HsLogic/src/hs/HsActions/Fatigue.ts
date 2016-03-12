@@ -20,12 +20,12 @@ namespace HSLogic {
                             source: param.source,
                             sourceType: SOURCE_TYPE.FATIGUE,
                             damageType: DAMAGE_TYPE.DIRECT,
-                            amount: counters,
+                            baseDamage: counters,
                             target: param.player,
                             cancelDamage: false
                         };
 
-                    resolve([gameCtx.actionFactory.damage(damageParam)]);
+                    resolve([gameCtx.actionFactory.damage.damage(damageParam)]);
                 });
         }
     }

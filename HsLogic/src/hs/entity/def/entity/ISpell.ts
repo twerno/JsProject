@@ -2,9 +2,7 @@
 
 namespace HSLogic {
 
-
-
     export interface ISpell extends ICard {
-        spellActions: IActionFactory<HsGameCtx, HsActionParam>[];
+        spellActions: ICardActionDefs
     }
 }

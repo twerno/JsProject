@@ -29,6 +29,8 @@ namespace HSLogic {
 
     export class HsActionFactory<T extends HsGameCtx> extends jsLogic.ActionFactory {
 
+        protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
+
         addGeneratedCardIntoHand(param: PlayerAndCardParam): AddGeneratedCardIntoHand<PlayerAndCardParam> {
             return new AddGeneratedCardIntoHand(param);
         }
@@ -37,9 +39,7 @@ namespace HSLogic {
         //    return new AuraUpdateStep(source);
         //}
 
-        damage(damageParam: DamageParam): Damage<DamageParam> {
-            return new Damage(damageParam);
-        }
+        get damage(): HsDamageFactory<T> { return this._damageFactory }
 
         deathCreationStep(param: HsActionParam): DeathCreationStep<HsActionParam> {
             return new DeathCreationStep(param);

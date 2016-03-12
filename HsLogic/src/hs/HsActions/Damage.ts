@@ -33,24 +33,31 @@ namespace HSLogic {
      * 
      */
 
+    export enum SPLIT_MODE {
+        MISSILE, MAD_BOMB
+    }
 
-	/**
-	 *  positive numbers - healing
-	 *  negative - damage
-	 */
+    export interface RandomlySplitDamageParam extends HsActionParam {
+        damageType: DAMAGE_TYPE,
+        sourceType: SOURCE_TYPE,
+        damagePerPart: number,
+        partsAmount: number,
+        splitMode: SPLIT_MODE
+    }
+
     export interface DamageParam extends HsActionParam {
         damageType: DAMAGE_TYPE,
         sourceType: SOURCE_TYPE,
         target: Player | Minion,
-        amount: number,
+        baseDamage: number,
         cancelDamage: boolean
     }
 
     export interface DealDamageParam extends HsActionParam {
         damageType: DAMAGE_TYPE,
         sourceType: SOURCE_TYPE,
-        targets: (Player | Minion)[],
-        amount: number
+        targets: HsEntity[],
+        baseDamage: number
     }
 
 
@@ -71,7 +78,7 @@ namespace HSLogic {
     /**
      * Damage
      *
- 	 */
+       */
     export class Damage<P extends DamageParam> extends jsLogic.BroadcastableAction<HsGameCtx, P> {
 
         onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnDamageCalculationEvent(param) }
@@ -97,10 +104,10 @@ namespace HSLogic {
 
                     if (target.flags.divine_shield) {
                         target.flags.divine_shield = false;
-                        param.amount = 0;
+                        param.baseDamage = 0;
                     }
 
-                    target.hp -= param.amount;
+                    target.hp -= param.baseDamage;
 
                     resolve([]);
                 }
@@ -115,19 +122,26 @@ namespace HSLogic {
 
                 (resolve, reject): void => {
                     let param: P = _this_.param,
-                        actions: Damage<DamageParam>[] = [];
+                        actions: Damage<DamageParam>[] = [],
+                        target: Player | Minion;
 
                     for (let i = 0; i < param.targets.length; i++) {
-                        actions.push(
-                            gameCtx.actionFactory.damage({
-                                source: param.source,
-                                damageType: param.damageType,
-                                sourceType: param.sourceType,
-                                target: param.targets[i],
-                                amount: param.amount,
-                                cancelDamage: false
-                            })
-                        );
+                        if (param.targets[i] instanceof Player
+                            || param.targets[i] instanceof Minion) {
+
+                            target = <Player | Minion>param.targets[i];
+
+                            actions.push(
+                                gameCtx.actionFactory.damage.damage({
+                                    source: param.source,
+                                    damageType: param.damageType,
+                                    sourceType: param.sourceType,
+                                    target: target,
+                                    baseDamage: param.baseDamage,
+                                    cancelDamage: false
+                                })
+                            );
+                        }
                     }
 
                     resolve(actions);

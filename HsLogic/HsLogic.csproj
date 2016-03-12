@@ -22,9 +22,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
     <TypeScriptCompile Include="src\commons\MathUtils.ts" />
@@ -50,7 +47,7 @@
     <TypeScriptCompile Include="src\hsTest\DrawTest.ts" />
     <TypeScriptCompile Include="src\hsTest\SelectorTest.ts" />
     <TypeScriptCompile Include="src\hs\entity\CardSet.ts" />
-    <TypeScriptCompile Include="src\hs\entity\def\action\DefActions.ts" />
+    <TypeScriptCompile Include="src\hs\entity\def\action\DirectDamage.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\target\chooseAction\ChooseAtRandomAction.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\target\DefTarget.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\target\chooseAction\ChooseAction.ts" />
@@ -71,6 +68,7 @@
     <TypeScriptCompile Include="src\hs\entity\def\entity\IPlayer.ts" />
     <TypeScriptCompile Include="src\hs\entity\def\target\target\ArcaneMissileDefTarget.ts" />
     <TypeScriptCompile Include="src\hs\entity\Player.ts" />
+    <TypeScriptCompile Include="src\hs\factories\HsDamageActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
     <TypeScriptCompile Include="src\hs\helpers\Target.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsActionFactory.ts" />
@@ -81,6 +79,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\Discard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Heal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\PayCostAndRemoveFromHand.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\AcquireTargets.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\PlayWeapon.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\PlaySpell.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\PlayMinion.ts" />
@@ -100,6 +99,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\ShuffleGeneratedCardIntoDeck.ts" />
     <TypeScriptCompile Include="src\hs\entity\Card.ts" />
     <TypeScriptCompile Include="src\core\ZoneExceptions.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\helper\Arcane_MissileAction.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnAfterCardDrawTrigger.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnAfterDamageTrigger.ts" />
     <TypeScriptCompile Include="src\hs\trigger\OnDamageCalculationTrigger.ts" />

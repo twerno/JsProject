@@ -6,10 +6,10 @@
 namespace HSLogic {
 
     export interface PlayCardParam extends HsActionParam {
-        card: Card,
+        card: Minion | Weapon | Spell,
         player: Player,
-        targets?: Target[],
-        cancelAction: boolean
+        cardActionTargets: Array<HsEntity[]>,
+        cancelAction?: { value: boolean }
     }
 
     export interface PlayMinionParam extends PlayCardParam {
@@ -21,22 +21,45 @@ namespace HSLogic {
      * PlayCard
      *
  	 */
-    export class PlayCard extends jsLogic.IAction<HsGameCtx> {
+    export class PlayCard extends HsAction<PlayCardParam> {
 
-        constructor(public param: PlayCardParam) { super(param.source.action) }
 
         resolve(_this_: PlayCard, gameCtx: HsGameCtx): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 (resolve, reject): void => {
+                    let param: PlayCardParam = _this_.param,
+                        actions: jsLogic.IAction<HsGameCtx>[] = [],
+                        targetBaseActions: ICardActionDefs = [],
+                        acquireTargetsParam: IAcquireTargetsParam = null;
 
-                    let actions: jsLogic.IAction<HsGameCtx>[] = [
-                        gameCtx.actionFactory.payCostAndRemoveFromHand(_this_.param) // pay cost & remove from hand
-                    ];
+                    ////acquire targets
+                    //if (param.card instanceof Minion)
+                    //    targetBaseActions = (<Minion>param.card).battlecry;
+                    //else if (param.card instanceof Weapon)
+                    //    targetBaseActions = (<Weapon>param.card).battlecry;
+                    //else if (param.card instanceof Spell)
+                    //    targetBaseActions = (<Spell>param.card).spellActions;
+
+                    //if (targetBaseActions && targetBaseActions.length > 0) {
+                    //    acquireTargetsParam = {
+                    //        source: param.source,
+                    //        cardActions: targetBaseActions,
+                    //        sets: [],
+                    //        cancelAction: param.cancelAction
+                    //    };
+
+                    //    actions.push(new AcquireTargets(acquireTargetsParam));
+                    //}
+
+                    // pay cost & remove from hand
+                    gameCtx.actionFactory.payCostAndRemoveFromHand(param);
+
 
                     // delegate to playSpell, playMinon or playWeapon action
-                    if (_this_.param.card.card_type === CARD_TYPE.MINION)
-                        actions.push(gameCtx.actionFactory.playMinion(<PlayMinionParam>_this_.param));
+                    if (param.card instanceof Minion) {
+                        actions.push(gameCtx.actionFactory.playMinion(<PlayMinionParam>param));
+                    }
 
                     if (_this_.param.card.card_type === CARD_TYPE.SPELL)
                         actions.push(gameCtx.actionFactory.playSpell(_this_.param));

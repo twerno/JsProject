@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProjectECMA6", "JSProject
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HsLogic", "HsLogic\HsLogic.csproj", "{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HsCardSets", "HsCardSets\HsCardSets.csproj", "{9436EB95-BA6B-433B-998A-E6EB9E1F091E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9436EB95-BA6B-433B-998A-E6EB9E1F091E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9436EB95-BA6B-433B-998A-E6EB9E1F091E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9436EB95-BA6B-433B-998A-E6EB9E1F091E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9436EB95-BA6B-433B-998A-E6EB9E1F091E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

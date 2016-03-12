@@ -21,8 +21,8 @@ namespace HSLogic {
  	 */
     export class PlayWeapon<P extends PlayCardParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: P): boolean { return eventParam.cancelAction }
-        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction }
+        cancelAction(eventParam: P): boolean { return eventParam.cancelAction.value }
+        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction.value }
 
         onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnWeaponPlaying(param) }
         onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnWeaponPlayed(param) }

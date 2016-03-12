@@ -23,8 +23,8 @@ namespace HSLogic {
  	 */
     export class PlayMinion<P extends PlayMinionParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: P): boolean { return eventParam.cancelAction }
-        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction }
+        cancelAction(eventParam: P): boolean { return eventParam.cancelAction.value }
+        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction.value }
 
         onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnMinionPlaying(param) }
         onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnMinionSummoned(param) }

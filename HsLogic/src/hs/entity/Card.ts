@@ -34,6 +34,7 @@ namespace HSLogic {
 
         flags: IFlags;
 
+        battlecry: ICardActionDefs = [];
 
         initFromDefinition(def: IMinion): void {
             super.initFromDefinition(def);
@@ -42,11 +43,12 @@ namespace HSLogic {
             this.maxHp = def.hp;
             this.attack = def.attack;
             this.minion_type = def.minion_type;
+            this.battlecry = def.battlecry;
         }
     }
 
     export class Spell extends Card implements ISpell {
-        spellActions: IActionFactory<HsGameCtx, HsActionParam>[];
+        spellActions: ICardActionDefs;
 
         initFromDefinition(def: ISpell): void {
             super.initFromDefinition(def);
@@ -58,12 +60,14 @@ namespace HSLogic {
     export class Weapon extends Card implements IWeapon {
         attack: number;
         durability: number;
+        battlecry: ICardActionDefs = [];
 
         initFromDefinition(def: IWeapon): void {
             super.initFromDefinition(def);
 
             this.attack = def.attack;
             this.durability = def.durability;
+            this.battlecry = def.battlecry;
         }
     }
 

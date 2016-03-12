@@ -48,8 +48,7 @@ namespace jsLogic {
                             resolve([
                                 context.actionFactory.dispatch(innerAction.onAfterEventBuilder(eventParam))
                             ]);
-                        }
-                        )
+                        })
                     ]);
                 });
         }

@@ -29,7 +29,8 @@ namespace HSLogic {
 
             hp: 2,
             attack: 3,
-            flags: {}
+            flags: {},
+            battlecry: []
         }
 
     export
@@ -42,10 +43,12 @@ namespace HSLogic {
             attack: 2,
             durability: 2,
 
-            battlecry: DEF_TARGETED_ACTION({
-                altTargets: DefTargetSetBuilder.CHARACTER,
-                actions: null
-            })
+            battlecry: []
+
+            //battlecry: DEF_TARGETED_ACTION({
+            //    altTargets: DefTargetSetBuilder.CHARACTER,
+            //    actions: null
+            //})
         }
 
     export
@@ -59,22 +62,23 @@ namespace HSLogic {
             attack: 4,
             hp: 2,
             flags: {},
+            battlecry: []
 
-            battlecry: [
-                //DEF_TARGETED_ACTION({
-                //    altTargets: DefTargetFilter.MINION.addFilter(
-                //        (caller, card, gameCtx): boolean => {
-                //            return card instanceof Minion && card.attack >= 7
-                //        }),
-                //    actions: DefAction_.destroy_target
-                //}),
+            //battlecry: [
+            //DEF_TARGETED_ACTION({
+            //    altTargets: DefTargetFilter.MINION.addFilter(
+            //        (caller, card, gameCtx): boolean => {
+            //            return card instanceof Minion && card.attack >= 7
+            //        }),
+            //    actions: DefAction_.destroy_target
+            //}),
 
-                DEF_TARGETED_ACTION({
+            //DEF_TARGETED_ACTION({
 
-                    altTargets: DefTargetSetBuilder.MINION.ATTACK_GREATER_THAN_OR_EQAUL_TO(7),
-                    actions: DefAction_.destroy_target
-                })
-            ]
+            //    altTargets: DefTargetSetBuilder.MINION.ATTACK_GREATER_THAN_OR_EQAUL_TO(7),
+            //    actions: DefAction_.destroy_target
+            //})
+            //]
         }
 
     var a = {

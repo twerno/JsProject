@@ -2,23 +2,28 @@
 
 namespace HSLogic {
 
+    export enum REQUIRE {
+        YES,
+        NO,
+        IF_TARGETS_ARE_AVAILABLE
+    }
+
+    export interface IChooseActionParamSets {
+        source: HsEntity[],
+        result: HsEntity[]
+    }
+
     export interface ChooseActionParam extends HsActionParam {
-        sourceSet: HsEntity[],
-        resultSet: HsEntity[]
+        sets: IChooseActionParamSets,
+        require: REQUIRE,
+        cancelAction?: { value: boolean }
     }
 
-    export abstract class ChooseAction<P extends ChooseActionParam> extends HsAction<P> {
-        //abstract sourceSet(param: P, gameCtx: HsGameCtx): HsEntity[];
-    }
-
-    export type FChooseActionBuilder<P extends ChooseActionParam>
-        = (source: IHsSource, gameCtx: HsGameCtx) => ChooseAction<P>;
+    export abstract class ChooseAction<P extends ChooseActionParam> extends HsAction<P> { }
 
 
-    //class ADVANCED_CHOOSE_METHOD {
 
-    //    //arcane_Missiles_Method(param: CustomChooseActionParam): CustomChooseAction<CustomChooseActionParam> {
-    //    //    return null;
-    //    //}
-    //}
+    export type FChooseActionBuilder<T extends HsGameCtx, P extends ChooseActionParam>
+        = (param: P, gameCtx: T) => jsLogic.IAction<T>;
+
 }

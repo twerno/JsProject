@@ -16,7 +16,7 @@ namespace HSLogic {
         minion_type: MINION_TYPE,
         flags: IFlags,
 
-        battlecry?: IDefActions
+        battlecry: ICardActionDefs
 
     }
 }

@@ -45,7 +45,7 @@ namespace MathUtils {
 
     export interface ISelectAtRandomProperties {
         amount: number,
-        withRepetitions: boolean
+        withRepetitions?: boolean
     }
 
     export function selectAtRandom<T>(sourceSet: T[], props: ISelectAtRandomProperties): T[] {
