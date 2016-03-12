@@ -18,19 +18,19 @@ namespace HSLogic {
  	 */
     export class ReturnCardIntoOwnersHandFrom<P extends ReturnCardIntoOwnersHandParam> extends HsAction<P> {
 
-        resolve(_this_: ReturnCardIntoOwnersHandFrom<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: ReturnCardIntoOwnersHandFrom<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        hand: HsZone = gameCtx.zonesOf(param.card.owner).hand;
+                        hand: HsZone = gameCtx.zonesOf( param.card.owner ).hand;
 
-                    if (hand.isFull) {
+                    if ( hand.isFull ) {
                         //resolve([gameCtx.actionFactory.markAsDestroyed(param.source, param.card)]);
                     }
                     else {
-                        param.sourceZone.removeEntity(param.card);
-                        hand.addEntity(param.card);
-                        resolve(null);
+                        param.sourceZone.removeEntity( param.card );
+                        hand.addEntity( param.card );
+                        resolve( null );
                     }
                 });
         }

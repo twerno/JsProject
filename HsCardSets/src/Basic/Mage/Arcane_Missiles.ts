@@ -13,8 +13,8 @@ namespace HSLogic {
 
         spellActions: [
             {
-                actionBuilder: (source: IHsSource, gameCtx: HsGameCtx): jsLogic.IAction<HsGameCtx> => {
-                    return gameCtx.actionFactory.damage.randomlySplitDamage({
+                actionBuilder: ( source: IHsSource, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> => {
+                    return gameCtx.actionFactory.damage.randomlySplitDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         sourceType: SOURCE_TYPE.SPELL,
@@ -28,5 +28,5 @@ namespace HSLogic {
         ]
     }
 
-    basicSet.registerCard(Arcane_Missiles);
+    basicSet.registerCard( Arcane_Missiles );
 }

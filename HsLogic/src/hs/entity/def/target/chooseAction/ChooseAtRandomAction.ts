@@ -12,23 +12,23 @@ namespace HSLogic {
      *
  	 */
     export class MakeAChoiceAtRandom<P extends MakeAChoiceAtRandomParam> extends ChooseAction<P> {
-        resolve(_this_: MakeAChoiceAtRandom<P>, gameCtx: HsGameCtx): PromiseOfActions {
-            if (_this_.param.cancelAction.value)
-                return Promise.resolve([]);
+        resolve( _this_: MakeAChoiceAtRandom<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+            if ( _this_.param.cancelAction.value )
+                return Promise.resolve( [] );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param;
 
                     param.sets.result.length = 0;
-                    param.sets.result.concat(MathUtils.selectAtRandom<HsEntity>(param.sets.source, param.props));
+                    param.sets.result.concat( MathUtils.selectAtRandom<HsEntity>( param.sets.source, param.props ) );
 
-                    resolve(jsLogic.NO_CONSEQUENCES);
+                    resolve( jsLogic.NO_CONSEQUENCES );
                 });
         }
 
-        static buildAction(param: ChooseActionParam, props: MathUtils.ISelectAtRandomProperties): MakeAChoiceAtRandom<MakeAChoiceAtRandomParam> {
-            return new MakeAChoiceAtRandom<MakeAChoiceAtRandomParam>({
+        static buildAction( param: ChooseActionParam, props: MathUtils.ISelectAtRandomProperties ): MakeAChoiceAtRandom<MakeAChoiceAtRandomParam> {
+            return new MakeAChoiceAtRandom<MakeAChoiceAtRandomParam>( {
                 source: param.source,
                 sets: param.sets,
                 require: param.require,
@@ -37,9 +37,9 @@ namespace HSLogic {
             });
         }
 
-        static builder(props: MathUtils.ISelectAtRandomProperties): FChooseActionBuilder<HsGameCtx, MakeAChoiceAtRandomParam> {
-            return (param: ChooseActionParam, gameCtx: HsGameCtx): jsLogic.IAction<HsGameCtx> => {
-                return MakeAChoiceAtRandom.buildAction(param, props)
+        static builder( props: MathUtils.ISelectAtRandomProperties ): FChooseActionBuilder<HsGameCtx, MakeAChoiceAtRandomParam> {
+            return ( param: ChooseActionParam, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> => {
+                return MakeAChoiceAtRandom.buildAction( param, props )
             };
         }
     }

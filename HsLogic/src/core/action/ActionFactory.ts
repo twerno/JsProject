@@ -11,9 +11,9 @@ namespace jsLogic {
 
     export class ActionFactory {
 
-        dispatch<T extends IExtContext, P extends IActionParam>(event: ActionEvent<T, P>): DispatchEventAction<T, P> {
-            if (event)
-                return new DispatchEventAction<T, P>(event)
+        dispatch<T extends IExtContext, P extends IActionParam>( event: ActionEvent<T, P> ): DispatchEventAction<T, P> {
+            if ( event )
+                return new DispatchEventAction<T, P>( event )
             else
                 return null;
         }
@@ -25,13 +25,13 @@ namespace jsLogic {
         //}
 
 
-        randomSelector<T extends IExtContext, O>(source: IAction<T>, selectorParam: SelectorParam<O>, resultSet: O[]): RandomSelector<T, O> {
-            return new RandomSelector<T, O>(source, selectorParam, resultSet);
+        randomSelector<T extends IExtContext, O>( source: IAction<T>, selectorParam: SelectorParam<O>, resultSet: O[] ): RandomSelector<T, O> {
+            return new RandomSelector<T, O>( source, selectorParam, resultSet );
         }
 
 
-        broadcastAction<T extends IExtContext, P extends IActionParam>(action2Broadcast: IActionToBroadcast<T, P>): BroadcastAction<T, P> {
-            return new BroadcastAction<T, P>(action2Broadcast);
+        broadcastAction<T extends IExtContext, P extends IActionParam>( action2Broadcast: IActionToBroadcast<T, P> ): BroadcastAction<T, P> {
+            return new BroadcastAction<T, P>( action2Broadcast );
         }
     }
 }

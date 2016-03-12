@@ -11,11 +11,11 @@ namespace HSLogic {
  	 */
     export class Fatigue<P extends PlayerParam> extends HsAction<P> {
 
-        resolve(_this_: Fatigue<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: Fatigue<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        counters: number = (++param.player.counters[FatigueCounter.type].value),
+                        counters: number = ( ++param.player.counters[FatigueCounter.type].value ),
                         damageParam: DamageParam = {
                             source: param.source,
                             sourceType: SOURCE_TYPE.FATIGUE,
@@ -25,7 +25,7 @@ namespace HSLogic {
                             cancelDamage: false
                         };
 
-                    resolve([gameCtx.actionFactory.damage.damage(damageParam)]);
+                    resolve( [gameCtx.actionFactory.damage.damage( damageParam )] );
                 });
         }
     }

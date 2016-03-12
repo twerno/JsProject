@@ -14,12 +14,12 @@ namespace jsLogic {
         // queue_level has to be a positive number
         queue_level: number = DEFAULT_TRIGGER_LEVEL;
 
-        abstract isRespondingTo(event: ActionEvent<T, P>): boolean;
+        abstract isRespondingTo( event: ActionEvent<T, P> ): boolean;
 
-        abstract trigger(event: ActionEvent<T, P>, param: T): IAction<T>;
+        abstract trigger( event: ActionEvent<T, P>, param: T ): IAction<T>;
 
         toString(): string {
-            return ClassUtils.getNameOfClass(this);
+            return ClassUtils.getNameOfClass( this );
         }
     }
 

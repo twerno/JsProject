@@ -9,14 +9,14 @@ namespace HSLogic {
         name: string;
         card_type: CARD_TYPE;
 
-        protected initFromDefinition(def: IHsEntity): void {
+        protected initFromDefinition( def: IHsEntity ): void {
             this.name = def.name;
             this.card_type = def.card_type;
         }
 
-        constructor(public owner: HsEntity, def?: IHsEntity) {
-            super(owner);
-            def && this.initFromDefinition(def);
+        constructor( public owner: HsEntity, def?: IHsEntity ) {
+            super( owner );
+            def && this.initFromDefinition( def );
         }
     }
 

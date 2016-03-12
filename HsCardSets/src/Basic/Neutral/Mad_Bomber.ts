@@ -19,8 +19,8 @@ namespace HSLogic {
 
         battlecry: [
             {
-                actionBuilder: (source: IHsSource, gameCtx: HsGameCtx): jsLogic.IAction<HsGameCtx> => {
-                    return gameCtx.actionFactory.damage.randomlySplitDamage({
+                actionBuilder: ( source: IHsSource, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> => {
+                    return gameCtx.actionFactory.damage.randomlySplitDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         sourceType: SOURCE_TYPE.MINION,
@@ -34,5 +34,5 @@ namespace HSLogic {
         ]
     }
 
-    basicSet.registerCard(Mad_Bomber);
+    basicSet.registerCard( Mad_Bomber );
 }

@@ -31,21 +31,21 @@ namespace HSLogic {
      */
     export class Heal<P extends HealParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: P): boolean { return eventParam.cancelHeal }
-        cancelOnAfterEvent(eventParam: P): boolean { return false }
+        cancelAction( eventParam: P ): boolean { return eventParam.cancelHeal }
+        cancelOnAfterEvent( eventParam: P ): boolean { return false }
 
-        onBeforeEventBuilder(eventParam: P): HsActionEvent<P> { return new HealCalculationEvent(eventParam) }
-        onAfterEventBuilder(eventParam: P): HsActionEvent<P> { return new OnAfterHealEvent(eventParam) }
+        onBeforeEventBuilder( eventParam: P ): HsActionEvent<P> { return new HealCalculationEvent( eventParam ) }
+        onAfterEventBuilder( eventParam: P ): HsActionEvent<P> { return new OnAfterHealEvent( eventParam ) }
 
 
-        resolve(_this_: Heal<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: Heal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param,
                         targetCounters: jsLogic.CounterMap = param.target.target.counters;
 
-                    if (targetCounters[DivineShieldCounter.type]) {
+                    if ( targetCounters[DivineShieldCounter.type] ) {
                         delete targetCounters[DivineShieldCounter.type];
                         param.amount = 0;
                     }

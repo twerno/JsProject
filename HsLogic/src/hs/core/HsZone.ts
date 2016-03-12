@@ -25,7 +25,7 @@ namespace HSLogic {
         maxElements: number = -1; // -1 - unlimited
 
         isFull(): boolean {
-            if (this.maxElements === -1)
+            if ( this.maxElements === -1 )
                 return false;
             else
                 return this.length >= this.maxElements;
@@ -35,10 +35,10 @@ namespace HSLogic {
             return this._entities.length === 0;
         }
 
-        constructor(public zones: HsZones, zoneId: string, maxElements: number) {
-            super(zones, zoneId);
-            this.maxElements = ((maxElements || 0) >= 0) ? (maxElements || 0) : -1;
-            zones.register(this);
+        constructor( public zones: HsZones, zoneId: string, maxElements: number ) {
+            super( zones, zoneId );
+            this.maxElements = ( ( maxElements || 0 ) >= 0 ) ? ( maxElements || 0 ) : -1;
+            zones.register( this );
         }
     }
 
@@ -56,20 +56,20 @@ namespace HSLogic {
         battlefield: HsZone;
         secret: HsZone;
 
-        constructor(public owner: Player) {
-            super(owner);
+        constructor( public owner: Player ) {
+            super( owner );
 
-            this.hand = new HsZone(this, ZoneConsts.HAND_ZONE, 10);
-            this.deck = new HsZone(this, ZoneConsts.DECK_ZONE, 80);
-            this.graveyard = new HsZone(this, ZoneConsts.GRAVEYARD_ZONE, ZoneConsts.UNLIMITED);
-            this.removed_from_play = new HsZone(this, ZoneConsts.REMOVED_FROM_PLAY_ZONE, ZoneConsts.UNLIMITED);
+            this.hand = new HsZone( this, ZoneConsts.HAND_ZONE, 10 );
+            this.deck = new HsZone( this, ZoneConsts.DECK_ZONE, 80 );
+            this.graveyard = new HsZone( this, ZoneConsts.GRAVEYARD_ZONE, ZoneConsts.UNLIMITED );
+            this.removed_from_play = new HsZone( this, ZoneConsts.REMOVED_FROM_PLAY_ZONE, ZoneConsts.UNLIMITED );
 
-            this.hero = new HsZone(this, ZoneConsts.HERO_ZONE, 1);
-            this.weapon = new HsZone(this, ZoneConsts.WEAPON_ZONE, 1);
-            this.heroPower = new HsZone(this, ZoneConsts.HERO_POWER_ZONE, 1);
+            this.hero = new HsZone( this, ZoneConsts.HERO_ZONE, 1 );
+            this.weapon = new HsZone( this, ZoneConsts.WEAPON_ZONE, 1 );
+            this.heroPower = new HsZone( this, ZoneConsts.HERO_POWER_ZONE, 1 );
 
-            this.battlefield = new HsZone(this, ZoneConsts.GAME_ZONE, 7);
-            this.secret = new HsZone(this, ZoneConsts.SECRET_ZONE, 5);
+            this.battlefield = new HsZone( this, ZoneConsts.GAME_ZONE, 7 );
+            this.secret = new HsZone( this, ZoneConsts.SECRET_ZONE, 5 );
         }
     }
 }

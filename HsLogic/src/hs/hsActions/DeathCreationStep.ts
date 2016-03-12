@@ -13,12 +13,12 @@ namespace HSLogic {
  	 */
     export class DeathCreationStep<P extends HsActionParam> extends HsAction<P> {
 
-        resolve(_this_: DeathCreationStep<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: DeathCreationStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param;
 
-                    resolve(null);
+                    resolve( null );
                 });
         }
     }

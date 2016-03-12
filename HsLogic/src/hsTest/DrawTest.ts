@@ -35,52 +35,52 @@ namespace HSLogic {
         constructor() {
             let self: DrawTest<T> = this;
             this.stack = new jsLogic.ActionStack<T>(
-                (action) => { self._onResolving(action); },
-                (action) => { self._onResolved(action); },
-                (action, error) => { self._onRejected(action, error); });
+                ( action ) => { self._onResolving( action ); },
+                ( action ) => { self._onResolved( action ); },
+                ( action, error ) => { self._onRejected( action, error ); });
 
             this.init();
         }
 
         public init(): void {
             this.gameCtx = new HsGameCtx();
-            this.gameCtx.activePlayer = this.initPlayer('player_1', this.gameCtx);
-            this.initPlayer('player_2', this.gameCtx);
+            this.gameCtx.activePlayer = this.initPlayer( 'player_1', this.gameCtx );
+            this.initPlayer( 'player_2', this.gameCtx );
             //this.gameCtx.handlers.registerTrigger(new OnAfterDamageTrigger());
             //this.gameCtx.handlers.registerTrigger(new OnDamageCalculationTrigger());
             //this.gameCtx.handlers.registerTrigger(new OnAfterCardDrawTrigger());
         }
 
 
-        public initPlayer(name: string, gameCtx: HsGameCtx): Player {
-            let player: Player = new Player(name);
-            let zones: HsZones = new HsZones(player);
-            gameCtx.players.push(player);
+        public initPlayer( name: string, gameCtx: HsGameCtx ): Player {
+            let player: Player = new Player( name );
+            let zones: HsZones = new HsZones( player );
+            gameCtx.players.push( player );
             gameCtx.zonesMap[player.id] = zones;
 
-            for (let i = 0; i < CARDS_IN_DECK; i++)
-                zones.deck.addEntity(new Minion(player, Bloodfen_Raptor));
+            for ( let i = 0; i < CARDS_IN_DECK; i++ )
+                zones.deck.addEntity( new Minion( player, Bloodfen_Raptor ) );
 
             return player;
         }
 
 
-        private _onResolving = (action: jsLogic.IAction<T>): void => {
-            console.log(`${action}`, action, `${action.source}`);
+        private _onResolving = ( action: jsLogic.IAction<T> ): void => {
+            console.log( `${action}`, action, `${action.source}` );
         }
 
 
-        private _onResolved = (action: jsLogic.IAction<T>): void => {
+        private _onResolved = ( action: jsLogic.IAction<T> ): void => {
             let zones: HsZones = this.gameCtx.zonesOfActivePlayer();
-            if (!this.stack.isEmpty())
-                this.stack.resolveTopAction(this.gameCtx);
+            if ( !this.stack.isEmpty() )
+                this.stack.resolveTopAction( this.gameCtx );
             else
-                console.log(`Cards in hand: ${zones.hand.length}; Cards in deck: ${zones.deck.length}; Cards in graveyard: ${zones.graveyard.length}; Players health: ${this.gameCtx.activePlayer.hp}`);
+                console.log( `Cards in hand: ${zones.hand.length}; Cards in deck: ${zones.deck.length}; Cards in graveyard: ${zones.graveyard.length}; Players health: ${this.gameCtx.activePlayer.hp}` );
         }
 
 
-        private _onRejected = (action: jsLogic.IAction<T>, error: Error): void => {
-            console.error(`${action}`, error);
+        private _onRejected = ( action: jsLogic.IAction<T>, error: Error ): void => {
+            console.error( `${action}`, error );
         }
 
         //private _resolve(innerAction: jsLogic.IAction<T>[]): void {

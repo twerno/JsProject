@@ -88,8 +88,8 @@ namespace HSLogic {
     }
 
     export
-        var classicSet: CardSet<ICard> = new CardSet<ICard>('classicSet');
+        var classicSet: CardSet<ICard> = new CardSet<ICard>( 'classicSet' );
 
 
-    classicSet.registerCard(Bloodfen_Raptor);
+    classicSet.registerCard( Bloodfen_Raptor );
 }

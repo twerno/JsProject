@@ -10,18 +10,18 @@ namespace HSLogic {
 
     export class VoidCounter extends HsCounter {
         constructor() {
-            super(0);
+            super( 0 );
         }
     }
 
 
     export class FatigueCounter extends HsCounter {
-        static get type(): string { return (new FatigueCounter(null)).type; }
+        static get type(): string { return ( new FatigueCounter( null ) ).type; }
     }
 
 
     export class DivineShieldCounter extends VoidCounter {
-        static get type(): string { return (new DivineShieldCounter()).type; }
+        static get type(): string { return ( new DivineShieldCounter() ).type; }
     }
 
     //export class HpCounter extends HsCounter {

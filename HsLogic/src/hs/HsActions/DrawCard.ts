@@ -24,37 +24,37 @@ namespace HSLogic {
  	 */
     export class DrawCard<P extends DrawParam> extends HsAction<P> {
 
-        resolve(_this_: DrawCard<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: DrawCard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        zones: HsZones = gameCtx.zonesOf(param.player);
+                        zones: HsZones = gameCtx.zonesOf( param.player );
 
                     // fatigue
-                    if (zones.deck.isEmpty()) {
-                        resolve([gameCtx.actionFactory.fatigue(param)]);
+                    if ( zones.deck.isEmpty() ) {
+                        resolve( [gameCtx.actionFactory.fatigue( param )] );
 
                     } else {
 
                         let card: Card = zones.deck.pop();
 
                         // addCard to hand if not full
-                        if (!zones.hand.isFull()) {
-                            zones.hand.addEntity(card);
+                        if ( !zones.hand.isFull() ) {
+                            zones.hand.addEntity( card );
 
                             // dispatch event if drawn
-                            resolve([
+                            resolve( [
                                 gameCtx.actionFactory.dispatch(
-                                    new OnAfterDrawEvent({
+                                    new OnAfterDrawEvent( {
                                         player: param.player,
                                         card: card,
                                         source: param.source
-                                    }))
-                            ]);
+                                    }) )
+                            ] );
                         } else {
                             // mill card if hand is full
-                            resolve([gameCtx.actionFactory.millCard(param.source, card)]);
+                            resolve( [gameCtx.actionFactory.millCard( param.source, card )] );
                         }
                     }
                 });

@@ -7,8 +7,8 @@ namespace MathUtils {
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 	 *
 	 */
-    export function randomNumber(min: number, max: number): number {
-        return Math.random() * (max - min + 1) + min;
+    export function randomNumber( min: number, max: number ): number {
+        return Math.random() * ( max - min + 1 ) + min;
     }
 
 	/**
@@ -16,8 +16,8 @@ namespace MathUtils {
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 	 *
 	 */
-    export function randomInt(min: number, max: number): number {
-        return Math.floor(Math.random() * (max - min + 1) + min);
+    export function randomInt( min: number, max: number ): number {
+        return Math.floor( Math.random() * ( max - min + 1 ) + min );
     }
 
 
@@ -26,12 +26,12 @@ namespace MathUtils {
       * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
       *
       */
-    export function randomizeArray(source: Object[]): void {
+    export function randomizeArray( source: Object[] ): void {
         let j: number;
         let tmp: Object;
 
-        for (let i = source.length - 1; i > 0; i--) {
-            j = randomInt(0, i);
+        for ( let i = source.length - 1; i > 0; i-- ) {
+            j = randomInt( 0, i );
             tmp = source[i];
             source[i] = source[j];
             source[j] = tmp;
@@ -48,40 +48,40 @@ namespace MathUtils {
         withRepetitions?: boolean
     }
 
-    export function selectAtRandom<T>(sourceSet: T[], props: ISelectAtRandomProperties): T[] {
+    export function selectAtRandom<T>( sourceSet: T[], props: ISelectAtRandomProperties ): T[] {
         let
             tmpSet: T[] = sourceSet.slice(),
             result: T[] = [],
             random: number,
-            limit: number = Math.min(props.amount || 0, sourceSet.length);
+            limit: number = Math.min( props.amount || 0, sourceSet.length );
 
-        for (let i = 0; i < limit; i++) {
-            random = randomInt(0, tmpSet.length - 1);
+        for ( let i = 0; i < limit; i++ ) {
+            random = randomInt( 0, tmpSet.length - 1 );
 
-            result.push(sourceSet[random]);
-            !props.withRepetitions && Collection.removeFrom(tmpSet, i);
+            result.push( sourceSet[random] );
+            !props.withRepetitions && Collection.removeFrom( tmpSet, i );
         }
 
         return result;
     }
 
-    export function selectAtRandomWithWeights<T>(sourceSet: IElementWithWeight<T>[], props: ISelectAtRandomProperties): T[] {
+    export function selectAtRandomWithWeights<T>( sourceSet: IElementWithWeight<T>[], props: ISelectAtRandomProperties ): T[] {
         let
-            tmpSet: ITmpElementWithWeights<T>[] = processOptions<T>(sourceSet),
-            maxValue: number = (tmpSet && tmpSet.length > 0 ? tmpSet[tmpSet.length - 1].maxValue : 0),
+            tmpSet: ITmpElementWithWeights<T>[] = processOptions<T>( sourceSet ),
+            maxValue: number = ( tmpSet && tmpSet.length > 0 ? tmpSet[tmpSet.length - 1].maxValue : 0 ),
             result: T[] = [],
             random: number,
             option: ITmpElementWithWeights<T>,
-            limit: number = Math.min(props.amount || 0, sourceSet.length);
+            limit: number = Math.min( props.amount || 0, sourceSet.length );
 
-        for (let i = 0; i < limit; i++) {
-            random = randomNumber(0, maxValue);
+        for ( let i = 0; i < limit; i++ ) {
+            random = randomNumber( 0, maxValue );
 
-            for (let j = 0; j < tmpSet.length; j++) {
+            for ( let j = 0; j < tmpSet.length; j++ ) {
                 option = tmpSet[j];
-                if (option.minValue <= random && (random < option.maxValue || random === maxValue)) {
-                    result.push(option.element);
-                    !props.withRepetitions && Collection.removeFrom(tmpSet, j);
+                if ( option.minValue <= random && ( random < option.maxValue || random === maxValue ) ) {
+                    result.push( option.element );
+                    !props.withRepetitions && Collection.removeFrom( tmpSet, j );
                     break;
                 }
             }
@@ -96,12 +96,12 @@ namespace MathUtils {
         maxValue: number
     }
 
-    function processOptions<T>(sourceSet: IElementWithWeight<T>[]): ITmpElementWithWeights<T>[] {
+    function processOptions<T>( sourceSet: IElementWithWeight<T>[] ): ITmpElementWithWeights<T>[] {
         let result: ITmpElementWithWeights<T>[] = [],
             value: number = 0,
             option: IElementWithWeight<T>;
 
-        for (let i = 0; i < sourceSet.length; i++) {
+        for ( let i = 0; i < sourceSet.length; i++ ) {
             option = sourceSet[i];
             result.push(
                 {

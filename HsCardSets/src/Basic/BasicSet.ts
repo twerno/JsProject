@@ -4,6 +4,6 @@
 
 namespace HSLogic {
 
-    export var basicSet: CardSet<ICard> = new CardSet<ICard>('BASIC');
+    export var basicSet: CardSet<ICard> = new CardSet<ICard>( 'BASIC' );
 
 }

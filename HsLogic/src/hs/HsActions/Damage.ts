@@ -81,35 +81,35 @@ namespace HSLogic {
        */
     export class Damage<P extends DamageParam> extends jsLogic.BroadcastableAction<HsGameCtx, P> {
 
-        onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnDamageCalculationEvent(param) }
-        onAfterEventBuilder(param: P): HsActionEvent<P> {
-            if (!this.param.target.flags.immune)
-                return new OnDamageDealt(param);
+        onBeforeEventBuilder( param: P ): HsActionEvent<P> { return new OnDamageCalculationEvent( param ) }
+        onAfterEventBuilder( param: P ): HsActionEvent<P> {
+            if ( !this.param.target.flags.immune )
+                return new OnDamageDealt( param );
             else
                 return null;
         }
 
 
-        resolve(_this_: Damage<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: Damage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param,
                         target: Player | Minion = param.target;
 
-                    if (target.flags.immune) {
-                        resolve([]);
+                    if ( target.flags.immune ) {
+                        resolve( [] );
                         return;
                     }
 
-                    if (target.flags.divine_shield) {
+                    if ( target.flags.divine_shield ) {
                         target.flags.divine_shield = false;
                         param.baseDamage = 0;
                     }
 
                     target.hp -= param.baseDamage;
 
-                    resolve([]);
+                    resolve( [] );
                 }
             );
         }
@@ -117,22 +117,22 @@ namespace HSLogic {
 
     export class DealDamage<P extends DealDamageParam> extends HsAction<P> {
 
-        resolve(_this_: DealDamage<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: DealDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param,
                         actions: Damage<DamageParam>[] = [],
                         target: Player | Minion;
 
-                    for (let i = 0; i < param.targets.length; i++) {
-                        if (param.targets[i] instanceof Player
-                            || param.targets[i] instanceof Minion) {
+                    for ( let i = 0; i < param.targets.length; i++ ) {
+                        if ( param.targets[i] instanceof Player
+                            || param.targets[i] instanceof Minion ) {
 
                             target = <Player | Minion>param.targets[i];
 
                             actions.push(
-                                gameCtx.actionFactory.damage.damage({
+                                gameCtx.actionFactory.damage.damage( {
                                     source: param.source,
                                     damageType: param.damageType,
                                     sourceType: param.sourceType,
@@ -144,7 +144,7 @@ namespace HSLogic {
                         }
                     }
 
-                    resolve(actions);
+                    resolve( actions );
                 });
         }
     }

@@ -14,13 +14,13 @@ namespace HSLogic {
  	 */
     export class EmptyAction<P extends EmptyActionParam> extends HsAction<P> {
 
-        resolve(_this_: EmptyAction<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: EmptyAction<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param;
 
-                    console.log(`Empty action resolver: ${param.message}`);
+                    console.log( `Empty action resolver: ${param.message}` );
                 });
         }
     }

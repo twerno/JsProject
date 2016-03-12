@@ -24,10 +24,10 @@ namespace HSLogic {
     export class PlayCard extends HsAction<PlayCardParam> {
 
 
-        resolve(_this_: PlayCard, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: PlayCard, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: PlayCardParam = _this_.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
                         targetBaseActions: ICardActionDefs = [],
@@ -53,21 +53,21 @@ namespace HSLogic {
                     //}
 
                     // pay cost & remove from hand
-                    gameCtx.actionFactory.payCostAndRemoveFromHand(param);
+                    gameCtx.actionFactory.payCostAndRemoveFromHand( param );
 
 
                     // delegate to playSpell, playMinon or playWeapon action
-                    if (param.card instanceof Minion) {
-                        actions.push(gameCtx.actionFactory.playMinion(<PlayMinionParam>param));
+                    if ( param.card instanceof Minion ) {
+                        actions.push( gameCtx.actionFactory.playMinion( <PlayMinionParam>param ) );
                     }
 
-                    if (_this_.param.card.card_type === CARD_TYPE.SPELL)
-                        actions.push(gameCtx.actionFactory.playSpell(_this_.param));
+                    if ( _this_.param.card.card_type === CARD_TYPE.SPELL )
+                        actions.push( gameCtx.actionFactory.playSpell( _this_.param ) );
 
-                    if (_this_.param.card.card_type === CARD_TYPE.WEAPON)
-                        actions.push(gameCtx.actionFactory.playWeapon(_this_.param));
+                    if ( _this_.param.card.card_type === CARD_TYPE.WEAPON )
+                        actions.push( gameCtx.actionFactory.playWeapon( _this_.param ) );
 
-                    resolve(actions);
+                    resolve( actions );
                 }
             );
         }

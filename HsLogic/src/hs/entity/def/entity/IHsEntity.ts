@@ -17,7 +17,7 @@ namespace HSLogic {
         card_type: CARD_TYPE;
     }
 
-    export function isMinion(entity: IHsEntity): entity is IMinion {
+    export function isMinion( entity: IHsEntity ): entity is IMinion {
         return entity.card_type === CARD_TYPE.MINION;
     }
 

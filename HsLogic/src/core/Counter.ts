@@ -9,11 +9,11 @@ namespace jsLogic {
         type: string;
 
         toString(): string {
-            return ClassUtils.getNameOfClass(this);
+            return ClassUtils.getNameOfClass( this );
         }
 
-        constructor(public value: number) {
-            this.type = ClassUtils.getNameOfClass(this);
+        constructor( public value: number ) {
+            this.type = ClassUtils.getNameOfClass( this );
         };
     }
 

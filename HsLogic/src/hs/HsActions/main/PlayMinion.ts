@@ -23,19 +23,19 @@ namespace HSLogic {
  	 */
     export class PlayMinion<P extends PlayMinionParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
 
-        cancelAction(eventParam: P): boolean { return eventParam.cancelAction.value }
-        cancelOnAfterEvent(eventParam: P): boolean { return eventParam.cancelAction.value }
+        cancelAction( eventParam: P ): boolean { return eventParam.cancelAction.value }
+        cancelOnAfterEvent( eventParam: P ): boolean { return eventParam.cancelAction.value }
 
-        onBeforeEventBuilder(param: P): HsActionEvent<P> { return new OnMinionPlaying(param) }
-        onAfterEventBuilder(param: P): HsActionEvent<P> { return new OnMinionSummoned(param) }
+        onBeforeEventBuilder( param: P ): HsActionEvent<P> { return new OnMinionPlaying( param ) }
+        onAfterEventBuilder( param: P ): HsActionEvent<P> { return new OnMinionSummoned( param ) }
 
 
-        resolve(_this_: PlayMinion<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: PlayMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let actions: jsLogic.IAction<HsGameCtx>[] = [
-                        gameCtx.actionFactory.payCostAndRemoveFromHand(_this_.param)
+                        gameCtx.actionFactory.payCostAndRemoveFromHand( _this_.param )
                     ];
 
                     //if (_this_.param.card.type === CARD_TYPE.MINION)
@@ -46,7 +46,7 @@ namespace HSLogic {
                     // delegate to play spell, play minon or play weapon action
                     // 
 
-                    resolve(actions);
+                    resolve( actions );
                 }
             );
         }

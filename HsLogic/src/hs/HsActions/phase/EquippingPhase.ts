@@ -14,13 +14,13 @@ namespace HSLogic {
  	 */
     export class EquippingPhase extends jsLogic.IAction<HsGameCtx> {
 
-        constructor(public param: PlayCardParam) { super(param.source.action) }
+        constructor( public param: PlayCardParam ) { super( param.source.action ) }
 
 
-        resolve(_this_: EquippingPhase, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: EquippingPhase, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let weapon: Weapon = <Weapon>_this_.param.card;
 
                     // destroy old weapon
@@ -30,7 +30,7 @@ namespace HSLogic {
 
                     let actions: jsLogic.IAction<HsGameCtx>[] = [];
 
-                    resolve(actions);
+                    resolve( actions );
                 }
             );
         }

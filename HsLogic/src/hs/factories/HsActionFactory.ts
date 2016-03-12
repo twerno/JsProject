@@ -31,8 +31,8 @@ namespace HSLogic {
 
         protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
 
-        addGeneratedCardIntoHand(param: PlayerAndCardParam): AddGeneratedCardIntoHand<PlayerAndCardParam> {
-            return new AddGeneratedCardIntoHand(param);
+        addGeneratedCardIntoHand( param: PlayerAndCardParam ): AddGeneratedCardIntoHand<PlayerAndCardParam> {
+            return new AddGeneratedCardIntoHand( param );
         }
 
         //auraUpdateStep(source: jsLogic.IAction<T>): AuraUpdateStep {
@@ -41,84 +41,84 @@ namespace HSLogic {
 
         get damage(): HsDamageFactory<T> { return this._damageFactory }
 
-        deathCreationStep(param: HsActionParam): DeathCreationStep<HsActionParam> {
-            return new DeathCreationStep(param);
+        deathCreationStep( param: HsActionParam ): DeathCreationStep<HsActionParam> {
+            return new DeathCreationStep( param );
         }
 
-        destroyCardInPlay(param: CardParam): DestroyCardInPlay<CardParam> {
-            return new DestroyCardInPlay(param);
+        destroyCardInPlay( param: CardParam ): DestroyCardInPlay<CardParam> {
+            return new DestroyCardInPlay( param );
         }
 
-        discard(discardParam: PlayerAndCardParam): Discard<PlayerAndCardParam> {
-            return new Discard(discardParam);
+        discard( discardParam: PlayerAndCardParam ): Discard<PlayerAndCardParam> {
+            return new Discard( discardParam );
         }
 
-        drawCard(drawParam: DrawParam): DrawCard<DrawParam> {
-            return new DrawCard(drawParam);
+        drawCard( drawParam: DrawParam ): DrawCard<DrawParam> {
+            return new DrawCard( drawParam );
         }
 
-        emptyAction(source: IHsSource, message: string): EmptyAction<EmptyActionParam> {
-            return new EmptyAction({ source: source, message: message });
+        emptyAction( source: IHsSource, message: string ): EmptyAction<EmptyActionParam> {
+            return new EmptyAction( { source: source, message: message });
         }
 
-        fatigue(fatigueParam: PlayerParam): Fatigue<PlayerParam> {
-            return new Fatigue(fatigueParam);
+        fatigue( fatigueParam: PlayerParam ): Fatigue<PlayerParam> {
+            return new Fatigue( fatigueParam );
         }
 
-        heal(healParam: HealParam): Heal<HealParam> {
-            return new Heal(healParam);
+        heal( healParam: HealParam ): Heal<HealParam> {
+            return new Heal( healParam );
         }
 
         //markAsDestroyed(source: jsLogic.IAction<T>, card: Card): MarkAsDestroyed {
         //    return new MarkAsDestroyed(source, card);
         //}
 
-        millCard(source: IHsSource, card: Card): MillCard<CardParam> {
-            return new MillCard({ source: source, card: card });
+        millCard( source: IHsSource, card: Card ): MillCard<CardParam> {
+            return new MillCard( { source: source, card: card });
         }
 
-        putCardIntoHand(source: IHsSource, player: Player, card: Card): PutCardIntoHand<PlayerAndCardParam> {
-            return new PutCardIntoHand({
+        putCardIntoHand( source: IHsSource, player: Player, card: Card ): PutCardIntoHand<PlayerAndCardParam> {
+            return new PutCardIntoHand( {
                 source: source,
                 player: player,
                 card: card
             });
         }
 
-        returnCardIntoOwnersHandFrom(param: ReturnCardIntoOwnersHandParam): ReturnCardIntoOwnersHandFrom<ReturnCardIntoOwnersHandParam> {
-            return new ReturnCardIntoOwnersHandFrom(param);
+        returnCardIntoOwnersHandFrom( param: ReturnCardIntoOwnersHandParam ): ReturnCardIntoOwnersHandFrom<ReturnCardIntoOwnersHandParam> {
+            return new ReturnCardIntoOwnersHandFrom( param );
         }
 
-        sequence(source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[]): Sequence {
-            return new Sequence({ action: source, card: null, caller: null }, innerActions);
+        sequence( source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[] ): Sequence {
+            return new Sequence( { action: source, card: null, caller: null }, innerActions );
         }
 
-        shuffleDeck(param: PlayerParam): ShuffleDeck<PlayerParam> {
-            return new ShuffleDeck(param);
+        shuffleDeck( param: PlayerParam ): ShuffleDeck<PlayerParam> {
+            return new ShuffleDeck( param );
         }
 
-        shuffleGeneratedCardIntoDeck(source: IHsSource, cards: Card[], owner: Player): ShuffleGeneratedCardIntoDeck<PlayerAndCardsParam> {
-            return new ShuffleGeneratedCardIntoDeck({ source: source, cards: cards, player: owner });
+        shuffleGeneratedCardIntoDeck( source: IHsSource, cards: Card[], owner: Player ): ShuffleGeneratedCardIntoDeck<PlayerAndCardsParam> {
+            return new ShuffleGeneratedCardIntoDeck( { source: source, cards: cards, player: owner });
         }
 
-        payCostAndRemoveFromHand(param: PlayCardParam): PayCostAndRemoveFromHand<PlayCardParam> {
-            return new PayCostAndRemoveFromHand(param);
+        payCostAndRemoveFromHand( param: PlayCardParam ): PayCostAndRemoveFromHand<PlayCardParam> {
+            return new PayCostAndRemoveFromHand( param );
         }
 
-        playCard(param: PlayCardParam): jsLogic.IAction<T> {
-            return new PlayCard(param);
+        playCard( param: PlayCardParam ): jsLogic.IAction<T> {
+            return new PlayCard( param );
         }
 
-        playMinion(param: PlayMinionParam): jsLogic.IAction<T> {
-            return new PlayMinion(param).wrapIt();
+        playMinion( param: PlayMinionParam ): jsLogic.IAction<T> {
+            return new PlayMinion( param ).wrapIt();
         }
 
-        playSpell(param: PlayCardParam): jsLogic.IAction<T> {
-            return new PlaySpell(param).wrapIt();
+        playSpell( param: PlayCardParam ): jsLogic.IAction<T> {
+            return new PlaySpell( param ).wrapIt();
         }
 
-        playWeapon(param: PlayCardParam): jsLogic.IAction<T> {
-            return new PlayWeapon(param).wrapIt();
+        playWeapon( param: PlayCardParam ): jsLogic.IAction<T> {
+            return new PlayWeapon( param ).wrapIt();
         }
     }
 }

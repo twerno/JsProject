@@ -24,6 +24,6 @@ namespace HSLogic {
 
 
     export type FChooseActionBuilder<T extends HsGameCtx, P extends ChooseActionParam>
-        = (param: P, gameCtx: T) => jsLogic.IAction<T>;
+        = ( param: P, gameCtx: T ) => jsLogic.IAction<T>;
 
 }

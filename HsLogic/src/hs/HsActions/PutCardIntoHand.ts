@@ -15,18 +15,18 @@ namespace HSLogic {
  	 */
     export class PutCardIntoHand<P extends PlayerAndCardParam> extends HsAction<P> {
 
-        resolve(_this_: PutCardIntoHand<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( _this_: PutCardIntoHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        zones: HsZones = gameCtx.zonesOf(param.player);
+                        zones: HsZones = gameCtx.zonesOf( param.player );
 
-                    if (!zones.hand.isFull) {
-                        zones.hand.addEntity(param.card);
-                        resolve(null);
+                    if ( !zones.hand.isFull ) {
+                        zones.hand.addEntity( param.card );
+                        resolve( null );
                     } else {
-                        resolve([gameCtx.actionFactory.millCard(param.source, param.card)]);
+                        resolve( [gameCtx.actionFactory.millCard( param.source, param.card )] );
                     }
                 });
         }

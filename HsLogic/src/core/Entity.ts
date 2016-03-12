@@ -15,10 +15,10 @@ namespace jsLogic {
         counters: CounterMap = {};
 
         toString(): string {
-            return `[${ClassUtils.getNameOfClass(this)}:${this.id}]`;
+            return `[${ClassUtils.getNameOfClass( this )}:${this.id}]`;
         }
 
-        constructor(public owner: Entity) { }
+        constructor( public owner: Entity ) { }
     }
 
 
@@ -31,7 +31,7 @@ namespace jsLogic {
 	 *
 	 */
     export function generateNewId(): string {
-        return (++_entityIdGenerator).toString();
+        return ( ++_entityIdGenerator ).toString();
     }
 
 }

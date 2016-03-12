@@ -10,13 +10,13 @@ namespace HSLogic {
 
         cost: number;
 
-        constructor(owner: Player, def?: ICard) {
-            super(owner, def);
+        constructor( owner: Player, def?: ICard ) {
+            super( owner, def );
         }
 
 
-        initFromDefinition(def: ICard): void {
-            super.initFromDefinition(def);
+        initFromDefinition( def: ICard ): void {
+            super.initFromDefinition( def );
 
             this.cost = def.cost;
         }
@@ -36,8 +36,8 @@ namespace HSLogic {
 
         battlecry: ICardActionDefs = [];
 
-        initFromDefinition(def: IMinion): void {
-            super.initFromDefinition(def);
+        initFromDefinition( def: IMinion ): void {
+            super.initFromDefinition( def );
 
             this.hp = def.hp;
             this.maxHp = def.hp;
@@ -50,8 +50,8 @@ namespace HSLogic {
     export class Spell extends Card implements ISpell {
         spellActions: ICardActionDefs;
 
-        initFromDefinition(def: ISpell): void {
-            super.initFromDefinition(def);
+        initFromDefinition( def: ISpell ): void {
+            super.initFromDefinition( def );
 
             this.spellActions = def.spellActions;
         }
@@ -62,8 +62,8 @@ namespace HSLogic {
         durability: number;
         battlecry: ICardActionDefs = [];
 
-        initFromDefinition(def: IWeapon): void {
-            super.initFromDefinition(def);
+        initFromDefinition( def: IWeapon ): void {
+            super.initFromDefinition( def );
 
             this.attack = def.attack;
             this.durability = def.durability;

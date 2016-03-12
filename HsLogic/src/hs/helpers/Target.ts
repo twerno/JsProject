@@ -11,10 +11,10 @@ namespace HSLogic {
     export class Target implements ITarget {
 
         targetInRightZone(): boolean {
-            return this.targetZone.has(<Card>this.target);
+            return this.targetZone.has( <Card>this.target );
         }
 
-        constructor(public target: Card, public targetZone: HsZone) {
+        constructor( public target: Card, public targetZone: HsZone ) {
         }
     }
 
@@ -23,13 +23,13 @@ namespace HSLogic {
     export class LivingTarget implements ITarget {
 
         targetInRightZone(): boolean {
-            if (this.target instanceof Player)
+            if ( this.target instanceof Player )
                 return true;
             else
-                return this.targetZone.has(<Minion>this.target);
+                return this.targetZone.has( <Minion>this.target );
         }
 
-        constructor(public target: Minion | Player, public targetZone: HsZone) {
+        constructor( public target: Minion | Player, public targetZone: HsZone ) {
         }
     }
 
@@ -40,8 +40,8 @@ namespace HSLogic {
             return true;
         }
 
-        constructor(public player: Player) {
-            super(player, null);
+        constructor( public player: Player ) {
+            super( player, null );
         }
     }
 }

@@ -22,7 +22,7 @@ namespace jsLogic {
     export const _30_SECONDS: number = 30 * 1000;
     export const _10_SECONDS: number = 10 * 1000;
     export const _5_SECONDS: number = 5 * 1000;
-    export type FPromiseExecutor<T> = (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
+    export type FPromiseExecutor<T> = ( resolve: ( value?: T | PromiseLike<T> ) => void, reject: ( reason?: any ) => void ) => void;
 
 
 	/**
@@ -31,17 +31,17 @@ namespace jsLogic {
      */
     export abstract class IAction<T extends IContext> {
 
-        get className(): string { return ClassUtils.getNameOfClass(this) }
+        get className(): string { return ClassUtils.getNameOfClass( this ) }
 
         toString(): string { return this.className }
 
         get timelimit(): number { return _5_SECONDS; }
 
-        constructor(public source: IAction<T>) { }
+        constructor( public source: IAction<T> ) { }
 
         // actions in natural order
         // first on results list are first to resolve
-        abstract resolve(_this_: IAction<T>, context: T): PromiseOfActions;
+        abstract resolve( _this_: IAction<T>, context: T ): PromiseOfActions;
     }
 
 
@@ -52,16 +52,16 @@ namespace jsLogic {
      */
     export abstract class SimpleAction<T extends IContext> extends IAction<T> {
 
-        resolve(_this_: SimpleAction<T>, context: T): PromiseOfActions {
+        resolve( _this_: SimpleAction<T>, context: T ): PromiseOfActions {
 
-            return new Promise<IAction<T>[]>((resolve: any, reject: any): void => {
-                _this_.baseActionResolver(_this_, context);
+            return new Promise<IAction<T>[]>(( resolve: any, reject: any ): void => {
+                _this_.baseActionResolver( _this_, context );
 
-                resolve(NO_CONSEQUENCES);
+                resolve( NO_CONSEQUENCES );
             });
         }
 
-        protected abstract baseActionResolver(_this_: IAction<T>, context: T): void;
+        protected abstract baseActionResolver( _this_: IAction<T>, context: T ): void;
 
     }
 
@@ -84,12 +84,12 @@ namespace jsLogic {
 
     export class InlineAction<T extends IContext, P extends IActionParam> extends IAction<T> {
 
-        resolve(_this_: InlineAction<T, P>, context: T): PromiseOfActions {
-            return new Promise<IAction<T>[]>(this.executor);
+        resolve( _this_: InlineAction<T, P>, context: T ): PromiseOfActions {
+            return new Promise<IAction<T>[]>( this.executor );
         }
 
-        constructor(public executor: FPromiseExecutor<IAction<T>[]>) {
-            super(null);
+        constructor( public executor: FPromiseExecutor<IAction<T>[]> ) {
+            super( null );
         }
     }
 

@@ -22,12 +22,12 @@ namespace HSLogic {
         flags: IFlags = {};
 
 
-        constructor(public name: string, def?: IPlayer) {
-            super(null, def);
+        constructor( public name: string, def?: IPlayer ) {
+            super( null, def );
         }
 
 
-        protected initFromDefinition(def: IPlayer): void {
+        protected initFromDefinition( def: IPlayer ): void {
             this.hp = def.hp;
             this.maxHp = def.hp;
 

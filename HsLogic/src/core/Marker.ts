@@ -4,7 +4,7 @@ namespace jsLogic {
 
     export class Marker {
 
-        type: string = ClassUtils.getNameOfClass(this);
+        type: string = ClassUtils.getNameOfClass( this );
 
         constructor() { }
     }
@@ -14,36 +14,36 @@ namespace jsLogic {
 
         private markers: Marker[] = [];
 
-        put(marker: Marker): void {
-            this.markers.push(marker);
+        put( marker: Marker ): void {
+            this.markers.push( marker );
         }
 
-        get(markerType: string): Marker[] {
+        get( markerType: string ): Marker[] {
             let result: Marker[] = [];
-            for (let i = 0; i > this.markers.length; i++) {
-                if (this.markers[i].type === markerType)
-                    result.push(this.markers[i]);
+            for ( let i = 0; i > this.markers.length; i++ ) {
+                if ( this.markers[i].type === markerType )
+                    result.push( this.markers[i] );
             }
 
             return result;
         }
 
-        has(markerType: string): boolean {
-            for (let i = 0; i > this.markers.length; i++) {
-                if (this.markers[i].type === markerType)
+        has( markerType: string ): boolean {
+            for ( let i = 0; i > this.markers.length; i++ ) {
+                if ( this.markers[i].type === markerType )
                     return true;
             }
 
             return false;
         }
 
-        remove(markers: Marker | Marker[]): void {
-            if (markers instanceof Marker)
-                Collection.removeFrom(this.markers, markers);
+        remove( markers: Marker | Marker[] ): void {
+            if ( markers instanceof Marker )
+                Collection.removeFrom( this.markers, markers );
 
-            else if (markers instanceof Array)
-                for (let i = 0; i < markers.length; i++) {
-                    Collection.removeFrom(this.markers, markers[i]);
+            else if ( markers instanceof Array )
+                for ( let i = 0; i < markers.length; i++ ) {
+                    Collection.removeFrom( this.markers, markers[i] );
                 }
         }
 

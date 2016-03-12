@@ -9,12 +9,12 @@ namespace HSLogic {
 
         private _map: Map<string, T> = new Map<string, T>();
 
-        registerCard(card: T): void {
-            if (this._map.has(card.name))
-                throw new Error(`Attempt to duplicate value: ${card}`);
+        registerCard( card: T ): void {
+            if ( this._map.has( card.name ) )
+                throw new Error( `Attempt to duplicate value: ${card}` );
 
-            Object.freeze(card);
-            this._map.set(card.name, card);
+            Object.freeze( card );
+            this._map.set( card.name, card );
         }
 
 
@@ -28,6 +28,6 @@ namespace HSLogic {
         }
 
 
-        constructor(public name: string) { }
+        constructor( public name: string ) { }
     }
 }
