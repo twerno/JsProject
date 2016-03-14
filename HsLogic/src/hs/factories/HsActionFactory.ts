@@ -25,7 +25,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export class HsActionFactory<T extends HsGameCtx> extends jsLogic.ActionFactory {
 

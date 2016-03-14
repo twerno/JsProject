@@ -2,7 +2,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     //export class OnAfterCardDrawTrigger extends HsEventHandler {
 

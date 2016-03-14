@@ -29,7 +29,7 @@ namespace Def {
                         }),
                         gameCtx.actionFactory.enchantment.freeze( {
                             source: source,
-                            targets: <HSLogic.Character[]>targets.targets
+                            targets: <HsLogic.Character[]>targets.targets
                         })
                     ]
                 }

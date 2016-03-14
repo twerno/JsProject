@@ -2,7 +2,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export interface ReturnCardIntoOwnersHandParam extends IHsActionParam {
         sourceZone: HsZone,

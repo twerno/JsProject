@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export interface ExecuteTriggersParam extends IHsActionParam {
         defActions: Def.IDefAction[],

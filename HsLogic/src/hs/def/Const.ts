@@ -2,8 +2,8 @@
 
 namespace Def {
 
-    export type HsSource = HSLogic.IHsSource;
-    export type GameCtx = HSLogic.HsGameCtx;
+    export type HsSource = HsLogic.IHsSource;
+    export type GameCtx = HsLogic.HsGameCtx;
 
 
     export enum DAMAGE_TYPE {

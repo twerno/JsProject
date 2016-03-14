@@ -6,7 +6,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export type PromiseOfActions = Promise<jsLogic.IAction<HsGameCtx>[]>;
 

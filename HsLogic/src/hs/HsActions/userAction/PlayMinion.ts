@@ -3,7 +3,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export class OnMinionPlaying<P extends PlayCardParam> extends HsActionEvent<P> {
         static get type(): string { return OnMinionPlaying.name }

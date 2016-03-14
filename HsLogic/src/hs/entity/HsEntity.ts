@@ -3,7 +3,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export class HsEntity extends jsLogic.Entity implements Def.IHsEntity {
         def: Def.IHsEntity;

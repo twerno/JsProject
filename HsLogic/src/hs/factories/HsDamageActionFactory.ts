@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export class HsDamageFactory<T extends HsGameCtx> {
         dealDamage( damageParam: DealDamageParam ): DealDamage<DealDamageParam> {

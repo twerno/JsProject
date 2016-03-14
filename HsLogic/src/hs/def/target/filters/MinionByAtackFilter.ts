@@ -10,33 +10,33 @@ namespace Def {
             return new MinionByAttackFilter( attackValue );
         }
 
-        lessThen( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
-            return entity instanceof HSLogic.Minion
+        lessThen( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+            return entity instanceof HsLogic.Minion
                 && entity.attack < this.attackValue;
         }
 
-        lessThenOrEqualTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
-            return entity instanceof HSLogic.Minion
+        lessThenOrEqualTo( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+            return entity instanceof HsLogic.Minion
                 && entity.attack <= this.attackValue;
         }
 
-        greaterThen( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
-            return entity instanceof HSLogic.Minion
+        greaterThen( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+            return entity instanceof HsLogic.Minion
                 && entity.attack > this.attackValue;
         }
 
-        greaterThenOrEqualTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
-            return entity instanceof HSLogic.Minion
+        greaterThenOrEqualTo( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+            return entity instanceof HsLogic.Minion
                 && entity.attack >= this.attackValue;
         }
 
-        equalTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
-            return entity instanceof HSLogic.Minion
+        equalTo( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+            return entity instanceof HsLogic.Minion
                 && entity.attack === this.attackValue;
         }
 
-        notEqualTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
-            return entity instanceof HSLogic.Minion
+        notEqualTo( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+            return entity instanceof HsLogic.Minion
                 && entity.attack !== this.attackValue;
         }
     }

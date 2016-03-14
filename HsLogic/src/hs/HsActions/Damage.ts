@@ -3,7 +3,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
 	/**
 	 *  http://hearthstone.gamepedia.com/Advanced_rulebook#Damage_and_Healing

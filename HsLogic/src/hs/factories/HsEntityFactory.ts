@@ -3,7 +3,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export class HsEntityFactory {
 

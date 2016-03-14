@@ -4,7 +4,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export namespace ZoneConsts {
         export const HAND_ZONE = 'HAND_ZONE';

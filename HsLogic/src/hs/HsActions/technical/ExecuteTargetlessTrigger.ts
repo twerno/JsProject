@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export interface TargetlessTriggersParam extends IHsActionParam {
         defActions: Def.IDefTargetlessAction[]

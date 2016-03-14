@@ -1,7 +1,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     //export class OnDamageCalculationTrigger extends HsEventHandler {
 

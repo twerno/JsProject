@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace HsLogic {
 
     export enum REQUIRE {
         YES,

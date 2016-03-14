@@ -5,7 +5,7 @@ namespace Def {
     export type Action = jsLogic.IAction<GameCtx>;
 
     export interface ITargets {
-        targets: HSLogic.HsEntity[];
+        targets: HsLogic.HsEntity[];
     }
 
 

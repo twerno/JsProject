@@ -4,6 +4,6 @@
 
 namespace Def {
 
-    export var basicSet: HSLogic.CardSet<ICard> = new HSLogic.CardSet<ICard>( 'BASIC' );
+    export var basicSet: HsLogic.CardSet<ICard> = new HsLogic.CardSet<ICard>( 'BASIC' );
 
 }

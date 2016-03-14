@@ -1,6 +1,6 @@
 /// <reference path="../../HsLogic/dist/HsLogic.d.ts" />
 declare namespace Def {
-    var basicSet: HSLogic.CardSet<ICard>;
+    var basicSet: HsLogic.CardSet<ICard>;
 }
 declare namespace Def {
 }
