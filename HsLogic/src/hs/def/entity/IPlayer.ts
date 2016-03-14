@@ -2,8 +2,6 @@
 
 namespace Def {
 
-
-
     export interface IPlayer extends IHsEntity {
         hp: number,
         manaCrystals: number,

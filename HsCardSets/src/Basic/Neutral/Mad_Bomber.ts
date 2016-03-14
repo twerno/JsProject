@@ -3,13 +3,13 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace Def {
 
-    var Mad_Bomber: IMinion = {
+    var Mad_Bomber: IMinion = basicSet.registerCard<IMinion>( {
         name: `Mad Bomber`,
         cost: 2,
 
-        card_type: CARD_TYPE.MINION,
+        cardType: CARD_TYPE.MINION,
         minion_type: MINION_TYPE.GENERAL,
 
         attack: 3,
@@ -17,25 +17,20 @@ namespace HSLogic {
         enchantments: [],
 
         flags: {},
-
-        battlecry: [
-            {
-                actionsBuilder: ( source: IHsSource, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx>[] => {
+        triggers: {
+            battlecry: [
+                ( source: HsSource, gameCtx: GameCtx ): Action[] => {
                     return [
                         gameCtx.actionFactory.damage.randomlySplitDamage( {
                             source: source,
                             damageType: DAMAGE_TYPE.DIRECT,
-                            sourceType: SOURCE_TYPE.MINION,
                             partsAmount: 3,
                             damagePerPart: 1,
                             splitMode: SPLIT_MODE.MAD_BOMB
                         })
                     ]
                 }
-
-            }
-        ]
-    }
-
-    basicSet.registerCard( Mad_Bomber );
+            ]
+        }
+    });
 }

@@ -34,7 +34,7 @@ namespace HSLogic {
                             resolve( [
                                 gameCtx.actionFactory.damage.dealDamage( {
                                     source: param.source,
-                                    damageType: DAMAGE_TYPE.DIRECT,
+                                    damageType: Def.DAMAGE_TYPE.DIRECT,
                                     baseDamage: 1,
                                     targets: resultSet
                                 })] );

@@ -18,7 +18,7 @@ namespace HSLogic {
 
                     resolve( [
                         gameCtx.actionFactory.damage.damage( {
-                            damageType: DAMAGE_TYPE.FATIGUE,
+                            damageType: Def.DAMAGE_TYPE.FATIGUE,
                             source: param.source,
                             target: param.player,
                             baseDamage: ++param.player.counters[FatigueCounter.type].value

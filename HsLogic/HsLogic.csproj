@@ -45,6 +45,8 @@
     <TypeScriptCompile Include="src\core\Marker.ts" />
     <TypeScriptCompile Include="src\hsTest\DrawTest.ts" />
     <TypeScriptCompile Include="src\hs\Const.ts" />
+    <TypeScriptCompile Include="src\hs\def\action\DefTargetedAction.ts" />
+    <TypeScriptCompile Include="src\hs\def\Const.ts" />
     <TypeScriptCompile Include="src\hs\def\entity\IEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\def\entity\IFlags.ts" />
     <TypeScriptCompile Include="src\hs\def\entity\ITriggers.ts" />

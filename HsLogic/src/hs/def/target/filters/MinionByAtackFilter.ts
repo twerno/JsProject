@@ -10,32 +10,32 @@ namespace Def {
             return new MinionByAttackFilter( attackValue );
         }
 
-        lessThen( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ): boolean {
+        lessThen( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
             return entity instanceof HSLogic.Minion
                 && entity.attack < this.attackValue;
         }
 
-        lessThenOrEqualTo( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ): boolean {
+        lessThenOrEqualTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
             return entity instanceof HSLogic.Minion
                 && entity.attack <= this.attackValue;
         }
 
-        greaterThen( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ): boolean {
+        greaterThen( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
             return entity instanceof HSLogic.Minion
                 && entity.attack > this.attackValue;
         }
 
-        greaterThenOrEqualTo( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ): boolean {
+        greaterThenOrEqualTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
             return entity instanceof HSLogic.Minion
                 && entity.attack >= this.attackValue;
         }
 
-        equalTo( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ): boolean {
+        equalTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
             return entity instanceof HSLogic.Minion
                 && entity.attack === this.attackValue;
         }
 
-        notEqualTo( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ): boolean {
+        notEqualTo( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
             return entity instanceof HSLogic.Minion
                 && entity.attack !== this.attackValue;
         }

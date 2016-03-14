@@ -3,7 +3,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace Def {
 
     var Arcane_Missiles: ISpell = basicSet.registerCard<ISpell>( {
         name: `Arcane Missiles`,
@@ -14,7 +14,7 @@ namespace HSLogic {
 
         spellActions: [
 
-            ( source: IHsSource, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx>[] => {
+            ( source: HsSource, gameCtx: GameCtx ): Action[] => {
                 return [
                     gameCtx.actionFactory.damage.randomlySplitDamage( {
                         source: source,
@@ -25,8 +25,6 @@ namespace HSLogic {
                     })
                 ]
             }
-
-
         ],
 
         triggers: {}

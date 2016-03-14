@@ -2,7 +2,7 @@
 
 namespace Def {
 
-    export type IDefTargetSetFilter = ( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ) => boolean;
+    export type IDefTargetSetFilter = ( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ) => boolean;
 
 
     export abstract class IDefTarget {
@@ -14,7 +14,7 @@ namespace Def {
             return this;
         }
 
-        abstract buildSet( source: HSLogic.IHsSource, gameCtx: HSLogic.HsGameCtx ): HSLogic.HsEntity[];
+        abstract buildSet( source: HsSource, gameCtx: GameCtx ): HSLogic.HsEntity[];
     }
 
 
@@ -30,7 +30,7 @@ namespace Def {
         constructor( protected _props: IDefTargetProperties ) { super(); }
 
 
-        buildSet( source: HSLogic.IHsSource, gameCtx: HSLogic.HsGameCtx ): HSLogic.HsEntity[] {
+        buildSet( source: HsSource, gameCtx: GameCtx ): HSLogic.HsEntity[] {
             let result: HSLogic.HsEntity[] = [],
                 zones: HSLogic.HsZone[] = null,
                 player: HSLogic.Player = null,
@@ -56,7 +56,7 @@ namespace Def {
         }
 
 
-        protected testAgainstFilters( source: HSLogic.IHsSource, entity: HSLogic.HsEntity, gameCtx: HSLogic.HsGameCtx ): boolean {
+        protected testAgainstFilters( source: HsSource, entity: HSLogic.HsEntity, gameCtx: GameCtx ): boolean {
 
             for ( let i = 0; i < this._filters.length; i++ ) {
                 if ( !this._filters[i]( source, entity, gameCtx ) )
@@ -66,7 +66,7 @@ namespace Def {
         }
 
 
-        protected sort( array: HSLogic.HsEntity[], gameCtx: HSLogic.HsGameCtx ): HSLogic.HsEntity[] {
+        protected sort( array: HSLogic.HsEntity[], gameCtx: GameCtx ): HSLogic.HsEntity[] {
             return array.sort(
                 ( a: HSLogic.HsEntity, b: HSLogic.HsEntity ): number => {
                     if ( a === gameCtx.activePlayer )

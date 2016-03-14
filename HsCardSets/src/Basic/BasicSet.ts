@@ -2,8 +2,8 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace Def {
 
-    export var basicSet: CardSet<ICard> = new CardSet<ICard>( 'BASIC' );
+    export var basicSet: HSLogic.CardSet<ICard> = new HSLogic.CardSet<ICard>( 'BASIC' );
 
 }

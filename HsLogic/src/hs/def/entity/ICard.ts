@@ -7,7 +7,7 @@ namespace Def {
 
         triggers: ITriggers,
 
-        isPlayalble?: ( source: HSLogic.IHsSource, gameCtx: HSLogic.HsGameCtx ) => boolean;
-        isActivated?: ( source: HSLogic.IHsSource, gameCtx: HSLogic.HsGameCtx ) => boolean;
+        isPlayalble?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
+        isActivated?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
     }
 }

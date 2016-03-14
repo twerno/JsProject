@@ -16,33 +16,16 @@ namespace HSLogic {
 	 */
 
 
-    export enum DAMAGE_TYPE {
-        COMBAT, DIRECT, PAY_LIFE, FATIGUE
-    }
 
-
-
-    /*
-     * MINION     + COMBAT
-     * MINION     + DIRECT = battlecry, event base effect 
-     * SPELL      + DIRECT
-     * HERO_POWER + DIRECT = hunter, mage
-     * HERO       + COMBAT = druid hero power, waepon
-     * 
-     */
-
-    export enum SPLIT_MODE {
-        MISSILE, MAD_BOMB
-    }
 
     export interface GenDamageParam {
-        damageType: DAMAGE_TYPE,
+        damageType: Def.DAMAGE_TYPE,
         baseDamage: number
     }
 
     export interface RandomlySplitDamageParam extends IHsActionParam {
-        damageType: DAMAGE_TYPE,
-        splitMode: SPLIT_MODE
+        damageType: Def.DAMAGE_TYPE,
+        splitMode: Def.SPLIT_MODE
         partsAmount: number,
         damagePerPart: number
     }

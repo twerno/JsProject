@@ -7,7 +7,6 @@ namespace Def {
     }
 
 
-
     export interface IMinion extends ICard {
         hp: number;
         attack: number;

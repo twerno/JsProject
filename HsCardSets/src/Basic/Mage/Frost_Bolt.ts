@@ -3,7 +3,7 @@
 
 "use strict";
 
-namespace HSLogic {
+namespace Def {
 
     var Frost_Bolt: ISpell = basicSet.registerCard<ISpell>( {
         name: `Frost Bolt`,
@@ -14,27 +14,26 @@ namespace HSLogic {
         enchantments: [],
 
         spellActions: [
-            {
-                availableTargets: DefTargetSetBuilder.CHARACTER.TARGETABLE_BY_SPELL_OR_HERO_POWER,
-                makeAChoice: MakeAChoiceAtRandom.builder<Player | Minion>( { amount: 1 }),
-                validateChoosen: ( param: ChooseActionParam<Player | Minion>, gameCtx: HsGameCtx ): boolean => { return true },
-                actions: ( param: ChooseActionParam<Player | Minion>, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx>[] => {
+            new SingleTargetAction( {
+                availableTargets: DefTargetHelper.BATTLEFIELD
+                    .addFilter( StandardFilters.character )
+                    .addFilter( StandardFilters.targetable_by_spell_or_hero_power ),
+
+                actionBuilder: ( source: HsSource, targets: ITargets, gameCtx: GameCtx ): Action[] => {
                     return [
                         gameCtx.actionFactory.damage.dealDamage( {
+                            source: source,
                             damageType: DAMAGE_TYPE.DIRECT,
-                            //sourceType: SOURCE_TYPE.SPELL,
-                            source: param.source,
-                            targets: param.sets.result,
-                            baseDamage: 3
+                            targets: targets.targets,
+                            baseDamage: 3,
                         }),
                         gameCtx.actionFactory.enchantment.freeze( {
-                            source: param.source,
-                            //sourceType: SOURCE_TYPE.SPELL,
-                            targets: param.sets.result
+                            source: source,
+                            targets: <HSLogic.Character[]>targets.targets
                         })
                     ]
                 }
-            }
+            })
         ]
     });
 }

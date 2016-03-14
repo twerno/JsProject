@@ -1,10 +1,10 @@
 /// <reference path="../../HsLogic/dist/HsLogic.d.ts" />
-declare namespace HSLogic {
-    var basicSet: CardSet<ICard>;
+declare namespace Def {
+    var basicSet: HSLogic.CardSet<ICard>;
 }
-declare namespace HSLogic {
+declare namespace Def {
 }
-declare namespace HSLogic {
+declare namespace Def {
 }
-declare namespace HSLogic {
+declare namespace Def {
 }
