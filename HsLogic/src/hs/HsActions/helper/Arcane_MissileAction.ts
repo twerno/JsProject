@@ -1,15 +1,16 @@
-﻿"use strict";
+"use strict";
 
 namespace HSLogic {
 
     export class Arcane_MissileAction<P extends IHsActionParam> extends HsAction<P> {
 
-        static sourceSetBuilder(): IDefTargetSetBuilder {
-            return DefTargetSetBuilder.ENEMY.CHARACTER
-                .addFilter(
-                ( caller, card, gameCtx ): boolean => {
-                    return ( card instanceof Player )
-                        || ( card instanceof Minion && card.hp > 0 );
+        static availableTargers(): Def.IDefTarget {
+            return Def.DefTargetHelper.BATTLEFIELD
+                .addFilter( Def.StandardFilters.enemy )
+                .addFilter( Def.StandardFilters.character )
+                .addFilter(( source, entity, gameCtx ): boolean => {
+                    return entity instanceof Player
+                        || entity instanceof Minion && entity.hp > 0;
                 });
         }
 
@@ -18,7 +19,7 @@ namespace HSLogic {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        sourceSet: HsEntity[] = Arcane_MissileAction.sourceSetBuilder().buildSet( param.source, gameCtx ),
+                        availableTargers: HsEntity[] = Arcane_MissileAction.availableTargers().buildSet( param.source, gameCtx ),
                         resultSet: ( Player | Minion )[];
 
                     resolve( [
@@ -26,14 +27,13 @@ namespace HSLogic {
                             source: param.source,
                             require: REQUIRE.YES,
                             props: { amount: 1, withRepetitions: false },
-                            sets: { source: sourceSet, result: resultSet }
+                            sets: { source: availableTargers, result: resultSet }
                         }),
 
                         new jsLogic.InlineAction(( resolve, reject ): void => {
                             resolve( [
                                 gameCtx.actionFactory.damage.dealDamage( {
                                     source: param.source,
-                                    sourceType: SOURCE_TYPE.SPELL,
                                     damageType: DAMAGE_TYPE.DIRECT,
                                     baseDamage: 1,
                                     targets: resultSet

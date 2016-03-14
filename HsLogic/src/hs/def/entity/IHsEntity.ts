@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace Def {
 
     export enum CARD_TYPE {
         SPELL,
@@ -16,15 +16,7 @@ namespace HSLogic {
     export interface IHsEntity {
         name: string,
         cardType: CARD_TYPE,
-        //owner: Player,
 
         enchantments?: IEnchantment[];
     }
-
-    export function isMinion( entity: IHsEntity ): entity is IMinion {
-        return entity.cardType === CARD_TYPE.MINION;
-    }
-
-
-
 }

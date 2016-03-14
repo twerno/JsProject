@@ -5,18 +5,18 @@
 namespace HSLogic {
 
 
-    export class Card extends HsEntity implements ICard {
-        def: ICard;
+    export class Card extends HsEntity implements Def.ICard {
+        def: Def.ICard;
         cost: number;
 
-        triggers: ITriggers;
+        triggers: Def.ITriggers;
 
-        constructor( owner: Player, def?: ICard ) {
+        constructor( owner: Player, def?: Def.ICard ) {
             super( owner, def );
         }
 
 
-        initFromDefinition( def: ICard ): void {
+        initFromDefinition( def: Def.ICard ): void {
             super.initFromDefinition( def );
 
             this.cost = def.cost;
@@ -25,8 +25,8 @@ namespace HSLogic {
     }
 
 
-    export class Minion extends Card implements IMinion {
-        def: IMinion;
+    export class Minion extends Card implements Def.IMinion {
+        def: Def.IMinion;
 
         hp: number;
 
@@ -34,13 +34,13 @@ namespace HSLogic {
 
         attack: number;
 
-        minion_type: MINION_TYPE;
+        minion_type: Def.MINION_TYPE;
 
-        flags: IFlags;
+        flags: Def.IFlags;
 
-        triggers: IPermanentsTriggers;
+        triggers: Def.IPermanentTriggers;
 
-        initFromDefinition( def: IMinion ): void {
+        initFromDefinition( def: Def.IMinion ): void {
             super.initFromDefinition( def );
 
             this.hp = def.hp;
@@ -50,25 +50,25 @@ namespace HSLogic {
         }
     }
 
-    export class Spell extends Card implements ISpell {
-        def: ISpell;
+    export class Spell extends Card implements Def.ISpell {
+        def: Def.ISpell;
 
-        spellActions: ICardActionDefs;
+        spellActions: Def.IDefAction[];
 
-        initFromDefinition( def: ISpell ): void {
+        initFromDefinition( def: Def.ISpell ): void {
             super.initFromDefinition( def );
 
             this.spellActions = def.spellActions;
         }
     }
 
-    export class Weapon extends Card implements IWeapon {
-        def: IWeapon;
+    export class Weapon extends Card implements Def.IWeapon {
+        def: Def.IWeapon;
         attack: number;
         durability: number;
-        triggers: IPermanentsTriggers;
+        triggers: Def.IPermanentTriggers;
 
-        initFromDefinition( def: IWeapon ): void {
+        initFromDefinition( def: Def.IWeapon ): void {
             super.initFromDefinition( def );
 
             this.attack = def.attack;

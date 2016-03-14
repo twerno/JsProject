@@ -7,22 +7,22 @@ namespace HSLogic {
 
     export class HsEntityFactory {
 
-        player( name: string, def: IPlayer ): Player {
+        player( name: string, def: Def.IPlayer ): Player {
             return new Player( name, def );
         }
 
 
 
-        card( owner: Player, def: ICard ): Card {
-            if ( def.cardType === CARD_TYPE.MINION )
-                return this.minion( owner, <IMinion>def );
+        card( owner: Player, def: Def.ICard ): Card {
+            if ( def.cardType === Def.CARD_TYPE.MINION )
+                return this.minion( owner, <Def.IMinion>def );
 
             throw new Error( `Unknown card type: ${def.cardType}.` );
         }
 
 
 
-        minion( owner: Player, def: IMinion ): Minion {
+        minion( owner: Player, def: Def.IMinion ): Minion {
             return new Minion( owner, def );
         }
 

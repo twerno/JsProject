@@ -7,8 +7,7 @@ namespace HSLogic {
 
     export interface PlayCardParam extends IHsActionParam {
         card: Minion | Weapon | Spell,
-        player: Player,
-        cardActionTargets: Array<HsEntity[]>,
+        defActionsTargets: Def.ITargets[],
         cancelAction?: { value: boolean }
     }
 
@@ -29,9 +28,7 @@ namespace HSLogic {
 
                 ( resolve, reject ): void => {
                     let param: PlayCardParam = _this_.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [],
-                        targetBaseActions: ICardActionDefs = [],
-                        acquireTargetsParam: IAcquireTargetsParam = null;
+                        actions: jsLogic.IAction<HsGameCtx>[] = [];
 
                     ////acquire targets
                     //if (param.card instanceof Minion)
@@ -61,10 +58,10 @@ namespace HSLogic {
                         actions.push( gameCtx.actionFactory.playMinion( <PlayMinionParam>param ) );
                     }
 
-                    if ( _this_.param.card.cardType === CARD_TYPE.SPELL )
+                    if ( _this_.param.card.cardType === Def.CARD_TYPE.SPELL )
                         actions.push( gameCtx.actionFactory.playSpell( _this_.param ) );
 
-                    if ( _this_.param.card.cardType === CARD_TYPE.WEAPON )
+                    if ( _this_.param.card.cardType === Def.CARD_TYPE.WEAPON )
                         actions.push( gameCtx.actionFactory.playWeapon( _this_.param ) );
 
                     resolve( actions );

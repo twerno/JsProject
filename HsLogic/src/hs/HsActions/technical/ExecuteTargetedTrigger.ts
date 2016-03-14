@@ -2,8 +2,9 @@
 
 namespace HSLogic {
 
-    export interface TargetedTriggerParam extends ChooseActionParam<HsEntity> {
-        actionBuilder: FActionsBuilder<HsEntity, ChooseActionParam<HsEntity>>
+    export interface TargetedTriggerParam extends IHsActionParam {
+        targets: Def.ITargets,
+        defAction: Def.IDefTargetedAction<Def.ITargets>
     }
 
     export class ExecuteTargetedTrigger<P extends TargetedTriggerParam> extends HsAction<P> {
@@ -13,7 +14,7 @@ namespace HSLogic {
                 ( resolve, reject ): void => {
                     let param: P = _this_.param;
 
-                    resolve( param.actionBuilder( param, gameCtx ) );
+                    resolve( param.defAction.actions( param.source, param.targets, gameCtx ) );
                 }
             )
         }

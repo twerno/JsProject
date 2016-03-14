@@ -11,7 +11,7 @@ namespace jsLogic {
 	 */
     export class Zone<T extends Entity> {
         protected _entities: T[] = [];
-        protected _uuidMap: Collection.StringMap<T> = new Collection.StringMap<T>();
+        protected _uuidMap: Collection.NumberMap<T> = new Collection.NumberMap<T>();
 
 
         removeEntity( entity: T ): void {
@@ -73,6 +73,13 @@ namespace jsLogic {
                 throw new ZoneDuplicationException( zone.zoneId );
 
             this._map[zone.zoneId] = zone;
+        }
+
+        getAsArray(): Z[] {
+            let result: Z[];
+            for ( let s in this._map )
+                result.push( this._map[s] );
+            return result;
         }
 
         constructor( public owner: Entity ) { }

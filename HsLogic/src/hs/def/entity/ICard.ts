@@ -1,13 +1,13 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace Def {
 
     export interface ICard extends IHsEntity {
         cost: number;
 
         triggers: ITriggers,
 
-        isPlayalble?: ( caster: Player, gameCtx: HsGameCtx ) => boolean;
-        isActivated?: ( caster: Player, gameCtx: HsGameCtx ) => boolean;
+        isPlayalble?: ( source: HSLogic.IHsSource, gameCtx: HSLogic.HsGameCtx ) => boolean;
+        isActivated?: ( source: HSLogic.IHsSource, gameCtx: HSLogic.HsGameCtx ) => boolean;
     }
 }

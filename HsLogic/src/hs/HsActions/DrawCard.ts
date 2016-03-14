@@ -51,7 +51,7 @@ namespace HSLogic {
 
                         actions.push( new ExecuteTargetlessTriggers( {
                             source: param.source,
-                            triggers: param.drawnCard.triggers.onDrawn
+                            defActions: param.drawnCard.triggers.onDrawn
                         }) );
 
                         actions.push( gameCtx.actionFactory.dispatch( new OnCardDrawn( param ) ) );
@@ -59,7 +59,7 @@ namespace HSLogic {
                     else
                         actions.push( gameCtx.actionFactory.fatigue( {
                             source: param.source,
-                            target: param.targetPlayer
+                            player: param.targetPlayer
                         }) );
 
                     resolve( actions );

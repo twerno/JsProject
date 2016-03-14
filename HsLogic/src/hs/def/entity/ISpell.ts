@@ -1,8 +1,8 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace Def {
 
     export interface ISpell extends ICard {
-        spellActions: ICardActionDefs
+        spellActions: IDefAction[]
     }
 }

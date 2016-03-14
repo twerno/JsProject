@@ -8,10 +8,8 @@ namespace HSLogic {
 
 
     export interface IAcquireTargetsParam extends IHsActionParam {
-        cardActions: ICardActionDefs,
-        sets: Array<IChooseActionParamSets>,
-        amount: number,
-        require: REQUIRE,
+        defActions: Def.IDefAction[],
+        targets: Def.ITargets[]
         cancelAction?: { value: boolean }
     }
 
@@ -19,62 +17,24 @@ namespace HSLogic {
     /**
      * AcquireTargets
      *
-       */
+     */
     export class AcquireTargets extends HsAction<IAcquireTargetsParam> {
-
-
-        static buildChooseActionParam( param: IAcquireTargetsParam,
-            cardAction: ITargetedTriggerDef<HsGameCtx, ChooseActionParam>,
-            gameCtx: HsGameCtx ): ChooseActionParam {
-            return {
-                source: param.source,
-                sets: {
-                    source: cardAction.availableTargets.buildSet( param.source, gameCtx ),
-                    result: []
-                },
-
-                //amount: param.amount,
-                require: param.require,
-                cancelAction: param.cancelAction
-            };
-        }
 
         resolve( _this_: AcquireTargets, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
                     let param: IAcquireTargetsParam = _this_.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [],
-                        targetedActionDef: ITargetedTriggerDef<HsGameCtx, ChooseActionParam>;
+                        actions: jsLogic.IAction<HsGameCtx>[] = [];
 
-                    param.sets = new Array<IChooseActionParamSets>( param.cardActions.length );
+                    param.targets = new Array<Def.ITargets>( param.defActions.length );
 
-                    for ( let i = 0; i < param.cardActions.length; i++ ) {
-                        let cardAction: ITriggerDef = param.cardActions[i];
+                    for ( let i = 0; i < param.defActions.length; i++ ) {
+                        let defAction: Def.IDefAction = param.defActions[i];
 
-                        if ( param.cancelAction.value )
-                            break;
-
-                        if ( isTargetedTriggerDef( cardAction ) ) {
-                            let paramTmp: ChooseActionParam = AcquireTargets.buildChooseActionParam( param, cardAction, gameCtx );
-                            param.sets[i] = paramTmp.sets;
-
-                            if ( param.require === REQUIRE.YES && paramTmp.sets.source.length < param.amount ) {
-                                param.cancelAction.value = true;
-                                break;
-                            }
-
+                        if ( Def.isTargetedActionDef( defAction ) ) {
                             actions.push(
-                                cardAction.makeAChoice( paramTmp, gameCtx ) );
-
-                            actions.push(
-                                new jsLogic.InlineAction(( resolve, reject ) => {
-                                    if ( param.cancelAction.value === false
-                                        && !cardAction.validateChoosen( paramTmp, gameCtx ) )
-                                        reject( new Error( 'ResultSet validation error!' ) );
-                                    else
-                                        resolve( [] );
-                                }) );
+                                defAction.acquireTargets( param.source, param.targets[i], gameCtx ) );
                         }
                     }
 

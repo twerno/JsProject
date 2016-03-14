@@ -1,11 +1,11 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace Def {
 
     export interface IWeapon extends ICard {
         attack: number,
         durability: number,
 
-        triggers: IPermanentsTriggers
+        triggers: IPermanentTriggers
     }
 }

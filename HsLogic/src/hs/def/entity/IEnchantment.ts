@@ -1,9 +1,9 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace Def {
 
     export interface IEnchantment extends IHsEntity {
-        recalculate( owner: IHsEntity, gameCtx: HsGameCtx ): void;
+        recalculate( enchantedEntity: IHsEntity, gameCtx: HSLogic.HsGameCtx ): void;
     }
 
 

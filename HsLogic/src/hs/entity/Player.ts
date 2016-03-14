@@ -1,13 +1,13 @@
-﻿///<reference path="../core/HsEntity.ts"/>
-///<reference path="def/entity/IPlayer.ts"/>
+///<reference path="../entity/HsEntity.ts"/>
+///<reference path="../def/entity/IPlayer.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
-    export class Player extends HsEntity implements IPlayer {
+    export class Player extends HsEntity implements Def.IPlayer {
 
-        def: IPlayer;
+        def: Def.IPlayer;
 
         hp: number = 30;
 
@@ -21,15 +21,15 @@ namespace HSLogic {
 
         heroPower: any;
 
-        flags: IFlags = {};
+        flags: Def.IFlags = {};
 
 
-        constructor( public name: string, def?: IPlayer ) {
+        constructor( public name: string, def?: Def.IPlayer ) {
             super( null, def );
         }
 
 
-        protected initFromDefinition( def: IPlayer ): void {
+        protected initFromDefinition( def: Def.IPlayer ): void {
             this.hp = def.hp;
             this.maxHp = def.hp;
 

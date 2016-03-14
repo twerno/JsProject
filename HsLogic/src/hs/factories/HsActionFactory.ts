@@ -6,7 +6,7 @@
 ///<reference path="../hsActions/Discard.ts"/>
 ///<reference path="../hsActions/DrawCard.ts"/>
 ///<reference path="../hsActions/EmptyAction.ts"/>
-///<reference path="../hsActions/Fatigue.ts"/>
+///<reference path="../hsActions/technical/Fatigue.ts"/>
 ///<reference path="../hsActions/Heal.ts"/>
 ///<reference path="../hsActions/MarkAsDestroyed.ts"/>
 ///<reference path="../hsActions/MillCard.ts"/>
@@ -20,7 +20,7 @@
 ///<reference path="../entity/Card.ts"/>
 ///<reference path="../core/HsAction.ts"/>
 ///<reference path="../hsActions/main/PayCostAndRemoveFromHand.ts"/>
-///<reference path="../hsActions/main/PlayMinion.ts"/>
+///<reference path="../hsActions/userAction/PlayMinion.ts"/>
 
 
 "use strict";
@@ -60,7 +60,7 @@ namespace HSLogic {
         }
 
         emptyAction( source: IHsSource, message: string ): EmptyAction<EmptyActionParam> {
-            return new EmptyAction( { source: source, message: message, sourceType: SOURCE_TYPE.NON });
+            return new EmptyAction( { source: source, message: message, sourceType: SOURCE_TYPE.NONE });
         }
 
         fatigue( param: TargetPlayerParam ): Fatigue<TargetPlayerParam> {
@@ -91,9 +91,9 @@ namespace HSLogic {
             return new ReturnCardIntoOwnersHandFrom( param );
         }
 
-        sequence( source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[] ): Sequence {
-            return new Sequence( { action: source, card: null, caller: null }, innerActions );
-        }
+        //        sequence(source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[]): Sequence {
+        //            return new Sequence({ action: source, card: null, caller: null }, innerActions);
+        //        }
 
         shuffleDeck( param: TargetPlayerParam ): ShuffleDeck<TargetPlayerParam> {
             return new ShuffleDeck( param );

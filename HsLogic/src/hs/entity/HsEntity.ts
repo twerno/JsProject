@@ -5,21 +5,21 @@
 
 namespace HSLogic {
 
-    export class HsEntity extends jsLogic.Entity implements IHsEntity {
-        def: IHsEntity;
+    export class HsEntity extends jsLogic.Entity implements Def.IHsEntity {
+        def: Def.IHsEntity;
         name: string;
-        cardType: CARD_TYPE;
-        enchantments: IEnchantment[];
+        cardType: Def.CARD_TYPE;
+        enchantments: Def.IEnchantment[];
 
 
-        protected initFromDefinition( def: IHsEntity ): void {
+        protected initFromDefinition( def: Def.IHsEntity ): void {
             this.def = def;
             this.name = def.name;
             this.cardType = def.cardType;
             this.enchantments = def.enchantments;
         }
 
-        constructor( public owner: HsEntity, def?: IHsEntity ) {
+        constructor( public owner: HsEntity, def?: Def.IHsEntity ) {
             super( owner );
             def && this.initFromDefinition( def );
         }

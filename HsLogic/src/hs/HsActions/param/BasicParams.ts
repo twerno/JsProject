@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HSLogic {
 
@@ -8,7 +8,7 @@ namespace HSLogic {
 
 
     export interface TargetPlayerParam extends IHsActionParam {
-        target: Player
+        player: Player
     }
 
 

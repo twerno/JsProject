@@ -18,7 +18,7 @@ namespace HSLogic {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        player: Player = param.player,
+                        player: Player = param.source.caster,
                         card: Card = param.card;
 
                     if ( player.filled_mana_crystals < card.cost )

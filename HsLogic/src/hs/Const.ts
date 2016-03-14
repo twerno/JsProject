@@ -1,7 +1,7 @@
-﻿"use strict";
+"use strict";
 
 namespace HSLogic {
 
-    Character = Player | Minion;
+    export type Character = Player | Minion;
 
 }

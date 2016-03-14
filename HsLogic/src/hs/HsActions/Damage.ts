@@ -125,7 +125,7 @@ namespace HSLogic {
                             actions.push(
                                 gameCtx.actionFactory.damage.damage( {
                                     source: param.source,
-                                    sourceType: param.sourceType,
+                                    //                                    sourceType: param.sourceType,
                                     damageType: param.damageType,
                                     target: target,
                                     baseDamage: param.baseDamage

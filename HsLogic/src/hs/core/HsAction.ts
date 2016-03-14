@@ -20,7 +20,7 @@ namespace HSLogic {
 
     export interface IHsSource extends jsLogic.ISource {
         card: Card,
-        caller: Player,
+        caster: Player,
         sourceType: SOURCE_TYPE
     }
 
@@ -36,5 +36,7 @@ namespace HSLogic {
     }
 
     export abstract class HsActionEvent<P extends IHsActionParam> extends jsLogic.ActionEvent<HsGameCtx, P> { };
+
+    export type FActionBuilder<P extends IHsActionParam> = ( param: P, gameCtx: HsGameCtx ) => HsAction<P>;
 
 }

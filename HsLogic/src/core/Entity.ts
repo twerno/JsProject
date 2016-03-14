@@ -10,7 +10,7 @@ namespace jsLogic {
 	 *
 	 */
     export class Entity {
-        id: string = generateNewId();
+        id: number = generateNewId();
         markers: MarkersList = new MarkersList();
         counters: CounterMap = {};
 
@@ -30,8 +30,8 @@ namespace jsLogic {
 	 *  generateNewId
 	 *
 	 */
-    export function generateNewId(): string {
-        return ( ++_entityIdGenerator ).toString();
+    export function generateNewId(): number {
+        return ++_entityIdGenerator;
     }
 
 }

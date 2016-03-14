@@ -1,13 +1,13 @@
 ﻿"use strict";
 
-namespace HSLogic {
+namespace Def {
 
     export interface ITriggers {
-        onDrawn?: ITargetlessTriggerDef[]
+        onDrawn?: IDefTargetlessAction[]
     }
 
-    export interface IPermanentsTriggers extends ITriggers {
-        battlecry?: ICardActionDefs,
-        deathrattle?: ITargetlessTriggerDef[]
+    export interface IPermanentTriggers extends ITriggers {
+        battlecry?: IDefAction[],
+        deathrattle?: IDefTargetlessAction[]
     }
 }
