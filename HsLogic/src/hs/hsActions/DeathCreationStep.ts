@@ -11,7 +11,7 @@ namespace HSLogic {
      * Sequence
      *
  	 */
-    export class DeathCreationStep<P extends HsActionParam> extends HsAction<P> {
+    export class DeathCreationStep<P extends IHsActionParam> extends HsAction<P> {
 
         resolve( _this_: DeathCreationStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(

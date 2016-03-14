@@ -5,7 +5,7 @@
 
 namespace HSLogic {
 
-    export interface HealParam extends HsActionParam {
+    export interface HealParam extends IHsActionParam {
         cancelHeal: boolean,
         amount: number,
         target: LivingTarget,

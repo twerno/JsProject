@@ -2,7 +2,7 @@
 
 namespace HSLogic {
 
-    export class Arcane_MissileAction<P extends HsActionParam> extends HsAction<P> {
+    export class Arcane_MissileAction<P extends IHsActionParam> extends HsAction<P> {
 
         static sourceSetBuilder(): IDefTargetSetBuilder {
             return DefTargetSetBuilder.ENEMY.CHARACTER

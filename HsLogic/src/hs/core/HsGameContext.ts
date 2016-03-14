@@ -12,7 +12,7 @@ namespace HSLogic {
 
         actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
 
-        handlers: jsLogic.EventHandlers<HsGameCtx, HsActionParam> = new jsLogic.EventHandlers<HsGameCtx, HsActionParam>();
+        handlers: jsLogic.EventHandlers<HsGameCtx, IHsActionParam> = new jsLogic.EventHandlers<HsGameCtx, IHsActionParam>();
 
         activePlayer: Player = null;
 

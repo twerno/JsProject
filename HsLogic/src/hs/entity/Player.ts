@@ -7,6 +7,8 @@ namespace HSLogic {
 
     export class Player extends HsEntity implements IPlayer {
 
+        def: IPlayer;
+
         hp: number = 30;
 
         maxHp: number = 30;

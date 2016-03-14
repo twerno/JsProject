@@ -14,10 +14,10 @@ namespace HSLogic {
 
 
         card( owner: Player, def: ICard ): Card {
-            if ( def.card_type === CARD_TYPE.MINION )
+            if ( def.cardType === CARD_TYPE.MINION )
                 return this.minion( owner, <IMinion>def );
 
-            throw new Error( `Unknown card type: ${def.card_type}.` );
+            throw new Error( `Unknown card type: ${def.cardType}.` );
         }
 
 

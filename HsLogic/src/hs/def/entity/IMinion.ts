@@ -2,8 +2,6 @@
 
 namespace HSLogic {
 
-
-
     export enum MINION_TYPE {
         BEAST, DEMON, DRAGON, MECH, MURLOC, PIRATE, TOTEM, GENERAL
     }
@@ -16,7 +14,6 @@ namespace HSLogic {
         minion_type: MINION_TYPE,
         flags: IFlags,
 
-        battlecry: ICardActionDefs
-
+        triggers: IPermanentsTriggers
     }
 }

@@ -1,5 +1,4 @@
-///<reference path="../core/HsEntity.ts"/>
-///<reference path="def/entity/ICard.ts"/>
+///<reference path="../def/entity/ICard.ts"/>
 
 "use strict";
 
@@ -7,8 +6,10 @@ namespace HSLogic {
 
 
     export class Card extends HsEntity implements ICard {
-
+        def: ICard;
         cost: number;
+
+        triggers: ITriggers;
 
         constructor( owner: Player, def?: ICard ) {
             super( owner, def );
@@ -19,11 +20,14 @@ namespace HSLogic {
             super.initFromDefinition( def );
 
             this.cost = def.cost;
+            this.triggers = def.triggers;
         }
     }
 
 
     export class Minion extends Card implements IMinion {
+        def: IMinion;
+
         hp: number;
 
         maxHp: number;
@@ -34,7 +38,7 @@ namespace HSLogic {
 
         flags: IFlags;
 
-        battlecry: ICardActionDefs = [];
+        triggers: IPermanentsTriggers;
 
         initFromDefinition( def: IMinion ): void {
             super.initFromDefinition( def );
@@ -43,11 +47,12 @@ namespace HSLogic {
             this.maxHp = def.hp;
             this.attack = def.attack;
             this.minion_type = def.minion_type;
-            this.battlecry = def.battlecry;
         }
     }
 
     export class Spell extends Card implements ISpell {
+        def: ISpell;
+
         spellActions: ICardActionDefs;
 
         initFromDefinition( def: ISpell ): void {
@@ -58,16 +63,16 @@ namespace HSLogic {
     }
 
     export class Weapon extends Card implements IWeapon {
+        def: IWeapon;
         attack: number;
         durability: number;
-        battlecry: ICardActionDefs = [];
+        triggers: IPermanentsTriggers;
 
         initFromDefinition( def: IWeapon ): void {
             super.initFromDefinition( def );
 
             this.attack = def.attack;
             this.durability = def.durability;
-            this.battlecry = def.battlecry;
         }
     }
 

@@ -7,7 +7,7 @@ namespace HSLogic {
 
 
 
-    export interface IAcquireTargetsParam extends HsActionParam {
+    export interface IAcquireTargetsParam extends IHsActionParam {
         cardActions: ICardActionDefs,
         sets: Array<IChooseActionParamSets>,
         amount: number,
@@ -24,7 +24,7 @@ namespace HSLogic {
 
 
         static buildChooseActionParam( param: IAcquireTargetsParam,
-            cardAction: ITargetedCardActionDef<HsGameCtx, ChooseActionParam>,
+            cardAction: ITargetedTriggerDef<HsGameCtx, ChooseActionParam>,
             gameCtx: HsGameCtx ): ChooseActionParam {
             return {
                 source: param.source,
@@ -45,17 +45,17 @@ namespace HSLogic {
                 ( resolve, reject ): void => {
                     let param: IAcquireTargetsParam = _this_.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
-                        targetedActionDef: ITargetedCardActionDef<HsGameCtx, ChooseActionParam>;
+                        targetedActionDef: ITargetedTriggerDef<HsGameCtx, ChooseActionParam>;
 
                     param.sets = new Array<IChooseActionParamSets>( param.cardActions.length );
 
                     for ( let i = 0; i < param.cardActions.length; i++ ) {
-                        let cardAction: ICardActionDef = param.cardActions[i];
+                        let cardAction: ITriggerDef = param.cardActions[i];
 
                         if ( param.cancelAction.value )
                             break;
 
-                        if ( isTargetedCardActionDef( cardAction ) ) {
+                        if ( isTargetedTriggerDef( cardAction ) ) {
                             let paramTmp: ChooseActionParam = AcquireTargets.buildChooseActionParam( param, cardAction, gameCtx );
                             param.sets[i] = paramTmp.sets;
 

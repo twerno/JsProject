@@ -1,17 +1,22 @@
 ﻿///<reference path="../../core/Entity.ts"/>
-///<reference path="../entity/def/entity/ICard.ts"/>
+///<reference path="../def/entity/ICard.ts"/>
 
 "use strict";
 
 namespace HSLogic {
 
     export class HsEntity extends jsLogic.Entity implements IHsEntity {
+        def: IHsEntity;
         name: string;
-        card_type: CARD_TYPE;
+        cardType: CARD_TYPE;
+        enchantments: IEnchantment[];
+
 
         protected initFromDefinition( def: IHsEntity ): void {
+            this.def = def;
             this.name = def.name;
-            this.card_type = def.card_type;
+            this.cardType = def.cardType;
+            this.enchantments = def.enchantments;
         }
 
         constructor( public owner: HsEntity, def?: IHsEntity ) {

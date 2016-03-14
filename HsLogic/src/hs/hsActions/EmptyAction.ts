@@ -4,7 +4,7 @@
 
 namespace HSLogic {
 
-    export interface EmptyActionParam extends HsActionParam {
+    export interface EmptyActionParam extends IHsActionParam {
         message: string
     }
 

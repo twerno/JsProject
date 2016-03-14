@@ -8,17 +8,23 @@ namespace HSLogic {
         WEAPON,
         PLAYER,
         HERO_POWER,
-        HERO
+        HERO,
+        NONE
     }
 
 
     export interface IHsEntity {
-        name: string;
-        card_type: CARD_TYPE;
+        name: string,
+        cardType: CARD_TYPE,
+        //owner: Player,
+
+        enchantments?: IEnchantment[];
     }
 
     export function isMinion( entity: IHsEntity ): entity is IMinion {
-        return entity.card_type === CARD_TYPE.MINION;
+        return entity.cardType === CARD_TYPE.MINION;
     }
+
+
 
 }

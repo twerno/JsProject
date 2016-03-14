@@ -30,6 +30,7 @@ namespace HSLogic {
     export class HsActionFactory<T extends HsGameCtx> extends jsLogic.ActionFactory {
 
         protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
+        protected _enchantments: HsEnchantmentActionFactory<T> = new HsEnchantmentActionFactory();
 
         addGeneratedCardIntoHand( param: PlayerAndCardParam ): AddGeneratedCardIntoHand<PlayerAndCardParam> {
             return new AddGeneratedCardIntoHand( param );
@@ -40,8 +41,9 @@ namespace HSLogic {
         //}
 
         get damage(): HsDamageFactory<T> { return this._damageFactory }
+        get enchantment(): HsEnchantmentActionFactory<T> { return this._enchantments }
 
-        deathCreationStep( param: HsActionParam ): DeathCreationStep<HsActionParam> {
+        deathCreationStep( param: IHsActionParam ): DeathCreationStep<IHsActionParam> {
             return new DeathCreationStep( param );
         }
 
@@ -58,11 +60,11 @@ namespace HSLogic {
         }
 
         emptyAction( source: IHsSource, message: string ): EmptyAction<EmptyActionParam> {
-            return new EmptyAction( { source: source, message: message });
+            return new EmptyAction( { source: source, message: message, sourceType: SOURCE_TYPE.NON });
         }
 
-        fatigue( fatigueParam: PlayerParam ): Fatigue<PlayerParam> {
-            return new Fatigue( fatigueParam );
+        fatigue( param: TargetPlayerParam ): Fatigue<TargetPlayerParam> {
+            return new Fatigue( param );
         }
 
         heal( healParam: HealParam ): Heal<HealParam> {
@@ -93,7 +95,7 @@ namespace HSLogic {
             return new Sequence( { action: source, card: null, caller: null }, innerActions );
         }
 
-        shuffleDeck( param: PlayerParam ): ShuffleDeck<PlayerParam> {
+        shuffleDeck( param: TargetPlayerParam ): ShuffleDeck<TargetPlayerParam> {
             return new ShuffleDeck( param );
         }
 

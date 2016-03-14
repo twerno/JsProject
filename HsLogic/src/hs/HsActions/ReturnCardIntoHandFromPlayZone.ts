@@ -4,7 +4,7 @@
 
 namespace HSLogic {
 
-    export interface ReturnCardIntoOwnersHandParam extends HsActionParam {
+    export interface ReturnCardIntoOwnersHandParam extends IHsActionParam {
         sourceZone: HsZone,
         card: Card
     }

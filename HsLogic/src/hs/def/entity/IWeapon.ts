@@ -5,8 +5,7 @@ namespace HSLogic {
     export interface IWeapon extends ICard {
         attack: number,
         durability: number,
-        battlecry: ICardActionDefs
+
+        triggers: IPermanentsTriggers
     }
-
-
 }

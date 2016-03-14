@@ -5,28 +5,30 @@
 
 namespace HSLogic {
 
-    var Arcane_Missiles: ISpell = {
+    var Arcane_Missiles: ISpell = basicSet.registerCard<ISpell>( {
         name: `Arcane Missiles`,
         cost: 1,
 
-        card_type: CARD_TYPE.SPELL,
+        cardType: CARD_TYPE.SPELL,
+        enchantments: [],
 
         spellActions: [
-            {
-                actionBuilder: ( source: IHsSource, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> => {
-                    return gameCtx.actionFactory.damage.randomlySplitDamage( {
+
+            ( source: IHsSource, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx>[] => {
+                return [
+                    gameCtx.actionFactory.damage.randomlySplitDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
-                        sourceType: SOURCE_TYPE.SPELL,
                         partsAmount: 3,
                         damagePerPart: 1,
                         splitMode: SPLIT_MODE.MISSILE
-                    });
-                }
-
+                    })
+                ]
             }
-        ]
-    }
 
-    basicSet.registerCard( Arcane_Missiles );
+
+        ],
+
+        triggers: {}
+    });
 }

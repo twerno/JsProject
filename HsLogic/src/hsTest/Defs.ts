@@ -10,7 +10,7 @@ namespace HSLogic {
     export
         var ClassicPlayer: IPlayer = {
             name: 'ClassicPlayer',
-            card_type: CARD_TYPE.HERO,
+            cardType: CARD_TYPE.HERO,
             hp: 30,
             manaCrystals: 1,
             hero: 'THRALL',
@@ -24,7 +24,7 @@ namespace HSLogic {
             name: 'Bloodfen Raptor',
             cost: 2,
 
-            card_type: CARD_TYPE.MINION,
+            cardType: CARD_TYPE.MINION,
             minion_type: MINION_TYPE.BEAST,
 
             hp: 2,
@@ -38,7 +38,7 @@ namespace HSLogic {
             name: `Perdition's Blade`,
             cost: 3,
 
-            card_type: CARD_TYPE.WEAPON,
+            cardType: CARD_TYPE.WEAPON,
 
             attack: 2,
             durability: 2,
@@ -56,7 +56,7 @@ namespace HSLogic {
             name: `Big Game Hunter`,
             cost: 3,
 
-            card_type: CARD_TYPE.MINION,
+            cardType: CARD_TYPE.MINION,
             minion_type: MINION_TYPE.GENERAL,
 
             attack: 4,

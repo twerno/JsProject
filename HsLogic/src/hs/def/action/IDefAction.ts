@@ -2,44 +2,40 @@
 
 namespace HSLogic {
 
-    export type FActionBuilder<T extends HsGameCtx, P extends ChooseActionParam> = ( param: P, gameCtx: T ) => jsLogic.IAction<T>;
+    export type FActionsBuilder<T extends HsEntity, P extends ChooseActionParam<T>> = ( param: P, gameCtx: HsGameCtx ) => jsLogic.IAction<HsGameCtx>[];
 
-    export interface ITargetedCardActionDef<T extends HsGameCtx, P extends ChooseActionParam> {
-        availableTargets: IDefTargetSetBuilder,
+    export interface ITargetedTriggerDef<T extends HsEntity, P extends ChooseActionParam<T>> {
+        availableTargets: IDefTargetSetBuilder<T>,
         //acquireTargetsParam: (source: IHsSource, gameCtx: T, props: A) => IAcquireTargetsParam,
         makeAChoice: FChooseActionBuilder<T, P>,
-        validateChoosen: ( param: P, gameCtx: T ) => boolean,
-        actionBuilder: FActionBuilder<T, P>,
+        validateChoosen: ( param: P, gameCtx: HsGameCtx ) => boolean,
+        actions: FActionsBuilder<T, P>,
     }
 
-    export interface ITargetlessActionDef<T extends HsGameCtx> {
-        actionBuilder: ( source: IHsSource, gameCtx: T ) => jsLogic.IAction<T>
-    }
+    export type ITargetlessTriggerDef = ( source: IHsSource, gameCtx: HsGameCtx ) => jsLogic.IAction<HsGameCtx>[];
 
-    export type ICardActionDef = ITargetedCardActionDef<HsGameCtx, ChooseActionParam> | ITargetlessActionDef<HsGameCtx>;
-    export type ICardActionDefs = ICardActionDef[];
+    export type ITriggerDef = ITargetedTriggerDef<HsEntity, ChooseActionParam<HsEntity>> | ITargetlessTriggerDef;
+    export type ICardActionDefs = ITriggerDef[];
 
 
-    export function isTargetedCardActionDef( cardActionDef: any ): cardActionDef is ITargetedCardActionDef<HsGameCtx, ChooseActionParam> {
-        return cardActionDef
-            && cardActionDef instanceof Object
-            && cardActionDef.hasOwnProperty( 'sourceSetBuilder' )
-            && cardActionDef.hasOwnProperty( 'chooseTargetActionBuilder' )
-            && cardActionDef.hasOwnProperty( 'validateChoosenTargets' )
+    export function isTargetedTriggerDef( cardActionDef: any ): cardActionDef is ITargetedTriggerDef<HsEntity, ChooseActionParam<HsEntity>> {
+        return cardActionDef instanceof Object
+            && cardActionDef.hasOwnProperty( 'availableTargets' )
+            && cardActionDef.hasOwnProperty( 'makeAChoice' )
+            && cardActionDef.hasOwnProperty( 'validateChoosen' )
             //&& cardActionDef.hasOwnProperty('acquireTargetsParam')
-            && cardActionDef.hasOwnProperty( 'actionBuilder' );
+            && cardActionDef.hasOwnProperty( 'actions' );
     }
 
     //var test: ICardActionDefs;
     //isTargetedCardActionDef(test[0]) && test[0]
 
-    export function isTargetlessCardActionDef( cardActionDef: any ): cardActionDef is ITargetlessActionDef<HsGameCtx> {
-        return cardActionDef
-            && cardActionDef instanceof Object
-            && !cardActionDef.hasOwnProperty( 'sourceSetBuilder' )
-            && !cardActionDef.hasOwnProperty( 'chooseTargetActionBuilder' )
-            && !cardActionDef.hasOwnProperty( 'validateChoosenTargets' )
-            && cardActionDef.hasOwnProperty( 'actionBuilder' );
+    export function isTargetlessTriggerDef( cardActionDef: any ): cardActionDef is ITargetlessTriggerDef {
+        return cardActionDef instanceof Function;
+        //&& !cardActionDef.hasOwnProperty( 'availableTargets' )
+        //&& !cardActionDef.hasOwnProperty( 'makeAChoice' )
+        //&& !cardActionDef.hasOwnProperty( 'validateChoosen' )
+        //&& cardActionDef.hasOwnProperty( 'actions' );
     }
 
     //export type ICardActionDefs<T extends HsGameCtx, P extends ChooseActionParam> = ICardActionDef<T, P> | ICardActionDef<T, P>[];

@@ -5,7 +5,7 @@
 
 namespace HSLogic {
 
-    export interface PlayCardParam extends HsActionParam {
+    export interface PlayCardParam extends IHsActionParam {
         card: Minion | Weapon | Spell,
         player: Player,
         cardActionTargets: Array<HsEntity[]>,
@@ -61,10 +61,10 @@ namespace HSLogic {
                         actions.push( gameCtx.actionFactory.playMinion( <PlayMinionParam>param ) );
                     }
 
-                    if ( _this_.param.card.card_type === CARD_TYPE.SPELL )
+                    if ( _this_.param.card.cardType === CARD_TYPE.SPELL )
                         actions.push( gameCtx.actionFactory.playSpell( _this_.param ) );
 
-                    if ( _this_.param.card.card_type === CARD_TYPE.WEAPON )
+                    if ( _this_.param.card.cardType === CARD_TYPE.WEAPON )
                         actions.push( gameCtx.actionFactory.playWeapon( _this_.param ) );
 
                     resolve( actions );

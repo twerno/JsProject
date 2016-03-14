@@ -17,12 +17,10 @@ namespace HSLogic {
 
 
     export enum DAMAGE_TYPE {
-        COMBAT, DIRECT, PAY_LIFE
+        COMBAT, DIRECT, PAY_LIFE, FATIGUE
     }
 
-    export enum SOURCE_TYPE {
-        MINION, SPELL, HERO_POWER, HERO, FATIGUE
-    }
+
 
     /*
      * MINION     + COMBAT
@@ -37,28 +35,21 @@ namespace HSLogic {
         MISSILE, MAD_BOMB
     }
 
-    export interface RandomlySplitDamageParam extends HsActionParam {
+    export interface GenDamageParam {
         damageType: DAMAGE_TYPE,
-        sourceType: SOURCE_TYPE,
-        damagePerPart: number,
-        partsAmount: number,
-        splitMode: SPLIT_MODE
-    }
-
-    export interface DamageParam extends HsActionParam {
-        damageType: DAMAGE_TYPE,
-        sourceType: SOURCE_TYPE,
-        target: Player | Minion,
-        baseDamage: number,
-        cancelDamage: boolean
-    }
-
-    export interface DealDamageParam extends HsActionParam {
-        damageType: DAMAGE_TYPE,
-        sourceType: SOURCE_TYPE,
-        targets: HsEntity[],
         baseDamage: number
     }
+
+    export interface RandomlySplitDamageParam extends IHsActionParam {
+        damageType: DAMAGE_TYPE,
+        splitMode: SPLIT_MODE
+        partsAmount: number,
+        damagePerPart: number
+    }
+
+    export interface DamageParam extends ISingleCharacterParam, GenDamageParam { }
+
+    export interface DealDamageParam extends ITargetsParam, GenDamageParam { }
 
 
     /**
@@ -134,11 +125,10 @@ namespace HSLogic {
                             actions.push(
                                 gameCtx.actionFactory.damage.damage( {
                                     source: param.source,
-                                    damageType: param.damageType,
                                     sourceType: param.sourceType,
+                                    damageType: param.damageType,
                                     target: target,
-                                    baseDamage: param.baseDamage,
-                                    cancelDamage: false
+                                    baseDamage: param.baseDamage
                                 })
                             );
                         }
