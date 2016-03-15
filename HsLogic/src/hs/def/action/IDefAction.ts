@@ -10,7 +10,7 @@ namespace Def {
 
 
     export abstract class IDefTargetedAction<T extends ITargets> {
-        abstract acquireTargets( source: HsSource, targets: T, gameCtx: GameCtx ): Action;
+        abstract acquireTargets( source: HsCancelableParam, targets: T, gameCtx: GameCtx ): Action;
         abstract actions( source: HsSource, targets: T, gameCtx: GameCtx ): Action[];
     }
 

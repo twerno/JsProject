@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace Def {
 
@@ -11,6 +11,7 @@ namespace Def {
         freezed?: boolean,
         stealth?: boolean,
         taunt?: boolean,
-        windfury?: boolean
+        windfury?: boolean,
+        silenced?: boolean
     }
 }

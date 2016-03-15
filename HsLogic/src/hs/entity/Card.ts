@@ -9,6 +9,7 @@ namespace HsLogic {
         def: Def.ICard;
         cost: number;
 
+        playActions: Def.IDefAction[];
         triggers: Def.ITriggers;
 
         constructor( owner: Player, def?: Def.ICard ) {
@@ -21,6 +22,7 @@ namespace HsLogic {
 
             this.cost = def.cost;
             this.triggers = def.triggers;
+            this.playActions = def.playActions;
         }
     }
 
@@ -57,8 +59,6 @@ namespace HsLogic {
 
         initFromDefinition( def: Def.ISpell ): void {
             super.initFromDefinition( def );
-
-            this.spellActions = def.spellActions;
         }
     }
 

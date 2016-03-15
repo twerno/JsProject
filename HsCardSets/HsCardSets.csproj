@@ -21,12 +21,17 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\Old Gods\" />
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\Basic\BasicSet.ts" />
+    <TypeScriptCompile Include="src\Basic\Druid\Swipe.ts" />
     <TypeScriptCompile Include="src\Basic\Mage\Frost_Bolt.ts" />
     <TypeScriptCompile Include="src\Basic\Mage\Arcane_Missiles.ts" />
     <TypeScriptCompile Include="src\Basic\Neutral\Mad_Bomber.ts" />
+    <TypeScriptCompile Include="src\Basic\Paladin\Consecration.ts" />
+    <TypeScriptCompile Include="src\Basic\Paladin\Holy_Wrath.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

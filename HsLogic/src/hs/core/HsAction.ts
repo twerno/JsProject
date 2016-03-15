@@ -28,6 +28,10 @@ namespace HsLogic {
         source: IHsSource
     }
 
+    export interface IHsCancelableParam extends IHsActionParam {
+        cancelAction: { value: boolean }
+    }
+
     export abstract class HsAction<P extends IHsActionParam> extends jsLogic.IAction<HsGameCtx> {
 
         constructor( public param: P ) { super( param.source.action ) }
@@ -39,4 +43,8 @@ namespace HsLogic {
 
     export type FActionBuilder<P extends IHsActionParam> = ( param: P, gameCtx: HsGameCtx ) => HsAction<P>;
 
+    //export function InlineAction( executor: jsLogic.FPromiseExecutor<jsLogic.IAction<HsGameCtx>[]> ) {
+    //    return new jsLogic.InlineAction( executor );           
+    //}
+    export class InlineAction extends jsLogic.InlineAction<HsGameCtx> { };
 }

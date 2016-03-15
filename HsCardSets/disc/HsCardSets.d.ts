@@ -8,3 +8,9 @@ declare namespace Def {
 }
 declare namespace Def {
 }
+declare namespace Def {
+}
+declare namespace Def {
+}
+declare namespace Def {
+}

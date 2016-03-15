@@ -3,6 +3,5 @@
 namespace Def {
 
     export interface ISpell extends ICard {
-        spellActions: IDefAction[]
     }
 }

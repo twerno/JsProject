@@ -20,7 +20,7 @@ namespace HsLogic {
 
                 ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        hand: HsZone = gameCtx.zonesOf( param.player ).hand;
+                        hand: HsZone<Card> = gameCtx.zonesOf( param.player ).hand;
 
                     if ( !hand.isFull )
                         hand.addEntity( param.card );

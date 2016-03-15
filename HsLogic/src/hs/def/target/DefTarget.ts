@@ -18,9 +18,8 @@ namespace Def {
     }
 
 
-
     export interface IDefTargetProperties {
-        zoneArrayGetter: ( zones: HsLogic.HsZones ) => HsLogic.HsZone[],
+        zoneArrayGetter: ( zones: HsLogic.HsZones ) => HsLogic.HsZone<HsLogic.Card>[],
         includePlayer?: boolean
     }
 
@@ -32,7 +31,7 @@ namespace Def {
 
         buildSet( source: HsSource, gameCtx: GameCtx ): HsLogic.HsEntity[] {
             let result: HsLogic.HsEntity[] = [],
-                zones: HsLogic.HsZone[] = null,
+                zones: HsLogic.HsZone<HsLogic.Card>[] = null,
                 player: HsLogic.Player = null,
                 cards: HsLogic.Card[] = null;
 

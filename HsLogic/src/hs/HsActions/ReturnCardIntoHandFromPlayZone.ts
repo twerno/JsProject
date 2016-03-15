@@ -5,7 +5,7 @@
 namespace HsLogic {
 
     export interface ReturnCardIntoOwnersHandParam extends IHsActionParam {
-        sourceZone: HsZone,
+        sourceZone: HsZone<Card>,
         card: Card
     }
 
@@ -22,7 +22,7 @@ namespace HsLogic {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        hand: HsZone = gameCtx.zonesOf( param.card.owner ).hand;
+                        hand: HsZone<Card> = gameCtx.zonesOf( param.card.owner ).hand;
 
                     if ( hand.isFull ) {
                         //resolve([gameCtx.actionFactory.markAsDestroyed(param.source, param.card)]);

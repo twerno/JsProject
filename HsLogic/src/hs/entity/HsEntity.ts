@@ -10,6 +10,7 @@ namespace HsLogic {
         name: string;
         cardType: Def.CARD_TYPE;
         enchantments: Def.IEnchantment[];
+        orderOfPlay: number = -1;
 
 
         protected initFromDefinition( def: Def.IHsEntity ): void {

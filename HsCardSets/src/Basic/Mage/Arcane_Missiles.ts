@@ -12,7 +12,7 @@ namespace Def {
         cardType: CARD_TYPE.SPELL,
         enchantments: [],
 
-        spellActions: [
+        playActions: [
 
             ( source: HsSource, gameCtx: GameCtx ): Action[] => {
                 return [

@@ -48,6 +48,11 @@ namespace Def {
             return false;
         }
 
+        static character_targetable_by_spell_or_hero_power( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+            return StandardFilters.character( source, entity, gameCtx )
+                && StandardFilters.targetable_by_spell_or_hero_power( source, entity, gameCtx );
+        }
+
         static targetable_by_minion( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
 
             if ( entity instanceof HsLogic.Player

@@ -15,7 +15,7 @@ namespace HsLogic {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = _this_.param,
-                        graveyard: HsZone = gameCtx.zonesOf( param.card.owner ).graveyard;
+                        graveyard: HsZone<Card> = gameCtx.zonesOf( param.card.owner ).graveyard;
 
                     graveyard.addEntity( param.card );
                 });

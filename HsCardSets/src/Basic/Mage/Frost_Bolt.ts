@@ -1,4 +1,4 @@
-﻿///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
+///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 ///<reference path="../BasicSet.ts"/>
 
 "use strict";
@@ -13,23 +13,23 @@ namespace Def {
         triggers: {},
         enchantments: [],
 
-        spellActions: [
-            new SingleTargetAction( {
+        playActions: [
+            new SingleTargetDefAction<Character>( {
                 availableTargets: DefTargetHelper.BATTLEFIELD
                     .addFilter( StandardFilters.character )
                     .addFilter( StandardFilters.targetable_by_spell_or_hero_power ),
 
-                actionBuilder: ( source: HsSource, targets: ITargets, gameCtx: GameCtx ): Action[] => {
+                actionBuilder: ( source: HsSource, target: Character, gameCtx: GameCtx ): Action[] => {
                     return [
                         gameCtx.actionFactory.damage.dealDamage( {
                             source: source,
                             damageType: DAMAGE_TYPE.DIRECT,
-                            targets: targets.targets,
+                            targets: [target],
                             baseDamage: 3,
                         }),
                         gameCtx.actionFactory.enchantment.freeze( {
                             source: source,
-                            targets: <HsLogic.Character[]>targets.targets
+                            targets: [target]
                         })
                     ]
                 }

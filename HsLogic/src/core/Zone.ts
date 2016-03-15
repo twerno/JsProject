@@ -48,7 +48,7 @@ namespace jsLogic {
 
         get owner(): Entity { return this.zoneMap.owner; }
 
-        constructor( public zoneMap: ZoneMap<T, Zone<T>>, public zoneId: string ) { }
+        constructor( public zoneMap: ZoneMap<Entity, Zone<Entity>>, public zoneId: string ) { }
     }
 
 

@@ -19,8 +19,6 @@
 ///<reference path="../core/HsZone.ts"/>
 ///<reference path="../entity/Card.ts"/>
 ///<reference path="../core/HsAction.ts"/>
-///<reference path="../hsActions/main/PayCostAndRemoveFromHand.ts"/>
-///<reference path="../hsActions/userAction/PlayMinion.ts"/>
 
 
 "use strict";
@@ -31,6 +29,7 @@ namespace HsLogic {
 
         protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
         protected _enchantments: HsEnchantmentActionFactory<T> = new HsEnchantmentActionFactory();
+        protected _makeAChoice: MakeChoiceActionFactory<T> = new MakeChoiceActionFactory();
 
         addGeneratedCardIntoHand( param: PlayerAndCardParam ): AddGeneratedCardIntoHand<PlayerAndCardParam> {
             return new AddGeneratedCardIntoHand( param );
@@ -42,6 +41,21 @@ namespace HsLogic {
 
         get damage(): HsDamageFactory<T> { return this._damageFactory }
         get enchantment(): HsEnchantmentActionFactory<T> { return this._enchantments }
+        get makeAChoice(): MakeChoiceActionFactory<T> { return this._makeAChoice }
+
+
+        executeTargetlessTriggers( param: ITargetlessTriggersParam ): jsLogic.IAction<T> {
+            return new ExecuteTargetlessTriggers( param );
+        }
+
+        silenceAMinion( param: ISilenceAMinionParam ): jsLogic.IAction<T> {
+            return new SilenceAMinion( param );
+        }
+
+        acquireTargets( param: IAcquireTargetsParam ): AcquireTargets {
+            return new AcquireTargets( param );
+        }
+
 
         deathCreationStep( param: IHsActionParam ): DeathCreationStep<IHsActionParam> {
             return new DeathCreationStep( param );
@@ -116,11 +130,11 @@ namespace HsLogic {
         }
 
         playSpell( param: PlayCardParam ): jsLogic.IAction<T> {
-            return new PlaySpell( param ).wrapIt();
+            return new PlaySpell( param );
         }
 
-        playWeapon( param: PlayCardParam ): jsLogic.IAction<T> {
-            return new PlayWeapon( param ).wrapIt();
+        playWeapon( param: IEquipWeaponParam ): jsLogic.IAction<T> {
+            return new PlayWeapon( param );
         }
     }
 }

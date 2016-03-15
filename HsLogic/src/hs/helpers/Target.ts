@@ -14,7 +14,7 @@ namespace HsLogic {
             return this.targetZone.has( <Card>this.target );
         }
 
-        constructor( public target: Card, public targetZone: HsZone ) {
+        constructor( public target: Card, public targetZone: HsZone<Card> ) {
         }
     }
 
@@ -29,7 +29,7 @@ namespace HsLogic {
                 return this.targetZone.has( <Minion>this.target );
         }
 
-        constructor( public target: Minion | Player, public targetZone: HsZone ) {
+        constructor( public target: Minion | Player, public targetZone: HsZone<Card> ) {
         }
     }
 

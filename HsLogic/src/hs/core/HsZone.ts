@@ -21,7 +21,7 @@ namespace HsLogic {
         export const UNLIMITED = -1;
     }
 
-    export class HsZone extends jsLogic.Zone<Card> {
+    export class HsZone<T extends Card> extends jsLogic.Zone<T> {
         maxElements: number = -1; // -1 - unlimited
 
         isFull(): boolean {
@@ -42,19 +42,19 @@ namespace HsLogic {
         }
     }
 
-    export class HsZones extends jsLogic.ZoneMap<Card, HsZone>{
+    export class HsZones extends jsLogic.ZoneMap<Card, HsZone<Card>>{
 
-        hand: HsZone;
-        deck: HsZone;
-        graveyard: HsZone;
-        removed_from_play: HsZone;
+        hand: HsZone<Card>;
+        deck: HsZone<Card>;
+        graveyard: HsZone<Card>;
+        removed_from_play: HsZone<Card>;
 
-        hero: HsZone;
-        weapon: HsZone;
-        heroPower: HsZone;
+        hero: HsZone<Card>;
+        weapon: HsZone<Weapon>;
+        heroPower: HsZone<Card>;
 
-        battlefield: HsZone;
-        secret: HsZone;
+        battlefield: HsZone<Card>;
+        secret: HsZone<Card>;
 
         constructor( public owner: Player ) {
             super( owner );
@@ -65,7 +65,7 @@ namespace HsLogic {
             this.removed_from_play = new HsZone( this, ZoneConsts.REMOVED_FROM_PLAY_ZONE, ZoneConsts.UNLIMITED );
 
             this.hero = new HsZone( this, ZoneConsts.HERO_ZONE, 1 );
-            this.weapon = new HsZone( this, ZoneConsts.WEAPON_ZONE, 1 );
+            this.weapon = new HsZone<Weapon>( this, ZoneConsts.WEAPON_ZONE, 1 );
             this.heroPower = new HsZone( this, ZoneConsts.HERO_POWER_ZONE, 1 );
 
             this.battlefield = new HsZone( this, ZoneConsts.GAME_ZONE, 7 );

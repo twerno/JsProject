@@ -3,7 +3,6 @@
 ///<reference path="helperActions/Selector.ts"/>
 ///<reference path="abstractActions/CancelableAction.ts"/>
 ///<reference path="abstractActions/BroadcastableAction.ts"/>
-///<reference path="helperActions/BroadcastAction.ts"/>
 
 "use strict";
 
@@ -25,13 +24,13 @@ namespace jsLogic {
         //}
 
 
-        randomSelector<T extends IExtContext, O>( source: IAction<T>, selectorParam: SelectorParam<O>, resultSet: O[] ): RandomSelector<T, O> {
-            return new RandomSelector<T, O>( source, selectorParam, resultSet );
-        }
+        //        randomSelector<T extends IExtContext, O>(source: IAction<T>, selectorParam: SelectorParam<O>, resultSet: O[]): RandomSelector<T, O> {
+        //            return new RandomSelector<T, O>(source, selectorParam, resultSet);
+        //        }
 
 
-        broadcastAction<T extends IExtContext, P extends IActionParam>( action2Broadcast: IActionToBroadcast<T, P> ): BroadcastAction<T, P> {
-            return new BroadcastAction<T, P>( action2Broadcast );
-        }
+        //        broadcastAction<T extends IExtContext, P extends IActionParam>(action2Broadcast: IActionToBroadcast<T, P>): BroadcastAction<T, P> {
+        //            return new BroadcastAction<T, P>(action2Broadcast);
+        //        }
     }
 }

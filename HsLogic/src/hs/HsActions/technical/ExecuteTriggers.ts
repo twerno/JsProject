@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -32,7 +32,7 @@ namespace HsLogic {
                             }) );
 
                         else if ( Def.isTargetlessActionDef( defAction ) )
-                            actions.push( new ExecuteTargetlessTriggers( {
+                            actions.push( gameCtx.actionFactory.executeTargetlessTriggers( {
                                 source: param.source,
                                 defActions: [defAction]
                             }) );

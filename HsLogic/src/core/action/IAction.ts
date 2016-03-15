@@ -66,13 +66,13 @@ namespace jsLogic {
     }
 
 
-    export class InlineAction<T extends IContext, P extends IActionParam> extends IAction<T> {
+    export class InlineAction<T extends IContext> extends IAction<T> {
 
-        resolve( _this_: InlineAction<T, P>, context: T ): PromiseOfActions {
+        resolve( _this_: InlineAction<T>, context: T ): PromiseOfActions {
             return new Promise<IAction<T>[]>( this.executor );
         }
 
-        constructor( public executor: FPromiseExecutor<IAction<T>[]> ) {
+        constructor( protected executor: FPromiseExecutor<IAction<T>[]> ) {
             super( null );
         }
     }

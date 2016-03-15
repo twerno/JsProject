@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace Def {
 
@@ -7,7 +7,8 @@ namespace Def {
     }
 
     export interface IPermanentTriggers extends ITriggers {
-        battlecry?: IDefAction[],
-        deathrattle?: IDefTargetlessAction[]
+        //battlecry?: IDefAction[],
+        deathrattle?: IDefTargetlessAction[],
+        onSilenced?: IDefTargetlessAction[] //trigger for Shadow Madness
     }
 }

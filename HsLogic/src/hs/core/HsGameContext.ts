@@ -36,8 +36,8 @@ namespace HsLogic {
         }
 
 
-        zoneOf( player: jsLogic.Entity | TargetPlayer, zoneId: string ): HsZone {
-            return this.zonesOf( player ).get( zoneId );
+        zoneOf<T extends Card>( player: jsLogic.Entity | TargetPlayer, zoneId: string ): HsZone<T> {
+            return <HsZone<T>>this.zonesOf( player ).get( zoneId );
         }
 
 

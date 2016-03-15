@@ -17,20 +17,20 @@ namespace Def {
         enchantments: [],
 
         flags: {},
-        triggers: {
-            battlecry: [
-                ( source: HsSource, gameCtx: GameCtx ): Action[] => {
-                    return [
-                        gameCtx.actionFactory.damage.randomlySplitDamage( {
-                            source: source,
-                            damageType: DAMAGE_TYPE.DIRECT,
-                            partsAmount: 3,
-                            damagePerPart: 1,
-                            splitMode: SPLIT_MODE.MAD_BOMB
-                        })
-                    ]
-                }
-            ]
-        }
+        playActions: [
+            ( source: HsSource, gameCtx: GameCtx ): Action[] => {
+                return [
+                    gameCtx.actionFactory.damage.randomlySplitDamage( {
+                        source: source,
+                        damageType: DAMAGE_TYPE.DIRECT,
+                        partsAmount: 3,
+                        damagePerPart: 1,
+                        splitMode: SPLIT_MODE.MAD_BOMB
+                    })
+                ]
+            }
+        ],
+        triggers: {}
+
     });
 }

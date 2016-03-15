@@ -1,12 +1,12 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
-    export interface TargetlessTriggersParam extends IHsActionParam {
+    export interface ITargetlessTriggersParam extends IHsActionParam {
         defActions: Def.IDefTargetlessAction[]
     }
 
-    export class ExecuteTargetlessTriggers<P extends TargetlessTriggersParam> extends HsAction<P> {
+    export class ExecuteTargetlessTriggers<P extends ITargetlessTriggersParam> extends HsAction<P> {
         resolve( _this_: ExecuteTargetlessTriggers<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(

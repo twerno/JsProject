@@ -7,10 +7,9 @@ namespace HsLogic {
 
 
 
-    export interface IAcquireTargetsParam extends IHsActionParam {
+    export interface IAcquireTargetsParam extends IHsCancelableParam {
         defActions: Def.IDefAction[],
         targets: Def.ITargets[]
-        cancelAction?: { value: boolean }
     }
 
 
@@ -25,16 +24,18 @@ namespace HsLogic {
 
                 ( resolve, reject ): void => {
                     let param: IAcquireTargetsParam = _this_.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: jsLogic.IAction<HsGameCtx>[] = [],
+                        defAction: Def.IDefAction;
 
                     param.targets = new Array<Def.ITargets>( param.defActions.length );
 
                     for ( let i = 0; i < param.defActions.length; i++ ) {
-                        let defAction: Def.IDefAction = param.defActions[i];
+                        defAction = param.defActions[i];
+                        param.targets[i] = { targets: [] };
 
                         if ( Def.isTargetedActionDef( defAction ) ) {
                             actions.push(
-                                defAction.acquireTargets( param.source, param.targets[i], gameCtx ) );
+                                defAction.acquireTargets( param, param.targets[i], gameCtx ) );
                         }
                     }
 
