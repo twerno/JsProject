@@ -80,6 +80,7 @@ namespace HsLogic {
                     resolve( actions );
                 }
             ); // return new Promise
+
         } // resolve( _this_: PlaySpell<P>
 
     } // export class PlaySpell

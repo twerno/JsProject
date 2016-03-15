@@ -6,7 +6,6 @@
 namespace HsLogic {
 
 
-
     export interface IAcquireTargetsParam extends IHsCancelableParam {
         defActions: Def.IDefAction[],
         targets: Def.ITargets[]
@@ -20,8 +19,8 @@ namespace HsLogic {
     export class AcquireTargets extends HsAction<IAcquireTargetsParam> {
 
         resolve( _this_: AcquireTargets, gameCtx: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: IAcquireTargetsParam = _this_.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
@@ -40,8 +39,10 @@ namespace HsLogic {
                     }
 
                     resolve( actions );
-                });
-        }
-    }
+                }
+            ); // return new Promise
 
+        } // resolve( _this_: AcquireTargets
+
+    } // export class AcquireTargets
 }

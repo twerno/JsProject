@@ -25,20 +25,21 @@ namespace HsLogic {
  	 */
     export class PlayCard extends HsAction<PlayCardParam> {
 
-
         resolve( _this_: PlayCard, gameCtx: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
+            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: PlayCardParam = _this_.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
-                    actions.push( gameCtx.actionFactory.acquireTargets( {
-                        source: param.source,
-                        targets: param.acquiredTargets,
-                        defActions: param.card.playActions,
-                        cancelAction: param.cancelAction
-                    }) );
+                    actions.push(
+                        gameCtx.actionFactory.acquireTargets( {
+                            source: param.source,
+                            targets: param.acquiredTargets,
+                            defActions: param.card.playActions,
+                            cancelAction: param.cancelAction
+                        })
+                    );
 
 
                     actions.push( new InlineAction(
@@ -68,11 +69,13 @@ namespace HsLogic {
 
                             resolve( innerActions );
                         }
-                    ) );
+                    ) );  // new InlineAction(
 
                     resolve( actions );
                 }
-            );
-        }
-    }
+            ); // return new Promise
+
+        } // resolve( _this_: PlayCard
+
+    } // export class PlayCard
 }

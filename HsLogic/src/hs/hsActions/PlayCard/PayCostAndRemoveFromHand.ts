@@ -27,10 +27,12 @@ namespace HsLogic {
                     player.filled_mana_crystals -= card.cost;
 
                     gameCtx.zonesOf( player ).hand.removeEntity( card );
-                    //gameCtx.zonesOf( player ).graveyard.addEntity( card );
 
                     resolve( jsLogic.NO_CONSEQUENCES );
-                });
-        }
-    }
+                }
+            ); // return new Promise
+
+        } // resolve( _this_: PayCostAndRemoveFromHand<P>
+
+    } // export class PayCostAndRemoveFromHand
 }

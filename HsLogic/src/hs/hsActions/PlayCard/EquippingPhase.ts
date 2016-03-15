@@ -61,6 +61,8 @@ namespace HsLogic {
                     resolve( actions );
                 }
             ); // return new Promise
+
         } // resolve( _this_: EquippingPhase<P>
+
     } // export class EquippingPhase
 }

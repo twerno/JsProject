@@ -40,29 +40,8 @@ namespace HsLogic {
                     resolve( actions );
                 }
             ); // return new Promise
+
         } // resolve( _this_: PlayWeapon<P>
+
     } // export class PlayWeapon
-
-    //export class PlayWeapon2<P extends PlayCardParam> extends jsLogic.CancelableAction<HsGameCtx, P> {
-
-    //    cancelAction( eventParam: P ): boolean { return eventParam.cancelAction.value }
-    //    cancelOnAfterEvent( eventParam: P ): boolean { return eventParam.cancelAction.value }
-
-    //    onBeforeEventBuilder( param: P ): HsActionEvent<P> { return new OnWeaponPlaying( param ) }
-    //    onAfterEventBuilder( param: P ): HsActionEvent<P> { return new OnWeaponPlayed( param ) }
-
-
-    //    resolve( _this_: PlayWeapon<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-    //        return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-
-    //            ( resolve, reject ): void => {
-    //                let weapon: Weapon = <Weapon>_this_.param.card;
-
-    //                // equiping phase
-
-    //                resolve( null );
-    //            }
-    //        );
-    //    }
-    //}
 }
