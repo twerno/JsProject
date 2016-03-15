@@ -65,22 +65,6 @@ namespace jsLogic {
 
     }
 
-    //export class InlineAction<T extends IContext, P extends IActionParam> extends IAction<T> {
-
-    //    resolve(_this_: InlineAction<T, P>, context: T): PromiseOfActions {
-    //        if (this.actionOrExecutor instanceof IAction) {
-    //            let action: IAction<T> = <IAction<T>>this.actionOrExecutor;
-    //            return action.resolve(_this_, context);
-    //        } else if (typeof (this.actionOrExecutor) === typeof (Function)) {
-    //            let executor: FPromiseExecutor<IAction<T>[]> = <FPromiseExecutor<IAction<T>[]>>this.actionOrExecutor;
-    //            return new Promise<IAction<T>[]>(executor);
-    //        }
-    //    }
-
-    //    constructor(sourceAction: IAction<T>, public actionOrExecutor: IAction<T> | FPromiseExecutor<IAction<T>[]>) {
-    //        super(sourceAction);
-    //    }
-    //}
 
     export class InlineAction<T extends IContext, P extends IActionParam> extends IAction<T> {
 

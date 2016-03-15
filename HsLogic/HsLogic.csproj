@@ -82,7 +82,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\Heal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\PayCostAndRemoveFromHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\AcquireTargets.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\ChooseAtRandomAction.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\technical\MakeChoiceAtRandom.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\ExecuteTriggers.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\ExecuteTargetedTrigger.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\ExecuteTargetlessTrigger.ts" />

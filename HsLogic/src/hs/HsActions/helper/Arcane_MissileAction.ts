@@ -23,7 +23,7 @@ namespace HsLogic {
                         resultSet: ( Player | Minion )[];
 
                     resolve( [
-                        new MakeAChoiceAtRandom( {
+                        new MakeChoiceAtRandom( {
                             source: param.source,
                             require: REQUIRE.YES,
                             props: { amount: 1, withRepetitions: false },

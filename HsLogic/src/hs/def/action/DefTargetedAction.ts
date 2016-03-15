@@ -12,7 +12,7 @@ namespace Def {
 
     export class SingleTargetAction extends IDefTargetedAction<ITargets> {
         acquireTargets( source: HsSource, targets: ITargets, gameCtx: GameCtx ): Action {
-            return new HsLogic.MakeAChoiceAtRandom( {
+            return new HsLogic.MakeChoiceAtRandom( {
                 source: source,
                 require: HsLogic.REQUIRE.YES,
                 props: { amount: 1 },
