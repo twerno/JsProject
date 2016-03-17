@@ -48,7 +48,6 @@ namespace HsLogic {
                         })
                     );
 
-
                     // old weapon deathrattle triggers
                     if ( oldWeapon )
                         actions.push(

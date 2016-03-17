@@ -79,15 +79,17 @@
     <TypeScriptCompile Include="src\hs\helpers\Target.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\AddGeneratedCardIntoHand.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\AuraUpdateStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DestroyCardInPlay.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\DeathCreationStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Discard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Heal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\PayCostAndRemoveFromHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\AcquireTargets.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\makeChoice\ChooseSingleTarget.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\makeChoice\MakeChoiceAtRandom.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\prototypes\AuraUpdateStep.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\prototypes\Battlecry.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\prototypes\DeathCreationStep.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\SummonResolutionStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\SilenceAMinion.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\ExecuteTriggers.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\ExecuteTargetedTrigger.ts" />
@@ -103,7 +105,6 @@
     <TypeScriptCompile Include="src\hs\hsActions\DrawCard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\EmptyAction.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\Fatigue.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\MarkAsDestroyed.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\MillCard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PutCardIntoHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\ReturnCardIntoHandFromPlayZone.ts" />

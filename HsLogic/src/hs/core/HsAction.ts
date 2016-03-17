@@ -37,14 +37,15 @@ namespace HsLogic {
         constructor( public param: P ) { super( param.source.action ) }
 
         abstract resolve( _this_: jsLogic.IAction<HsGameCtx>, gameCtx: HsGameCtx ): PromiseOfActions;
+
+        protected dispatch( event: HsActionEvent<IHsActionParam>, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> {
+            return gameCtx.actionFactory.dispatch( event );
+        }
     }
 
     export abstract class HsActionEvent<P extends IHsActionParam> extends jsLogic.ActionEvent<HsGameCtx, P> { };
 
     export type FActionBuilder<P extends IHsActionParam> = ( param: P, gameCtx: HsGameCtx ) => HsAction<P>;
 
-    //export function InlineAction( executor: jsLogic.FPromiseExecutor<jsLogic.IAction<HsGameCtx>[]> ) {
-    //    return new jsLogic.InlineAction( executor );           
-    //}
     export class InlineAction extends jsLogic.InlineAction<HsGameCtx> { };
 }

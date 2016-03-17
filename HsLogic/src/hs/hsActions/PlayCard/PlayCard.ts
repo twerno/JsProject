@@ -26,50 +26,36 @@ namespace HsLogic {
     export class PlayCard extends HsAction<PlayCardParam> {
 
         resolve( _this_: PlayCard, gameCtx: HsGameCtx ): PromiseOfActions {
+            if ( _this_.param.cancelAction.value )
+                return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: PlayCardParam = _this_.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
-                    actions.push(
-                        gameCtx.actionFactory.acquireTargets( {
-                            source: param.source,
-                            targets: param.acquiredTargets,
-                            defActions: param.card.playActions,
-                            cancelAction: param.cancelAction
-                        })
-                    );
+                    //                    actions.push(gameCtx.actionFactory.acquireTargets({
+                    //                        source: param.source,
+                    //                        targets: param.acquiredTargets,
+                    //                        defActions: param.card.playActions,
+                    //                        cancelAction: param.cancelAction
+                    //                    }));
 
+                    // pay cost & remove from hand
+                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
-                    actions.push( new InlineAction(
-                        ( resolve, reject ): void => {
-                            let innerActions: jsLogic.IAction<HsGameCtx>[] = [];
+                    // delegate to playSpell, playMinon or playWeapon action
+                    if ( param.card instanceof Minion )
+                        actions.push( gameCtx.actionFactory.playMinion( <PlayMinionParam>param ) );
 
-                            if ( param.cancelAction.value ) {
-                                resolve( jsLogic.NO_CONSEQUENCES );
-                                return;
-                            }
+                    else if ( param.card instanceof Spell )
+                        actions.push( gameCtx.actionFactory.playSpell( param ) );
 
-                            // pay cost & remove from hand
-                            innerActions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
+                    else if ( param.card instanceof Weapon )
+                        actions.push( gameCtx.actionFactory.playWeapon( <IEquipWeaponParam>param ) );
 
-                            // delegate to playSpell, playMinon or playWeapon action
-                            if ( param.card instanceof Minion )
-                                innerActions.push( gameCtx.actionFactory.playMinion( <PlayMinionParam>param ) );
-
-                            else if ( param.card instanceof Spell )
-                                innerActions.push( gameCtx.actionFactory.playSpell( param ) );
-
-                            else if ( param.card instanceof Weapon )
-                                innerActions.push( gameCtx.actionFactory.playWeapon( <IEquipWeaponParam>param ) );
-
-                            else
-                                reject( new Error( `Unsuported object class: ${param.card}` ) );
-
-                            resolve( innerActions );
-                        }
-                    ) );  // new InlineAction(
+                    else
+                        reject( new Error( `Unsuported object class: ${param.card}` ) );
 
                     resolve( actions );
                 }
@@ -78,4 +64,5 @@ namespace HsLogic {
         } // resolve( _this_: PlayCard
 
     } // export class PlayCard
+
 }

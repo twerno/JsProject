@@ -1,7 +1,5 @@
 ///<reference path="../hsActions/AddGeneratedCardIntoHand.ts"/>
-///<reference path="../hsActions/AuraUpdateStep.ts"/>
 ///<reference path="../hsActions/Damage.ts"/>
-///<reference path="../hsActions/DeathCreationStep.ts"/>
 ///<reference path="../hsActions/DestroyCardInPlay.ts"/>
 ///<reference path="../hsActions/Discard.ts"/>
 ///<reference path="../hsActions/DrawCard.ts"/>
@@ -126,7 +124,7 @@ namespace HsLogic {
         }
 
         playMinion( param: PlayMinionParam ): jsLogic.IAction<T> {
-            return new PlayMinion( param ).wrapIt();
+            return new PlayMinion( param );
         }
 
         playSpell( param: PlayCardParam ): jsLogic.IAction<T> {

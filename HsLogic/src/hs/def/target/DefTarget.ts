@@ -65,6 +65,11 @@ namespace Def {
         }
 
 
+		/**
+		 *  1. Active player
+		 *  2. Other player
+		 *  3. Cards in order of play
+		 */
         protected sort( array: HsLogic.HsEntity[], gameCtx: GameCtx ): HsLogic.HsEntity[] {
             return array.sort(
                 ( a: HsLogic.HsEntity, b: HsLogic.HsEntity ): number => {
@@ -72,8 +77,12 @@ namespace Def {
                         return -1;
                     else if ( b === gameCtx.activePlayer )
                         return 1
+                    else if ( a instanceof HsLogic.Player )
+                        return -1
+                    else if ( b instanceof HsLogic.Player )
+                        return 1
                     else
-                        return a.id - b.id;
+                        return a.orderOfPlay - b.orderOfPlay;
                 });
         }
 

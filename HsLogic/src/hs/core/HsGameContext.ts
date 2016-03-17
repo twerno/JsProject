@@ -5,7 +5,10 @@
 
 namespace HsLogic {
 
-
+    export interface IPendingEvents {
+        summon: SummonEvent[],
+        death: HsActionEvent<IHsActionParam>[]
+    }
 
 
     export class HsGameCtx implements jsLogic.IExtContext {
@@ -44,5 +47,10 @@ namespace HsLogic {
         zonesOfActivePlayer(): HsZones {
             return this.zonesOf( this.activePlayer );
         }
+
+        pendingEvents: IPendingEvents = {
+            summon: [],
+            death: []
+        };
     }
 }

@@ -24,7 +24,7 @@ namespace jsLogic {
 
 
         pop(): T {
-            let result: T = this._entities[this._entities.length - 1];
+            let result: T = this._entities[this._entities.length - 1] || null;
             this.removeEntity( result );
             return result;
         }
