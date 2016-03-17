@@ -2,17 +2,17 @@
 
 namespace HsLogic {
 
-    export interface ExecuteTriggersParam extends IHsActionParam {
+    export interface ExecuteTriggersParam extends IActionParam {
         defActions: Def.IDefAction[],
         targets: Def.ITargets[]
     }
 
-    export class ExecuteTriggers<P extends ExecuteTriggersParam> extends HsAction<P> {
-        resolve( _this_: ExecuteTriggers<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+    export class ExecuteTriggers<P extends ExecuteTriggersParam> extends Action<P> {
+        resolve( self: ExecuteTriggers<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
                         defAction: Def.IDefAction;
 

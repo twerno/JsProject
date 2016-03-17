@@ -4,7 +4,7 @@
 
 namespace HsLogic {
 
-    export interface ISilenceAMinionParam extends IHsActionParam {
+    export interface ISilenceAMinionParam extends IActionParam {
         minion: Minion;
     }
 
@@ -12,15 +12,17 @@ namespace HsLogic {
      * SilenceAMinion
      *
  	 */
-    export class SilenceAMinion<P extends ISilenceAMinionParam> extends HsAction<P> {
+    export class SilenceAMinion<P extends ISilenceAMinionParam> extends Action<P> {
 
-        resolve( _this_: SilenceAMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: SilenceAMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
-                        minion: Minion = param.minion,
-                        triggers: Def.IDefTargetlessAction[] = minion.triggers.onSilenced;
+                    let param: P = self.param,
+                        minion: Minion = param.minion;
+
+                    //@TODO fix for Shadow Madness
+                    //triggers: Def.IDefTargetlessAction[] = minion.triggers.onSilenced;
 
                     minion.attack = minion.def.attack;
                     minion.hp += Math.min( minion.def.hp - minion.maxHp, minion.def.hp );
@@ -38,17 +40,18 @@ namespace HsLogic {
                         windfury: false,
                         silenced: true
                     }
-                    minion.triggers = {};
+                    minion.triggers = [];
                     minion.enchantments = [];
                     minion.counters = {};
                     minion.markers = new jsLogic.MarkersList();
 
-                    resolve( [
-                        gameCtx.actionFactory.executeTargetlessTriggers( {
-                            source: param.source,
-                            defActions: triggers
-                        })
-                    ] );
+                    resolve( jsLogic.NO_CONSEQUENCES );
+                    //                    resolve([
+                    //                        gameCtx.actionFactory.executeTargetlessTriggers({
+                    //                            source: param.source,
+                    //                            defActions: triggers
+                    //                        })
+                    //                    ]);
                 }
             );
         }

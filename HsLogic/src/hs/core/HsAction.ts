@@ -18,34 +18,43 @@ namespace HsLogic {
         NONE
     }
 
-    export interface IHsSource extends jsLogic.ISource {
+    export interface ISource extends jsLogic.ISource {
         card: Card,
         caster: Player,
         sourceType: SOURCE_TYPE
     }
 
-    export interface IHsActionParam extends jsLogic.IActionParam {
-        source: IHsSource
+    export interface IActionParam extends jsLogic.IActionParam {
+        source: ISource
     }
 
-    export interface IHsCancelableParam extends IHsActionParam {
+    export interface IHsCancelableParam extends IActionParam {
         cancelAction: { value: boolean }
     }
 
-    export abstract class HsAction<P extends IHsActionParam> extends jsLogic.IAction<HsGameCtx> {
+    export abstract class Action<P extends IActionParam> extends jsLogic.IAction<HsGameCtx> {
 
-        constructor( public param: P ) { super( param.source.action ) }
+        constructor( public param: P ) { super( param.source ) }
 
-        abstract resolve( _this_: jsLogic.IAction<HsGameCtx>, gameCtx: HsGameCtx ): PromiseOfActions;
+        abstract resolve( self: jsLogic.IAction<HsGameCtx>, gameCtx: HsGameCtx ): PromiseOfActions;
 
-        protected dispatch( event: HsActionEvent<IHsActionParam>, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> {
-            return gameCtx.actionFactory.dispatch( event );
-        }
+        //protected dispatch( event: HsActionEvent<IHsActionParam>, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> {
+        //    return //gameCtx.actionFactory.dispatch( event );
+        //}
     }
 
-    export abstract class HsActionEvent<P extends IHsActionParam> extends jsLogic.ActionEvent<HsGameCtx, P> { };
 
-    export type FActionBuilder<P extends IHsActionParam> = ( param: P, gameCtx: HsGameCtx ) => HsAction<P>;
+    export interface ActionEventClass {
+        new ( param: IActionParam ): ActionEvent<IActionParam>;
+    }
+
+    export abstract class ActionEvent<P extends IActionParam> {
+        get type(): string { return ClassUtils.getNameOfClass( this ) }
+
+        constructor( public param: P ) { }
+    };
+
+    export type FActionBuilder<P extends IActionParam> = ( param: P, gameCtx: HsGameCtx ) => Action<P>;
 
     export class InlineAction extends jsLogic.InlineAction<HsGameCtx> { };
 }

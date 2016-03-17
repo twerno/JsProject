@@ -23,15 +23,15 @@ namespace HsLogic {
      * PlayCard
      *
  	 */
-    export class PlayCard extends HsAction<PlayCardParam> {
+    export class PlayCard extends Action<PlayCardParam> {
 
-        resolve( _this_: PlayCard, gameCtx: HsGameCtx ): PromiseOfActions {
-            if ( _this_.param.cancelAction.value )
+        resolve( self: PlayCard, gameCtx: HsGameCtx ): PromiseOfActions {
+            if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: PlayCardParam = _this_.param,
+                    let param: PlayCardParam = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
                     //                    actions.push(gameCtx.actionFactory.acquireTargets({
@@ -61,7 +61,7 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve( _this_: PlayCard
+        } // resolve( self: PlayCard
 
     } // export class PlayCard
 

@@ -11,20 +11,20 @@ namespace jsLogic {
  	 */
     export class DispatchEventAction<T extends IExtContext, P extends IActionParam> extends IAction<T> {
 
-        resolve( _this_: DispatchEventAction<T, P>, context: T ): PromiseOfActions {
+        resolve( self: DispatchEventAction<T, P>, context: T ): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 ( resolve, reject ): void => {
 
                     // first action returned will be the first action to resolve
                     resolve(
-                        context.handlers.collectResponsesOf( _this_.event, context )
+                        context.handlers.collectResponsesOf( self.event, context )
                     );
                 });
         }
 
 
         constructor( public event: ActionEvent<T, P> ) {
-            super( event.param.source.action );
+            super( event.param.source );
         };
     }
 

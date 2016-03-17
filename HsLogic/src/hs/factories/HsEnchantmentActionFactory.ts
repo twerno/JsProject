@@ -2,19 +2,19 @@
 
 namespace HsLogic {
 
-    export interface ITargetsParam extends IHsActionParam {
+    export interface ITargetsParam extends IActionParam {
         targets: HsEntity[],
     }
 
-    export interface ICharactersParam extends IHsActionParam {
+    export interface ICharactersParam extends IActionParam {
         targets: ( Player | Minion )[],
     }
 
-    export interface ISingleTargetParam extends IHsActionParam {
+    export interface ISingleTargetParam extends IActionParam {
         target: HsEntity,
     }
 
-    export interface ISingleCharacterParam extends IHsActionParam {
+    export interface ISingleCharacterParam extends IActionParam {
         target: Player | Minion,
     }
 

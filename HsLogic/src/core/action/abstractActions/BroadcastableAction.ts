@@ -22,7 +22,7 @@ namespace jsLogic {
 
 
         constructor( public param: P ) {
-            super( param.source.action );
+            super( param.source );
         }
     }
 
@@ -34,11 +34,11 @@ namespace jsLogic {
      */
     export class BroadcastableActionWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
 
-        resolve( _this_: BroadcastableActionWrapper<T, P>, context: T ): PromiseOfActions {
+        resolve( self: BroadcastableActionWrapper<T, P>, context: T ): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 ( resolve, reject ): void => {
 
-                    let innerAction: BroadcastableAction<T, P> = _this_.broadcastableAction;
+                    let innerAction: BroadcastableAction<T, P> = self.broadcastableAction;
                     let eventParam: P = innerAction.param;
 
                     resolve( [
@@ -55,7 +55,7 @@ namespace jsLogic {
 
 
         constructor( public broadcastableAction: BroadcastableAction<T, P> ) {
-            super( broadcastableAction.param.source.action );
+            super( broadcastableAction.param.source );
         }
     }
 }

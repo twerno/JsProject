@@ -5,7 +5,7 @@
 
 namespace HsLogic {
 
-    export class CardSet<T extends Def.IHsEntity> {
+    export class CardSet<T extends Def.ICard> {
 
         private _map: Map<string, T> = new Map<string, T>();
 

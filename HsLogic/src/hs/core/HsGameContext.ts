@@ -6,8 +6,8 @@
 namespace HsLogic {
 
     export interface IPendingEvents {
-        summon: SummonEvent[],
-        death: HsActionEvent<IHsActionParam>[]
+        summon: EventSummon[],
+        death: ActionEvent<IActionParam>[]
     }
 
 
@@ -15,7 +15,7 @@ namespace HsLogic {
 
         actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
 
-        handlers: jsLogic.EventHandlers<HsGameCtx, IHsActionParam> = new jsLogic.EventHandlers<HsGameCtx, IHsActionParam>();
+        handlers: jsLogic.EventHandlers<HsGameCtx, IActionParam> = new jsLogic.EventHandlers<HsGameCtx, IActionParam>();
 
         activePlayer: Player = null;
 

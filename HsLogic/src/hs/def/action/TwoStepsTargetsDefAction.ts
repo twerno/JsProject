@@ -3,7 +3,7 @@
 namespace Def {
 
     export interface IStep2TargetsDefActionParam<T extends HsLogic.HsEntity> {
-        availableTargets: ( step1Target: T ) => IDefTarget,
+        availableTargets: ( step1Target: T ) => IDefSetBuilder,
         actionBuilder: FTargetsActionBuilder<T>
     }
 

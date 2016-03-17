@@ -15,13 +15,13 @@ namespace HsLogic {
  	 * http://hearthstone.gamepedia.com/Advanced_rulebook 
  	 *
  	 */
-    export class ShuffleGeneratedCardIntoDeck<P extends PlayerAndCardsParam> extends HsAction<P> {
+    export class ShuffleGeneratedCardIntoDeck<P extends PlayerAndCardsParam> extends Action<P> {
 
-        resolve( _this_: ShuffleGeneratedCardIntoDeck<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: ShuffleGeneratedCardIntoDeck<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         deck: HsZone<Card> = gameCtx.zonesOf( param.player ).deck,
                         added: boolean = false;
 

@@ -1,26 +1,26 @@
-﻿///<reference path="../../core/Entity.ts"/>
+///<reference path="../../core/Entity.ts"/>
 ///<reference path="../def/entity/ICard.ts"/>
 
 "use strict";
 
 namespace HsLogic {
 
-    export class HsEntity extends jsLogic.Entity implements Def.IHsEntity {
+    export class HsEntity extends jsLogic.Entity implements Def.IHsEntityImpl {
         def: Def.IHsEntity;
-        name: string;
-        cardType: Def.CARD_TYPE;
-        enchantments: Def.IEnchantment[];
-        orderOfPlay: number = -1;
+        type: Def.TYPE;
+
+        orderOfPlay: number;
 
 
         protected initFromDefinition( def: Def.IHsEntity ): void {
             this.def = def;
-            this.name = def.name;
-            this.cardType = def.cardType;
-            this.enchantments = def.enchantments;
+            this.type = Def.TYPE.UNKNOWN
+            this.orderOfPlay = jsLogic.generateNewId();
         }
 
-        constructor( public owner: HsEntity, def?: Def.IHsEntity ) {
+
+
+        constructor( public owner: Player, def?: Def.IHsEntity ) {
             super( owner );
             def && this.initFromDefinition( def );
         }

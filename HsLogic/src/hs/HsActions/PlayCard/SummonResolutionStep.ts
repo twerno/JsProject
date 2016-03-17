@@ -18,21 +18,21 @@ namespace HsLogic {
  	 */
 
 
-    export class SummonResolutionStep<P extends IHsActionParam> extends HsAction<P> {
+    export class SummonResolutionStep<P extends IActionParam> extends Action<P> {
 
         resolvable( param: P, gameCtx: HsGameCtx ): boolean {
             return gameCtx.pendingEvents.summon.length !== 0;
         }
 
-        resolve( _this_: SummonResolutionStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: SummonResolutionStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             if ( gameCtx.pendingEvents.summon.length === 0 )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
-                        event: SummonEvent,
+                        event: EventSummon,
                         card: Card;
 
                     // 1. aura Update (Health/Attack) Step
@@ -48,8 +48,8 @@ namespace HsLogic {
                         // http://hearthstone.gamepedia.com/Advanced_rulebook#Summon_Resolution_Step
                         // Examples: 
                         // if the minion associated with a Summon Event is no longer in play at the time it is resolved, then nothing queues
-                        if ( gameCtx.zonesOf( card.owner ).battlefield.has( card ) )
-                            actions.push( this.dispatch( event, gameCtx ) );
+                        //if ( gameCtx.zonesOf( card.owner ).battlefield.has( card ) )
+                        //    actions.push( this.dispatch( event, gameCtx ) );
                     }
 
                     // 3-6. Delegate execution to DeathCreationStep
@@ -58,7 +58,7 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve( _this_: PlaySpell<P>
+        } // resolve( self: PlaySpell<P>
 
     } // export class SummonResolutionStep
 }

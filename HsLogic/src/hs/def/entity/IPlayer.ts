@@ -8,6 +8,7 @@ namespace Def {
         hero: any,
         heroPower: any
 
-        flags: IFlags
+        flags: IFlags,
+        triggers: IDefTriggerImpl[],
     }
 }

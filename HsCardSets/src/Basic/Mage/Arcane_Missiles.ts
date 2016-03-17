@@ -9,8 +9,8 @@ namespace Def {
         name: `Arcane Missiles`,
         cost: 1,
 
-        cardType: CARD_TYPE.SPELL,
         enchantments: [],
+        triggers: [],
 
         playActions: [
 
@@ -27,6 +27,6 @@ namespace Def {
             }
         ],
 
-        triggers: {}
+
     });
 }

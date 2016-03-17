@@ -5,15 +5,15 @@
 
 namespace HsLogic {
 
-    export class OnPlayPhaseEvent extends HsActionEvent<PlayCardParam> {
+    export class OnPlayPhaseEvent extends ActionEvent<PlayCardParam> {
         static get type(): string { return OnPlayPhaseEvent.name }
     }
 
-    export class OnTargetingPhaseEvent extends HsActionEvent<PlayCardParam> {
+    export class OnTargetingPhaseEvent extends ActionEvent<PlayCardParam> {
         static get type(): string { return OnTargetingPhaseEvent.name }
     }
 
-    export class OnAfterSpellPhaseEvent extends HsActionEvent<PlayCardParam> {
+    export class OnAfterSpellPhaseEvent extends ActionEvent<PlayCardParam> {
         static get type(): string { return OnAfterSpellPhaseEvent.name }
     }
 
@@ -31,19 +31,19 @@ namespace HsLogic {
  	 */
 
 
-    export class PlaySpell<P extends PlayCardParam> extends HsAction<P> {
+    export class PlaySpell<P extends PlayCardParam> extends Action<P> {
 
-        resolve( _this_: PlaySpell<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-            if ( _this_.param.cancelAction.value )
+        resolve( self: PlaySpell<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+            if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
                     // step 2 - onPlayPhase
-                    actions.push( gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
+                    actions.push(); //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
                     actions.push( new SummonResolutionStep( { source: param.source }) );
                     actions.push( new DeathCreationStep( { source: param.source }) );
 
@@ -57,7 +57,7 @@ namespace HsLogic {
                             let innerActions: jsLogic.IAction<HsGameCtx>[] = [];
 
                             // step 3 - onTargetingPhase
-                            innerActions.push( gameCtx.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
+                            innerActions.push(); //gameCtx.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
                             actions.push( new SummonResolutionStep( { source: param.source }) );
                             actions.push( new DeathCreationStep( { source: param.source }) );
 
@@ -71,7 +71,7 @@ namespace HsLogic {
                             }) );
 
                             // step 5 - onAfterPlaySpell
-                            innerActions.push( gameCtx.actionFactory.dispatch( new OnAfterSpellPhaseEvent( param ) ) );
+                            innerActions.push(); //gameCtx.actionFactory.dispatch( new OnAfterSpellPhaseEvent( param ) ) );
 
                             resolve( innerActions );
                         }
@@ -81,7 +81,7 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve( _this_: PlaySpell<P>
+        } // resolve( self: PlaySpell<P>
 
     } // export class PlaySpell
 }

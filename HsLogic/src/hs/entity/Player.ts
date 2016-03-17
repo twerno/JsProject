@@ -23,6 +23,8 @@ namespace HsLogic {
 
         flags: Def.IFlags = {};
 
+        triggers: Trigger[];
+
 
         constructor( public name: string, def?: Def.IPlayer ) {
             super( null, def );

@@ -55,7 +55,7 @@ namespace HsLogic {
         }
 
 
-        deathCreationStep( param: IHsActionParam ): DeathCreationStep<IHsActionParam> {
+        deathCreationStep( param: IActionParam ): DeathCreationStep<IActionParam> {
             return new DeathCreationStep( param );
         }
 
@@ -71,7 +71,7 @@ namespace HsLogic {
             return new DrawCard( drawParam );
         }
 
-        emptyAction( source: IHsSource, message: string ): EmptyAction<EmptyActionParam> {
+        emptyAction( source: ISource, message: string ): EmptyAction<EmptyActionParam> {
             return new EmptyAction( { source: source, message: message, sourceType: SOURCE_TYPE.NONE });
         }
 
@@ -87,11 +87,11 @@ namespace HsLogic {
         //    return new MarkAsDestroyed(source, card);
         //}
 
-        millCard( source: IHsSource, card: Card ): MillCard<CardParam> {
+        millCard( source: ISource, card: Card ): MillCard<CardParam> {
             return new MillCard( { source: source, card: card });
         }
 
-        putCardIntoHand( source: IHsSource, player: Player, card: Card ): PutCardIntoHand<PlayerAndCardParam> {
+        putCardIntoHand( source: ISource, player: Player, card: Card ): PutCardIntoHand<PlayerAndCardParam> {
             return new PutCardIntoHand( {
                 source: source,
                 player: player,
@@ -111,7 +111,7 @@ namespace HsLogic {
             return new ShuffleDeck( param );
         }
 
-        shuffleGeneratedCardIntoDeck( source: IHsSource, cards: Card[], owner: Player ): ShuffleGeneratedCardIntoDeck<PlayerAndCardsParam> {
+        shuffleGeneratedCardIntoDeck( source: ISource, cards: Card[], owner: Player ): ShuffleGeneratedCardIntoDeck<PlayerAndCardsParam> {
             return new ShuffleGeneratedCardIntoDeck( { source: source, cards: cards, player: owner });
         }
 

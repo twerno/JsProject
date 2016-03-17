@@ -15,14 +15,14 @@ namespace jsLogic {
     export class RandomSelector<T extends IExtContext, O> extends IAction<T> {
 
 
-        resolve( _this_: RandomSelector<T, O>, context: T ): PromiseOfActions {
+        resolve( self: RandomSelector<T, O>, context: T ): PromiseOfActions {
             return new Promise<IAction<T>[]>(
                 ( resolve, reject ): void => {
 
-                    let limit: number = Math.min( _this_.selectorParam.options.length, _this_.selectorParam.amount );
+                    let limit: number = Math.min( self.selectorParam.options.length, self.selectorParam.amount );
 
                     for ( let i = 0; i < limit; i++ ) {
-                        _this_.resultSet.push( _this_._selectElementAtRandom() );
+                        self.resultSet.push( self._selectElementAtRandom() );
                     }
 
                     resolve( null );
@@ -44,7 +44,7 @@ namespace jsLogic {
         }
 
 
-        constructor( source: IAction<T>, public selectorParam: SelectorParam<O>, public resultSet: O[] ) {
+        constructor( source: ISource, public selectorParam: SelectorParam<O>, public resultSet: O[] ) {
             super( source );
         };
     }

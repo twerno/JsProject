@@ -24,7 +24,7 @@ namespace jsLogic {
 
 
         constructor( public param: P ) {
-            super( param.source.action );
+            super( param.source );
         };
     }
 
@@ -35,20 +35,20 @@ namespace jsLogic {
      *
      */
     export class CancellableActionExternalWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
-        resolve( _this_: CancellableActionExternalWrapper<T, P>, context: T ): PromiseOfActions {
+        resolve( self: CancellableActionExternalWrapper<T, P>, context: T ): PromiseOfActions {
             return new Promise<IAction<T>[]>(
 
                 ( resolve, reject ): void => {
 
-                    let param: P = _this_.mainAction.param;
-                    let onBeforeEvent: ActionEvent<T, P> = _this_.mainAction.onBeforeEventBuilder( param );
+                    let param: P = self.mainAction.param;
+                    let onBeforeEvent: ActionEvent<T, P> = self.mainAction.onBeforeEventBuilder( param );
 
                     if ( !onBeforeEvent )
-                        reject( new Error( `[${_this_.mainAction}] 'onBeforeEvent' had not beed created.` ) );
+                        reject( new Error( `[${self.mainAction}] 'onBeforeEvent' had not beed created.` ) );
 
                     resolve( [
                         context.actionFactory.dispatch( onBeforeEvent ),
-                        new CancellableActionInternalWrapper( _this_.mainAction )
+                        new CancellableActionInternalWrapper( self.mainAction )
                     ] );
 
                 });
@@ -56,7 +56,7 @@ namespace jsLogic {
 
 
         constructor( public mainAction: CancelableAction<T, P> ) {
-            super( mainAction.param.source.action );
+            super( mainAction.param.source );
         };
     }
 
@@ -67,21 +67,21 @@ namespace jsLogic {
      *
      */
     class CancellableActionInternalWrapper<T extends IExtContext, P extends IActionParam> extends IAction<T> {
-        resolve( _this_: CancellableActionInternalWrapper<T, P>, context: T ): PromiseOfActions {
+        resolve( self: CancellableActionInternalWrapper<T, P>, context: T ): PromiseOfActions {
             return new Promise<IAction<T>[]>(
 
                 ( resolve, reject ): void => {
-                    let param: P = _this_.mainAction.param;
+                    let param: P = self.mainAction.param;
 
-                    if ( _this_.mainAction.cancelAction( param ) ) {
+                    if ( self.mainAction.cancelAction( param ) ) {
                         resolve( NO_CONSEQUENCES );
                         return;
                     }
 
-                    let actions: IAction<T>[] = [_this_.mainAction];
+                    let actions: IAction<T>[] = [self.mainAction];
 
-                    if ( !_this_.mainAction.cancelOnAfterEvent( param ) ) {
-                        let onAfterEvent: ActionEvent<T, P> = _this_.mainAction.onAfterEventBuilder( param );
+                    if ( !self.mainAction.cancelOnAfterEvent( param ) ) {
+                        let onAfterEvent: ActionEvent<T, P> = self.mainAction.onAfterEventBuilder( param );
 
                         actions.push( context.actionFactory.dispatch( onAfterEvent ) );
                     }
@@ -93,7 +93,7 @@ namespace jsLogic {
 
 
         constructor( public mainAction: CancelableAction<T, P> ) {
-            super( mainAction.param.source.action );
+            super( mainAction.param.source );
         };
     }
 }

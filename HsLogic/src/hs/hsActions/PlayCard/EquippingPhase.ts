@@ -17,15 +17,15 @@ namespace HsLogic {
     *   4. execute deathrattle
     */
 
-    export class EquippingPhase<P extends IEquipWeaponParam> extends HsAction<P> {
+    export class EquippingPhase<P extends IEquipWeaponParam> extends Action<P> {
 
-        resolve( _this_: EquippingPhase<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-            if ( _this_.param.cancelAction.value )
+        resolve( self: EquippingPhase<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+            if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
                         weaponZone: HsZone<Weapon> = gameCtx.zonesOf( param.player ).weapon,
                         oldWeapon: Weapon = weaponZone.getRawArray()[0] || null;
@@ -49,19 +49,19 @@ namespace HsLogic {
                     );
 
                     // old weapon deathrattle triggers
-                    if ( oldWeapon )
-                        actions.push(
-                            new ExecuteTargetlessTriggers( {
-                                source: param.source,
-                                defActions: oldWeapon.triggers.deathrattle
-                            })
-                        );
+                    //                    if (oldWeapon)
+                    //                        actions.push(
+                    //                            new ExecuteTargetlessTriggers({
+                    //                                source: param.source,
+                    //                                defActions: oldWeapon.triggers.deathrattle
+                    //                            })
+                    //                            );
 
                     resolve( actions );
                 }
             ); // return new Promise
 
-        } // resolve( _this_: EquippingPhase<P>
+        } // resolve( self: EquippingPhase<P>
 
     } // export class EquippingPhase
 }

@@ -23,7 +23,7 @@ namespace HsLogic {
         baseDamage: number
     }
 
-    export interface RandomlySplitDamageParam extends IHsActionParam {
+    export interface RandomlySplitDamageParam extends IActionParam {
         damageType: Def.DAMAGE_TYPE,
         splitMode: Def.SPLIT_MODE
         partsAmount: number,
@@ -40,11 +40,11 @@ namespace HsLogic {
      *  DEFAULT_TRIGGER_LEVEL - Spell Damage/Fallen Heros
      *  QUEUE_TRIGGER_LAST    - Prophet Velens 
      */
-    export class OnDamageCalculationEvent<P extends DamageParam> extends HsActionEvent<P> {
+    export class OnDamageCalculationEvent<P extends DamageParam> extends ActionEvent<P> {
         static get type(): string { return OnDamageCalculationEvent.name }
     }
 
-    export class OnDamageDealt<P extends DamageParam> extends HsActionEvent<P> {
+    export class OnDamageDealt<P extends DamageParam> extends ActionEvent<P> {
         static get type(): string { return OnDamageDealt.name }
     }
 
@@ -53,22 +53,22 @@ namespace HsLogic {
      * Damage
      *
        */
-    export class Damage<P extends DamageParam> extends jsLogic.BroadcastableAction<HsGameCtx, P> {
+    export class Damage<P extends DamageParam> extends Action<P> {
 
-        onBeforeEventBuilder( param: P ): HsActionEvent<P> { return new OnDamageCalculationEvent( param ) }
-        onAfterEventBuilder( param: P ): HsActionEvent<P> {
-            if ( !this.param.target.flags.immune )
-                return new OnDamageDealt( param );
-            else
-                return null;
-        }
+        //onBeforeEventBuilder( param: P ): ActionEvent<P> { return new OnDamageCalculationEvent( param ) }
+        //onAfterEventBuilder( param: P ): ActionEvent<P> {
+        //    if ( !this.param.target.flags.immune )
+        //        return new OnDamageDealt( param );
+        //    else
+        //        return null;
+        //}
 
 
-        resolve( _this_: Damage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Damage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         target: Player | Minion = param.target;
 
                     if ( target.flags.immune ) {
@@ -89,13 +89,13 @@ namespace HsLogic {
         }
     }
 
-    export class DealDamage<P extends DealDamageParam> extends HsAction<P> {
+    export class DealDamage<P extends DealDamageParam> extends Action<P> {
 
-        resolve( _this_: DealDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: DealDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: Damage<DamageParam>[] = [],
                         target: Player | Minion;
 

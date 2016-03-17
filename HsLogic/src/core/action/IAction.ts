@@ -37,11 +37,13 @@ namespace jsLogic {
 
         get timelimit(): number { return _5_SECONDS; }
 
-        constructor( public source: IAction<T> ) { }
+        constructor( public source: ISource ) { }
 
         // actions in natural order
         // first on results list are first to resolve
-        abstract resolve( _this_: IAction<T>, context: T ): PromiseOfActions;
+        abstract resolve( self: IActionType, context: T ): PromiseOfActions;
+
+        //abstract resolvable(param: P, context: T): boolean;
     }
 
 
@@ -50,25 +52,25 @@ namespace jsLogic {
      *  BaseAction<T>
      *   action with no consequences
      */
-    export abstract class SimpleAction<T extends IContext> extends IAction<T> {
-
-        resolve( _this_: SimpleAction<T>, context: T ): PromiseOfActions {
-
-            return new Promise<IAction<T>[]>(( resolve: any, reject: any ): void => {
-                _this_.baseActionResolver( _this_, context );
-
-                resolve( NO_CONSEQUENCES );
-            });
-        }
-
-        protected abstract baseActionResolver( _this_: IAction<T>, context: T ): void;
-
-    }
+    //    export abstract class SimpleAction<T extends IContext> extends IAction<T> {
+    //
+    //        resolve(self: SimpleAction<T>, context: T): PromiseOfActions {
+    //
+    //            return new Promise<IAction<T>[]>((resolve: any, reject: any): void => {
+    //                self.baseActionResolver(self, context);
+    //
+    //                resolve(NO_CONSEQUENCES);
+    //            });
+    //        }
+    //
+    //        protected abstract baseActionResolver(self: IAction < T >, context: T): void;
+    //
+    //    }
 
 
     export class InlineAction<T extends IContext> extends IAction<T> {
 
-        resolve( _this_: InlineAction<T>, context: T ): PromiseOfActions {
+        resolve( self: IActionType, context: T ): PromiseOfActions {
             return new Promise<IAction<T>[]>( this.executor );
         }
 
@@ -76,6 +78,8 @@ namespace jsLogic {
             super( null );
         }
     }
+
+    export type IActionType = IAction<IContext>;
 
 
 }

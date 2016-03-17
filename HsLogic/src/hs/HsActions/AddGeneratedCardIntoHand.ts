@@ -13,13 +13,13 @@ namespace HsLogic {
  	 * http://hearthstone.gamepedia.com/Advanced_rulebook 
  	 *
  	 */
-    export class AddGeneratedCardIntoHand<P extends PlayerAndCardParam> extends HsAction<P> {
+    export class AddGeneratedCardIntoHand<P extends PlayerAndCardParam> extends Action<P> {
 
-        resolve( _this_: AddGeneratedCardIntoHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: AddGeneratedCardIntoHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         hand: HsZone<Card> = gameCtx.zonesOf( param.player ).hand;
 
                     if ( !hand.isFull )

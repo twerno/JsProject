@@ -15,12 +15,12 @@ namespace jsLogic {
     //export class MoveEntityBetweenZones<T extends IExtContext> extends jsLogic.IAction<T> {
 
 
-    //    resolve(_this_: MoveEntityBetweenZones<T>, context: T): PromiseOfActions {
+    //    resolve(self: MoveEntityBetweenZones<T>, context: T): PromiseOfActions {
     //        return new Promise<IAction<T>[]>(
     //            (resolve, reject): void => {
 
-    //                _this_.param.sourceZone.removeEntity(_this_.param.entity);
-    //                _this_.param.targetZone.addEntity(_this_.param.entity);
+    //                self.param.sourceZone.removeEntity(self.param.entity);
+    //                self.param.targetZone.addEntity(self.param.entity);
 
     //                resolve(null);
     //            });

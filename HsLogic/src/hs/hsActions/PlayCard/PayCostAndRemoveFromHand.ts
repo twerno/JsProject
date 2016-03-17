@@ -9,15 +9,15 @@ namespace HsLogic {
      * PayCostAndRemoveFromHand
      *
  	 */
-    export class PayCostAndRemoveFromHand<P extends PlayCardParam> extends HsAction<P> {
+    export class PayCostAndRemoveFromHand<P extends PlayCardParam> extends Action<P> {
 
-        resolve( _this_: PayCostAndRemoveFromHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-            if ( _this_.param.cancelAction.value )
+        resolve( self: PayCostAndRemoveFromHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+            if ( self.param.cancelAction.value )
                 return Promise.resolve( [] );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         player: Player = param.source.caster,
                         card: Card = param.card;
 
@@ -32,7 +32,7 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve( _this_: PayCostAndRemoveFromHand<P>
+        } // resolve( self: PayCostAndRemoveFromHand<P>
 
     } // export class PayCostAndRemoveFromHand
 }

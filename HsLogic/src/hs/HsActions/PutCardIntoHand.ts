@@ -13,13 +13,13 @@ namespace HsLogic {
 	 * If the hand is full move it to graveyard instead
  	 *
  	 */
-    export class PutCardIntoHand<P extends PlayerAndCardParam> extends HsAction<P> {
+    export class PutCardIntoHand<P extends PlayerAndCardParam> extends Action<P> {
 
-        resolve( _this_: PutCardIntoHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: PutCardIntoHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         zones: HsZones = gameCtx.zonesOf( param.player );
 
                     if ( !zones.hand.isFull ) {

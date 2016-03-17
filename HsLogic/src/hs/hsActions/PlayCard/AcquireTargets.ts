@@ -16,13 +16,13 @@ namespace HsLogic {
      * AcquireTargets
      *
      */
-    export class AcquireTargets extends HsAction<IAcquireTargetsParam> {
+    export class AcquireTargets extends Action<IAcquireTargetsParam> {
 
-        resolve( _this_: AcquireTargets, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: AcquireTargets, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: IAcquireTargetsParam = _this_.param,
+                    let param: IAcquireTargetsParam = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
                         defAction: Def.IDefAction;
 
@@ -42,7 +42,7 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve( _this_: AcquireTargets
+        } // resolve( self: AcquireTargets
 
     } // export class AcquireTargets
 }

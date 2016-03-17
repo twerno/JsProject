@@ -6,7 +6,7 @@
 namespace HsLogic {
 
 
-    export class OnAfterDiscardEvent<P extends PlayerAndCardParam> extends HsActionEvent<P> {
+    export class OnAfterDiscardEvent<P extends PlayerAndCardParam> extends ActionEvent<P> {
         static get type(): string { return OnAfterDiscardEvent.name }
     }
 
@@ -15,13 +15,13 @@ namespace HsLogic {
      * Discard
      *
  	 */
-    export class Discard<P extends PlayerAndCardParam> extends HsAction<P> {
+    export class Discard<P extends PlayerAndCardParam> extends Action<P> {
 
-        resolve( _this_: Discard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Discard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         zones: HsZones = gameCtx.zonesOf( param.player );
 
                     if ( !param || !param.card ) {
@@ -33,7 +33,7 @@ namespace HsLogic {
                     zones.graveyard.addEntity( param.card );
 
                     resolve( [
-                        gameCtx.actionFactory.dispatch<HsGameCtx, P>( new OnAfterDiscardEvent<P>( param ) )
+                        //gameCtx.actionFactory.dispatch<HsGameCtx, P>( new OnAfterDiscardEvent<P>( param ) )
                     ] );
                 });
         }

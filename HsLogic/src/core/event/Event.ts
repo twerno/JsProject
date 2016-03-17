@@ -4,6 +4,10 @@
 
 namespace jsLogic {
 
+    export interface ActionEventClass {
+        new ( param: IActionParam ): ActionEvent<IExtContext, IActionParam>;
+    }
+
     export class ActionEvent<T extends IExtContext, P extends IActionParam> {
 
         type: string = ClassUtils.getNameOfClass( this );

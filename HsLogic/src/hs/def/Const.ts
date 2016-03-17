@@ -2,13 +2,16 @@
 
 namespace Def {
 
+    export type Entity = HsLogic.HsEntity;
     export type Card = HsLogic.Card;
     export type Minion = HsLogic.Minion;
     export type Player = HsLogic.Player;
     export type Character = HsLogic.Character;
-    export type HsSource = HsLogic.IHsSource;
+    export type HsSource = HsLogic.ISource;
     export type HsCancelableParam = HsLogic.IHsCancelableParam;
     export type GameCtx = HsLogic.HsGameCtx;
+    export type IActionParam = HsLogic.IActionParam;
+    export type ActionEventClass = HsLogic.ActionEventClass;
 
 
     export enum DAMAGE_TYPE {

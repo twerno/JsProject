@@ -7,7 +7,7 @@ namespace Def {
     }
 
     export interface ISingleTargetParam<T extends HsLogic.HsEntity> {
-        availableTargets: IDefTarget,
+        availableTargets: IDefSetBuilder,
         actionBuilder: FSingleTargetActionBuilder<T>
     }
 
@@ -27,7 +27,7 @@ namespace Def {
                 source: param.source,
                 cancelAction: param.cancelAction,
                 sets: {
-                    source: this.param.availableTargets.buildSet( param.source, gameCtx ),
+                    source: this.param.availableTargets.buildSet<Entity>( param.source, gameCtx ),
                     result: targets.target
                 },
             })

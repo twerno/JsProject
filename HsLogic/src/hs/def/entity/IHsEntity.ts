@@ -1,22 +1,30 @@
-﻿"use strict";
+"use strict";
 
 namespace Def {
 
-    export enum CARD_TYPE {
+    export enum TYPE {
         SPELL,
         MINION,
         WEAPON,
         PLAYER,
         HERO_POWER,
         HERO,
-        NONE
+        NONE,
+        TRIGGER,
+        UNKNOWN
     }
 
 
     export interface IHsEntity {
-        name: string,
-        cardType: CARD_TYPE,
 
-        enchantments?: IEnchantment[];
+    }
+
+    export interface IHsEntityImpl {
+        id: number,
+        def: IHsEntity,
+        type: TYPE,
+        owner: Player,
+
+        orderOfPlay: number,
     }
 }

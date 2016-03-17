@@ -7,22 +7,22 @@ namespace HsLogic {
     }
 
 
-    export interface TargetPlayerParam extends IHsActionParam {
+    export interface TargetPlayerParam extends IActionParam {
         player: Player
     }
 
 
-    export interface PlayerAndCardParam extends IHsActionParam {
+    export interface PlayerAndCardParam extends IActionParam {
         card: Card,
         player: Player
     }
 
 
-    export interface CardParam extends IHsActionParam {
+    export interface CardParam extends IActionParam {
         card: Card
     }
 
-    export interface PlayerAndCardsParam extends IHsActionParam {
+    export interface PlayerAndCardsParam extends IActionParam {
         cards: Card[],
         player: Player
     }

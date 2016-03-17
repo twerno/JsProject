@@ -9,13 +9,12 @@ namespace Def {
         name: `Consecration`,
         cost: 4,
 
-        cardType: CARD_TYPE.SPELL,
-        triggers: {},
+        triggers: [],
         enchantments: [],
 
         playActions: [
             new AllTargetsDefAction<Character>( {
-                availableTargets: DefTargetHelper.BATTLEFIELD
+                availableTargets: SetBuilderHelper.BATTLEFIELD
                     .addFilter( StandardFilters.character ),
 
                 actionBuilder: ( source: HsSource, targets: Character[], gameCtx: GameCtx ): Action[] => {

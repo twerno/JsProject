@@ -4,7 +4,7 @@
 
 namespace HsLogic {
 
-    export interface ReturnCardIntoOwnersHandParam extends IHsActionParam {
+    export interface ReturnCardIntoOwnersHandParam extends IActionParam {
         sourceZone: HsZone<Card>,
         card: Card
     }
@@ -16,12 +16,12 @@ namespace HsLogic {
 	 * If the hand is full DESTROY IT (deathrattle etc)
  	 *
  	 */
-    export class ReturnCardIntoOwnersHandFrom<P extends ReturnCardIntoOwnersHandParam> extends HsAction<P> {
+    export class ReturnCardIntoOwnersHandFrom<P extends ReturnCardIntoOwnersHandParam> extends Action<P> {
 
-        resolve( _this_: ReturnCardIntoOwnersHandFrom<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: ReturnCardIntoOwnersHandFrom<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         hand: HsZone<Card> = gameCtx.zonesOf( param.card.owner ).hand;
 
                     if ( hand.isFull ) {

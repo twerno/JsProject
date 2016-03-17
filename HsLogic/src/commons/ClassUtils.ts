@@ -2,30 +2,26 @@
 
 namespace ClassUtils {
 
-
-    function getConstructorName( _constructor: Function ): string {
-        if ( _constructor && _constructor.name )
-            return _constructor.name;
+    export function getNameOfClass( constructor: Function ): string;
+    export function getNameOfClass( clazz: Object ): string;
+    export function getNameOfClass( x: any ): string {
+        if ( typeof ( x ) === typeof ( Function ) )
+            return x.name;
+        else if ( typeof ( x ) === typeof ( {}) )
+            return x.constructor.name;
         else
-            throw new Error( `Constructor ${_constructor} does not have a 'name' property.` );
+            throw new Error( `Unknown class name of ${x}` );
+
+        // in case of compatibility issues there is an alternative approach
+        // see: https://www.stevefenton.co.uk/Content/Blog/Date/201304/Blog/Obtaining-A-Class-Name-At-Runtime-In-TypeScript/
     }
-
-    export function getNameOfClass( inputClass: Object ): string {
-        //// see: https://www.stevefenton.co.uk/Content/Blog/Date/201304/Blog/Obtaining-A-Class-Name-At-Runtime-In-TypeScript/
-
-        //var funcNameRegex = /function (.{1,})\(/;
-        //var results = (funcNameRegex).exec((<any> inputClass).constructor.toString());
-        //return (results && results.length > 1) ? results[1] : '';
-        return inputClass && inputClass.constructor && getConstructorName( inputClass.constructor );
-    }
-
 
     export function create<T>( _constructor: Function ): T {
         return <T>Object.create( _constructor );
     }
 
 
-    export function getClassType( _constructor: Function ): string {
-        return getConstructorName( _constructor );
-    }
+    //export function getClassType( _constructor: Function ): string {
+    //    return getConstructorName( _constructor );
+    //}
 }

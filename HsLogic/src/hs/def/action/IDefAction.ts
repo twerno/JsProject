@@ -17,7 +17,6 @@ namespace Def {
 
     export type IDefTargetlessAction = ( source: HsSource, gameCtx: GameCtx ) => Action[];
 
-
     export type IDefAction = IDefTargetedAction<ITargets> | IDefTargetlessAction;
 
 

@@ -3,7 +3,7 @@
 namespace Def {
 
     export interface IAllTargetsParam<T extends HsLogic.HsEntity> {
-        availableTargets: IDefTarget,
+        availableTargets: IDefSetBuilder,
         actionBuilder: FTargetsActionBuilder<T>
     }
 
@@ -15,7 +15,7 @@ namespace Def {
         }
 
         acquireTargets( param: HsCancelableParam, targets: ITargets, gameCtx: GameCtx ): Action {
-            targets.targets = this.param.availableTargets.buildSet( param.source, gameCtx );
+            targets.targets = this.param.availableTargets.buildSet<HsLogic.HsEntity>( param.source, gameCtx );
             return null;
         }
 

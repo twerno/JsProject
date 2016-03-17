@@ -16,20 +16,20 @@ namespace HsLogic {
      *   4. win/loss check         - outside action: PlayCard?
  	 */
 
-    export class PlayWeapon<P extends IEquipWeaponParam> extends HsAction<P> {
+    export class PlayWeapon<P extends IEquipWeaponParam> extends Action<P> {
 
-        resolve( _this_: PlayWeapon<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-            if ( _this_.param.cancelAction.value )
+        resolve( self: PlayWeapon<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+            if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = []
 
                     // step 2 - onPlayPhase
                     actions.push(
-                        gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) )
+                        //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) )
                     );
 
                     // step 3 - equipping Phase
@@ -41,7 +41,7 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve( _this_: PlayWeapon<P>
+        } // resolve( self: PlayWeapon<P>
 
     } // export class PlayWeapon
 }

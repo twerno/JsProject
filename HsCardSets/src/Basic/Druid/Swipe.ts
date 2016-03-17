@@ -9,8 +9,7 @@ namespace Def {
         name: `Swipe`,
         cost: 2,
 
-        cardType: CARD_TYPE.SPELL,
-        triggers: {},
+        triggers: [],
         enchantments: [],
 
         playActions: [
@@ -21,15 +20,15 @@ namespace Def {
             //   susspend activation of any event untill all is done
             new TwoStepsTargetsDefAction<Character>( {
                 step1: {
-                    availableTargets: DefTargetHelper.BATTLEFIELD
+                    availableTargets: SetBuilderHelper.BATTLEFIELD
                         .addFilter( StandardFilters.character )
                         .addFilter( StandardFilters.targetable_by_spell_or_hero_power ),
 
                     actionBuilder: DealDirectDamageToTarget( 4 )
                 },
                 step2: {
-                    availableTargets: ( step1Target: Character ): IDefTarget => {
-                        return DefTargetHelper.BATTLEFIELD
+                    availableTargets: ( step1Target: Character ): IDefSetBuilder => {
+                        return SetBuilderHelper.BATTLEFIELD
                             .addFilter( StandardFilters.character )
                             .addFilter( EntityFilter.VALUE( step1Target ).other_than );
                     },

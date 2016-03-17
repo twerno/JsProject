@@ -5,17 +5,11 @@
 
 namespace HsLogic {
 
-    export class SummonEvent extends HsActionEvent<PlayCardParam> {
-        static get type(): string { return SummonEvent.name }
-    }
+    export class EventSummon extends ActionEvent<PlayCardParam> { }
 
-    export class AfterPlayPhase extends HsActionEvent<PlayCardParam> {
-        static get type(): string { return AfterPlayPhase.name }
-    }
+    export class EventAfterPlay extends ActionEvent<PlayCardParam> { }
 
-    export class AfterSummonPhase extends HsActionEvent<PlayCardParam> {
-        static get type(): string { return AfterSummonPhase.name }
-    }
+    export class EventAfterSummon extends ActionEvent<PlayCardParam> { }
 
     /**
      * PlayMinion
@@ -25,19 +19,19 @@ namespace HsLogic {
      *   1. pay & remove from hand - outside action: PlayCard
      *   2. enters the battlefied 
      *   3. create SummonEvent 
-     *   4. onPlayPhase            - OnPlayPhaseEvent
+     *   4. onPlayPhase            - EventAfterPlayPhase
      *   5. Battlecry Phase        - 
      *   6. After Play Phase       - 
-     *   7. After Summon Phase     - 
+     *   7. After Summon Phase     - EventAfterSummon
      *   8. win/loss check         - outside action: PlayCard?
  	 */
-    export class PlayMinion<P extends PlayMinionParam> extends HsAction<P> {
+    export class PlayMinion<P extends PlayMinionParam> extends Action<P> {
 
-        resolve( _this_: PlayMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
                     //@TODO interrupt following phases if then minion dies (battlecry still goes)
@@ -48,11 +42,11 @@ namespace HsLogic {
 
 
                     // 3. create SummonEvent 
-                    gameCtx.pendingEvents.summon.push( new SummonEvent( param ) );
+                    gameCtx.pendingEvents.summon.push( new EventSummon( param ) );
 
 
                     // 4. onPlayPhase
-                    actions.push( gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
+                    actions.push(); //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
                     actions.push( new SummonResolutionStep( { source: param.source }) );
                     actions.push( new DeathCreationStep( { source: param.source }) );
 
@@ -65,16 +59,16 @@ namespace HsLogic {
                     // the Death Creation Step and Summon Resolution Step are skipped
 
                     // 6. After Play Phase
-                    actions.push( gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
+                    actions.push(); //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
 
                     // 7. After Summon Phase
-                    actions.push( gameCtx.actionFactory.dispatch( new AfterSummonPhase( param ) ) );
+                    actions.push(); //gameCtx.actionFactory.dispatch( new EventAfterSummon( param ) ) );
 
                     resolve( actions );
                 }
 
             ); // return new Promise
-        } // resolve(_this_: PlayMinion
+        } // resolve(self: PlayMinion
 
     } // export class PlayMinion
 }

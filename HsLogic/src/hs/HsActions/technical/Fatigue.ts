@@ -9,12 +9,12 @@ namespace HsLogic {
      * Fatigue
      *
  	 */
-    export class Fatigue<P extends TargetPlayerParam> extends HsAction<P> {
+    export class Fatigue<P extends TargetPlayerParam> extends Action<P> {
 
-        resolve( _this_: Fatigue<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Fatigue<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param;
+                    let param: P = self.param;
 
                     resolve( [
                         gameCtx.actionFactory.damage.damage( {

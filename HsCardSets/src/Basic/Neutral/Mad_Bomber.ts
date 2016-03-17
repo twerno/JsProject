@@ -9,13 +9,12 @@ namespace Def {
         name: `Mad Bomber`,
         cost: 2,
 
-        cardType: CARD_TYPE.MINION,
-        minion_type: MINION_TYPE.GENERAL,
-
         attack: 3,
         hp: 2,
-        enchantments: [],
+        minion_type: MINION_TYPE.GENERAL,
 
+        enchantments: [],
+        triggers: [],
         flags: {},
         playActions: [
             ( source: HsSource, gameCtx: GameCtx ): Action[] => {
@@ -30,7 +29,7 @@ namespace Def {
                 ]
             }
         ],
-        triggers: {}
+
 
     });
 }

@@ -9,13 +9,12 @@ namespace Def {
         name: `Holy wrath`,
         cost: 5,
 
-        cardType: CARD_TYPE.SPELL,
-        triggers: {},
+        triggers: [],
         enchantments: [],
 
         playActions: [
             new SingleTargetDefAction<Character>( {
-                availableTargets: DefTargetHelper.BATTLEFIELD
+                availableTargets: SetBuilderHelper.BATTLEFIELD
                     .addFilter( StandardFilters.character )
                     .addFilter( StandardFilters.targetable_by_spell_or_hero_power ),
 

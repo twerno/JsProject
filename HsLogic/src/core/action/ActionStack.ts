@@ -22,7 +22,7 @@ namespace jsLogic {
     export class ActionStack<T extends IContext> {
 
 
-        private _stackFILO: IAction<T>[] = []; // first in - last out
+        private _stackFILO: IActionType[] = []; // first in - last out
         private _timeoutHandler: number = null;
         private _resolving: Resolving;
 
@@ -34,7 +34,7 @@ namespace jsLogic {
         }
 
 
-        putOnTop( action: IAction<T> ): void {
+        putOnTop( action: IActionType ): void {
             if ( action instanceof IAction )
                 this._stackFILO.push( action );
             else

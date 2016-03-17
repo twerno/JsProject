@@ -9,7 +9,7 @@ namespace Def {
         }
 
         static hero( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
-            return entity.cardType === CARD_TYPE.HERO;
+            return entity.type === TYPE.HERO;
         }
 
         static waepon( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {

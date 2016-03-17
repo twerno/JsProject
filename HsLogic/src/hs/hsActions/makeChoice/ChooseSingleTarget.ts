@@ -14,15 +14,15 @@ namespace HsLogic {
      * ChooseSingleTarget
      *
  	 */
-    export class ChooseSingleTarget<T extends HsEntity, P extends IChooseSingleTargetParam<T>> extends HsAction<P> {
-        resolve( _this_: ChooseSingleTarget<T, P>, gameCtx: HsGameCtx ): PromiseOfActions {
+    export class ChooseSingleTarget<T extends HsEntity, P extends IChooseSingleTargetParam<T>> extends Action<P> {
+        resolve( self: ChooseSingleTarget<T, P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
-            if ( _this_.param.cancelAction.value )
+            if ( self.param.cancelAction.value )
                 return Promise.resolve( [] );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         results: T[];
 
                     //@TODO - umozliwic uzytkownikowi dokonanie wyboru

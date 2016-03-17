@@ -7,13 +7,13 @@ namespace HsLogic {
      *
  	 */
 
-    export class Battlecry<P extends PlayCardParam> extends HsAction<P> {
+    export class Battlecry<P extends PlayCardParam> extends Action<P> {
 
-        resolve( _this_: Battlecry<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Battlecry<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [];;
 
                     //@TODO Fix for Brann Bronzebeard 
@@ -28,7 +28,7 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve(_this_: Battlecry
+        } // resolve(self: Battlecry
 
     } // export class Battlecry
 

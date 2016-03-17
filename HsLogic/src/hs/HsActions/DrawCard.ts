@@ -5,16 +5,16 @@
 namespace HsLogic {
 
 
-    export interface DrawParam extends IHsActionParam {
+    export interface DrawParam extends IActionParam {
         targetPlayer: Player,
         drawnCard: Card
     }
 
-    export class OnCardDraw extends HsActionEvent<DrawParam> {
+    export class OnCardDraw extends ActionEvent<DrawParam> {
         static get type(): string { return OnCardDraw.name }
     }
 
-    export class OnCardDrawn extends HsActionEvent<DrawParam> {
+    export class OnCardDrawn extends ActionEvent<DrawParam> {
         static get type(): string { return OnCardDrawn.name }
     }
 
@@ -29,13 +29,13 @@ namespace HsLogic {
      * 4. execute onDrawn trigger if exists
      * 5. dispatch on drawn event: (Sea Reaver, Flame Leviathan, Ambush!, Burrowing Mine, Fatigue)
  	 */
-    export class DrawCard<P extends DrawParam> extends HsAction<P> {
+    export class DrawCard<P extends DrawParam> extends Action<P> {
 
-        resolve( _this_: DrawCard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: DrawCard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         zones: HsZones = gameCtx.zonesOf( param.targetPlayer ),
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
@@ -47,14 +47,14 @@ namespace HsLogic {
                         else
                             zones.graveyard.addEntity( param.drawnCard );
 
-                        actions.push( gameCtx.actionFactory.dispatch( new OnCardDraw( param ) ) );
+                        actions.push(); //gameCtx.actionFactory.dispatch( new OnCardDraw( param ) ) );
 
-                        actions.push( new ExecuteTargetlessTriggers( {
-                            source: param.source,
-                            defActions: param.drawnCard.triggers.onDrawn
-                        }) );
+                        //                        actions.push( new ExecuteTargetlessTriggers( {
+                        //                            source: param.source,
+                        //                            defActions: param.drawnCard.triggers.onDrawn
+                        //                        }) );
 
-                        actions.push( gameCtx.actionFactory.dispatch( new OnCardDrawn( param ) ) );
+                        actions.push(); //gameCtx.actionFactory.dispatch( new OnCardDrawn( param ) ) );
                     }
                     else
                         actions.push( gameCtx.actionFactory.fatigue( {

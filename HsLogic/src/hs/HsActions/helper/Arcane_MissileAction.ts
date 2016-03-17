@@ -2,10 +2,10 @@
 
 namespace HsLogic {
 
-    export class Arcane_MissileAction<P extends IHsActionParam> extends HsAction<P> {
+    export class Arcane_MissileAction<P extends IActionParam> extends Action<P> {
 
-        static availableTargers(): Def.IDefTarget {
-            return Def.DefTargetHelper.BATTLEFIELD
+        static availableTargers(): Def.IDefSetBuilder {
+            return Def.SetBuilderHelper.BATTLEFIELD
                 .addFilter( Def.StandardFilters.enemy )
                 .addFilter( Def.StandardFilters.character )
                 .addFilter(( source, entity, gameCtx ): boolean => {
@@ -14,11 +14,11 @@ namespace HsLogic {
                 });
         }
 
-        resolve( _this_: Arcane_MissileAction<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Arcane_MissileAction<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param,
+                    let param: P = self.param,
                         availableTargers: HsEntity[] = Arcane_MissileAction.availableTargers().buildSet( param.source, gameCtx ),
                         resultSet: ( Player | Minion )[];
 

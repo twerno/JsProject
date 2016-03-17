@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace Def {
 
@@ -12,7 +12,14 @@ namespace Def {
         attack: number;
         minion_type: MINION_TYPE,
         flags: IFlags,
-
-        triggers: IPermanentTriggers
     }
+
+    export interface IMinionImpl extends ICardImpl {
+        hp: number;
+        attack: number;
+        minion_type: MINION_TYPE,
+        flags: IFlags,
+    }
+
+
 }

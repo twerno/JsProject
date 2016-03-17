@@ -4,7 +4,7 @@
 
 namespace HsLogic {
 
-    export interface EmptyActionParam extends IHsActionParam {
+    export interface EmptyActionParam extends IActionParam {
         message: string
     }
 
@@ -12,13 +12,13 @@ namespace HsLogic {
      * MillCard
      *
  	 */
-    export class EmptyAction<P extends EmptyActionParam> extends HsAction<P> {
+    export class EmptyAction<P extends EmptyActionParam> extends Action<P> {
 
-        resolve( _this_: EmptyAction<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: EmptyAction<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
-                    let param: P = _this_.param;
+                    let param: P = self.param;
 
                     console.log( `Empty action resolver: ${param.message}` );
                 });
