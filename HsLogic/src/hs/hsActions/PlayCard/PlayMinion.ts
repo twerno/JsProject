@@ -51,15 +51,13 @@ namespace HsLogic {
                     // pay cost & remove from hand
                     actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
+                    // 2. enters the battlefied  
+                    gameCtx.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
+
                     // pre summon reaction bug
                     // http://hearthstone.gamepedia.com/Advanced_rulebook#Cobalt_Guardian.2FMurloc_Tidecaller_Pre-Summon_Reaction_Bug
 
                     //@TODO interrupt following phases if then minion dies (battlecry still goes)
-
-                    // 2. enters the battlefied  
-                    //@TODO - positiong
-                    gameCtx.zonesOf( param.card.owner ).battlefield.addEntity( param.card );
-
 
                     // 3. create SummonEvent 
                     gameCtx.pendingEvents.summon.push( new event.Summon( param ) );

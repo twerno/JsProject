@@ -30,12 +30,21 @@ namespace jsLogic {
         }
 
 
-        addEntity( entity: T ): void {
+        addEntity( entity: T, position?: number ): void {
             if ( this._uuidMap.has( entity.id ) )
                 throw new EntityDuplicationException( entity, this );
 
             this._uuidMap.put( entity.id, entity );
-            this._entities.push( entity );
+            this._entities.splice( this._computePosition( position ), 0, entity );
+        }
+
+        private _computePosition( position: number ): number {
+            if ( !position || position < 0 )
+                return 0;
+            else if ( position > this._entities.length )
+                return this._entities.length;
+
+            return position;
         }
 
         has( entity: T ): boolean {
