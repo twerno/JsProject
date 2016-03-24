@@ -13,7 +13,6 @@
 ///<reference path="../hsActions/Sequence.ts"/>
 ///<reference path="../hsActions/ShuffleDeck.ts"/>
 ///<reference path="../hsActions/ShuffleGeneratedCardIntoDeck.ts"/>
-///<reference path="../../core/action/ActionFactory.ts"/>
 ///<reference path="../core/HsZone.ts"/>
 ///<reference path="../entity/Card.ts"/>
 ///<reference path="../core/HsAction.ts"/>
@@ -23,7 +22,7 @@
 
 namespace HsLogic {
 
-    export class HsActionFactory<T extends HsGameCtx> extends jsLogic.ActionFactory {
+    export class HsActionFactory<T extends HsGameCtx> {
 
         protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
         protected _enchantments: HsEnchantmentActionFactory<T> = new HsEnchantmentActionFactory();

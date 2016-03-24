@@ -2,23 +2,24 @@
 
 namespace Def {
 
-    export type FTriggerable = ( self: IDefTriggerImpl, eventParam: IActionParam, gameCtx: GameCtx ) => boolean;
-    export type IDefTriggerAction = ( self: IDefTriggerImpl, eventParam: IActionParam, gameCtx: GameCtx ) => Action[];
+    export type FTriggerable = ( self: IDefTriggerImpl, event: ActionEvent, gameCtx: GameCtx ) => boolean;
+    export type IDefTriggerAction = ( self: IDefTriggerImpl, event: ActionEvent, gameCtx: GameCtx ) => Action[];
+
+    export const Trigger_Priority_DEFAULT = 200;
+
 
     export interface IDefTrigger extends IHsEntity {
-        eventClass: ActionEventClass,
+        eventClass: ActionEventClass | ActionEventClass[],
         triggerPriority: number,
         actions: IDefTriggerAction,
         triggerable?: FTriggerable,
-        owner: ( self: IDefTriggerImpl ) => Player;
     }
 
     export interface IDefTriggerImpl extends IHsEntityImpl {
-        computeOwner: ( self: IDefTriggerImpl ) => Player,
-        parent: IHsEntityImpl,
+        parent: IHsEntity,
         sourceCard: ICardImpl,
 
-        eventType: string,
+        eventType: string[],
         triggerPriority: number,
         actions: IDefTriggerAction,
         triggerable: FTriggerable

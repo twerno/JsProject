@@ -14,5 +14,9 @@ namespace Def {
         owns_trigger( source: HsSource, trigger: IDefTriggerImpl, gameCtx: GameCtx ): boolean {
             return trigger.owner === this.owner;
         }
+
+        DOES_NOT_own_trigger( source: HsSource, trigger: IDefTriggerImpl, gameCtx: GameCtx ): boolean {
+            return trigger.owner !== this.owner;
+        }
     }
 }

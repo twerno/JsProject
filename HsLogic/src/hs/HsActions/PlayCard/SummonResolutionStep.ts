@@ -1,5 +1,5 @@
 ///<reference path="../../core/HsAction.ts"/>
-///<reference path="../../../core/action/abstractActions/CancelableAction.ts"/>
+
 
 "use strict";
 
@@ -20,19 +20,18 @@ namespace HsLogic {
 
     export class SummonResolutionStep<P extends IActionParam> extends Action<P> {
 
-        resolvable( param: P, gameCtx: HsGameCtx ): boolean {
+        resolvable( self: SummonResolutionStep<P>, gameCtx: HsGameCtx ): boolean {
             return gameCtx.pendingEvents.summon.length !== 0;
         }
 
         resolve( self: SummonResolutionStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-            if ( gameCtx.pendingEvents.summon.length === 0 )
-                return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
+
                     let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
-                        event: EventSummon,
+                        event: event.Summon,
                         card: Card;
 
                     // 1. aura Update (Health/Attack) Step

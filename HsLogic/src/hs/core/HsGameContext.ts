@@ -1,21 +1,16 @@
-///<reference path="../../core/action/IActionContext.ts"/>
-
-
 "use strict";
 
 namespace HsLogic {
 
     export interface IPendingEvents {
-        summon: EventSummon[],
+        summon: event.Summon[],
         death: ActionEvent<IActionParam>[]
     }
 
 
-    export class HsGameCtx implements jsLogic.IExtContext {
+    export class HsGameCtx implements jsLogic.IContext {
 
         actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
-
-        handlers: jsLogic.EventHandlers<HsGameCtx, IActionParam> = new jsLogic.EventHandlers<HsGameCtx, IActionParam>();
 
         activePlayer: Player = null;
 
@@ -24,13 +19,11 @@ namespace HsLogic {
         zonesMap: Collection.IStringMap<HsZones> = {};
 
 
-        zonesOf( player: jsLogic.Entity | TargetPlayer ): HsZones {
+        zonesOf( player: jsLogic.Entity ): HsZones {
             let result: HsZones = null;
 
             if ( player instanceof jsLogic.Entity )
-                result = this.zonesMap[player.id];
-            else if ( player instanceof TargetPlayer )
-                result = this.zonesMap[player.target.id];
+                result = this.zonesMap[player.id]
 
             if ( result )
                 return result;
@@ -39,7 +32,7 @@ namespace HsLogic {
         }
 
 
-        zoneOf<T extends Card>( player: jsLogic.Entity | TargetPlayer, zoneId: string ): HsZone<T> {
+        zoneOf<T extends Card>( player: jsLogic.Entity, zoneId: string ): HsZone<T> {
             return <HsZone<T>>this.zonesOf( player ).get( zoneId );
         }
 

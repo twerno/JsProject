@@ -1,7 +1,7 @@
 build.path.exportedFolder=dist
 build.path.sourceFolder=src
 compiler.codeGenTarget=ECMASCRIPT6
-compiler.compileOnSave=true
+compiler.compileOnSave=false
 compiler.generateDeclarationFiles=true
 compiler.inlineSourceMap=false
 compiler.inlineSources=false

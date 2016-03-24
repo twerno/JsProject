@@ -1,8 +1,5 @@
 ///<reference path="../../core/action/IAction.ts"/>
-///<reference path="../../core/action/IAction.ts"/>
 ///<reference path="HsGameContext.ts"/>
-///<reference path="../../core/action/IActionContext.ts"/>
-
 
 "use strict";
 
@@ -37,10 +34,6 @@ namespace HsLogic {
         constructor( public param: P ) { super( param.source ) }
 
         abstract resolve( self: jsLogic.IAction<HsGameCtx>, gameCtx: HsGameCtx ): PromiseOfActions;
-
-        //protected dispatch( event: HsActionEvent<IHsActionParam>, gameCtx: HsGameCtx ): jsLogic.IAction<HsGameCtx> {
-        //    return //gameCtx.actionFactory.dispatch( event );
-        //}
     }
 
 
@@ -50,6 +43,8 @@ namespace HsLogic {
 
     export abstract class ActionEvent<P extends IActionParam> {
         get type(): string { return ClassUtils.getNameOfClass( this ) }
+
+        valid( gameCtx: HsGameCtx ): boolean { return true }
 
         constructor( public param: P ) { }
     };

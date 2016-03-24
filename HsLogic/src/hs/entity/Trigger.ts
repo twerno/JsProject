@@ -7,7 +7,7 @@ namespace HsLogic {
     export class Trigger extends HsEntity implements Def.IDefTriggerImpl {
         parent: HsEntity;
         sourceCard: Card;
-        eventType: string;
+        eventType: string[] = [];
         triggerPriority: number;
 
         actions: Def.IDefTriggerAction;
@@ -22,19 +22,27 @@ namespace HsLogic {
             this.sourceCard = sourceCard || null;
         }
 
+
         initFromDefinition( def: Def.IDefTrigger ): void {
             super.initFromDefinition( def );
 
-            this.computeOwner = def.owner;
-            this.eventType = ClassUtils.getNameOfClass( def.eventClass );
+            if ( def.eventClass instanceof Array )
+                for ( let i = 0; i < def.eventClass.length; i++ )
+                    this.eventType.push( ClassUtils.getNameOfClass(( <ActionEventClass[]>def.eventClass )[i] ) );
+            else
+                this.eventType.push( ClassUtils.getNameOfClass( def.eventClass ) );
             this.triggerPriority = def.triggerPriority;
-            this.actions = def.actions || [];
+            this.actions = def.actions;
             this.triggerable = def.triggerable || Trigger.SELF_TRIGGER_PROTECTOR;
         }
 
-        static SELF_TRIGGER_PROTECTOR( self: Def.IDefTriggerImpl, eventParam: IActionParam, gameCtx: HsGameCtx ): boolean {
-            return self.sourceCard !== eventParam.source.card;
+
+        // http://hearthstone.gamepedia.com/Advanced_rulebook#Glossary
+        // Humble safeguard: Minions are not allowed to trigger on themselves entering play.
+        static SELF_TRIGGER_PROTECTOR( self: Def.IDefTriggerImpl, event: ActionEvent<IActionParam>, gameCtx: HsGameCtx ): boolean {
+            return self.sourceCard !== event.param.source.card;
         }
+
 
         get owner(): Player {
             if ( this.computeOwner )

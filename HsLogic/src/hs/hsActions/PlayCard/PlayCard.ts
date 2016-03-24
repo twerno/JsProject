@@ -1,5 +1,5 @@
 ///<reference path="../../core/HsAction.ts"/>
-///<reference path="../../../core/action/abstractActions/CancelableAction.ts"/>
+
 
 "use strict";
 
@@ -40,9 +40,6 @@ namespace HsLogic {
                     //                        defActions: param.card.playActions,
                     //                        cancelAction: param.cancelAction
                     //                    }));
-
-                    // pay cost & remove from hand
-                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // delegate to playSpell, playMinon or playWeapon action
                     if ( param.card instanceof Minion )

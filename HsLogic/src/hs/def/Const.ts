@@ -11,6 +11,7 @@ namespace Def {
     export type HsCancelableParam = HsLogic.IHsCancelableParam;
     export type GameCtx = HsLogic.HsGameCtx;
     export type IActionParam = HsLogic.IActionParam;
+    export type ActionEvent = HsLogic.ActionEvent<IActionParam>;
     export type ActionEventClass = HsLogic.ActionEventClass;
 
 

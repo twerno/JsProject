@@ -30,11 +30,6 @@ namespace Def {
             return !StandardFilters.friendly( source, entity, gameCtx );
         }
 
-        //static other_than( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
-        //    return ( target instanceof Array && target.indexOf( entity ) === -1 )
-        //        || ( target instanceof HsEntity && target !== entity );
-        //}
-
         static targetable_by_spell_or_hero_power( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
 
             if ( entity instanceof HsLogic.Player || entity instanceof HsLogic.Minion )

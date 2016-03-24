@@ -4,33 +4,32 @@
 
 namespace jsLogic {
 
-    export type OnActionResolving<T extends IContext> = ( action: IAction<T>, executionTime?: number ) => void;
-    export type OnActionResolved<T extends IContext> = ( action: IAction<T>, executionTime?: number ) => void;
-    export type OnActionRejected<T extends IContext> = ( action: IAction<T>, error: Error, executionTime?: number ) => void;
+    export type OnActionResolving = ( action: IAction<IContext>, resolvable: boolean ) => void;
+    export type OnActionResolved = ( action: IAction<IContext>, executionTime?: number ) => void;
+    export type OnActionRejected = ( action: IAction<IContext>, error: Error, executionTime?: number ) => void;
 
 
     export class ActionTimeoutError<T extends IContext> extends Error {
-        constructor( message: string, public action: IAction<T> ) {
+        constructor( message: string, public action: IAction<IContext> ) {
             super( message );
         }
     }
 
     /**
-     *  ActionStack<T>
+     *  ActionStack<IContext>
      * 
      */
-    export class ActionStack<T extends IContext> {
-
+    export class ActionStack {
 
         private _stackFILO: IActionType[] = []; // first in - last out
         private _timeoutHandler: number = null;
-        private _resolving: Resolving;
+        private _currActionInfo: CurrentActionInfo;
 
 
         constructor(
-            private _onActionResolving: OnActionResolving<T>,
-            private _onActionResolved: OnActionResolved<T>,
-            private _onActionRejected: OnActionRejected<T> ) {
+            private _onActionResolving: OnActionResolving,
+            private _onActionResolved: OnActionResolved,
+            private _onActionRejected: OnActionRejected ) {
         }
 
 
@@ -42,45 +41,51 @@ namespace jsLogic {
         }
 
 
-        resolveTopAction( context: T ): void {
-            if ( this._resolving )
-                throw new Error( `You can not resolve an action while another action ${this._resolving.action} is beeing resolved.` );
+        resolveTopAction( context: IContext ): void {
+            if ( this._currActionInfo )
+                throw new Error( `You can not resolve an action while another action ${this._currActionInfo.action} is beeing resolved.` );
 
             if ( this.isEmpty() )
                 throw new Error( 'There is no action left to resolve!' );
 
-            this._resolving = new Resolving( this._stackFILO.pop() );
-            this._resolveAction( this._resolving, context );
+            this._currActionInfo = new CurrentActionInfo( this._stackFILO.pop(), context );
+            this._resolveAction( this, this._currActionInfo, context );
         }
 
 
-        private _resolveAction( resolving: Resolving, context: T ): void {
-            let self: ActionStack<T> = this;
+        private _preResolveAction( self: ActionStack, resolving: CurrentActionInfo, context: IContext ): void {
 
-            this._onActionResolving && this._onActionResolving( resolving.action );
+            this._onActionResolving && this._onActionResolving( this._currActionInfo.action, this._currActionInfo.resolvable );
 
             if ( resolving.action.timelimit > UNLIMITED )
                 this._timeoutHandler = setTimeout(() => self._onTimeout( resolving ), resolving.action.timelimit );
 
             resolving.startTimer();
-            resolving.action.resolve( resolving.action, context )
-                .then(
-                ( consequences: IAction<T>[] ) => {
-                    self._resolving !== resolving && ActionStack._postMortemLog<T>( resolving, consequences );
-                    self._resolving === resolving && self._onSuccess( resolving, consequences );
-                })
-                .catch(
-                ( error: Error ) => {
-                    self._resolving !== resolving && ActionStack._postMortemLog<T>( resolving, error );
-                    self._resolving === resolving && self._onFail( resolving, error );
-                });
+        }
+
+
+        private _resolveAction( self: ActionStack, resolving: CurrentActionInfo, context: IContext ): void {
+            this._preResolveAction( self, self._currActionInfo, context );
+
+            if ( resolving.resolvable )
+                resolving.action.resolve( resolving.action, context )
+                    .then(( consequences: IAction<IContext>[] ) => {
+                        self._currActionInfo !== resolving && ActionStack._postMortemLog<IContext>( resolving, consequences );
+                        self._currActionInfo === resolving && self._onSuccess( resolving, consequences );
+                    })
+                    .catch(( error: Error ) => {
+                        self._currActionInfo !== resolving && ActionStack._postMortemLog<IContext>( resolving, error );
+                        self._currActionInfo === resolving && self._onFail( resolving, error );
+                    });
+            else
+                self._onSuccess( resolving, [] );
         }
 
 
         kill(): void {
             this._clearTimeout();
             this._stackFILO = [];
-            this._resolving = null;
+            this._currActionInfo = null;
             this._onActionResolving = null;
             this._onActionResolved = null;
             this._onActionRejected = null;
@@ -93,10 +98,10 @@ namespace jsLogic {
 
 
         isBusy(): boolean {
-            return this._resolving !== null;
+            return this._currActionInfo !== null;
         }
 
-        private static _postMortemLog<T extends IContext>( resolving: Resolving, result: Object ): void {
+        private static _postMortemLog<T extends IContext>( resolving: CurrentActionInfo, result: Object ): void {
             resolving.stopTimer();
 
             console.error( `Postmortem action log (executionTime: ${resolving.executionTimeStr()}, timelimit: ${StringUtils.msPrettyPrint( resolving.action.timelimit )})`,
@@ -104,42 +109,42 @@ namespace jsLogic {
             console.error( result );
         }
 
-        private _onSuccess( resolving: Resolving, consequences: IAction<T>[] ): void {
+        private _onSuccess( resolving: CurrentActionInfo, consequences: IAction<IContext>[] ): void {
             resolving.stopTimer();
             this._clearTimeout();
 
-            let action: IAction<T>;
+            let action: IAction<IContext>;
             if ( consequences instanceof Array )
                 while ( consequences.length > 0 ) {
                     action = consequences.pop();
                     action && this.putOnTop( action );
                 }
 
-            this._resolving = null;
-            !this._onActionResolved && ActionStack._postMortemLog<T>( resolving, consequences );
+            this._currActionInfo = null;
+            !this._onActionResolved && ActionStack._postMortemLog<IContext>( resolving, consequences );
             this._onActionResolved && this._onActionResolved.call( undefined, resolving.action, resolving.executionTime() );
         }
 
 
-        private _onFail( resolving: Resolving, error: Error ): void {
+        private _onFail( resolving: CurrentActionInfo, error: Error ): void {
             resolving.stopTimer();
             this._clearTimeout();
 
-            this._resolving = null;
-            !this._onActionRejected && ActionStack._postMortemLog<T>( resolving, error );
+            this._currActionInfo = null;
+            !this._onActionRejected && ActionStack._postMortemLog<IContext>( resolving, error );
             this._onActionRejected && this._onActionRejected.call( undefined, resolving.action, error, resolving.executionTime() );
         }
 
 
-        private _onTimeout( resolving: Resolving ): void {
+        private _onTimeout( resolving: CurrentActionInfo ): void {
             resolving.stopTimer();
             this._clearTimeout();
 
-            let error: ActionTimeoutError<T>
-                = new ActionTimeoutError<T>( `Timeout: ${resolving.action.timelimit}ms.`, resolving.action );
+            let error: ActionTimeoutError<IContext>
+                = new ActionTimeoutError<IContext>( `Timeout: ${resolving.action.timelimit}ms.`, resolving.action );
 
-            this._resolving = null;
-            !this._onActionRejected && ActionStack._postMortemLog<T>( resolving, error );
+            this._currActionInfo = null;
+            !this._onActionRejected && ActionStack._postMortemLog<IContext>( resolving, error );
             this._onActionRejected && this._onActionRejected( resolving.action, error, resolving.executionTime() );
         }
 
@@ -151,12 +156,15 @@ namespace jsLogic {
     }
 
 
-    class Resolving {
+    class CurrentActionInfo {
 
         startTime: number = null;
         finishTime: number = null;
+        resolvable: boolean;
 
-        constructor( public action: IAction<IContext> ) { }
+        constructor( public action: IAction<IContext>, context: IContext ) {
+            this.resolvable = action.resolvable( action, context );
+        }
 
         executionTime(): number {
             return ( this.finishTime ? this.finishTime : performance.now() ) - this.startTime;

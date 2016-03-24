@@ -12,7 +12,7 @@ namespace Def {
         }
 
 
-        protected _internalBuildSet( source: HsSource, gameCtx: GameCtx ): IHsEntityImpl[] {
+        protected _internalBuildSet( source: HsSource, gameCtx: GameCtx ): IDefTriggerImpl[] {
             let result: IDefTriggerImpl[] = [],
                 player: Player,
                 zones: HsLogic.HsZones;
@@ -23,16 +23,16 @@ namespace Def {
 
                 result.concat( this._triggersOfEventType( player.triggers, source, gameCtx ) );
 
-                result.concat( this._lookForTriggerIn( zones.battlefield.getRawArray(), source, gameCtx ) );
-                result.concat( this._lookForTriggerIn( zones.weapon.getRawArray(), source, gameCtx ) );
-                result.concat( this._lookForTriggerIn( zones.hand.getRawArray(), source, gameCtx ) );
-                result.concat( this._lookForTriggerIn( zones.secret.getRawArray(), source, gameCtx ) );
-
-                return result;
+                result.concat( this._lookForTriggers( zones.battlefield.getRawArray(), source, gameCtx ) );
+                result.concat( this._lookForTriggers( zones.weapon.getRawArray(), source, gameCtx ) );
+                result.concat( this._lookForTriggers( zones.hand.getRawArray(), source, gameCtx ) );
+                result.concat( this._lookForTriggers( zones.secret.getRawArray(), source, gameCtx ) );
             }
+            return result;
         }
 
-        protected _lookForTriggerIn( cards: Card[], source: HsSource, gameCtx: GameCtx ): IDefTriggerImpl[] {
+
+        protected _lookForTriggers( cards: Card[], source: HsSource, gameCtx: GameCtx ): IDefTriggerImpl[] {
             let result: IDefTriggerImpl[] = [];
 
             for ( let i = 0; i < cards.length; i++ ) {
@@ -42,16 +42,19 @@ namespace Def {
             return result;
         }
 
+
         protected _triggersOfEventType( triggers: IDefTriggerImpl[], source: HsSource, gameCtx: GameCtx ): IDefTriggerImpl[] {
             let result: IDefTriggerImpl[] = [];
 
             for ( let i = 0; i < triggers.length; i++ )
-                if ( triggers[i].eventType === this.eventType
-                    && this.testAgainstFilters( source, triggers[i], gameCtx ) )
-                    result.push( triggers[i] );
+                for ( let j = 0; j < triggers[i].eventType.length; j++ )
+                    if ( triggers[i].eventType[j] === this.eventType
+                        && this.testAgainstFilters( source, triggers[i], gameCtx ) )
+                        result.push( triggers[i] );
 
             return result;
         }
+
 
         protected sort( array: IDefTriggerImpl[], gameCtx: GameCtx ): IDefTriggerImpl[] {
             return array.sort(
@@ -63,6 +66,7 @@ namespace Def {
                         return result;
                 });
         }
+
 
         protected compare( a: IDefTriggerImpl, b: IDefTriggerImpl ): number {
             let result: number = a.triggerPriority - b.triggerPriority;

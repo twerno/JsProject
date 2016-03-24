@@ -9,6 +9,8 @@ namespace HsLogic {
 
         def: Def.IPlayer;
 
+        attack: number;
+
         hp: number = 30;
 
         maxHp: number = 30;

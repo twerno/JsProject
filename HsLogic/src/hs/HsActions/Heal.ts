@@ -1,5 +1,4 @@
 ///<reference path="../core/HsAction.ts"/>
-///<reference path="../../core/action/abstractActions/CancelableAction.ts"/>
 
 "use strict";
 
@@ -8,7 +7,7 @@ namespace HsLogic {
     export interface HealParam extends IActionParam {
         cancelHeal: boolean,
         amount: number,
-        target: LivingTarget,
+        target: Character,
     }
 
 
@@ -36,14 +35,14 @@ namespace HsLogic {
 
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        targetCounters: jsLogic.CounterMap = param.target.target.counters;
+                        targetCounters: jsLogic.CounterMap = param.target.counters;
 
                     if ( targetCounters[DivineShieldCounter.type] ) {
                         delete targetCounters[DivineShieldCounter.type];
                         param.amount = 0;
                     }
 
-                    param.target.target.hp -= param.amount;
+                    param.target.hp -= param.amount;
 
                     return null;
                 });

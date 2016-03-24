@@ -46,5 +46,10 @@ namespace Def {
             });
         }
 
+        static get ENEMY_CHARACTER(): IDefSetBuilder {
+            return SetBuilderHelper.BATTLEFIELD
+                .addFilter( StandardFilters.enemy );
+        }
+
     }
 }

@@ -8,7 +8,7 @@ namespace Def {
 
         playActions: IDefAction[],
         triggers: IDefTrigger[],
-        enchantments?: IEnchantment[];
+        enchantments?: Object[];
 
         isPlayalble?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
         isActivated?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
@@ -20,7 +20,7 @@ namespace Def {
 
         playActions: IDefAction[],
         triggers: HsLogic.Trigger[],
-        enchantments?: IEnchantment[];
+        enchantments?: Object[];
 
         isPlayalble?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
         isActivated?: ( source: HsSource, gameCtx: GameCtx ) => boolean;

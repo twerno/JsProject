@@ -1,5 +1,5 @@
 ///<reference path="../../core/HsAction.ts"/>
-///<reference path="../../../core/action/abstractActions/CancelableAction.ts"/>
+
 
 "use strict";
 
@@ -10,7 +10,7 @@ namespace HsLogic {
      * http://hearthstone.gamepedia.com/Advanced_rulebook#Playing_a_weapon
      *
      * Phases:
-     *   1. pay & remove from hand - outside action: PlayCard
+     *   1. pay & remove from hand - 
      *   2. onPlayPhase            - OnPlayPhaseEvent
      *   3. equipping Phase        - 
      *   4. win/loss check         - outside action: PlayCard?
@@ -26,6 +26,9 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = []
+
+                    // pay cost & remove from hand
+                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
                     actions.push(
