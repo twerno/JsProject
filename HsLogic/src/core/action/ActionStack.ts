@@ -109,20 +109,27 @@ namespace jsLogic {
             console.error( result );
         }
 
-        private _onSuccess( resolving: CurrentActionInfo, consequences: IAction<IContext>[] ): void {
+        private _onSuccess( resolving: CurrentActionInfo, consequences: IActionType | IActionType[] ): void {
             resolving.stopTimer();
             this._clearTimeout();
 
-            let action: IAction<IContext>;
-            if ( consequences instanceof Array )
-                while ( consequences.length > 0 ) {
-                    action = consequences.pop();
-                    action && this.putOnTop( action );
-                }
+            this._addConsequnces( consequences );
 
             this._currActionInfo = null;
             !this._onActionResolved && ActionStack._postMortemLog<IContext>( resolving, consequences );
             this._onActionResolved && this._onActionResolved.call( undefined, resolving.action, resolving.executionTime() );
+        }
+
+
+        private _addConsequnces( consequences: IActionType | IActionType[] ): void {
+            let action: IAction<IContext>;
+
+            if ( consequences instanceof Array )
+                while ( consequences.length > 0 ) {
+                    this.putOnTop( consequences.pop() );
+                }
+            else if ( consequences instanceof IAction )
+                this.putOnTop( consequences );
         }
 
 
@@ -163,7 +170,7 @@ namespace jsLogic {
         resolvable: boolean;
 
         constructor( public action: IAction<IContext>, context: IContext ) {
-            this.resolvable = action.resolvable( action, context );
+            this.resolvable = action.resolvable( context );
         }
 
         executionTime(): number {

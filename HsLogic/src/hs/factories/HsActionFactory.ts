@@ -1,11 +1,9 @@
 ///<reference path="../hsActions/AddGeneratedCardIntoHand.ts"/>
-///<reference path="../hsActions/Damage.ts"/>
 ///<reference path="../hsActions/DestroyCardInPlay.ts"/>
 ///<reference path="../hsActions/Discard.ts"/>
 ///<reference path="../hsActions/DrawCard.ts"/>
 ///<reference path="../hsActions/EmptyAction.ts"/>
 ///<reference path="../hsActions/technical/Fatigue.ts"/>
-///<reference path="../hsActions/Heal.ts"/>
 ///<reference path="../hsActions/MarkAsDestroyed.ts"/>
 ///<reference path="../hsActions/MillCard.ts"/>
 ///<reference path="../hsActions/PutCardIntoHand.ts"/>
@@ -78,9 +76,9 @@ namespace HsLogic {
             return new Fatigue( param );
         }
 
-        heal( healParam: HealParam ): Heal<HealParam> {
-            return new Heal( healParam );
-        }
+        //heal( healParam: HealTargetsParam ): Heal<HealTargetsParam> {
+        //    return new Heal( healParam );
+        //}
 
         //markAsDestroyed(source: jsLogic.IAction<T>, card: Card): MarkAsDestroyed {
         //    return new MarkAsDestroyed(source, card);

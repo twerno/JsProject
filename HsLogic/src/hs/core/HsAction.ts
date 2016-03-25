@@ -5,7 +5,7 @@
 
 namespace HsLogic {
 
-    export type PromiseOfActions = Promise<jsLogic.IAction<HsGameCtx>[]>;
+    export type PromiseOfActions = Promise<jsLogic.IAction<HsGameCtx> | jsLogic.IAction<HsGameCtx>[]>;
 
     export enum SOURCE_TYPE {
         MINION,
@@ -16,9 +16,9 @@ namespace HsLogic {
     }
 
     export interface ISource extends jsLogic.ISource {
-        card: Card,
         caster: Player,
-        sourceType: SOURCE_TYPE
+        sourceType: SOURCE_TYPE,
+        sourceCard: Card
     }
 
     export interface IActionParam extends jsLogic.IActionParam {
@@ -52,4 +52,5 @@ namespace HsLogic {
     export type FActionBuilder<P extends IActionParam> = ( param: P, gameCtx: HsGameCtx ) => Action<P>;
 
     export class InlineAction extends jsLogic.InlineAction<HsGameCtx> { };
+    export class InlineActionExt extends jsLogic.InlineActionExt<HsGameCtx> { };
 }

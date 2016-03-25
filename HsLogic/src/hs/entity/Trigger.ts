@@ -40,7 +40,7 @@ namespace HsLogic {
         // http://hearthstone.gamepedia.com/Advanced_rulebook#Glossary
         // Humble safeguard: Minions are not allowed to trigger on themselves entering play.
         static SELF_TRIGGER_PROTECTOR( self: Def.IDefTriggerImpl, event: ActionEvent<IActionParam>, gameCtx: HsGameCtx ): boolean {
-            return self.sourceCard !== event.param.source.card;
+            return self.sourceCard !== event.param.source.sourceCard;
         }
 
 

@@ -4,7 +4,13 @@ namespace HsLogic {
 
     export interface IPendingEvents {
         summon: event.Summon[],
-        death: ActionEvent<IActionParam>[]
+        death: ActionEvent<IActionParam>[],
+        //general: ActionEvent<IActionParam>[]
+    }
+
+    export interface PowerMgr {
+        getHealPower( source: ISource ): number;
+        getDamagePower( source: ISource, damageType: Def.DAMAGE_TYPE ): number;
     }
 
 
@@ -17,6 +23,8 @@ namespace HsLogic {
         players: Player[] = [];
 
         zonesMap: Collection.IStringMap<HsZones> = {};
+
+        powerMgr: PowerMgr;
 
 
         zonesOf( player: jsLogic.Entity ): HsZones {

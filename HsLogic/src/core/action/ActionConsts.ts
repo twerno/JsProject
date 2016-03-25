@@ -3,7 +3,7 @@
 namespace jsLogic {
 
     export type IActionType = IAction<IContext>;
-    export type PromiseOfActions = Promise<IAction<IContext>[]>;
+    export type PromiseOfActions = Promise<IActionType | IActionType[]>;
     export type FPromiseExecutor<T> = ( resolve: ( value?: T | PromiseLike<T> ) => void, reject: ( reason?: any ) => void ) => void;
 
 

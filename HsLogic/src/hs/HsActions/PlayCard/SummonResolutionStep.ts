@@ -20,7 +20,7 @@ namespace HsLogic {
 
     export class SummonResolutionStep<P extends IActionParam> extends Action<P> {
 
-        resolvable( self: SummonResolutionStep<P>, gameCtx: HsGameCtx ): boolean {
+        resolvable( gameCtx: HsGameCtx ): boolean {
             return gameCtx.pendingEvents.summon.length !== 0;
         }
 

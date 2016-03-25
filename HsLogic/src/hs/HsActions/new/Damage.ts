@@ -1,5 +1,3 @@
-///<reference path="../core/HsAction.ts"/>
-
 "use strict";
 
 namespace HsLogic {
@@ -48,6 +46,8 @@ namespace HsLogic {
     }
 
 
+
+
     /**
      * Damage
      *
@@ -88,36 +88,5 @@ namespace HsLogic {
         }
     }
 
-    export class DealDamage<P extends DealDamageParam> extends Action<P> {
 
-        resolve( self: DealDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
-
-                ( resolve, reject ): void => {
-                    let param: P = self.param,
-                        actions: Damage<DamageParam>[] = [],
-                        target: Player | Minion;
-
-                    for ( let i = 0; i < param.targets.length; i++ ) {
-                        if ( param.targets[i] instanceof Player
-                            || param.targets[i] instanceof Minion ) {
-
-                            target = <Player | Minion>param.targets[i];
-
-                            actions.push(
-                                gameCtx.actionFactory.damage.damage( {
-                                    source: param.source,
-                                    //                                    sourceType: param.sourceType,
-                                    damageType: param.damageType,
-                                    target: target,
-                                    baseDamage: param.baseDamage
-                                })
-                            );
-                        }
-                    }
-
-                    resolve( actions );
-                });
-        }
-    }
 }

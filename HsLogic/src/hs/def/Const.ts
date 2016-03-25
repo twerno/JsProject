@@ -19,6 +19,10 @@ namespace Def {
         COMBAT, DIRECT, PAY_LIFE, FATIGUE
     }
 
+    export enum HEAL_TYPE {
+        DIRECT
+    }
+
     export enum SPLIT_MODE {
         MISSILE, MAD_BOMB
     }
