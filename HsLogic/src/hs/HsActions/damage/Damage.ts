@@ -64,7 +64,7 @@ namespace HsLogic {
 
 
         resolve( self: Damage<P>, context: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
 
                 ( resolve, reject ): void => {
                     let param: P = self.param,

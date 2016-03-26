@@ -23,7 +23,7 @@ namespace HsLogic {
     export class DealDamage<P extends DealDamageParam> extends Action<P> {
 
         resolve( self: DealDamage<P>, context: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
 
                 ( resolve, reject ): void => {
                     let param: P = self.param,
@@ -69,10 +69,10 @@ namespace HsLogic {
 
     //    resolve( self: DealDamageToTargets<P>, context: HsGameCtx ): PromiseOfActions {
 
-    //        return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+    //        return new Promise<ActionType | ActionType[]>(
     //            ( resolve, reject ): void => {
     //                let param: P = self.param,
-    //                    actions: jsLogic.IAction<HsGameCtx>[] = [],
+    //                    actions: ActionType[] = [],
     //                    healDamagePower: number = context.powerMgr.get( param );
 
     //                param.finalValue = param.baseAmount;

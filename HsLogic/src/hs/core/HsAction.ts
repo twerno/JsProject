@@ -34,7 +34,7 @@ namespace HsLogic {
 
         constructor( public param: P ) { super( param.source ) }
 
-        abstract resolve( self: jsLogic.IAction<HsGameCtx>, context: HsGameCtx ): PromiseOfActions;
+        abstract resolve( self: Action<P>, context: HsGameCtx ): PromiseOfActions;
     }
 
 

@@ -6,10 +6,10 @@ namespace HsLogic {
 
         resolve( self: MultistepHeal<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: ActionType[] = [];
 
                     for ( let i = 0; i < param.steps.length; i++ ) {
                         param.steps[i].notifyMode = param.notifyEventMode;

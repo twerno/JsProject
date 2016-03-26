@@ -15,7 +15,7 @@ namespace HsLogic {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( [] );
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         player: Player = param.source.caster,

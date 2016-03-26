@@ -26,11 +26,11 @@ namespace HsLogic {
 
         resolve( self: SummonResolutionStep<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
 
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [],
+                        actions: ActionType[] = [],
                         event: event.Summon,
                         card: Card;
 

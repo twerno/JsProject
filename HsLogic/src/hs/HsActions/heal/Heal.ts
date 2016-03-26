@@ -11,10 +11,10 @@ namespace HsLogic {
 
         resolve( self: Heal<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: ActionType[] = [];
 
                     for ( let i = 0; i < param.targets.length; i++ )
                         param.targets[i].healed = 0;
@@ -65,11 +65,11 @@ namespace HsLogic {
 
         resolve( self: InternalHealTargets<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [],
-                        postActions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: ActionType[] = [],
+                        postActions: ActionType[] = [];
 
                     for ( let i = 0; i < param.targets.length; i++ ) {
                         let targetParam: HealedParam = param.targets[i],

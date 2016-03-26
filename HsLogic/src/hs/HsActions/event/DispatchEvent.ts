@@ -29,7 +29,7 @@ namespace HsLogic {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: IActionParam = self.event.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [],
+                        actions: ActionType[] = [],
                         triggers: Trigger[],
                         doneByDominantPlayer: Trigger[] = [];
 
@@ -99,10 +99,10 @@ namespace HsLogic {
 
         resolve( self: ProcessQueue<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[],
+                        actions: ActionType[],
                         trigger: Def.IDefTriggerImpl;
 
                     for ( let i = 0; i < param.triggers.length; i++ ) {

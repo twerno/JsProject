@@ -23,10 +23,10 @@ namespace HsLogic {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [],
+                        actions: ActionType[] = [],
                         weaponZone: HsZone<Weapon> = context.zonesOf( param.player ).weapon,
                         oldWeapon: Weapon = weaponZone.getRawArray()[0] || null;
 

@@ -13,7 +13,7 @@ namespace HsLogic {
     export class DestroyCardInPlay<P extends CardParam> extends Action<P> {
 
         resolve( self: DestroyCardInPlay<P>, param: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param;
 

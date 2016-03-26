@@ -20,10 +20,10 @@ namespace HsLogic {
 
         resolve( self: AcquireTargets, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: IAcquireTargetsParam = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [],
+                        actions: ActionType[] = [],
                         defAction: Def.IDefAction;
 
                     param.targets = new Array<Def.ITargets>( param.defActions.length );

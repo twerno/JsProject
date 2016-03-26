@@ -21,7 +21,9 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\hs\hsActions\new\" />
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
@@ -84,7 +86,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\AddGeneratedCardIntoHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\event\DispatchEvents.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\Heal.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\new\Damage.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\damage\Damage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DestroyCardInPlay.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\Discard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\DrawCard.ts" />
@@ -94,9 +96,9 @@
     <TypeScriptCompile Include="src\hs\hsActions\makeChoice\MakeChoiceAtRandom.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\MarkAsDestroyed.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\MillCard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\new\Damage2.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\damage\Damage2.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\HealShared.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\new\HealDamageCalc.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\damage\HealDamageCalc.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\MultistepHeal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\param\BasicParams.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\AcquireTargets.ts" />
@@ -126,7 +128,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>GameLogicEngine</RootNamespace>
+    <RootNamespace>HsLogic</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />

@@ -19,7 +19,7 @@ namespace HsLogic {
  	 */
     export class MakeChoiceAtRandom<T extends HsEntity, P extends MakeAChoiceAtRandomParam<T>> extends Action<P> {
         resolve( self: MakeChoiceAtRandom<T, P>, context: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param;
 

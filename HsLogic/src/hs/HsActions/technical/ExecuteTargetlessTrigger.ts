@@ -9,10 +9,10 @@ namespace HsLogic {
     export class ExecuteTargetlessTriggers<P extends ITargetlessTriggersParam> extends Action<P> {
         resolve( self: ExecuteTargetlessTriggers<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: ActionType[] = [];
 
                     if ( param.defActions )
                         for ( let i = 0; i < param.defActions.length; i++ )

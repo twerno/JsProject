@@ -42,11 +42,11 @@ namespace HsLogic {
     export class PlayMinion<P extends PlayMinionParam> extends Action<P> {
 
         resolve( self: PlayMinion<P>, context: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
 
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: ActionType[] = [];
 
                     // pay cost & remove from hand
                     actions.push( context.actionFactory.payCostAndRemoveFromHand( param ) );

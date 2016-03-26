@@ -33,11 +33,11 @@ namespace HsLogic {
 
         resolve( self: DrawCard<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         zones: HsZones = context.zonesOf( param.targetPlayer ),
-                        actions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: ActionType[] = [];
 
                     param.drawnCard = zones.deck.pop() || null;
 

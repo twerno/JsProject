@@ -12,10 +12,10 @@ namespace HsLogic {
     export class Sequence extends jsLogic.IAction<HsGameCtx> {
 
         resolve( self: Sequence, context: HsGameCtx ): PromiseOfActions {
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
 
-                    let actions: jsLogic.IAction<HsGameCtx>[] = [];
+                    let actions: ActionType[] = [];
 
                     while ( self.innerActions && self.innerActions.length > 0 )
                         actions.push( self.innerActions.shift() );
@@ -27,7 +27,7 @@ namespace HsLogic {
                 });
         }
 
-        constructor( public source: ISource, public innerActions: jsLogic.IAction<HsGameCtx>[] ) {
+        constructor( public source: ISource, public innerActions: ActionType[] ) {
             super( source );
         }
 

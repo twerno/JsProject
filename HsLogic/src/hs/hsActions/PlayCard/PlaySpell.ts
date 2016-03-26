@@ -37,10 +37,10 @@ namespace HsLogic {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: jsLogic.IAction<HsGameCtx>[] = [];
+                        actions: ActionType[] = [];
 
                     // pay cost & remove from hand
                     actions.push( context.actionFactory.payCostAndRemoveFromHand( param ) );
@@ -57,7 +57,7 @@ namespace HsLogic {
                                 return;
                             }
 
-                            let innerActions: jsLogic.IAction<HsGameCtx>[] = [];
+                            let innerActions: ActionType[] = [];
 
                             // step 3 - onTargetingPhase
                             innerActions.push(); //context.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );

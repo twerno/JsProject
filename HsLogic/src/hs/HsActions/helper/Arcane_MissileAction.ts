@@ -16,7 +16,7 @@ namespace HsLogic {
 
         resolve( self: Arcane_MissileAction<P>, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         availableTargers: HsEntity[] = Arcane_MissileAction.availableTargers().buildSet( param.source, context ),

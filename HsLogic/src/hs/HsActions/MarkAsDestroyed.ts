@@ -14,7 +14,7 @@ namespace HsLogic {
     //         self.card.markers.put(new DestroyMarker());
     //     }
 
-    //     constructor(source: jsLogic.IAction<HsGameCtx>, public card: Card) {
+    //     constructor(source: ActionType[], public card: Card) {
     //         super(source);
     //     };
     // }
