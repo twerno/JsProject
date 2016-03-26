@@ -118,6 +118,8 @@ namespace HsLogic {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
+                    param.amount = Math.max( 0, param.amount );
+
                     actions.push( new event.PreDamagePhase( param ).dispatch( context ) );
 
                     actions.push( new InternalDamage( param ) );
@@ -148,8 +150,7 @@ namespace HsLogic {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
-                    let param: P = self.param,
-                        actions: ActionType[] = [];
+                    let param: P = self.param;
 
                     param.damageState = DAMAGE_STATE.DEALT;
 

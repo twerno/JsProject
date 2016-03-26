@@ -14,11 +14,11 @@ namespace HsLogic {
                     for ( let i = 0; i < param.steps.length; i++ ) {
                         param.steps[i].notifyMode = param.notifyEventMode;
 
-                        actions.push( new Heal( param.steps[i] ) );
+                        actions.push( new CalculateAndHeal( param.steps[i] ) );
                     }
 
                     if ( param.notifyEventMode === NOTIFY_MODE.AFTER_ALL_STEPS )
-                        actions.push( new DispatchSavedEvents( event.TargetHealed, context ) );
+                        actions.push( new DispatchSavedEvents( event.Heal, context ) );
 
                     resolve( actions );
                 }

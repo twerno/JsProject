@@ -22,7 +22,7 @@ namespace HsLogic {
 
     export class HsActionFactory<T extends HsGameCtx> {
 
-        protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
+        //protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
         protected _enchantments: HsEnchantmentActionFactory<T> = new HsEnchantmentActionFactory();
         protected _makeAChoice: MakeChoiceActionFactory<T> = new MakeChoiceActionFactory();
 
@@ -34,7 +34,7 @@ namespace HsLogic {
         //    return new AuraUpdateStep(source);
         //}
 
-        get damage(): HsDamageFactory<T> { return this._damageFactory }
+        //get damage(): HsDamageFactory<T> { return this._damageFactory }
         get enchantment(): HsEnchantmentActionFactory<T> { return this._enchantments }
         get makeAChoice(): MakeChoiceActionFactory<T> { return this._makeAChoice }
 

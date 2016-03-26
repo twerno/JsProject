@@ -35,7 +35,4 @@ namespace HsLogic {
         notifyEventMode: NOTIFY_MODE
     }
 
-
-
-
 }
