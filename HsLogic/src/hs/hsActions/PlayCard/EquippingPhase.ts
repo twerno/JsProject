@@ -19,7 +19,7 @@ namespace HsLogic {
 
     export class EquippingPhase<P extends IEquipWeaponParam> extends Action<P> {
 
-        resolve( self: EquippingPhase<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: EquippingPhase<P>, context: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
@@ -27,13 +27,13 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
-                        weaponZone: HsZone<Weapon> = gameCtx.zonesOf( param.player ).weapon,
+                        weaponZone: HsZone<Weapon> = context.zonesOf( param.player ).weapon,
                         oldWeapon: Weapon = weaponZone.getRawArray()[0] || null;
 
                     // destroy old weapon
                     if ( oldWeapon ) {
                         weaponZone.removeEntity( oldWeapon );
-                        gameCtx.zonesOf( param.player ).graveyard.addEntity( oldWeapon );
+                        context.zonesOf( param.player ).graveyard.addEntity( oldWeapon );
                     }
 
                     // equip new weapon

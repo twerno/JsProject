@@ -2,6 +2,12 @@
 
 namespace HsLogic {
 
+    export interface IEventMgr {
+        save( event: ActionEvent<IActionParam> ): void;
+        get( eventClass: ActionEventClass ): ActionEvent<IActionParam>[];
+        count( eventClass: ActionEventClass ): number;
+    }
+
     export interface IPendingEvents {
         summon: event.Summon[],
         death: ActionEvent<IActionParam>[],
@@ -53,5 +59,7 @@ namespace HsLogic {
             summon: [],
             death: []
         };
+
+        eventMgr: IEventMgr;
     }
 }

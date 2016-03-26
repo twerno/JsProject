@@ -33,7 +33,7 @@ namespace HsLogic {
 
     export class PlaySpell<P extends PlayCardParam> extends Action<P> {
 
-        resolve( self: PlaySpell<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlaySpell<P>, context: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
@@ -43,10 +43,10 @@ namespace HsLogic {
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
                     // pay cost & remove from hand
-                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
+                    actions.push( context.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
-                    actions.push(); //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
+                    actions.push(); //context.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
                     actions.push( new SummonResolutionStep( { source: param.source }) );
                     actions.push( new DeathCreationStep( { source: param.source }) );
 
@@ -60,7 +60,7 @@ namespace HsLogic {
                             let innerActions: jsLogic.IAction<HsGameCtx>[] = [];
 
                             // step 3 - onTargetingPhase
-                            innerActions.push(); //gameCtx.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
+                            innerActions.push(); //context.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
                             actions.push( new SummonResolutionStep( { source: param.source }) );
                             actions.push( new DeathCreationStep( { source: param.source }) );
 
@@ -74,7 +74,7 @@ namespace HsLogic {
                             }) );
 
                             // step 5 - onAfterPlaySpell
-                            innerActions.push(); //gameCtx.actionFactory.dispatch( new OnAfterSpellPhaseEvent( param ) ) );
+                            innerActions.push(); //context.actionFactory.dispatch( new OnAfterSpellPhaseEvent( param ) ) );
 
                             resolve( innerActions );
                         }

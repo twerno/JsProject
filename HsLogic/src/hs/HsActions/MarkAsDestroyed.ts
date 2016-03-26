@@ -10,7 +10,7 @@ namespace HsLogic {
     //*/
     // export class MarkAsDestroyed extends HsBaseAction {
 
-    //     protected baseActionResolver(self: MarkAsDestroyed, gameCtx: HsGameCtx): void {
+    //     protected baseActionResolver(self: MarkAsDestroyed, context: HsGameCtx): void {
     //         self.card.markers.put(new DestroyMarker());
     //     }
 

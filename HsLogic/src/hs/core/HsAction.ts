@@ -5,7 +5,8 @@
 
 namespace HsLogic {
 
-    export type PromiseOfActions = Promise<jsLogic.IAction<HsGameCtx> | jsLogic.IAction<HsGameCtx>[]>;
+    export type ActionType = jsLogic.IAction<HsGameCtx>;
+    export type PromiseOfActions = Promise<ActionType | ActionType[]>;
 
     export enum SOURCE_TYPE {
         MINION,
@@ -33,7 +34,7 @@ namespace HsLogic {
 
         constructor( public param: P ) { super( param.source ) }
 
-        abstract resolve( self: jsLogic.IAction<HsGameCtx>, gameCtx: HsGameCtx ): PromiseOfActions;
+        abstract resolve( self: jsLogic.IAction<HsGameCtx>, context: HsGameCtx ): PromiseOfActions;
     }
 
 
@@ -44,12 +45,16 @@ namespace HsLogic {
     export abstract class ActionEvent<P extends IActionParam> {
         get type(): string { return ClassUtils.getNameOfClass( this ) }
 
-        valid( gameCtx: HsGameCtx ): boolean { return true }
+        valid( context: HsGameCtx ): boolean { return true }
+
+        dispatch( context: HsGameCtx ): ActionType {
+            return new DispatchEvent( this );
+        }
 
         constructor( public param: P ) { }
     };
 
-    export type FActionBuilder<P extends IActionParam> = ( param: P, gameCtx: HsGameCtx ) => Action<P>;
+    export type FActionBuilder<P extends IActionParam> = ( param: P, context: HsGameCtx ) => Action<P>;
 
     export class InlineAction extends jsLogic.InlineAction<HsGameCtx> { };
     export class InlineActionExt extends jsLogic.InlineActionExt<HsGameCtx> { };

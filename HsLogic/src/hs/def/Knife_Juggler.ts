@@ -16,8 +16,8 @@ namespace Def {
         triggers: [{
             eventClass: HsLogic.event.AfterSummon,
             triggerPriority: Trigger_Priority_DEFAULT,
-            actions: ( self: IDefTriggerImpl, event: HsLogic.event.AfterSummon, gameCtx: GameCtx ): Action[] => {
-                let character: HsLogic.Character[] = SetBuilderHelper.ENEMY_CHARACTER.buildSet<HsLogic.Character>( event.param.source, gameCtx );
+            actions: ( self: IDefTriggerImpl, event: HsLogic.event.AfterSummon, context: GameCtx ): Action[] => {
+                let character: HsLogic.Character[] = SetBuilderHelper.ENEMY_CHARACTER.buildSet<HsLogic.Character>( event.param.source, context );
                 // wybierz jednego - losowo
                 // deal 1 dmg
                 return null;

@@ -17,9 +17,9 @@ namespace Def {
         triggers: [],
         flags: {},
         playActions: [
-            ( source: HsSource, gameCtx: GameCtx ): Action[] => {
+            ( source: HsSource, context: GameCtx ): Action[] => {
                 return [
-                    gameCtx.actionFactory.damage.randomlySplitDamage( {
+                    context.actionFactory.damage.randomlySplitDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         partsAmount: 3,

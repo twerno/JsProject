@@ -63,7 +63,7 @@ namespace HsLogic {
         //}
 
 
-        resolve( self: Damage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Damage<P>, context: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {

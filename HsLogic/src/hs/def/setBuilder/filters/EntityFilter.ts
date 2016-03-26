@@ -11,7 +11,7 @@ namespace Def {
         }
 
 
-        other_than( source: HsSource, entity: HsLogic.HsEntity, gameCtx: GameCtx ): boolean {
+        other_than( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
             return ( this.entity instanceof HsLogic.HsEntity && this.entity !== entity )
             /*|| (this.entity instanceof Array && this.entity.indexOf(entity) === -1) */
         }

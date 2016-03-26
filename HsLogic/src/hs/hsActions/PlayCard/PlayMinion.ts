@@ -9,8 +9,8 @@ namespace HsLogic {
 
         //namespace internal {
         export class GenSummonMinionEventextends<P extends PlayCardParam> extends ActionEvent<P> {
-            valid( gameCtx: HsGameCtx ): boolean {
-                return gameCtx.zonesOf( this.param.card.owner )
+            valid( context: HsGameCtx ): boolean {
+                return context.zonesOf( this.param.card.owner )
                     .battlefield.has( this.param.card );
             }
         }
@@ -41,7 +41,7 @@ namespace HsLogic {
        */
     export class PlayMinion<P extends PlayMinionParam> extends Action<P> {
 
-        resolve( self: PlayMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayMinion<P>, context: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
@@ -49,10 +49,10 @@ namespace HsLogic {
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
                     // pay cost & remove from hand
-                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
+                    actions.push( context.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // 2. enters the battlefied  
-                    gameCtx.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
+                    context.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
 
                     // pre summon reaction bug
                     // http://hearthstone.gamepedia.com/Advanced_rulebook#Cobalt_Guardian.2FMurloc_Tidecaller_Pre-Summon_Reaction_Bug
@@ -60,7 +60,7 @@ namespace HsLogic {
                     //@TODO interrupt following phases if then minion dies (battlecry still goes)
 
                     // 3. create SummonEvent 
-                    gameCtx.pendingEvents.summon.push( new event.Summon( param ) );
+                    context.pendingEvents.summon.push( new event.Summon( param ) );
 
 
                     // 4. onPlayPhase

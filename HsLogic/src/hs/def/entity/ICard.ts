@@ -10,8 +10,8 @@ namespace Def {
         triggers: IDefTrigger[],
         enchantments?: Object[];
 
-        isPlayalble?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
-        isActivated?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
+        isPlayalble?: ( source: HsSource, context: GameCtx ) => boolean;
+        isActivated?: ( source: HsSource, context: GameCtx ) => boolean;
     }
 
     export interface ICardImpl extends IHsEntityImpl {
@@ -22,7 +22,7 @@ namespace Def {
         triggers: HsLogic.Trigger[],
         enchantments?: Object[];
 
-        isPlayalble?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
-        isActivated?: ( source: HsSource, gameCtx: GameCtx ) => boolean;
+        isPlayalble?: ( source: HsSource, context: GameCtx ) => boolean;
+        isActivated?: ( source: HsSource, context: GameCtx ) => boolean;
     }
 }

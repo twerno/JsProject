@@ -14,7 +14,7 @@ namespace HsLogic {
  	 */
     export class SilenceAMinion<P extends ISilenceAMinionParam> extends Action<P> {
 
-        resolve( self: SilenceAMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: SilenceAMinion<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
@@ -47,7 +47,7 @@ namespace HsLogic {
 
                     resolve( jsLogic.NO_CONSEQUENCES );
                     //                    resolve([
-                    //                        gameCtx.actionFactory.executeTargetlessTriggers({
+                    //                        context.actionFactory.executeTargetlessTriggers({
                     //                            source: param.source,
                     //                            defActions: triggers
                     //                        })

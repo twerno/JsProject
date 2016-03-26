@@ -2,8 +2,8 @@
 
 namespace Def {
 
-    export type FTriggerable = ( self: IDefTriggerImpl, event: ActionEvent, gameCtx: GameCtx ) => boolean;
-    export type IDefTriggerAction = ( self: IDefTriggerImpl, event: ActionEvent, gameCtx: GameCtx ) => Action[];
+    export type FTriggerable = ( self: IDefTriggerImpl, event: ActionEvent, context: GameCtx ) => boolean;
+    export type IDefTriggerAction = ( self: IDefTriggerImpl, event: ActionEvent, context: GameCtx ) => Action[];
 
     export const Trigger_Priority_DEFAULT = 200;
 

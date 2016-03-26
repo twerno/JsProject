@@ -20,11 +20,11 @@ namespace HsLogic {
 
     export class SummonResolutionStep<P extends IActionParam> extends Action<P> {
 
-        resolvable( gameCtx: HsGameCtx ): boolean {
-            return gameCtx.pendingEvents.summon.length !== 0;
+        resolvable( context: HsGameCtx ): boolean {
+            return context.pendingEvents.summon.length !== 0;
         }
 
-        resolve( self: SummonResolutionStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: SummonResolutionStep<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
@@ -41,14 +41,14 @@ namespace HsLogic {
                     }) );
 
                     // 2. resolve: summonEvent
-                    while ( event = gameCtx.pendingEvents.summon.shift() ) {
+                    while ( event = context.pendingEvents.summon.shift() ) {
                         card = event.param.card;
 
                         // http://hearthstone.gamepedia.com/Advanced_rulebook#Summon_Resolution_Step
                         // Examples: 
                         // if the minion associated with a Summon Event is no longer in play at the time it is resolved, then nothing queues
-                        //if ( gameCtx.zonesOf( card.owner ).battlefield.has( card ) )
-                        //    actions.push( this.dispatch( event, gameCtx ) );
+                        //if ( context.zonesOf( card.owner ).battlefield.has( card ) )
+                        //    actions.push( this.dispatch( event, context ) );
                     }
 
                     // 3-6. Delegate execution to DeathCreationStep

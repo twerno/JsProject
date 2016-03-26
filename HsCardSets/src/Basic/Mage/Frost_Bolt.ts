@@ -18,15 +18,15 @@ namespace Def {
                     .addFilter( StandardFilters.character )
                     .addFilter( StandardFilters.targetable_by_spell_or_hero_power ),
 
-                actionBuilder: ( source: HsSource, target: Character, gameCtx: GameCtx ): Action[] => {
+                actionBuilder: ( source: HsSource, target: Character, context: GameCtx ): Action[] => {
                     return [
-                        gameCtx.actionFactory.damage.dealDamage( {
+                        context.actionFactory.damage.dealDamage( {
                             source: source,
                             damageType: DAMAGE_TYPE.DIRECT,
                             targets: [target],
                             baseDamage: 3,
                         }),
-                        gameCtx.actionFactory.enchantment.freeze( {
+                        context.actionFactory.enchantment.freeze( {
                             source: source,
                             targets: [target]
                         })

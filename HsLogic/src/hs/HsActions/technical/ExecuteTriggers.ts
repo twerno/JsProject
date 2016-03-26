@@ -8,7 +8,7 @@ namespace HsLogic {
     }
 
     export class ExecuteTriggers<P extends ExecuteTriggersParam> extends Action<P> {
-        resolve( self: ExecuteTriggers<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: ExecuteTriggers<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
@@ -32,7 +32,7 @@ namespace HsLogic {
                             }) );
 
                         else if ( Def.isTargetlessActionDef( defAction ) )
-                            actions.push( gameCtx.actionFactory.executeTargetlessTriggers( {
+                            actions.push( context.actionFactory.executeTargetlessTriggers( {
                                 source: param.source,
                                 defActions: [defAction]
                             }) );

@@ -27,7 +27,7 @@ namespace Def {
         MISSILE, MAD_BOMB
     }
 
-    export type FSingleTargetActionBuilder<T extends HsLogic.HsEntity> = ( source: HsSource, target: T, gameCtx: GameCtx ) => Action[];
+    export type FSingleTargetActionBuilder<T extends HsLogic.HsEntity> = ( source: HsSource, target: T, context: GameCtx ) => Action[];
 
-    export type FTargetsActionBuilder<T extends HsLogic.HsEntity> = ( source: HsSource, targets: T[], gameCtx: GameCtx ) => Action[];
+    export type FTargetsActionBuilder<T extends HsLogic.HsEntity> = ( source: HsSource, targets: T[], context: GameCtx ) => Action[];
 }

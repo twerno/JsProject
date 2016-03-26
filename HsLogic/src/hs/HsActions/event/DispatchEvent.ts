@@ -11,31 +11,32 @@ namespace HsLogic {
  	 */
 
 
-    export class DispatchEvent<P extends IActionParam> extends Action<P> {
+    export class DispatchEvent extends Action<IActionParam> {
 
-        constructor( public event: ActionEvent<P> ) {
-            super( event.param )
+        constructor( public event: ActionEvent<IActionParam> ) {
+            super( null )
         }
 
 
         resolvable( context: HsGameCtx ): boolean {
-            return this.event.valid( context );
+            return this.event
+                && this.event.valid( context );
         }
 
 
-        resolve( self: DispatchEvent<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: DispatchEvent, context: HsGameCtx ): PromiseOfActions {
 
-            return new Promise<jsLogic.IAction<HsGameCtx>[]>(
+            return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
-                    let param: P = self.param,
+                    let param: IActionParam = self.event.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [],
                         triggers: Trigger[],
                         doneByDominantPlayer: Trigger[] = [];
 
                     // Dominant Player === active player (for sake of simplicity)
                     // Dominant Player Triggers
-                    triggers = self._getDominantPlayerTriggers( gameCtx.activePlayer )
-                        .buildSet<Trigger>( param.source, gameCtx );
+                    triggers = self._getDominantPlayerTriggers( context.activePlayer )
+                        .buildSet<Trigger>( param.source, context );
 
                     // Dominant Player Queue
                     actions.push( new ProcessQueue( {
@@ -51,8 +52,8 @@ namespace HsLogic {
 
                         // Double safeguard
                         // Subtrack triggers that already had been triggered by dominant player
-                        triggers = self._getSecondaryPlayerTriggers( gameCtx.activePlayer, doneByDominantPlayer )
-                            .buildSet<Trigger>( param.source, gameCtx );
+                        triggers = self._getSecondaryPlayerTriggers( context.activePlayer, doneByDominantPlayer )
+                            .buildSet<Trigger>( param.source, context );
 
                         // Secondary Player Queue
                         actions.push( new ProcessQueue( {
@@ -79,7 +80,7 @@ namespace HsLogic {
         protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.IDefSetBuilder {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.TriggerFilter.OWNER( player ).DOES_NOT_own_trigger )
-                .addFilter(( source: ISource, trigger: Trigger, gameCtx: HsGameCtx ): boolean => {
+                .addFilter(( source: ISource, trigger: Trigger, context: HsGameCtx ): boolean => {
                     return triggeredByDominantPlayer.indexOf( trigger ) === -1;
                 });
         }
@@ -96,7 +97,7 @@ namespace HsLogic {
 
     class ProcessQueue<P extends QueueParam> extends Action<P> {
 
-        resolve( self: ProcessQueue<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: ProcessQueue<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
@@ -109,11 +110,11 @@ namespace HsLogic {
 
                         actions.push( new InlineAction(
                             ( resolve, reject ): void => {
-                                if ( !trigger.triggerable( trigger, param.event, gameCtx ) )
+                                if ( !trigger.triggerable( trigger, param.event, context ) )
                                     return;
 
                                 param.done.push( trigger );
-                                resolve( trigger.actions( trigger, param.event, gameCtx ) );
+                                resolve( trigger.actions( trigger, param.event, context ) );
                             }
                         ) );
                     }

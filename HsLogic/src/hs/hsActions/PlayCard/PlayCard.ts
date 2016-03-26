@@ -25,7 +25,7 @@ namespace HsLogic {
  	 */
     export class PlayCard extends Action<PlayCardParam> {
 
-        resolve( self: PlayCard, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayCard, context: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
@@ -34,7 +34,7 @@ namespace HsLogic {
                     let param: PlayCardParam = self.param,
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
-                    //                    actions.push(gameCtx.actionFactory.acquireTargets({
+                    //                    actions.push(context.actionFactory.acquireTargets({
                     //                        source: param.source,
                     //                        targets: param.acquiredTargets,
                     //                        defActions: param.card.playActions,
@@ -43,13 +43,13 @@ namespace HsLogic {
 
                     // delegate to playSpell, playMinon or playWeapon action
                     if ( param.card instanceof Minion )
-                        actions.push( gameCtx.actionFactory.playMinion( <PlayMinionParam>param ) );
+                        actions.push( context.actionFactory.playMinion( <PlayMinionParam>param ) );
 
                     else if ( param.card instanceof Spell )
-                        actions.push( gameCtx.actionFactory.playSpell( param ) );
+                        actions.push( context.actionFactory.playSpell( param ) );
 
                     else if ( param.card instanceof Weapon )
-                        actions.push( gameCtx.actionFactory.playWeapon( <IEquipWeaponParam>param ) );
+                        actions.push( context.actionFactory.playWeapon( <IEquipWeaponParam>param ) );
 
                     else
                         reject( new Error( `Unsuported object class: ${param.card}` ) );

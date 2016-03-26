@@ -10,12 +10,12 @@ namespace Def {
 
 
     export abstract class IDefTargetedAction<T extends ITargets> {
-        abstract acquireTargets( source: HsCancelableParam, targets: T, gameCtx: GameCtx ): Action;
-        abstract actions( source: HsSource, targets: T, gameCtx: GameCtx ): Action[];
+        abstract acquireTargets( source: HsCancelableParam, targets: T, context: GameCtx ): Action;
+        abstract actions( source: HsSource, targets: T, context: GameCtx ): Action[];
     }
 
 
-    export type IDefTargetlessAction = ( source: HsSource, gameCtx: GameCtx ) => Action[];
+    export type IDefTargetlessAction = ( source: HsSource, context: GameCtx ) => Action[];
 
     export type IDefAction = IDefTargetedAction<ITargets> | IDefTargetlessAction;
 

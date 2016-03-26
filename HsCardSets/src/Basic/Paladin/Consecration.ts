@@ -17,9 +17,9 @@ namespace Def {
                 availableTargets: SetBuilderHelper.BATTLEFIELD
                     .addFilter( StandardFilters.character ),
 
-                actionBuilder: ( source: HsSource, targets: Character[], gameCtx: GameCtx ): Action[] => {
+                actionBuilder: ( source: HsSource, targets: Character[], context: GameCtx ): Action[] => {
                     return [
-                        gameCtx.actionFactory.damage.dealDamage( {
+                        context.actionFactory.damage.dealDamage( {
                             source: source,
                             damageType: DAMAGE_TYPE.DIRECT,
                             targets: targets,

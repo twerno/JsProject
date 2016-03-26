@@ -9,7 +9,7 @@ namespace HsLogic {
 
     export class Battlecry<P extends PlayCardParam> extends Action<P> {
 
-        resolve( self: Battlecry<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Battlecry<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {

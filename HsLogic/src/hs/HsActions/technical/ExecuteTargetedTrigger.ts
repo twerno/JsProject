@@ -8,13 +8,13 @@ namespace HsLogic {
     }
 
     export class ExecuteTargetedTrigger<P extends TargetedTriggerParam> extends Action<P> {
-        resolve( self: ExecuteTargetedTrigger<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: ExecuteTargetedTrigger<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param;
 
-                    resolve( param.defAction.actions( param.source, param.targets, gameCtx ) );
+                    resolve( param.defAction.actions( param.source, param.targets, context ) );
                 }
             )
         }

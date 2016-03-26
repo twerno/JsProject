@@ -17,12 +17,12 @@ namespace HsLogic {
  	 */
     export class ShuffleGeneratedCardIntoDeck<P extends PlayerAndCardsParam> extends Action<P> {
 
-        resolve( self: ShuffleGeneratedCardIntoDeck<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: ShuffleGeneratedCardIntoDeck<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        deck: HsZone<Card> = gameCtx.zonesOf( param.player ).deck,
+                        deck: HsZone<Card> = context.zonesOf( param.player ).deck,
                         added: boolean = false;
 
                     for ( let id in param.cards ) {
@@ -33,7 +33,7 @@ namespace HsLogic {
                     }
 
                     if ( added )
-                        resolve( [gameCtx.actionFactory.shuffleDeck( param )] );
+                        resolve( [context.actionFactory.shuffleDeck( param )] );
                     else
                         resolve( null );
                 });

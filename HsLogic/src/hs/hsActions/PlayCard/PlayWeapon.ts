@@ -18,7 +18,7 @@ namespace HsLogic {
 
     export class PlayWeapon<P extends IEquipWeaponParam> extends Action<P> {
 
-        resolve( self: PlayWeapon<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayWeapon<P>, context: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
@@ -28,11 +28,11 @@ namespace HsLogic {
                         actions: jsLogic.IAction<HsGameCtx>[] = []
 
                     // pay cost & remove from hand
-                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
+                    actions.push( context.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
                     actions.push(
-                        //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) )
+                        //context.actionFactory.dispatch( new OnPlayPhaseEvent( param ) )
                     );
 
                     // step 3 - equipping Phase

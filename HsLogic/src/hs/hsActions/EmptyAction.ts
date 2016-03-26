@@ -14,7 +14,7 @@ namespace HsLogic {
  	 */
     export class EmptyAction<P extends EmptyActionParam> extends Action<P> {
 
-        resolve( self: EmptyAction<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: EmptyAction<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {

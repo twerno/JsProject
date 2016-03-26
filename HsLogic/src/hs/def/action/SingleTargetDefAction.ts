@@ -22,19 +22,19 @@ namespace Def {
                 return null;
         }
 
-        acquireTargets( param: HsCancelableParam, targets: ITarget, gameCtx: GameCtx ): Action {
-            return gameCtx.actionFactory.makeAChoice.singleTarget( {
+        acquireTargets( param: HsCancelableParam, targets: ITarget, context: GameCtx ): Action {
+            return context.actionFactory.makeAChoice.singleTarget( {
                 source: param.source,
                 cancelAction: param.cancelAction,
                 sets: {
-                    source: this.param.availableTargets.buildSet<Entity>( param.source, gameCtx ),
+                    source: this.param.availableTargets.buildSet<Entity>( param.source, context ),
                     result: targets.target
                 },
             })
         }
 
-        actions( source: HsSource, targets: ITargets, gameCtx: GameCtx ): Action[] {
-            return this.param.actionBuilder( source, this.getSingleTarget( targets ), gameCtx );
+        actions( source: HsSource, targets: ITargets, context: GameCtx ): Action[] {
+            return this.param.actionBuilder( source, this.getSingleTarget( targets ), context );
         }
 
         constructor( public param: ISingleTargetParam<T> ) { super() }

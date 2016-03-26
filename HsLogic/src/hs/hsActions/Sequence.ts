@@ -11,7 +11,7 @@ namespace HsLogic {
  	 */
     export class Sequence extends jsLogic.IAction<HsGameCtx> {
 
-        resolve( self: Sequence, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Sequence, context: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
 
@@ -20,8 +20,8 @@ namespace HsLogic {
                     while ( self.innerActions && self.innerActions.length > 0 )
                         actions.push( self.innerActions.shift() );
 
-                    //actions.push(gameCtx.actionFactory.auraUpdateStep(self.source));
-                    actions.push( gameCtx.actionFactory.deathCreationStep( { source: self.source }) );
+                    //actions.push(context.actionFactory.auraUpdateStep(self.source));
+                    actions.push( context.actionFactory.deathCreationStep( { source: self.source }) );
 
                     resolve( actions );
                 });

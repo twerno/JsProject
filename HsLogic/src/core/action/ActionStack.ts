@@ -126,7 +126,8 @@ namespace jsLogic {
 
             if ( consequences instanceof Array )
                 while ( consequences.length > 0 ) {
-                    this.putOnTop( consequences.pop() );
+                    action = consequences.pop();
+                    action && this.putOnTop( consequences.pop() );
                 }
             else if ( consequences instanceof IAction )
                 this.putOnTop( consequences );

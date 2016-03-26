@@ -8,18 +8,18 @@ namespace HsLogic {
             return Def.SetBuilderHelper.BATTLEFIELD
                 .addFilter( Def.StandardFilters.enemy )
                 .addFilter( Def.StandardFilters.character )
-                .addFilter(( source, entity, gameCtx ): boolean => {
+                .addFilter(( source, entity, context ): boolean => {
                     return entity instanceof Player
                         || entity instanceof Minion && entity.hp > 0;
                 });
         }
 
-        resolve( self: Arcane_MissileAction<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: Arcane_MissileAction<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        availableTargers: HsEntity[] = Arcane_MissileAction.availableTargers().buildSet( param.source, gameCtx ),
+                        availableTargers: HsEntity[] = Arcane_MissileAction.availableTargers().buildSet( param.source, context ),
                         resultSet: ( Player | Minion )[];
 
                     resolve( [
@@ -32,7 +32,7 @@ namespace HsLogic {
 
                         new jsLogic.InlineAction(( resolve, reject ): void => {
                             resolve( [
-                                gameCtx.actionFactory.damage.dealDamage( {
+                                context.actionFactory.damage.dealDamage( {
                                     source: param.source,
                                     damageType: Def.DAMAGE_TYPE.DIRECT,
                                     baseDamage: 1,

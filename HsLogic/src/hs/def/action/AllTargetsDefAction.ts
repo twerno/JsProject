@@ -14,13 +14,13 @@ namespace Def {
             return <T[]>( ( targets && targets.targets ) || [] );
         }
 
-        acquireTargets( param: HsCancelableParam, targets: ITargets, gameCtx: GameCtx ): Action {
-            targets.targets = this.param.availableTargets.buildSet<HsLogic.HsEntity>( param.source, gameCtx );
+        acquireTargets( param: HsCancelableParam, targets: ITargets, context: GameCtx ): Action {
+            targets.targets = this.param.availableTargets.buildSet<HsLogic.HsEntity>( param.source, context );
             return null;
         }
 
-        actions( source: HsSource, targets: ITargets, gameCtx: GameCtx ): Action[] {
-            return this.param.actionBuilder( source, this.getAllTargets( targets ), gameCtx );
+        actions( source: HsSource, targets: ITargets, context: GameCtx ): Action[] {
+            return this.param.actionBuilder( source, this.getAllTargets( targets ), context );
         }
 
         constructor( public param: IAllTargetsParam<T> ) { super() }

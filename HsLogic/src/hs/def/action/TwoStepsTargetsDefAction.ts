@@ -15,14 +15,14 @@ namespace Def {
 
     export class TwoStepsTargetsDefAction<T extends HsLogic.HsEntity> extends SingleTargetDefAction<T> {
 
-        actions( source: HsSource, targets: ITargets, gameCtx: GameCtx ): Action[] {
-            let result: Action[] = super.actions( source, targets, gameCtx ),
+        actions( source: HsSource, targets: ITargets, context: GameCtx ): Action[] {
+            let result: Action[] = super.actions( source, targets, context ),
                 step1Target: T = this.getSingleTarget( targets );
 
 
             if ( step1Target !== null ) {
-                let step2Targets: T[] = <T[]>this.twoStepParam.step2.availableTargets( step1Target ).buildSet( source, gameCtx );
-                result.concat( this.twoStepParam.step2.actionBuilder( source, step2Targets, gameCtx ) );
+                let step2Targets: T[] = <T[]>this.twoStepParam.step2.availableTargets( step1Target ).buildSet( source, context );
+                result.concat( this.twoStepParam.step2.actionBuilder( source, step2Targets, context ) );
             }
 
             return result;

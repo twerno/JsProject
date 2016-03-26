@@ -18,7 +18,7 @@ namespace HsLogic {
      */
     export class AcquireTargets extends Action<IAcquireTargetsParam> {
 
-        resolve( self: AcquireTargets, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: AcquireTargets, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
@@ -34,7 +34,7 @@ namespace HsLogic {
 
                         if ( Def.isTargetedActionDef( defAction ) ) {
                             actions.push(
-                                defAction.acquireTargets( param, param.targets[i], gameCtx ) );
+                                defAction.acquireTargets( param, param.targets[i], context ) );
                         }
                     }
 

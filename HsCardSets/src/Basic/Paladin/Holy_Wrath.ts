@@ -18,20 +18,20 @@ namespace Def {
                     .addFilter( StandardFilters.character )
                     .addFilter( StandardFilters.targetable_by_spell_or_hero_power ),
 
-                actionBuilder: ( source: HsSource, target: Character, gameCtx: GameCtx ): Action[] => {
+                actionBuilder: ( source: HsSource, target: Character, context: GameCtx ): Action[] => {
                     let drawCardParam: HsLogic.DrawParam = {
                         source: source,
                         targetPlayer: source.caster,
                         drawnCard: null
                     };
                     return [
-                        gameCtx.actionFactory.drawCard( drawCardParam ),
+                        context.actionFactory.drawCard( drawCardParam ),
 
                         new jsLogic.InlineAction(( resolve, reject ): void => {
 
                             if ( drawCardParam.drawnCard )
                                 resolve(
-                                    DealDirectDamageToTarget( drawCardParam.drawnCard.cost )( source, target, gameCtx )
+                                    DealDirectDamageToTarget( drawCardParam.drawnCard.cost )( source, target, context )
                                 );
                             else
                                 resolve( jsLogic.NO_CONSEQUENCES );

@@ -22,7 +22,7 @@ namespace HsLogic {
 
     export class DealDamage<P extends DealDamageParam> extends Action<P> {
 
-        resolve( self: DealDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: DealDamage<P>, context: HsGameCtx ): PromiseOfActions {
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
 
                 ( resolve, reject ): void => {
@@ -37,7 +37,7 @@ namespace HsLogic {
                             target = <Player | Minion>param.targets[i];
 
                             actions.push(
-                                gameCtx.actionFactory.damage.damage( {
+                                context.actionFactory.damage.damage( {
                                     source: param.source,
                                     damageType: param.damageType,
                                     target: target,
@@ -67,13 +67,13 @@ namespace HsLogic {
 
     //export class DealDamageToTargets<P extends HealDamageCalcParam> extends Action<P> {
 
-    //    resolve( self: DealDamageToTargets<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+    //    resolve( self: DealDamageToTargets<P>, context: HsGameCtx ): PromiseOfActions {
 
     //        return new Promise<jsLogic.IAction<HsGameCtx>[]>(
     //            ( resolve, reject ): void => {
     //                let param: P = self.param,
     //                    actions: jsLogic.IAction<HsGameCtx>[] = [],
-    //                    healDamagePower: number = gameCtx.powerMgr.get( param );
+    //                    healDamagePower: number = context.powerMgr.get( param );
 
     //                param.finalValue = param.baseAmount;
 

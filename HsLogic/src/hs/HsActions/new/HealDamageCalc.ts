@@ -22,13 +22,13 @@ namespace HsLogic {
 
     //export class HealDamageCalc<P extends HealDamageCalcParam> extends Action<P> {
 
-    //    resolve( self: HealDamageCalc<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+    //    resolve( self: HealDamageCalc<P>, context: HsGameCtx ): PromiseOfActions {
 
     //        return new Promise<jsLogic.IAction<HsGameCtx>[]>(
     //            ( resolve, reject ): void => {
     //                let param: P = self.param,
     //                    actions: jsLogic.IAction<HsGameCtx>[] = [];
-    //                //healDamagePower: number = gameCtx.powerMgr.getDamagePower( param );
+    //                //healDamagePower: number = context.powerMgr.getDamagePower( param );
 
     //                param.finalValue = param.baseAmount;
 

@@ -31,12 +31,12 @@ namespace HsLogic {
  	 */
     export class DrawCard<P extends DrawParam> extends Action<P> {
 
-        resolve( self: DrawCard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve( self: DrawCard<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<jsLogic.IAction<HsGameCtx>[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        zones: HsZones = gameCtx.zonesOf( param.targetPlayer ),
+                        zones: HsZones = context.zonesOf( param.targetPlayer ),
                         actions: jsLogic.IAction<HsGameCtx>[] = [];
 
                     param.drawnCard = zones.deck.pop() || null;
@@ -47,17 +47,17 @@ namespace HsLogic {
                         else
                             zones.graveyard.addEntity( param.drawnCard );
 
-                        actions.push(); //gameCtx.actionFactory.dispatch( new OnCardDraw( param ) ) );
+                        actions.push(); //context.actionFactory.dispatch( new OnCardDraw( param ) ) );
 
                         //                        actions.push( new ExecuteTargetlessTriggers( {
                         //                            source: param.source,
                         //                            defActions: param.drawnCard.triggers.onDrawn
                         //                        }) );
 
-                        actions.push(); //gameCtx.actionFactory.dispatch( new OnCardDrawn( param ) ) );
+                        actions.push(); //context.actionFactory.dispatch( new OnCardDrawn( param ) ) );
                     }
                     else
-                        actions.push( gameCtx.actionFactory.fatigue( {
+                        actions.push( context.actionFactory.fatigue( {
                             source: param.source,
                             player: param.targetPlayer
                         }) );
