@@ -51,6 +51,20 @@ namespace HsLogic {
             return new DispatchEvent( this );
         }
 
+        dispatchOrSave( context: HsGameCtx, check: () => boolean ): ActionType {
+            let param: P = this.param,
+                self: ActionEvent<P> = this;
+
+            return new InlineAction(( resolve, reject ): void => {
+                if ( check && check() )
+                    resolve( new DispatchEvent( self ) );
+                else {
+                    context.eventMgr.save( self );
+                    resolve( jsLogic.NO_CONSEQUENCES );
+                }
+            });
+        }
+
         constructor( public param: P ) { }
     };
 

@@ -38,7 +38,7 @@ namespace HsLogic {
                     }) );
 
 
-                    actions.push( new InternalHealTargets( param ) );
+                    actions.push( new InternalHeal( param ) );
 
 
                     resolve( actions );
@@ -56,14 +56,14 @@ namespace HsLogic {
      * InternalHeal
      *
      */
-    export class InternalHealTargets<P extends HealParam> extends Action<P> {
+    class InternalHeal<P extends HealParam> extends Action<P> {
 
         resolvable( context: HsGameCtx ): boolean {
             return !this.param.cancelAction.value;
         }
 
 
-        resolve( self: InternalHealTargets<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: InternalHeal<P>, context: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
