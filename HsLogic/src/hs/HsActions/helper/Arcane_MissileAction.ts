@@ -32,12 +32,13 @@ namespace HsLogic {
 
                         new jsLogic.InlineAction(( resolve, reject ): void => {
                             resolve( [
-                                context.actionFactory.damage.dealDamage( {
-                                    source: param.source,
-                                    damageType: Def.DAMAGE_TYPE.DIRECT,
-                                    baseDamage: 1,
-                                    targets: resultSet
-                                })] );
+                                //context.actionFactory.damage.dealDamage( {
+                                //    source: param.source,
+                                //    damageType: Def.DAMAGE_TYPE.DIRECT,
+                                //    baseDamage: 1,
+                                //    targets: resultSet
+                                //})
+                            ] );
                         })
                     ] );
                 });

@@ -20,12 +20,12 @@ namespace Def {
 
                 actionBuilder: ( source: HsSource, target: Character, context: GameCtx ): Action[] => {
                     return [
-                        context.actionFactory.damage.dealDamage( {
-                            source: source,
-                            damageType: DAMAGE_TYPE.DIRECT,
-                            targets: [target],
-                            baseDamage: 3,
-                        }),
+                        //context.actionFactory.damage.dealDamage( {
+                        //    source: source,
+                        //    damageType: DAMAGE_TYPE.DIRECT,
+                        //    targets: [target],
+                        //    baseDamage: 3,
+                        //}),
                         context.actionFactory.enchantment.freeze( {
                             source: source,
                             targets: [target]

@@ -17,12 +17,12 @@ namespace HsLogic {
                     let param: P = self.param;
 
                     resolve( [
-                        context.actionFactory.damage.damage( {
-                            damageType: Def.DAMAGE_TYPE.FATIGUE,
-                            source: param.source,
-                            target: param.player,
-                            baseDamage: ++param.player.counters[FatigueCounter.type].value
-                        })
+                        //context.actionFactory.damage.damage( {
+                        //    damageType: Def.DAMAGE_TYPE.FATIGUE,
+                        //    source: param.source,
+                        //    target: param.player,
+                        //    baseDamage: ++param.player.counters[FatigueCounter.type].value
+                        //})
                     ] );
                 }
             );

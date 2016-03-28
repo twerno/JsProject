@@ -19,12 +19,12 @@ namespace Def {
 
                 actionBuilder: ( source: HsSource, targets: Character[], context: GameCtx ): Action[] => {
                     return [
-                        context.actionFactory.damage.dealDamage( {
-                            source: source,
-                            damageType: DAMAGE_TYPE.DIRECT,
-                            targets: targets,
-                            baseDamage: 2,
-                        })
+                        //context.actionFactory.damage.dealDamage( {
+                        //    source: source,
+                        //    damageType: DAMAGE_TYPE.DIRECT,
+                        //    targets: targets,
+                        //    baseDamage: 2,
+                        //})
                     ]
                 }
             })

@@ -16,13 +16,13 @@ namespace Def {
 
             ( source: HsSource, context: GameCtx ): Action[] => {
                 return [
-                    context.actionFactory.damage.randomlySplitDamage( {
-                        source: source,
-                        damageType: DAMAGE_TYPE.DIRECT,
-                        partsAmount: 3,
-                        damagePerPart: 1,
-                        splitMode: SPLIT_MODE.MISSILE
-                    })
+                    //context.actionFactory.damage.randomlySplitDamage( {
+                    //    source: source,
+                    //    damageType: DAMAGE_TYPE.DIRECT,
+                    //    partsAmount: 3,
+                    //    damagePerPart: 1,
+                    //    splitMode: SPLIT_MODE.MISSILE
+                    //})
                 ]
             }
         ],

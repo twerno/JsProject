@@ -30,34 +30,27 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
 
                     let param: P = self.param,
-                        actions: ActionType[] = [],
-                        event: event.Summon,
-                        card: Card;
+                        actions: ActionType[] = [];
 
                     // 1. aura Update (Health/Attack) Step
                     actions.push( new AuraUpdateStep( {
                         source: param.source,
-                        mode: AURA_UPDATE_MODE.ATTACK_HEALTH
+                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
                     }) );
 
-                    // 2. resolve: summonEvent
-                    while ( event = context.pendingEvents.summon.shift() ) {
-                        card = event.param.card;
 
-                        // http://hearthstone.gamepedia.com/Advanced_rulebook#Summon_Resolution_Step
-                        // Examples: 
-                        // if the minion associated with a Summon Event is no longer in play at the time it is resolved, then nothing queues
-                        //if ( context.zonesOf( card.owner ).battlefield.has( card ) )
-                        //    actions.push( this.dispatch( event, context ) );
-                    }
+                    // 2. resolve: summonEvent
+                    actions.push( new DispatchSavedEvents( event.Summon, context ) );
+
 
                     // 3-6. Delegate execution to DeathCreationStep
+                    actions.push( new DeathCreationStep( param ) );
 
                     resolve( actions );
                 }
             ); // return new Promise
 
-        } // resolve( self: PlaySpell<P>
+        } // resolve( self: SummonResolutionStep<P>
 
     } // export class SummonResolutionStep
 }

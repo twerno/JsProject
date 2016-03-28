@@ -14,6 +14,10 @@ namespace HsLogic {
 
         resolve( self: DeathCreationStep<P>, context: HsGameCtx ): PromiseOfActions {
 
+            //resolvable( context: HsGameCtx ): boolean {
+            //    return context.eventMgr.has(event.) .summon.length !== 0;
+            //}
+
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
@@ -22,7 +26,7 @@ namespace HsLogic {
                     // 1. aura Update (Health/Attack) Step
                     actions.push( new AuraUpdateStep( {
                         source: param.source,
-                        mode: AURA_UPDATE_MODE.ATTACK_HEALTH
+                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
                     }) );
 
                     // 2. Death Creation Step 
@@ -34,7 +38,11 @@ namespace HsLogic {
                     // 3. aura Update (Other) Step
                     actions.push( new AuraUpdateStep( {
                         source: param.source,
-                        mode: AURA_UPDATE_MODE.EVERYTHING
+                        auraUpdateMode: AURA_UPDATE_MODE.OTHER
+                    }) );
+
+                    actions.push( new InlineAction(( resolve, reject ): void => {
+                        resolve( true ? new DeathCreationStep( param ) : jsLogic.NO_CONSEQUENCES );
                     }) );
 
                     resolve( null );

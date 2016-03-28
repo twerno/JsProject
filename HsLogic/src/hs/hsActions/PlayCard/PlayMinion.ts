@@ -8,6 +8,13 @@ namespace HsLogic {
     export namespace event {
 
         //namespace internal {
+
+        /**
+         *  Summon
+         *  http://hearthstone.gamepedia.com/Advanced_rulebook#Summon_Resolution_Step
+         *  Examples:
+         *    if the minion associated with a Summon Event is no longer in play at the time it is resolved, then nothing queues
+         */
         export class GenSummonMinionEventextends<P extends PlayCardParam> extends ActionEvent<P> {
             valid( context: HsGameCtx ): boolean {
                 return context.zonesOf( this.param.card.owner )
@@ -18,9 +25,21 @@ namespace HsLogic {
 
         export class PreSummon extends ActionEvent<PlayMinionParam> { }
 
-        export class Summon extends GenSummonMinionEventextends<PlayMinionParam> { }
+
+        export class Summon extends GenSummonMinionEventextends<PlayMinionParam> {
+
+            //valid( context: HsGameCtx ): boolean {
+            //    let card: Card = this.param.card;
+            //    return context.zonesOf( card.owner ).battlefield.has( card );
+            //}
+
+        }
+
+
 
         export class AfterPlay extends GenSummonMinionEventextends<PlayCardParam> { }
+
+
 
         export class AfterSummon extends GenSummonMinionEventextends<PlayMinionParam> { }
     }

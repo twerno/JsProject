@@ -4,11 +4,11 @@ namespace HsLogic {
 
     export enum AURA_UPDATE_MODE {
         ATTACK_HEALTH,
-        EVERYTHING
+        OTHER
     }
 
     export interface IAuraUpdateParam extends IActionParam {
-        mode: AURA_UPDATE_MODE,
+        auraUpdateMode: AURA_UPDATE_MODE,
     }
 
     /**
