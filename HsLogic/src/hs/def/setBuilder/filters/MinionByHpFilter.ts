@@ -2,42 +2,42 @@
 
 namespace Def {
 
-    export class MinionByHpFilter {
+    export class MinionByAttackFilter {
 
-        constructor( public hpValue: number ) { }
+        constructor( public attackValue: number ) { }
 
-        static hp( hpValue: number ): MinionByHpFilter {
-            return new MinionByHpFilter( hpValue );
+        static ATTACK( attackValue: number ): MinionByAttackFilter {
+            return new MinionByAttackFilter( attackValue );
         }
 
         lessThen( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp < this.hpValue;
+                && entity.attack < this.attackValue;
         }
 
         lessThenOrEqualTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp <= this.hpValue;
+                && entity.attack <= this.attackValue;
         }
 
         greaterThen( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp > this.hpValue;
+                && entity.attack > this.attackValue;
         }
 
         greaterThenOrEqualTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp >= this.hpValue;
+                && entity.attack >= this.attackValue;
         }
 
         equalTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp === this.hpValue;
+                && entity.attack === this.attackValue;
         }
 
         notEqualTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp !== this.hpValue;
+                && entity.attack !== this.attackValue;
         }
     }
 }

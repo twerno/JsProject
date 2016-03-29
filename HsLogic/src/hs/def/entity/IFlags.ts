@@ -12,6 +12,7 @@ namespace Def {
         stealth?: boolean,
         taunt?: boolean,
         windfury?: boolean,
-        silenced?: boolean
+        silenced?: boolean,
+        pending_destroy?: boolean
     }
 }

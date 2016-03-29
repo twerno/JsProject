@@ -56,4 +56,29 @@ namespace jsLogic {
         }
     }
 
+
+
+    //    export abstract class ActionWrapper<T extends IContext> {
+    //
+    //
+    //    // actions in natural order
+    //    // first on results list are first to resolve
+    //    resolve(self: IActionType, context: T): Promise<IAction<IContext> | IAction<IContext>[]> {
+    //        let actions: IAction<IContext> | IAction<IContext>[] = [];
+    //        
+    //        actions
+    //        
+    //        return new Promise<IAction<IContext> | IAction<IContext>[]>(
+    //            (resolve, reject): void => {
+    //                resolve(actions);
+    //            }
+    //            )
+    //    }
+    //
+    //    protected abstract beforeMain(self: IActionType, context: T): IAction<IContext> | IAction < IContext > [];
+    //protected abstract main(self: IActionType, context: T): IAction<IContext> | IAction < IContext > [];
+    //protected abstract afterMain(self: IActionType, context: T): IAction<IContext> | IAction < IContext > [];
+    //
+    //}
+
 }

@@ -121,7 +121,7 @@ namespace HsLogic {
         }
 
         playMinion( param: PlayMinionParam ): jsLogic.IAction<T> {
-            return new PlayMinion( param );
+            return new PlayMinionSequence( param );
         }
 
         playSpell( param: PlayCardParam ): jsLogic.IAction<T> {

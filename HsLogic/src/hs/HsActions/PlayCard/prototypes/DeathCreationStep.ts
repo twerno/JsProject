@@ -2,6 +2,14 @@
 
 namespace HsLogic {
 
+    export interface DeathParam extends IActionParam {
+        target: Character
+    }
+
+    export namespace event {
+        export class Death<P extends DeathParam> extends ActionEvent<P> { }
+    }
+
     /**
      * DeathCreationStep
      * http://hearthstone.gamepedia.com/Advanced_rulebook#Death_Phases_and_consequences_of_Death
@@ -24,22 +32,35 @@ namespace HsLogic {
                         actions: ActionType[] = [];
 
                     // 1. aura Update (Health/Attack) Step
-                    actions.push( new AuraUpdateStep( {
-                        source: param.source,
-                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
-                    }) );
+                    //                    actions.push( new AuraUpdateStep( {
+                    //                        source: param.source,
+                    //                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
+                    //                    }) );
 
-                    // 2. Death Creation Step 
-                    //@TODO
-                    //                    actions.push(new DeathCreationStep({
-                    //                        source: param.source
-                    //                    }));
+                    let minions: Minion[] = Def.SetBuilderHelper.BATTLEFIELD
+                        .addFilter( Def.StandardFilters.minion )
+                        .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
+                            return minion instanceof HsLogic.Minion
+                                && ( minion.hp <= 0
+                                    || minion.flags.pending_destroy );
+                        }).buildSet<Minion>( param.source, context );
+
+                    for ( let i = 0; i < minions.length; i++ ) {
+
+
+
+                        context.eventMgr.save( new event.Death( {
+                            source: param.source, //@TODO: real death source: pending_destroy source, or lethal damage source
+                            target: minions[i]
+                        }) )
+                    }
+
 
                     // 3. aura Update (Other) Step
-                    actions.push( new AuraUpdateStep( {
-                        source: param.source,
-                        auraUpdateMode: AURA_UPDATE_MODE.OTHER
-                    }) );
+                    //                    actions.push( new AuraUpdateStep( {
+                    //                        source: param.source,
+                    //                        auraUpdateMode: AURA_UPDATE_MODE.OTHER
+                    //                    }) );
 
                     actions.push( new InlineAction(( resolve, reject ): void => {
                         resolve( true ? new DeathCreationStep( param ) : jsLogic.NO_CONSEQUENCES );

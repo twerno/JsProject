@@ -7,8 +7,6 @@ namespace HsLogic {
 
     export namespace event {
 
-        //namespace internal {
-
         /**
          *  Summon
          *  http://hearthstone.gamepedia.com/Advanced_rulebook#Summon_Resolution_Step
@@ -21,7 +19,7 @@ namespace HsLogic {
                     .battlefield.has( this.param.card );
             }
         }
-        //}
+
 
         export class PreSummon extends ActionEvent<PlayMinionParam> { }
 
@@ -58,9 +56,9 @@ namespace HsLogic {
      *   7. After Summon Phase     - EventAfterSummon
      *   8. win/loss check         - outside action: PlayCard?
        */
-    export class PlayMinion<P extends PlayMinionParam> extends Action<P> {
+    export class PlayMinionSequence<P extends PlayMinionParam> extends Action<P> {
 
-        resolve( self: PlayMinion<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayMinionSequence<P>, context: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
 
                 ( resolve, reject ): void => {
@@ -79,19 +77,17 @@ namespace HsLogic {
                     //@TODO interrupt following phases if then minion dies (battlecry still goes)
 
                     // 3. create SummonEvent 
-                    context.pendingEvents.summon.push( new event.Summon( param ) );
+                    context.eventMgr.save( new event.Summon( param ) );
 
 
                     // 4. onPlayPhase
                     actions.push( new DispatchEvent( new OnPlayPhaseEvent( param ) ) );
-                    actions.push( new SummonResolutionStep( { source: param.source }) );
-                    actions.push( new DeathCreationStep( { source: param.source }) );
+                    actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
 
                     // 5. Battlecry Phase
                     actions.push( new Battlecry( param ) );
-                    actions.push( new SummonResolutionStep( { source: param.source }) );
-                    actions.push( new DeathCreationStep( { source: param.source }) );
+                    actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
                     // the Death Creation Step and Summon Resolution Step are skipped
 

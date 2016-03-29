@@ -47,8 +47,8 @@ namespace HsLogic {
 
                     // step 2 - onPlayPhase
                     actions.push(); //context.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
-                    actions.push( new SummonResolutionStep( { source: param.source }) );
-                    actions.push( new DeathCreationStep( { source: param.source }) );
+                    actions.push( new OutermostPhaseEnd( { source: param.source }) );
+
 
                     actions.push( new InlineAction(
                         ( resolve, reject ): void => {
@@ -60,11 +60,10 @@ namespace HsLogic {
                             let innerActions: ActionType[] = [];
 
                             // step 3 - onTargetingPhase
-                            innerActions.push(); //context.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
-                            actions.push( new SummonResolutionStep( { source: param.source }) );
-                            actions.push( new DeathCreationStep( { source: param.source }) );
-
                             // the Death Creation Step and Summon Resolution Step are skipped
+                            innerActions.push(); //context.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
+
+
 
                             // step 4 - spellTextPhase
                             innerActions.push( new ExecuteTriggers( {
