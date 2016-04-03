@@ -103,7 +103,9 @@ namespace HsLogic {
                     }) );
 
 
-                    // 4. Death Creation Step 
+                    // 4. Death Creation Step
+                    //    Remove Minions
+                    //    Create DeatchEvent for each removed
                     actions.push( new DeathCreationStep( { source: param.source }) );
 
 

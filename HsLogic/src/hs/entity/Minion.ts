@@ -4,7 +4,8 @@
 
 namespace HsLogic {
 
-    export class Minion extends Card implements Def.IMinionImpl {
+    export class Minion extends Card implements Def.IMinionImpl, IPermanent<Minion> {
+
         def: Def.IMinion;
 
         hp: number;
@@ -17,11 +18,13 @@ namespace HsLogic {
 
         flags: Def.IFlags;
 
-        //stateOpe: PermanentStateChange[] = []
+        states: PermanentState<Minion, any>[] = [];
 
 
         initFromDefinition( def: Def.IMinion ): void {
             super.initFromDefinition( def );
+
+            this.states = [];
 
             this.type = Def.TYPE.MINION;
             this.hp = def.hp;

@@ -105,10 +105,10 @@
     <TypeScriptCompile Include="src\hs\hsActions\param\BasicParams.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\AcquireTargets.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\EquippingPhase.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\OutermostPhaseEnds.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\OutermostPhaseEnd.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\PayCostAndRemoveFromHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\PlayCard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\PlayMinion.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\PlayCard\PlayMinionSequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\PlaySpell.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\PlayWeapon.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\PlayCard\prototypes\AuraUpdateStep.ts" />

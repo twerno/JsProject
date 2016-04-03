@@ -3,7 +3,8 @@
 namespace HsLogic {
 
     export interface DeathParam extends IActionParam {
-        target: Character
+        target: Character | Weapon,
+        position: number
     }
 
     export namespace event {
@@ -14,29 +15,21 @@ namespace HsLogic {
      * DeathCreationStep
      * http://hearthstone.gamepedia.com/Advanced_rulebook#Death_Phases_and_consequences_of_Death
      *
-     * 1. Aura Update (Health/Attack)
-     * 2. Looks for all mortally wounded (0 or less Health)/pending destroy (hit with a destroy effect) and remove them from play
-     * 3. Aura Update (Other)
+     * Part of death phases
+     *
+     * Looks for all mortally wounded (0 or less Health)/pending destroy (hit with a destroy effect) and remove them from play
  	 */
     export class DeathCreationStep<P extends IActionParam> extends Action<P> {
 
         resolve( self: DeathCreationStep<P>, context: HsGameCtx ): PromiseOfActions {
 
-            //resolvable( context: HsGameCtx ): boolean {
-            //    return context.eventMgr.has(event.) .summon.length !== 0;
-            //}
-
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: ActionType[] = [];
+                        actions: ActionType[] = [],
+                        state: PermanentState<Permanent, any>;
 
-                    // 1. aura Update (Health/Attack) Step
-                    //                    actions.push( new AuraUpdateStep( {
-                    //                        source: param.source,
-                    //                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
-                    //                    }) );
-
+                    // find minions to be destroyed
                     let minions: Minion[] = Def.SetBuilderHelper.BATTLEFIELD
                         .addFilter( Def.StandardFilters.minion )
                         .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
@@ -45,28 +38,24 @@ namespace HsLogic {
                                     || minion.flags.pending_destroy );
                         }).buildSet<Minion>( param.source, context );
 
+                    // process them
                     for ( let i = 0; i < minions.length; i++ ) {
 
-
+                        state = PermanentStateHelper.findFirst<Minion>( minions[i], PendingDestroy );
+                        if ( !state )
+                            state = PermanentStateHelper.findLethal( minions[i] );
 
                         context.eventMgr.save( new event.Death( {
-                            source: param.source, //@TODO: real death source: pending_destroy source, or lethal damage source
-                            target: minions[i]
-                        }) )
+                            source: state.source,
+                            target: minions[i],
+                            position: 0
+                        }) );
+
+                        //  remove from battlefield
+                        context.zonesOf( minions[i].owner ).battlefield.removeEntity( minions[i] );
                     }
 
-
-                    // 3. aura Update (Other) Step
-                    //                    actions.push( new AuraUpdateStep( {
-                    //                        source: param.source,
-                    //                        auraUpdateMode: AURA_UPDATE_MODE.OTHER
-                    //                    }) );
-
-                    actions.push( new InlineAction(( resolve, reject ): void => {
-                        resolve( true ? new DeathCreationStep( param ) : jsLogic.NO_CONSEQUENCES );
-                    }) );
-
-                    resolve( null );
+                    resolve( jsLogic.NO_CONSEQUENCES );
                 });
         }
     }
