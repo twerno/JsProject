@@ -24,4 +24,5 @@ namespace ClassUtils {
     //export function getClassType( _constructor: Function ): string {
     //    return getConstructorName( _constructor );
     //}
+
 }

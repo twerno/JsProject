@@ -20,6 +20,17 @@ namespace HsLogic {
         getDamagePower( source: ISource, damageType: Def.DAMAGE_TYPE ): number;
     }
 
+    //export interface LethalMonitorElement {
+    //    target: Character,
+    //    SourceBuffer: ISource
+    //}
+
+    export interface LethalMonitor {
+        registerCandidate( target: Character, source: ISource ): void;
+        clear(): void;
+        getSourceFor( target: Character ): ISource;
+    }
+
 
     export class HsGameCtx implements jsLogic.IContext {
 
@@ -32,6 +43,8 @@ namespace HsLogic {
         zonesMap: Collection.IStringMap<HsZones> = {};
 
         powerMgr: PowerMgr;
+
+        lethalMonitor: LethalMonitor;
 
 
         zonesOf( player: jsLogic.Entity ): HsZones {

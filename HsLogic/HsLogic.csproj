@@ -72,8 +72,10 @@
     <TypeScriptCompile Include="src\hs\entity\CardSet.ts" />
     <TypeScriptCompile Include="src\hs\entity\HsEntity.ts" />
     <TypeScriptCompile Include="src\hs\entity\Minion.ts" />
+    <TypeScriptCompile Include="src\hs\entity\PermanentState\IPerrmanent.ts" />
+    <TypeScriptCompile Include="src\hs\entity\PermanentState\PermanentState.ts" />
     <TypeScriptCompile Include="src\hs\entity\PermanentState\PermanentStateCalculator.ts" />
-    <TypeScriptCompile Include="src\hs\entity\PermanentState\PermanentStateChange.ts" />
+    <TypeScriptCompile Include="src\hs\entity\PermanentState\PermanentStateHelper.ts" />
     <TypeScriptCompile Include="src\hs\entity\Player.ts" />
     <TypeScriptCompile Include="src\hs\entity\Spell.ts" />
     <TypeScriptCompile Include="src\hs\entity\Trigger.ts" />

@@ -1,112 +1,96 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
-    export enum PERMANENT_STATE_SOURCE_TYPE {
-        NON_AURA, AURA
-    }
 
     export interface PermanentStateClass {
-        new ( target: Permanent, source: ISource ): PermanentState<Permanent, any>;
+        new ( source: ISource ): PermanentState<any>;
     }
 
-    export abstract class PermanentState<T extends Minion | Player | Weapon, P extends any> {
+    export abstract class PermanentState<P extends any> {
+
+        param: P;
+
+        isAura: boolean;
 
         orderOfPlay: number;
 
-        abstract apply(): void;
+        init( param: P, isAura: boolean ): PermanentState<P> {
+            this.param = param;
+            this.isAura = isAura;
+            return this;
+        }
 
-        abstract init( param: P ): PermanentState<T, P>;
-
-        constructor( public target: T, public source: ISource ) {
+        constructor( public source: ISource ) {
             this.orderOfPlay = jsLogic.generateNewId();
         }
 
-        onRemovingReplaceWith(): PermanentState<T, P> {
+
+        abstract apply( target: ICharacterState ): void;
+
+        onRemovingReplaceWith( target: ICharacterState ): PermanentState<P> {
             return null;
         }
     }
 
 
 
-    export class AttackBuff<T extends Minion | Player | Weapon> extends PermanentState<T, number> {
-        protected amount: number = 0;
+    export class AttackBuff<T extends ICharacterState> extends PermanentState<number> {
 
-        init( param: number ): PermanentState<T, any> {
-            this.amount = param;
-            return this;
-        }
-
-        apply(): void {
-            this.target.attack += this.amount;
+        apply( target: ICharacterState ): void {
+            target.attack += this.param;
         }
     }
 
 
-    export class MaxHpBuff<T extends Minion> extends PermanentState<T, number> {
-        protected maxHpMod: number = 0;
+    export class MaxHpBuff extends PermanentState<number> {
 
-        init( param: number ): PermanentState<T, any> {
-            this.maxHpMod = param;
-            return this;
-        }
+        apply( target: ICharacterState ): void {
+            if ( this.param !== 0 ) {
 
-        apply(): void {
-            if ( this.maxHpMod !== 0 ) {
+                let hpMod: number = Math.max( this.param - target.maxHp, 0 );
+                let newHp: number = Math.min( target.hp + hpMod, this.param );
 
-                let hpMod: number = Math.max( this.maxHpMod - this.target.maxHp, 0 );
-                let newHp: number = Math.min( this.target.hp + hpMod, this.maxHpMod );
-
-                this.target.maxHp += this.maxHpMod;
-                this.target.hp = newHp;
+                target.maxHp += this.param;
+                target.hp = newHp;
             }
         }
 
-        onRemovingReplaceWith(): PermanentState<T, any> {
+        onRemovingReplaceWith( target: ICharacterState ): PermanentState<any> {
             //if ( target.hp < target.maxHp
             return null;
         }
     }
 
 
-    export class CharacterHeal<T extends Minion | Player> extends PermanentState<T, number> {
-        protected amount: number = 0;
+    export class CharacterHeal extends PermanentState<number> {
 
-        init( param: number ): PermanentState<T, any> {
-            this.amount = Math.max( param || 0, 0 );
-            return this;
+        init( param: number, isAura: boolean ): PermanentState<any> {
+            return super.init( Math.max( param || 0, 0 ), isAura );
         }
 
-        apply(): void {
-            let target: T = this.target;
-
-            target.hp = Math.min( target.hp + this.amount, target.maxHp );
+        apply( target: ICharacterState ): void {
+            target.hp = Math.min( target.hp + this.param, target.maxHp );
         }
     }
 
 
-    export class CharacterDamage<T extends Minion | Player> extends PermanentState<T, number> {
-        protected amount: number = 0;
+    export class CharacterDamage extends PermanentState<number> {
 
-        init( param: number ): PermanentState<T, any> {
-            this.amount = Math.min( param || 0, 0 );
-            return this;
+        init( param: number, isAura: boolean ): PermanentState<any> {
+            return super.init( Math.min( param || 0, 0 ), isAura );
         }
 
-        apply(): void {
-            this.target.hp = Math.min( this.target.hp + this.amount, this.target.maxHp );
+        apply( target: ICharacterState ): void {
+            target.hp = Math.min( target.hp + this.param, target.maxHp );
         }
     }
 
 
-    export class PendingDestroy<T extends Minion | Player> extends PermanentState<T, void> {
+    export class PendingDestroy extends PermanentState<void> {
 
-        init(): PermanentState<T, void> {
-            return this;
-        }
-
-        apply(): void {
-            this.target.flags.pending_destroy = true;
+        apply( target: ICharacterState ): void {
+            target.flags.pending_destroy = true;
         }
     }
 

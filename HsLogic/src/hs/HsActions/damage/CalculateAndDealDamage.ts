@@ -164,6 +164,9 @@ namespace HsLogic {
                         param.target.flags.divine_shield = false;
                     }
 
+                    if ( param.target.hp > 0 && param.target.hp - param.amount <= 0 )
+                        context.lethalMonitor.registerCandidate( param.target, param.source );
+
                     param.target.hp -= param.amount;
 
                     resolve( jsLogic.NO_CONSEQUENCES );

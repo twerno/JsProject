@@ -1,25 +1,22 @@
-﻿///<reference path="../def/entity/ICard.ts"/>
+///<reference path="../def/entity/ICard.ts"/>
 
 "use strict";
 
 namespace HsLogic {
 
-    export class Minion extends Card implements Def.IMinionImpl, IPermanent<Minion> {
+    export class Minion extends Card implements Def.IMinionImpl, IPermanent, ICharacterState {
 
         def: Def.IMinion;
 
-        hp: number;
-
-        maxHp: number;
-
-        attack: number;
-
         minion_type: Def.MINION_TYPE;
 
+        // current state
+        hp: number;
+        maxHp: number;
+        attack: number;
         flags: Def.IFlags;
 
-        states: PermanentState<Minion, any>[] = [];
-
+        states: PermanentState<any>[] = [];
 
         initFromDefinition( def: Def.IMinion ): void {
             super.initFromDefinition( def );
@@ -31,6 +28,7 @@ namespace HsLogic {
             this.maxHp = def.hp;
             this.attack = def.attack;
             this.minion_type = def.minion_type;
+            this.flags = Def.cloneFlags( def.flags );
         }
     }
 

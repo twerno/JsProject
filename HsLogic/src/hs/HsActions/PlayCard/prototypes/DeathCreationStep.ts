@@ -27,7 +27,8 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [],
-                        state: PermanentState<Permanent, any>;
+                        state: PermanentState<any>,
+                        source: ISource;
 
                     // find minions to be destroyed
                     let minions: Minion[] = Def.SetBuilderHelper.BATTLEFIELD
@@ -43,10 +44,10 @@ namespace HsLogic {
 
                         state = PermanentStateHelper.findFirst<Minion>( minions[i], PendingDestroy );
                         if ( !state )
-                            state = PermanentStateHelper.findLethal( minions[i] );
+                            source = context.lethalMonitor.getSourceFor( minions[i] );
 
                         context.eventMgr.save( new event.Death( {
-                            source: state.source,
+                            source: source,
                             target: minions[i],
                             position: 0
                         }) );
