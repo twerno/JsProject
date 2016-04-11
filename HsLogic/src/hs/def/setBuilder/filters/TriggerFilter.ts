@@ -11,11 +11,11 @@ namespace Def {
         }
 
 
-        owns_trigger( source: HsSource, trigger: IDefTriggerImpl, context: GameCtx ): boolean {
+        owns_trigger( source: ISource, trigger: any, context: HsGameCtx ): boolean {
             return trigger.owner === this.owner;
         }
 
-        DOES_NOT_own_trigger( source: HsSource, trigger: IDefTriggerImpl, context: GameCtx ): boolean {
+        DOES_NOT_own_trigger( source: ISource, trigger: any, context: HsGameCtx ): boolean {
             return trigger.owner !== this.owner;
         }
     }

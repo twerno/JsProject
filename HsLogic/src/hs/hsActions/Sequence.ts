@@ -1,5 +1,3 @@
-///<reference path="../core/HsAction.ts"/>
-
 "use strict";
 
 namespace HsLogic {
@@ -28,7 +26,7 @@ namespace HsLogic {
         }
 
         constructor( public source: ISource, public innerActions: ActionType[] ) {
-            super( source );
+            super();
         }
 
     }

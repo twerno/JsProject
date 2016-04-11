@@ -9,8 +9,8 @@ namespace Def {
         name: `Swipe`,
         cost: 2,
 
-        triggers: [],
-        enchantments: [],
+        //triggers: [],
+        //enchantments: [],
 
         playActions: [
             // dealDamageAction

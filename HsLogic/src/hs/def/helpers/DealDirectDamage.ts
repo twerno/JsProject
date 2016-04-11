@@ -4,7 +4,7 @@ namespace Def {
 
 
     export function DealDirectDamageToTarget<T extends Character>( amount: number ): FSingleTargetActionBuilder<T> {
-        return ( source: HsSource, target: T, context: GameCtx ): Action[] => {
+        return ( source: ISource, target: T, context: HsGameCtx ): Action[] => {
             return [
                 //context.actionFactory.damage.dealDamage( {
                 //    source: source,
@@ -18,7 +18,7 @@ namespace Def {
 
 
     export function DealDirectDamageToTargets<T extends Character>( amount: number ): FTargetsActionBuilder<T> {
-        return ( source: HsSource, targets: T[], context: GameCtx ): Action[] => {
+        return ( source: ISource, targets: T[], context: HsGameCtx ): Action[] => {
             return [
                 //context.actionFactory.damage.dealDamage( {
                 //    source: source,

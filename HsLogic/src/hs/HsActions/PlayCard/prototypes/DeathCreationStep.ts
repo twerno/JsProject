@@ -27,7 +27,6 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [],
-                        state: PermanentState<any>,
                         source: ISource;
 
                     // find minions to be destroyed
@@ -36,14 +35,14 @@ namespace HsLogic {
                         .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
                             return minion instanceof HsLogic.Minion
                                 && ( minion.hp <= 0
-                                    || minion.flags.pending_destroy );
+                                    || minion.tags.has( Def.Pending_Destroy_Tag ) );
                         }).buildSet<Minion>( param.source, context );
 
                     // process them
                     for ( let i = 0; i < minions.length; i++ ) {
 
-                        state = PermanentStateHelper.findFirst<Minion>( minions[i], PendingDestroy );
-                        if ( !state )
+                        source = minions[i].tags.getFirstSource( Def.Pending_Destroy_Tag )
+                        if ( !source )
                             source = context.lethalMonitor.getSourceFor( minions[i] );
 
                         context.eventMgr.save( new event.Death( {

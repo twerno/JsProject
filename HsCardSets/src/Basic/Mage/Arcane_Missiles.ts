@@ -9,8 +9,8 @@ namespace Def {
         name: `Arcane Missiles`,
         cost: 1,
 
-        enchantments: [],
-        triggers: [],
+        //enchantments: [],
+        //triggers: [],
 
         playActions: [
 

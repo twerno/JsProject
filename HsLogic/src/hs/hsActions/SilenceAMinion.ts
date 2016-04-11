@@ -1,5 +1,3 @@
-///<reference path="../core/HsAction.ts"/>
-
 "use strict";
 
 namespace HsLogic {
@@ -42,8 +40,8 @@ namespace HsLogic {
                     }
                     minion.triggers = [];
                     minion.enchantments = [];
-                    minion.counters = {};
-                    minion.markers = new jsLogic.MarkersList();
+                    //                    minion.counters = {};
+                    //                    minion.markers = new jsLogic.MarkersList();
 
                     resolve( jsLogic.NO_CONSEQUENCES );
                     //                    resolve([

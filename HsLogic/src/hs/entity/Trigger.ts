@@ -1,10 +1,8 @@
-///<reference path="../def/entity/ICard.ts"/>
-
 "use strict";
 
 namespace HsLogic {
 
-    export class Trigger extends HsEntity implements Def.IDefTriggerImpl {
+    export class Trigger extends HsEntity {
         parent: HsEntity;
         sourceCard: Card;
         eventType: string[] = [];
@@ -17,7 +15,6 @@ namespace HsLogic {
         constructor( parent: HsEntity, sourceCard: Card, def?: Def.IHsEntity ) {
             super( parent.owner, def );
 
-            this.type = Def.TYPE.TRIGGER;
             this.parent = parent || null;
             this.sourceCard = sourceCard || null;
         }
@@ -39,7 +36,7 @@ namespace HsLogic {
 
         // http://hearthstone.gamepedia.com/Advanced_rulebook#Glossary
         // Humble safeguard: Minions are not allowed to trigger on themselves entering play.
-        static SELF_TRIGGER_PROTECTOR( self: Def.IDefTriggerImpl, event: ActionEvent<IActionParam>, context: HsGameCtx ): boolean {
+        static SELF_TRIGGER_PROTECTOR( self: Trigger, event: ActionEvent<IActionParam>, context: HsGameCtx ): boolean {
             return self.sourceCard !== event.param.source.sourceCard;
         }
 

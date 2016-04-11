@@ -9,8 +9,8 @@ namespace Def {
         name: `Holy wrath`,
         cost: 5,
 
-        triggers: [],
-        enchantments: [],
+        //triggers: [],
+        //enchantments: [],
 
         playActions: [
             new SingleTargetDefAction<Character>( {

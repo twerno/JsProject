@@ -1,21 +1,21 @@
 ///<reference path="../../core/Entity.ts"/>
-///<reference path="../def/entity/ICard.ts"/>
+
 
 "use strict";
 
 namespace HsLogic {
 
 
-    export class HsEntity extends jsLogic.Entity implements Def.IHsEntityImpl {
+    export class HsEntity extends jsLogic.Entity {
         def: Def.IHsEntity;
-        type: Def.TYPE;
+        //type: Def.TYPE;
 
         orderOfPlay: number;
 
 
         protected initFromDefinition( def: Def.IHsEntity ): void {
             this.def = def;
-            this.type = Def.TYPE.UNKNOWN
+            // this.type = Def.TYPE.UNKNOWN
             this.orderOfPlay = jsLogic.generateNewId();
         }
 
@@ -34,7 +34,7 @@ namespace HsLogic {
 
         export interface IEntity {
             id: number,
-            type: Def.TYPE,
+            //type: Def.TYPE,
             orderOfPlay: number,
             tags: Object[], // flags, counters (obnizenie kosztu, itp)
         }
@@ -66,8 +66,8 @@ namespace HsLogic {
             eventType: string[],
             priority: number,
 
-            actions: Def.IDefTriggerAction,
-            isTriggerable: Def.FTriggerable,
+            //actions: Def.IDefTriggerAction,
+            //isTriggerable: Def.FTriggerable,
         }
 
 

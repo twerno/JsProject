@@ -13,8 +13,8 @@ namespace Def {
         hp: 2,
         minion_type: MINION_TYPE.GENERAL,
 
-        enchantments: [],
-        triggers: [],
+        //enchantments: [],
+        //triggers: [],
         flags: {},
         playActions: [
             ( source: HsSource, context: GameCtx ): Action[] => {

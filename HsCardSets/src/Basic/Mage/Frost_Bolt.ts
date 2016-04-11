@@ -9,8 +9,8 @@ namespace Def {
         name: `Frost Bolt`,
         cost: 2,
 
-        enchantments: [],
-        triggers: [],
+        //enchantments: [],
+        //triggers: [],
 
         playActions: [
             new SingleTargetDefAction<Character>( {

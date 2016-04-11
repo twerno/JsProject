@@ -13,7 +13,6 @@
 ///<reference path="../hsActions/ShuffleGeneratedCardIntoDeck.ts"/>
 ///<reference path="../core/HsZone.ts"/>
 ///<reference path="../entity/Card.ts"/>
-///<reference path="../core/HsAction.ts"/>
 
 
 "use strict";

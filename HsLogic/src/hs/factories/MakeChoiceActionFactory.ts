@@ -8,7 +8,7 @@ namespace HsLogic {
             return new MakeChoiceAtRandom( param );
         }
 
-        singleTarget( param: IChooseSingleTargetParam<HsEntity> ): jsLogic.IAction<T> {
+        singleTarget( param: Def.AcquireTargetsParam ): jsLogic.IAction<T> {
             return new ChooseSingleTarget( param );
         }
 

@@ -27,20 +27,26 @@ namespace HsLogic {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
-                    actions.push( new CalculateAndDealDamage( param ) );
+                    actions.push( new CalculateDamage( param ) );
 
-                    for ( let i = 0; i < param.targets.length; i++ ) {
-                        actions.push( new Damage( {
-                            source: param.source,
-                            damageType: param.damageType,
+                    actions.push( new InlineAction(( resolve, reject ): void => {
+                        let actions: ActionType[] = [];
 
-                            target: param.targets[i],
-                            amount: param.amount,
+                        for ( let i = 0; i < param.targets.length; i++ ) {
+                            actions.push( new Damage( {
+                                source: param.source,
+                                damageType: param.damageType,
 
-                            damageState: DAMAGE_STATE.PENDING,
-                            notifyMode: param.notifyMode
-                        }) );
-                    }
+                                target: param.targets[i],
+                                amount: param.amount,
+
+                                damageState: DAMAGE_STATE.PENDING,
+                                notifyMode: param.notifyMode
+                            }) );
+                        }
+
+                        resolve( actions );
+                    }) );
 
                     if ( param.notifyMode = NOTIFY_MODE.AFTER_ALL_ACTIONS )
                         actions.push( new DispatchSavedEvents( event.Damage, context ) );
@@ -125,7 +131,8 @@ namespace HsLogic {
                     actions.push( new InternalDamage( param ) );
 
                     actions.push( new event.Damage( param )
-                        .dispatchOrSave( context, (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
+                        .dispatchOrSave( context,
+                        (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
                     );
 
                     resolve( actions );
@@ -154,18 +161,22 @@ namespace HsLogic {
 
                     param.damageState = DAMAGE_STATE.DEALT;
 
-                    if ( param.target.flags.immune ) {
+                    if ( param.target.tags.has( Def.Immune_Tag ) ) {
                         param.amount = 0;
                         param.damageState = DAMAGE_STATE.PREVENTED;
                     }
 
-                    if ( param.amount > 0 && param.target.flags.divine_shield ) {
+                    if ( param.amount > 0 && param.target.tags.has( Def.Divine_Shield_Tag ) ) {
                         param.amount = 0;
-                        param.target.flags.divine_shield = false;
+                        param.target.tags.removeAll( Def.Divine_Shield_Tag );
                     }
 
                     if ( param.target.hp > 0 && param.target.hp - param.amount <= 0 )
                         context.lethalMonitor.registerCandidate( param.target, param.source );
+
+                    if ( param.source.sourceCard instanceof Minion && param.damageState === DAMAGE_STATE.DEALT )
+                        ( <Minion>param.source.sourceCard ).tags.removeAll( Def.Stealth_Tag );
+
 
                     param.target.hp -= param.amount;
 

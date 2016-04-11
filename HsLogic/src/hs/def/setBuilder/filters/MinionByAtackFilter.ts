@@ -10,32 +10,32 @@ namespace Def {
             return new MinionByHpFilter( hpValue );
         }
 
-        lessThen( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
+        lessThen( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
                 && entity.hp < this.hpValue;
         }
 
-        lessThenOrEqualTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
+        lessThenOrEqualTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
                 && entity.hp <= this.hpValue;
         }
 
-        greaterThen( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
+        greaterThen( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
                 && entity.hp > this.hpValue;
         }
 
-        greaterThenOrEqualTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
+        greaterThenOrEqualTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
                 && entity.hp >= this.hpValue;
         }
 
-        equalTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
+        equalTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
                 && entity.hp === this.hpValue;
         }
 
-        notEqualTo( source: HsSource, entity: HsLogic.HsEntity, context: GameCtx ): boolean {
+        notEqualTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
                 && entity.hp !== this.hpValue;
         }

@@ -1,10 +1,9 @@
-﻿///<reference path="../def/entity/ICard.ts"/>
-
+﻿
 "use strict";
 
 namespace HsLogic {
 
-    export class Weapon extends Card implements Def.IWeaponImpl {
+    export class Weapon extends Card {
         def: Def.IWeapon;
         attack: number;
         durability: number;
@@ -12,7 +11,6 @@ namespace HsLogic {
         initFromDefinition( def: Def.IWeapon ): void {
             super.initFromDefinition( def );
 
-            this.type = Def.TYPE.WEAPON;
             this.attack = def.attack;
             this.durability = def.durability;
         }

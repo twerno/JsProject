@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic.event {
 
@@ -18,9 +18,9 @@ namespace HsLogic.event {
 
 
 
-    export class PreHealCalculationEvent<P extends HealTargetsParam> extends ActionEvent<P> { }
+    export class PreHealCalculationEvent<P extends HealTargetsParam> extends CancelableEvent<P> { }
 
 
 
-    export class PostHealCalculationEvent<P extends HealTargetsParam> extends ActionEvent<P> { }
+    export class PostHealCalculationEvent<P extends HealTargetsParam> extends CancelableEvent<P> { }
 }

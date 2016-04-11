@@ -15,7 +15,7 @@ namespace Def {
 
     export class TwoStepsTargetsDefAction<T extends HsLogic.HsEntity> extends SingleTargetDefAction<T> {
 
-        actions( source: HsSource, targets: ITargets, context: GameCtx ): Action[] {
+        actions( source: ISource, targets: ITargets, context: HsGameCtx ): Action[] {
             let result: Action[] = super.actions( source, targets, context ),
                 step1Target: T = this.getSingleTarget( targets );
 

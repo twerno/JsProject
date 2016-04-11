@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -22,14 +22,14 @@ namespace HsLogic {
     }
 
 
-    export interface HealTargetsParam extends IActionParam {
+    export interface HealTargetsParam extends IHsCancelableParam {
         targets: Character[],
         amount: number,
 
         healState: HEAL_STATE,
         notifyMode: NOTIFY_MODE,
 
-        customHealPower?: ( param: HealTargetsParam, context: HsGameCtx ) => number
+        customHealPowerCalculator?: ( param: HealTargetsParam, context: HsGameCtx ) => number
     }
 
 

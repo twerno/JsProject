@@ -102,21 +102,21 @@ namespace HsLogic {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: ActionType[],
-                        trigger: Def.IDefTriggerImpl;
+                        actions: ActionType[];
+                    //,                        trigger: Def.IDefTriggerImpl;
 
                     for ( let i = 0; i < param.triggers.length; i++ ) {
                         let trigger = param.triggers[i];
 
-                        actions.push( new InlineAction(
-                            ( resolve, reject ): void => {
-                                if ( !trigger.triggerable( trigger, param.event, context ) )
-                                    return;
+                        //actions.push( new InlineAction(
+                        //    ( resolve, reject ): void => {
+                        //        if ( !trigger.triggerable( trigger, param.event, context ) )
+                        //            return;
 
-                                param.done.push( trigger );
-                                resolve( trigger.actions( trigger, param.event, context ) );
-                            }
-                        ) );
+                        //        param.done.push( trigger );
+                        //        resolve( trigger.actions( trigger, param.event, context ) );
+                        //    }
+                        //) );
                     }
                     resolve( actions );
                 });

@@ -12,17 +12,17 @@ namespace Def {
 
 
 
-    export interface IDefEnchantment extends IHsEntity {
+    export interface IDefEnchantment {
 
         sourceCard: Card,
-        attachedTo: IHsEntityImpl,
+        //attachedTo: IHsEntityImpl,
 
         //attach: () => void,
         //recalculate: () => void,
         //remove: () => void,
 
         auras: Object[],
-        triggers: IDefTrigger[],
+        //triggers: IDefTrigger[],
 
 
 

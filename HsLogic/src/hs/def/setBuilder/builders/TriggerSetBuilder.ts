@@ -12,8 +12,8 @@ namespace Def {
         }
 
 
-        protected _internalBuildSet( source: HsSource, context: GameCtx ): IDefTriggerImpl[] {
-            let result: IDefTriggerImpl[] = [],
+        protected _internalBuildSet( source: ISource, context: HsGameCtx ): any[] {
+            let result: any[] = [],
                 player: Player,
                 zones: HsLogic.HsZones;
 
@@ -32,8 +32,8 @@ namespace Def {
         }
 
 
-        protected _lookForTriggers( cards: Card[], source: HsSource, context: GameCtx ): IDefTriggerImpl[] {
-            let result: IDefTriggerImpl[] = [];
+        protected _lookForTriggers( cards: Card[], source: ISource, context: HsGameCtx ): any[] {
+            let result: any[] = [];
 
             for ( let i = 0; i < cards.length; i++ ) {
                 result.concat( this._triggersOfEventType( cards[i].triggers, source, context ) );
@@ -43,8 +43,8 @@ namespace Def {
         }
 
 
-        protected _triggersOfEventType( triggers: IDefTriggerImpl[], source: HsSource, context: GameCtx ): IDefTriggerImpl[] {
-            let result: IDefTriggerImpl[] = [];
+        protected _triggersOfEventType( triggers: any[], source: ISource, context: HsGameCtx ): any[] {
+            let result: any[] = [];
 
             for ( let i = 0; i < triggers.length; i++ )
                 for ( let j = 0; j < triggers[i].eventType.length; j++ )
@@ -56,9 +56,9 @@ namespace Def {
         }
 
 
-        protected sort( array: IDefTriggerImpl[], context: GameCtx ): IDefTriggerImpl[] {
+        protected sort( array: any[], context: HsGameCtx ): any[] {
             return array.sort(
-                ( a: IDefTriggerImpl, b: IDefTriggerImpl ): number => {
+                ( a: any, b: any ): number => {
                     let result: number = a.triggerPriority - b.triggerPriority;
                     if ( result === 0 )
                         return a.orderOfPlay - b.orderOfPlay;
@@ -68,7 +68,7 @@ namespace Def {
         }
 
 
-        protected compare( a: IDefTriggerImpl, b: IDefTriggerImpl ): number {
+        protected compare( a: any, b: any ): number {
             let result: number = a.triggerPriority - b.triggerPriority;
             if ( result === 0 )
                 return super.compare( a, b );

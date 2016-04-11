@@ -87,11 +87,11 @@ namespace HsLogic {
     }
 
 
-    export class PendingDestroy extends PermanentState<void> {
-
-        apply( target: ICharacterState ): void {
-            target.flags.pending_destroy = true;
-        }
-    }
+    //    export class PendingDestroy extends PermanentState<void> {
+    //
+    //        apply( target: ICharacterState ): void {
+    //            target.flags.pending_destroy = true;
+    //        }
+    //    }
 
 }

@@ -1,11 +1,11 @@
 ///<reference path="../entity/HsEntity.ts"/>
-///<reference path="../def/entity/IPlayer.ts"/>
+
 
 "use strict";
 
 namespace HsLogic {
 
-    export class Player extends HsEntity implements Def.IPlayer {
+    export class Player extends HsEntity {
 
         def: Def.IPlayer;
 
@@ -26,6 +26,8 @@ namespace HsLogic {
         flags: Def.IFlags = {};
 
         triggers: Trigger[];
+
+        tags: Def.ITags;
 
 
         constructor( public name: string, def?: Def.IPlayer ) {

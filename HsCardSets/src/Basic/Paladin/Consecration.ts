@@ -9,8 +9,8 @@ namespace Def {
         name: `Consecration`,
         cost: 4,
 
-        triggers: [],
-        enchantments: [],
+        //triggers: [],
+        //enchantments: [],
 
         playActions: [
             new AllTargetsDefAction<Character>( {

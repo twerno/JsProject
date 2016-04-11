@@ -22,7 +22,7 @@ namespace Def {
                 return null;
         }
 
-        acquireTargets( param: HsCancelableParam, targets: ITarget, context: GameCtx ): Action {
+        acquireTargets( param: HsCancelableParam, targets: ITarget, context: HsGameCtx ): Action {
             return context.actionFactory.makeAChoice.singleTarget( {
                 source: param.source,
                 cancelAction: param.cancelAction,
@@ -33,7 +33,7 @@ namespace Def {
             })
         }
 
-        actions( source: HsSource, targets: ITargets, context: GameCtx ): Action[] {
+        actions( source: ISource, targets: ITargets, context: HsGameCtx ): Action[] {
             return this.param.actionBuilder( source, this.getSingleTarget( targets ), context );
         }
 

@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -18,23 +18,26 @@ namespace HsLogic {
 
                     actions.push( new CalculateHeal( param ) );
 
+                    actions.push( new InlineAction(( responce, reject ): void => {
+                        let actions: ActionType[] = [];
 
-                    for ( let i = 0; i < param.targets.length; i++ ) {
-                        actions.push( new Heal( {
-                            source: param.source,
+                        for ( let i = 0; i < param.targets.length; i++ ) {
+                            actions.push( new Heal( {
+                                source: param.source,
 
-                            target: param.targets[i],
-                            amount: param.amount,
+                                target: param.targets[i],
+                                amount: param.amount,
 
-                            healState: HEAL_STATE.PENDING,
-                            notifyMode: param.notifyMode
-                        }) );
-                    }
+                                healState: HEAL_STATE.PENDING,
+                                notifyMode: param.notifyMode
+                            }) );
+                        }
+                        resolve( actions );
+                    }) );
 
 
                     if ( param.notifyMode = NOTIFY_MODE.AFTER_ALL_ACTIONS )
                         actions.push( new DispatchSavedEvents( event.Heal, context ) );
-
 
                     resolve( actions );
                 }
@@ -69,11 +72,14 @@ namespace HsLogic {
 
 
                     // calculate heal
-                    actions.push( new InlineAction(
+                    actions.push( new InlineActionExt(
+                        (): boolean => {
+                            return !param.cancelAction.value
+                        },
                         ( resolve, reject ): void => {
 
-                            if ( param.customHealPower )
-                                param.amount += param.customHealPower( param, context );
+                            if ( param.customHealPowerCalculator )
+                                param.amount = param.customHealPowerCalculator( param, context );
                             else
                                 param.amount += context.powerMgr.getHealPower( param.source );
 

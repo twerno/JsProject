@@ -12,8 +12,8 @@ namespace Def {
 
         constructor( protected _props: IDefTargetProperties ) { super(); }
 
-        protected _internalBuildSet( source: HsSource, context: GameCtx ): IHsEntityImpl[] {
-            let result: HsLogic.HsEntity[] = [],
+        protected _internalBuildSet( source: ISource, context: HsGameCtx ): Entity[] {
+            let result: Entity[] = [],
                 zones: HsLogic.HsZone<HsLogic.Card>[] = null,
                 player: HsLogic.Player = null,
                 cards: HsLogic.Card[] = null;
