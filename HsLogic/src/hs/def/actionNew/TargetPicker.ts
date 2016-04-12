@@ -32,21 +32,21 @@ namespace Def {
         pickMode: PICK_MODE
     }
 
-    export enum AVAILABLE_TARGETS {
-        ENEMY_HERO,
-        EMEMY_MINION,
-        ENEMY_CHARACTER,
-        EMENY_WEAPON,
-        FRIENDLY_HERO,
-        FRIENDLY_MINION,
-        FRIENDLY_CHARACTER,
-        FRIENDLY_WEAPON,
-        ANY_MINION,
-        ANY_CHARACTER
-    }
+    //export enum AVAILABLE_TARGETS {
+    //    ENEMY_HERO,
+    //    EMEMY_MINION,
+    //    ENEMY_CHARACTER,
+    //    EMENY_WEAPON,
+    //    FRIENDLY_HERO,
+    //    FRIENDLY_MINION,
+    //    FRIENDLY_CHARACTER,
+    //    FRIENDLY_WEAPON,
+    //    ANY_MINION,
+    //    ANY_CHARACTER
+    //}
 
     export interface SimpleTargetPickerParam {
-        availableTargets: AVAILABLE_TARGETS,
+        availableTargets: ITargetSetBuilder,
         numberOfAvailibleTargetsToBePlayable: number,
         numberOfTargets: number,
         pickMode: PICK_MODE
@@ -55,9 +55,8 @@ namespace Def {
 
     export class SimpleTargetPicker extends ITargetPicker<SimpleTargetPickerParam> {
 
-        availableTargets( context: HsGameCtx ): Target[] {
-            // based on AVAILABLE_TARGETS
-            return [];
+        availableTargets( source: ISource, context: HsGameCtx ): Target[] {
+            return this.param.availableTargets.buildSet<Target>( source, context );
         }
 
 
@@ -84,7 +83,7 @@ namespace Def {
 
         static get SINGLE_FRIENDLY_MINION(): SimpleTargetPicker {
             return new SimpleTargetPicker( {
-                availableTargets: AVAILABLE_TARGETS.FRIENDLY_MINION,
+                availableTargets: TargetFinder.FRIENDLY_MINION,
                 numberOfAvailibleTargetsToBePlayable: 0,
                 numberOfTargets: 1,
                 pickMode: PICK_MODE.USER_CHOICE
@@ -98,7 +97,7 @@ namespace Def {
 
         static get SINGLE_CHARACTER(): SimpleTargetPicker {
             return new SimpleTargetPicker( {
-                availableTargets: AVAILABLE_TARGETS.ANY_CHARACTER,
+                availableTargets: TargetFinder.ANY_CHARACTER,
                 numberOfAvailibleTargetsToBePlayable: 1,
                 numberOfTargets: 1,
                 pickMode: PICK_MODE.USER_CHOICE

@@ -30,13 +30,12 @@ namespace HsLogic {
                         source: ISource;
 
                     // find minions to be destroyed
-                    let minions: Minion[] = Def.SetBuilderHelper.BATTLEFIELD
-                        .addFilter( Def.StandardFilters.minion )
+                    let minions: Minion[] = Def.TargetFinder.ANY_MINION
                         .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
                             return minion instanceof HsLogic.Minion
                                 && ( minion.hp <= 0
                                     || minion.tags.has( Def.Pending_Destroy_Tag ) );
-                        }).buildSet<Minion>( param.source, context );
+                        }).buildSet<Minion>( null, context );
 
                     // process them
                     for ( let i = 0; i < minions.length; i++ ) {

@@ -17,5 +17,7 @@ namespace Def {
     export type ActionEventClass = HsLogic.ActionEventClass;
     export type Trigger = HsLogic.Trigger;
     export type Action = jsLogic.IAction<HsGameCtx>;
+    export type HsZones = HsLogic.HsZones;
+    export type HsZone = HsLogic.HsZone<Card>;
 
 }

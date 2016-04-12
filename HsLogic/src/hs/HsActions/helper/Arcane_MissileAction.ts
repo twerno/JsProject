@@ -5,13 +5,14 @@ namespace HsLogic {
     export class Arcane_MissileAction<P extends IActionParam> extends Action<P> {
 
         static availableTargers(): Def.ITargetSetBuilder {
-            return Def.SetBuilderHelper.BATTLEFIELD
-                .addFilter( Def.StandardFilters.enemy )
-                .addFilter( Def.StandardFilters.character )
-                .addFilter(( source, entity, context ): boolean => {
-                    return entity instanceof Player
-                        || entity instanceof Minion && entity.hp > 0;
-                });
+            return null;
+            //return Def.SetBuilderHelper.BATTLEFIELD
+            //    .addFilter( Def.StandardFilters.enemy )
+            //    .addFilter( Def.StandardFilters.character )
+            //    .addFilter(( source, entity, context ): boolean => {
+            //        return entity instanceof Player
+            //            || entity instanceof Minion && entity.hp > 0;
+            //    });
         }
 
         resolve( self: Arcane_MissileAction<P>, context: HsGameCtx ): PromiseOfActions {

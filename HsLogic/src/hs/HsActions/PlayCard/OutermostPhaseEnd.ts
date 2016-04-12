@@ -80,8 +80,7 @@ namespace HsLogic {
     export class DeathPhase<P extends IActionParam> extends Action<P> {
 
         resolvable( context: HsGameCtx ): boolean {
-            return Def.SetBuilderHelper.BATTLEFIELD
-                .addFilter( Def.StandardFilters.minion )
+            return Def.TargetFinder.ANY_MINION
                 .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
                     return minion instanceof HsLogic.Minion
                         && ( minion.hp <= 0
