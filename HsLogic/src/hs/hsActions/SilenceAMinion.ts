@@ -26,20 +26,20 @@ namespace HsLogic {
                     minion.hp += Math.min( minion.def.hp - minion.maxHp, minion.def.hp );
                     minion.maxHp = minion.def.hp;
 
-                    minion.flags = {
-                        immune: false,
-                        elusive: false,
-                        divine_shield: false,
-                        charge: false,
-                        forgetful: false,
-                        freezed: false,
-                        stealth: false,
-                        taunt: false,
-                        windfury: false,
-                        silenced: true
-                    }
+                    //                    minion.flags = {
+                    //                        immune: false,
+                    //                        elusive: false,
+                    //                        divine_shield: false,
+                    //                        charge: false,
+                    //                        forgetful: false,
+                    //                        freezed: false,
+                    //                        stealth: false,
+                    //                        taunt: false,
+                    //                        windfury: false,
+                    //                        silenced: true
+                    //                    }
                     minion.triggers = [];
-                    minion.enchantments = [];
+                    //minion.enchantments = [];
                     //                    minion.counters = {};
                     //                    minion.markers = new jsLogic.MarkersList();
 

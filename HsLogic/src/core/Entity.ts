@@ -7,13 +7,15 @@ namespace jsLogic {
 	 *
 	 */
     export class Entity {
-        id: number = generateNewId();
+        id: number;
 
         toString(): string {
             return `[${ClassUtils.getNameOfClass( this )}:${this.id}]`;
         }
 
-        constructor( public owner: Entity ) { }
+        constructor( public owner: Entity ) {
+            this.id = generateNewId();
+        }
     }
 
 

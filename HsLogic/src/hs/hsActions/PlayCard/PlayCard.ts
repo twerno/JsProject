@@ -5,15 +5,21 @@ namespace HsLogic {
 
     export interface PlayCardParam extends IHsCancelableParam {
         card: Minion | Weapon | Spell,
-        acquiredTargets: Def.ITargets[]
+        targets: Def.Target[]
     }
 
     export interface PlayMinionParam extends PlayCardParam {
+        card: Minion,
         position: number
     }
 
-    export interface IEquipWeaponParam extends PlayCardParam {
+    export interface PlayWeaponParam extends PlayCardParam {
+        card: Weapon,
         player: Player
+    }
+
+    export interface PlaySpellParam extends PlayCardParam {
+        card: Spell
     }
 
 
@@ -44,10 +50,10 @@ namespace HsLogic {
                         actions.push( context.actionFactory.playMinion( <PlayMinionParam>param ) );
 
                     else if ( param.card instanceof Spell )
-                        actions.push( context.actionFactory.playSpell( param ) );
+                        actions.push( context.actionFactory.playSpell( <PlaySpellParam>param ) );
 
                     else if ( param.card instanceof Weapon )
-                        actions.push( context.actionFactory.playWeapon( <IEquipWeaponParam>param ) );
+                        actions.push( context.actionFactory.playWeapon( <PlayWeaponParam>param ) );
 
                     else
                         reject( new Error( `Unsuported object class: ${param.card}` ) );

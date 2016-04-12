@@ -11,7 +11,7 @@ namespace HsLogic {
         static get type(): string { return OnTargetingPhaseEvent.name }
     }
 
-    export class OnAfterSpellPhaseEvent extends ActionEvent<PlayCardParam> {
+    export class OnAfterSpellPhaseEvent extends ActionEvent<PlaySpellParam> {
         static get type(): string { return OnAfterSpellPhaseEvent.name }
     }
 
@@ -29,7 +29,7 @@ namespace HsLogic {
  	 */
 
 
-    export class PlaySpell<P extends PlayCardParam> extends Action<P> {
+    export class PlaySpell<P extends PlaySpellParam> extends Action<P> {
 
         resolve( self: PlaySpell<P>, context: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
@@ -48,13 +48,11 @@ namespace HsLogic {
                     actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
 
-                    actions.push( new InlineAction(
+                    actions.push( new InlineActionExt(
+                        (): boolean => {
+                            return !param.cancelAction.value
+                        },
                         ( resolve, reject ): void => {
-                            if ( param.cancelAction.value ) {
-                                resolve( jsLogic.NO_CONSEQUENCES );
-                                return;
-                            }
-
                             let innerActions: ActionType[] = [];
 
                             // step 3 - onTargetingPhase
@@ -62,13 +60,10 @@ namespace HsLogic {
                             innerActions.push(); //context.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
 
 
-
                             // step 4 - spellTextPhase
-                            innerActions.push( new ExecuteTriggers( {
-                                source: param.source,
-                                defActions: param.card.playActions,
-                                targets: param.acquiredTargets
-                            }) );
+                            if ( param.card.spellAction )
+                                innerActions.concat( param.card.spellAction.actionBuilder( param.source, param.targets, context ) );
+
 
                             // step 5 - onAfterPlaySpell
                             innerActions.push(); //context.actionFactory.dispatch( new OnAfterSpellPhaseEvent( param ) ) );

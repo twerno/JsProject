@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -18,10 +18,10 @@ namespace HsLogic {
                         player: Player = param.source.caster,
                         card: Card = param.card;
 
-                    if ( player.filled_mana_crystals < card.cost )
+                    if ( player.filled_mana_crystals < card.baseCost )
                         throw new Error( `NOT enough mana to play ${card}.` );
 
-                    player.filled_mana_crystals -= card.cost;
+                    player.filled_mana_crystals -= card.baseCost;
 
                     context.zonesOf( player ).hand.removeEntity( card );
 

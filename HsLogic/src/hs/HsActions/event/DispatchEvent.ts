@@ -71,13 +71,13 @@ namespace HsLogic {
         // resolve( self: DispatchEvent<P>
 
 
-        protected _getDominantPlayerTriggers( player: Player ): Def.IDefSetBuilder {
+        protected _getDominantPlayerTriggers( player: Player ): Def.ITargetSetBuilder {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.TriggerFilter.OWNER( player ).owns_trigger );
         }
 
 
-        protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.IDefSetBuilder {
+        protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.ITargetSetBuilder {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.TriggerFilter.OWNER( player ).DOES_NOT_own_trigger )
                 .addFilter(( source: ISource, trigger: Trigger, context: HsGameCtx ): boolean => {
@@ -103,20 +103,19 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[];
-                    //,                        trigger: Def.IDefTriggerImpl;
 
                     for ( let i = 0; i < param.triggers.length; i++ ) {
                         let trigger = param.triggers[i];
 
-                        //actions.push( new InlineAction(
-                        //    ( resolve, reject ): void => {
-                        //        if ( !trigger.triggerable( trigger, param.event, context ) )
-                        //            return;
-
-                        //        param.done.push( trigger );
-                        //        resolve( trigger.actions( trigger, param.event, context ) );
-                        //    }
-                        //) );
+                        actions.push( new InlineActionExt(
+                            (): boolean => {
+                                return trigger.triggerable( trigger, param.event, context );
+                            },
+                            ( resolve, reject ): void => {
+                                param.done.push( trigger );
+                                resolve( trigger.actionBuilder( trigger, param.event, context ) );
+                            }
+                        ) );
                     }
                     resolve( actions );
                 });

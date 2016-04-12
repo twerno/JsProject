@@ -12,7 +12,7 @@ namespace HsLogic {
                 attack: minion.def.attack,
                 hp: minion.def.hp,
                 maxHp: minion.def.hp,
-                flags: Def.cloneFlags( minion.def.flags )
+                //                flags: Def.cloneFlags( minion.def.flags )
             };
 
             let candidates: PermanentState<any>[];

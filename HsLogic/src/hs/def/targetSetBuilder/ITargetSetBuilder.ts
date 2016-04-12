@@ -5,14 +5,14 @@ namespace Def {
     export type IDefSetFilter = ( source: ISource, entity: Entity, context: HsGameCtx ) => boolean;
 
 
-    export abstract class IDefSetBuilder {
+    export abstract class ITargetSetBuilder {
 
-        protected _filters: IDefSetFilter[] = [];
+        private _filters: IDefSetFilter[] = [];
 
         protected abstract _internalBuildSet( source: ISource, context: HsGameCtx ): Entity[];
 
 
-        addFilter( filter: IDefSetFilter ): IDefSetBuilder {
+        addFilter( filter: IDefSetFilter ): ITargetSetBuilder {
             this._filters.push( filter );
             return this;
         }

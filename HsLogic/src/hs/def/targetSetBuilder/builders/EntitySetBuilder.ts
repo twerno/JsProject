@@ -8,7 +8,7 @@ namespace Def {
     }
 
 
-    export class EntitySetBuilder extends IDefSetBuilder {
+    export class EntitySetBuilder extends ITargetSetBuilder {
 
         constructor( protected _props: IDefTargetProperties ) { super(); }
 

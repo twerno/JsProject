@@ -14,7 +14,7 @@ namespace HsLogic {
      * ChooseSingleTarget
      *
  	 */
-    export class ChooseSingleTarget<P extends Def.AcquireTargetsParam> extends Action<P> {
+    export class ChooseSingleTarget<P extends Def.AcquireTargetsActionParam> extends Action<P> {
         resolve( self: ChooseSingleTarget<P>, context: HsGameCtx ): PromiseOfActions {
 
             if ( self.param.cancelAction.value )

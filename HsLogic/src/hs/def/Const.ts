@@ -19,6 +19,14 @@ namespace Def {
         BEAST, DEMON, DRAGON, MECH, MURLOC, PIRATE, TOTEM, GENERAL
     }
 
+    export enum RARITY {
+        FREE,
+        COMMON,
+        RARE,
+        EPIC,
+        LEGANDARY
+    }
+
     export type FSingleTargetActionBuilder<T extends HsLogic.HsEntity> = ( source: ISource, target: T, context: HsGameCtx ) => Action[];
 
     export type FTargetsActionBuilder<T extends HsLogic.HsEntity> = ( source: ISource, targets: T[], context: HsGameCtx ) => Action[];

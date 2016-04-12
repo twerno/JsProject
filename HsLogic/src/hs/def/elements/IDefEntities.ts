@@ -10,7 +10,9 @@ namespace Def {
 
     export interface ICard {
         name: string,
-        cost: number;
+        cost: number,
+        rarity: RARITY,
+        uncollectible?: boolean,
 
         triggers: IDefTrigger[],
         //enchantments?: Object[];
@@ -21,7 +23,7 @@ namespace Def {
 
 
     export interface ISpell extends ICard {
-        onPlayActions: IDefAction[]
+        onPlayAction: IDefAction
     }
 
 
@@ -30,10 +32,9 @@ namespace Def {
         attack: number;
         minion_type: MINION_TYPE,
 
-        battlecry: IDefAction[],
+        battlecry: IDefAction,
 
-        tags: ITags,
-
+        tags: TagClass[],
     }
 
 
@@ -41,9 +42,9 @@ namespace Def {
         attack: number,
         durability: number,
 
-        battlecry: IDefAction[],
+        battlecry: IDefAction,
 
-        tags: ITags,
+        tags: TagClass[],
 
     }
 

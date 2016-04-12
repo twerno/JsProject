@@ -4,7 +4,7 @@ namespace HsLogic {
 
     export class Arcane_MissileAction<P extends IActionParam> extends Action<P> {
 
-        static availableTargers(): Def.IDefSetBuilder {
+        static availableTargers(): Def.ITargetSetBuilder {
             return Def.SetBuilderHelper.BATTLEFIELD
                 .addFilter( Def.StandardFilters.enemy )
                 .addFilter( Def.StandardFilters.character )

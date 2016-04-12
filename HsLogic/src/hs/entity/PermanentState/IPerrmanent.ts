@@ -10,7 +10,7 @@ namespace HsLogic {
         attack: number,
         hp: number,
         maxHp: number,
-        flags: Def.IFlags
+        //        flags: Def.IFlags
     }
 
     //    export interface IWeaponState {

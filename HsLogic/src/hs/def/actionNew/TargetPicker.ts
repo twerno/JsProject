@@ -21,34 +21,90 @@ namespace Def {
     //}
 
 
+    export enum PICK_MODE {
+        RANDOM, USER_CHOICE
+    }
+
     export interface TargetPickerParam {
-        availableTargetsSetBuilder: IDefSetBuilder,
+        availableTargetsSetBuilder: ITargetSetBuilder,
         numberOfAvailibleTargetsRequired: number,
-        numberOfTargets: number
+        numberOfTargets: number,
+        pickMode: PICK_MODE
+    }
+
+    export enum AVAILABLE_TARGETS {
+        ENEMY_HERO,
+        EMEMY_MINION,
+        ENEMY_CHARACTER,
+        EMENY_WEAPON,
+        FRIENDLY_HERO,
+        FRIENDLY_MINION,
+        FRIENDLY_CHARACTER,
+        FRIENDLY_WEAPON,
+        ANY_MINION,
+        ANY_CHARACTER
+    }
+
+    export interface SimpleTargetPickerParam {
+        availableTargets: AVAILABLE_TARGETS,
+        numberOfAvailibleTargetsToBePlayable: number,
+        numberOfTargets: number,
+        pickMode: PICK_MODE
     }
 
 
-    export class SingleTargetPicker extends ITargetPicker<TargetPickerParam> {
+    export class SimpleTargetPicker extends ITargetPicker<SimpleTargetPickerParam> {
 
         availableTargets( context: HsGameCtx ): Target[] {
-            return <Target[]>this.param.availableTargetsSetBuilder.buildSet( null, context );
+            // based on AVAILABLE_TARGETS
+            return [];
         }
 
 
         isAvailibleTargetsSetValid( availableTargets: Target[], context: HsGameCtx ): boolean {
-            return availableTargets.length >= ( this.param.numberOfAvailibleTargetsRequired || 0 );
+            return availableTargets.length >= ( this.param.numberOfAvailibleTargetsToBePlayable || 0 );
         }
 
 
-        acquireTargetsAction( param: AcquireTargetsParam, context: HsGameCtx ): Action {
-            return context.actionFactory.makeAChoice.singleTarget( param );
+        acquireTargetsAction( param: AcquireTargetsActionParam, context: HsGameCtx ): Action {
+            if ( this.param.pickMode === PICK_MODE.RANDOM )
+                return context.actionFactory.makeAChoice.singleTarget( param );
+            else
+                return context.actionFactory.makeAChoice.singleTarget( param );
         }
 
 
-        arePickedTargetsValid( param: AcquireTargetsParam, context: HsGameCtx ): boolean {
-            return ( this.param.numberOfAvailibleTargetsRequired === 0 && ( param.targets.length in [0, this.param.numberOfTargets] ) )
-                || param.targets.length === this.param.numberOfAvailibleTargetsRequired;
+        arePickedTargetsValid( availableTargets: Target[], picked: Target[], context: HsGameCtx ): boolean {
+            return ( this.param.numberOfAvailibleTargetsToBePlayable === 0 && ( picked.length in [0, this.param.numberOfTargets] ) )
+                || picked.length === this.param.numberOfAvailibleTargetsToBePlayable;
         }
+    }
+
+    export class OPTIONAL_TARGET {
+
+        static get SINGLE_FRIENDLY_MINION(): SimpleTargetPicker {
+            return new SimpleTargetPicker( {
+                availableTargets: AVAILABLE_TARGETS.FRIENDLY_MINION,
+                numberOfAvailibleTargetsToBePlayable: 0,
+                numberOfTargets: 1,
+                pickMode: PICK_MODE.USER_CHOICE
+            });
+        }
+
+    }
+
+
+    export class TARGET {
+
+        static get SINGLE_CHARACTER(): SimpleTargetPicker {
+            return new SimpleTargetPicker( {
+                availableTargets: AVAILABLE_TARGETS.ANY_CHARACTER,
+                numberOfAvailibleTargetsToBePlayable: 1,
+                numberOfTargets: 1,
+                pickMode: PICK_MODE.USER_CHOICE
+            });
+        }
+
     }
 
 }

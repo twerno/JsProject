@@ -1,4 +1,4 @@
-﻿
+
 "use strict";
 
 namespace HsLogic {
@@ -6,10 +6,12 @@ namespace HsLogic {
     export class Spell extends Card {
         def: Def.ISpell;
 
-        spellActions: Def.IDefAction[];
+        spellAction: Def.IDefAction;
 
         initFromDefinition( def: Def.ISpell ): void {
             super.initFromDefinition( def );
+
+            this.spellAction = def.onPlayAction;
         }
     }
 

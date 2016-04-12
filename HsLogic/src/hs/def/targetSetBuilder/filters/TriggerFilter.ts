@@ -18,5 +18,6 @@ namespace Def {
         DOES_NOT_own_trigger( source: ISource, trigger: any, context: HsGameCtx ): boolean {
             return trigger.owner !== this.owner;
         }
+
     }
 }

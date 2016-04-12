@@ -3,9 +3,7 @@
 namespace Def {
 
     export type FTriggerable = ( self: Trigger, event: ActionEvent, context: HsGameCtx ) => boolean;
-
-    export type IDefTriggerAction = ( self: Trigger, event: ActionEvent, context: HsGameCtx ) => Action[];
-
+    export type FTriggerActionBulder = ( self: Trigger, event: ActionEvent, context: HsGameCtx ) => Action[];
 
 
     export const TRIGGER_PRIORITY_LOWEST = 100;
@@ -23,9 +21,9 @@ namespace Def {
         // Humble safeguard: Minions are not allowed to trigger on themselves entering play.
         disable_self_trigger_protection?: boolean,
 
-        triggerable?: FTriggerable,
+        triggerable?: FTriggerable;
 
-        actions: IDefTriggerAction,
+        actionBuilder: FTriggerActionBulder
     }
 
 }

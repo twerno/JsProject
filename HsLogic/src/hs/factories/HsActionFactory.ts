@@ -38,17 +38,17 @@ namespace HsLogic {
         get makeAChoice(): MakeChoiceActionFactory<T> { return this._makeAChoice }
 
 
-        executeTargetlessTriggers( param: ITargetlessTriggersParam ): jsLogic.IAction<T> {
-            return new ExecuteTargetlessTriggers( param );
-        }
+        //        executeTargetlessTriggers(param: ITargetlessTriggersParam): jsLogic.IAction<T> {
+        //            return new ExecuteTargetlessTriggers(param);
+        //        }
 
         silenceAMinion( param: ISilenceAMinionParam ): jsLogic.IAction<T> {
             return new SilenceAMinion( param );
         }
 
-        acquireTargets( param: IAcquireTargetsParam ): AcquireTargets {
-            return new AcquireTargets( param );
-        }
+        //        acquireTargets( param: IAcquireTargetsParam ): AcquireTargets {
+        //            return new AcquireTargets( param );
+        //        }
 
 
         deathCreationStep( param: IActionParam ): DeathCreationStep<IActionParam> {
@@ -123,12 +123,12 @@ namespace HsLogic {
             return new PlayMinionSequence( param );
         }
 
-        playSpell( param: PlayCardParam ): jsLogic.IAction<T> {
+        playSpell( param: PlaySpellParam ): jsLogic.IAction<T> {
             return new PlaySpell( param );
         }
 
-        playWeapon( param: IEquipWeaponParam ): jsLogic.IAction<T> {
-            return new PlayWeapon( param );
+        playWeapon( param: PlayWeaponParam ): jsLogic.IAction<T> {
+            return new PlayWeaponSequence( param );
         }
     }
 }

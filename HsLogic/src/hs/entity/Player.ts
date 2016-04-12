@@ -7,7 +7,7 @@ namespace HsLogic {
 
     export class Player extends HsEntity {
 
-        def: Def.IPlayer;
+        //        def: Def.IPlayer;
 
         attack: number;
 
@@ -23,27 +23,27 @@ namespace HsLogic {
 
         heroPower: any;
 
-        flags: Def.IFlags = {};
+        //        flags: Def.IFlags = {};
 
         triggers: Trigger[];
 
         tags: Def.ITags;
 
 
-        constructor( public name: string, def?: Def.IPlayer ) {
-            super( null, def );
+        constructor( public name: string ) {
+            super( null, null );
         }
 
 
-        protected initFromDefinition( def: Def.IPlayer ): void {
-            this.hp = def.hp;
-            this.maxHp = def.hp;
-
-            this.manaCrystals = def.manaCrystals;
-            this.filled_mana_crystals = def.manaCrystals;
-
-            this.hero = def.hero;
-            this.heroPower = def.heroPower;
-        }
+        //        protected initFromDefinition(def: Def.IPlayer): void {
+        //            this.hp = def.hp;
+        //            this.maxHp = def.hp;
+        //
+        //            this.manaCrystals = def.manaCrystals;
+        //            this.filled_mana_crystals = def.manaCrystals;
+        //
+        //            this.hero = def.hero;
+        //            this.heroPower = def.heroPower;
+        //        }
     }
 }

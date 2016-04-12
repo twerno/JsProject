@@ -4,12 +4,14 @@ namespace HsLogic {
 
     export class Card extends HsEntity {
         def: Def.ICard;
-        cost: number;
         name: string;
-        enchantments: Object[];
+        baseCost: number;
+        rarity: Def.RARITY;
+        uncollectible: boolean;
 
-        playActions: Def.IDefAction[];
         triggers: Trigger[];
+        //        enchantments: Object[];
+
 
         constructor( public owner: Player, def?: Def.ICard ) {
             super( owner, def );
@@ -20,18 +22,15 @@ namespace HsLogic {
             super.initFromDefinition( def );
 
             this.name = def.name;
-            //this.enchantments = def.enchantments;
-            this.cost = def.cost;
-            this.playActions = def.onPlayActions;
+            this.baseCost = def.cost;
+            this.rarity = def.rarity;
+            this.uncollectible = def.uncollectible || false;
 
             this.triggers = [];
-            let defTrigger: Def.IDefTrigger;
-            //for ( let i = 0; i < def.triggers.length; i++ ) {
-            //    defTrigger = def.triggers[i];
-            //    if ( defTrigger )
-            //        this.triggers.push(
-            //            new Trigger( this, this, defTrigger ) );
-            //}
+            for ( let i = 0; i < def.triggers.length; i++ )
+                this.triggers.push( new Trigger( this, this, def.triggers[i] ) );
+
+            //this.enchantments = def.enchantments;
         }
     }
 

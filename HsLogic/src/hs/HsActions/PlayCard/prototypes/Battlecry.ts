@@ -14,15 +14,13 @@ namespace HsLogic {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: ActionType[] = [];;
+                        card: Minion | Weapon = <Minion | Weapon>param.card,
+                        actions: ActionType[] = [];
 
                     //@TODO Fix for Brann Bronzebeard 
 
-                    actions.push( new ExecuteTriggers( {
-                        source: param.source,
-                        defActions: param.card.playActions,
-                        targets: param.acquiredTargets
-                    }) );
+                    if ( card.battlecry )
+                        actions.concat( card.battlecry.actionBuilder( param.source, param.targets, context ) );
 
                     resolve( actions );
                 }
