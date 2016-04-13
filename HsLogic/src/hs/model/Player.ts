@@ -1,6 +1,3 @@
-///<reference path="../entity/HsEntity.ts"/>
-
-
 "use strict";
 
 namespace HsLogic {
@@ -27,7 +24,8 @@ namespace HsLogic {
 
         triggers: Trigger[];
 
-        tags: Def.ITags;
+        tags: ITags;
+        effects: Object[];
 
 
         constructor( public name: string ) {

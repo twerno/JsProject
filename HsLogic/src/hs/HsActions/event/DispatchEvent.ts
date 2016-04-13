@@ -80,6 +80,8 @@ namespace HsLogic {
         protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.ITargetSetBuilder {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.TriggerFilter.OWNER( player ).DOES_NOT_own_trigger )
+
+                // Double safeguard
                 .addFilter(( source: ISource, trigger: Trigger, context: HsGameCtx ): boolean => {
                     return triggeredByDominantPlayer.indexOf( trigger ) === -1;
                 });

@@ -11,7 +11,7 @@ namespace jsLogic {
 	 */
     export class Zone<T extends Entity> {
         protected _entities: T[] = [];
-        protected _uuidMap: Collection.NumberMap<T> = new Collection.NumberMap<T>();
+        protected _uuidMap: Collection.StringMap<T> = new Collection.StringMap<T>();
 
 
         removeEntity( entity: T ): void {

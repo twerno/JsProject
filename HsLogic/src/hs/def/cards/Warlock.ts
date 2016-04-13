@@ -7,7 +7,7 @@ namespace Def {
 
         triggers: [],
         onPlayAction: {
-            target: TARGET.SINGLE_CHARACTER,
+            targets: TARGET.SINGLE_CHARACTER,
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
 
                 return [

@@ -52,10 +52,10 @@ namespace HsLogic {
 
 
     /**
-     * Heal
+     * CalculateHeal
      *
      */
-    class CalculateHeal<P extends HealTargetsParam> extends Action<P> {
+    export class CalculateHeal<P extends CalculateHealParam> extends Action<P> {
 
         resolve( self: CalculateHeal<P>, context: HsGameCtx ): PromiseOfActions {
 
@@ -105,7 +105,7 @@ namespace HsLogic {
      * Heal
      *
      */
-    class Heal<P extends HealParam> extends Action<P> {
+    export class Heal<P extends HealParam> extends Action<P> {
 
         resolve( self: Heal<P>, context: HsGameCtx ): PromiseOfActions {
 

@@ -1,18 +1,4 @@
-///<reference path="../hsActions/AddGeneratedCardIntoHand.ts"/>
-///<reference path="../hsActions/DestroyCardInPlay.ts"/>
-///<reference path="../hsActions/Discard.ts"/>
-///<reference path="../hsActions/DrawCard.ts"/>
-///<reference path="../hsActions/EmptyAction.ts"/>
-///<reference path="../hsActions/technical/Fatigue.ts"/>
-///<reference path="../hsActions/MarkAsDestroyed.ts"/>
-///<reference path="../hsActions/MillCard.ts"/>
-///<reference path="../hsActions/PutCardIntoHand.ts"/>
-///<reference path="../hsActions/ReturnCardIntoHandFromPlayZone.ts"/>
-///<reference path="../hsActions/Sequence.ts"/>
-///<reference path="../hsActions/ShuffleDeck.ts"/>
-///<reference path="../hsActions/ShuffleGeneratedCardIntoDeck.ts"/>
 ///<reference path="../core/HsZone.ts"/>
-///<reference path="../entity/Card.ts"/>
 
 
 "use strict";
@@ -29,27 +15,14 @@ namespace HsLogic {
             return new AddGeneratedCardIntoHand( param );
         }
 
-        //auraUpdateStep(source: jsLogic.IAction<T>): AuraUpdateStep {
-        //    return new AuraUpdateStep(source);
-        //}
-
         //get damage(): HsDamageFactory<T> { return this._damageFactory }
         get enchantment(): HsEnchantmentActionFactory<T> { return this._enchantments }
         get makeAChoice(): MakeChoiceActionFactory<T> { return this._makeAChoice }
 
 
-        //        executeTargetlessTriggers(param: ITargetlessTriggersParam): jsLogic.IAction<T> {
-        //            return new ExecuteTargetlessTriggers(param);
-        //        }
-
         silenceAMinion( param: ISilenceAMinionParam ): jsLogic.IAction<T> {
             return new SilenceAMinion( param );
         }
-
-        //        acquireTargets( param: IAcquireTargetsParam ): AcquireTargets {
-        //            return new AcquireTargets( param );
-        //        }
-
 
         deathCreationStep( param: IActionParam ): DeathCreationStep<IActionParam> {
             return new DeathCreationStep( param );
@@ -75,13 +48,6 @@ namespace HsLogic {
             return new Fatigue( param );
         }
 
-        //heal( healParam: HealTargetsParam ): Heal<HealTargetsParam> {
-        //    return new Heal( healParam );
-        //}
-
-        //markAsDestroyed(source: jsLogic.IAction<T>, card: Card): MarkAsDestroyed {
-        //    return new MarkAsDestroyed(source, card);
-        //}
 
         millCard( source: ISource, card: Card ): MillCard<CardParam> {
             return new MillCard( { source: source, card: card });
@@ -99,10 +65,6 @@ namespace HsLogic {
             return new ReturnCardIntoOwnersHandFrom( param );
         }
 
-        //        sequence(source: jsLogic.IAction<T>, innerActions: jsLogic.IAction<T>[]): Sequence {
-        //            return new Sequence({ action: source, card: null, caller: null }, innerActions);
-        //        }
-
         shuffleDeck( param: TargetPlayerParam ): ShuffleDeck<TargetPlayerParam> {
             return new ShuffleDeck( param );
         }
@@ -116,7 +78,7 @@ namespace HsLogic {
         }
 
         playCard( param: PlayCardParam ): jsLogic.IAction<T> {
-            return new PlayCard( param );
+            return new PlayCardSequence( param );
         }
 
         playMinion( param: PlayMinionParam ): jsLogic.IAction<T> {
@@ -124,7 +86,7 @@ namespace HsLogic {
         }
 
         playSpell( param: PlaySpellParam ): jsLogic.IAction<T> {
-            return new PlaySpell( param );
+            return new PlaySpellSequence( param );
         }
 
         playWeapon( param: PlayWeaponParam ): jsLogic.IAction<T> {

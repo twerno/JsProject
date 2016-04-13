@@ -3,7 +3,7 @@
 
 namespace HsLogic {
 
-    export class Minion extends Card implements IPermanent, ICharacterState {
+    export class Minion extends Card {
         def: Def.IMinion;
 
         hp: number;
@@ -12,9 +12,8 @@ namespace HsLogic {
         minion_type: Def.MINION_TYPE;
 
         battlecry: Def.IDefAction;
-        tags: Def.ITags;
 
-        states: PermanentState<any>[] = [];
+        //states: PermanentState<any>[] = [];
 
         initFromDefinition( def: Def.IMinion ): void {
             super.initFromDefinition( def );
@@ -28,7 +27,7 @@ namespace HsLogic {
             this.battlecry = def.battlecry;
 
             for ( let i = 0; i < def.tags.length; i++ )
-                this.tags.register( new def.tags[i]( {
+                this.tags.add( new def.tags[i]( {
                     action: null,
                     caster: this.owner,
                     sourceType: SOURCE_TYPE.NONE,

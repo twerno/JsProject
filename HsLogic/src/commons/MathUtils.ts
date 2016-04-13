@@ -48,6 +48,12 @@ namespace MathUtils {
         withRepetitions?: boolean
     }
 
+
+    export function selectOneAtRandom<T>( sourceSet: T[] ): T {
+        let resultSet: T[] = selectAtRandom<T>( sourceSet, { amount: 1 }) || [];
+        return resultSet.length === 1 ? resultSet[0] : null;
+    }
+
     export function selectAtRandom<T>( sourceSet: T[], props: ISelectAtRandomProperties ): T[] {
         let
             tmpSet: T[] = sourceSet.slice(),

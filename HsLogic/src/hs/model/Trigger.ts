@@ -17,6 +17,8 @@ namespace HsLogic {
         triggerable: Def.FTriggerable;
         actionBuilder: Def.FTriggerActionBulder;
 
+        triggerContext: Object = {};
+
 
         constructor( parent: HsEntity, sourceCard: Card, def?: Def.IDefTrigger ) {
             super( parent.owner, def );
@@ -35,8 +37,8 @@ namespace HsLogic {
             else
                 this.respondsTo.push( ClassUtils.getNameOfClass( def.respondsTo ) );
 
-            this.triggerPriority = def.triggerPriority;
-            this.disable_self_trigger_protection = def.disable_self_trigger_protection;
+            this.triggerPriority = def.triggerPriority || Def.TRIGGER_PRIORITY_DEFAULT;
+            this.disable_self_trigger_protection = def.disable_self_trigger_protection || false;
             this.triggerable = def.triggerable || null;
             this.actionBuilder = def.actionBuilder;
         }
@@ -48,4 +50,13 @@ namespace HsLogic {
 
     } // class Trigger
 
+
+
+    function enrage( parent: HsEntity, sourceCard: Card ): Trigger {
+        let result: Trigger = new Trigger( parent, sourceCard );
+        result.disable_self_trigger_protection = true;
+        result.respondsTo
+
+        return result;
+    }
 }

@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -21,8 +21,7 @@ namespace HsLogic {
                     let actions: ActionType[] = [];
 
                     for ( let i = 0; i < this.events.length; i++ )
-                        if ( this.events[i].valid( context ) )
-                            actions.push( new DispatchEvent( this.events[i] ) );
+                        actions.push( new DispatchEvent( this.events[i] ) );
 
                     resolve( actions );
                 }

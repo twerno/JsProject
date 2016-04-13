@@ -48,6 +48,10 @@ namespace Def {
             return null;
         }
 
+        static RemoveTag( param: { source: ISource, targets: Character, tag: Tag }): Action {
+            return null;
+        }
+
         static MinionStatMod( param: MinionStatModParam ): Action {
             return null;
         }

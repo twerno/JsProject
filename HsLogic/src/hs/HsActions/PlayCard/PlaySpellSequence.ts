@@ -29,9 +29,9 @@ namespace HsLogic {
  	 */
 
 
-    export class PlaySpell<P extends PlaySpellParam> extends Action<P> {
+    export class PlaySpellSequence<P extends PlaySpellParam> extends Action<P> {
 
-        resolve( self: PlaySpell<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlaySpellSequence<P>, context: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 

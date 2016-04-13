@@ -1,22 +1,11 @@
-﻿"use strict";
+"use strict";
 
 namespace jsLogic {
 
     export type IActionType = IAction<IContext>;
     export type PromiseOfActions = Promise<IActionType | IActionType[]>;
 
-
-
     export interface IContext { }
-
-    export interface ISource {
-        action: IActionType
-    }
-
-    export interface IActionParam {
-        source: ISource
-    }
-
 
     export const NO_CONSEQUENCES: any = null;
 

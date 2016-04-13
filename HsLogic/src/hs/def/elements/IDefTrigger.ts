@@ -2,8 +2,8 @@
 
 namespace Def {
 
-    export type FTriggerable = ( self: Trigger, event: ActionEvent, context: HsGameCtx ) => boolean;
-    export type FTriggerActionBulder = ( self: Trigger, event: ActionEvent, context: HsGameCtx ) => Action[];
+    export type FTriggerable = ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ) => boolean;
+    export type FTriggerActionBulder = ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ) => Action[];
 
 
     export const TRIGGER_PRIORITY_LOWEST = 100;
@@ -13,7 +13,7 @@ namespace Def {
 
     export interface IDefTrigger {
 
-        triggerPriority: number,
+        triggerPriority?: number,
 
         respondsTo: ActionEventClass | ActionEventClass[],
 
@@ -23,7 +23,8 @@ namespace Def {
 
         triggerable?: FTriggerable;
 
-        actionBuilder: FTriggerActionBulder
-    }
+        actionBuilder: FTriggerActionBulder,
 
+        init?: ( trigger: Trigger, context: HsGameCtx ) => void;
+    }
 }

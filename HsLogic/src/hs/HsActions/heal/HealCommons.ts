@@ -22,14 +22,25 @@ namespace HsLogic {
     }
 
 
-    export interface HealTargetsParam extends IHsCancelableParam {
-        targets: Character[],
+    export interface SplitHealParam extends IHsCancelableParam {
         amount: number,
+
+        splitMode: Def.SPLIT_MODE
+    }
+
+
+    export interface HealTargetsParam extends CalculateHealParam {
+        targets: Character[],
 
         healState: HEAL_STATE,
         notifyMode: NOTIFY_MODE,
+    }
 
-        customHealPowerCalculator?: ( param: HealTargetsParam, context: HsGameCtx ) => number
+
+    export interface CalculateHealParam extends IHsCancelableParam {
+        amount: number,
+
+        customHealPowerCalculator?: ( param: CalculateHealParam, context: HsGameCtx ) => number
     }
 
 
@@ -37,11 +48,4 @@ namespace HsLogic {
         steps: HealTargetsParam[],
         notifyEventMode: NOTIFY_MODE
     }
-
-
-    export namespace event {
-
-
-    }
-
 }

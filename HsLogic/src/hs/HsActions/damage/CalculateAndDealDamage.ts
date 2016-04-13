@@ -30,10 +30,10 @@ namespace HsLogic {
                     actions.push( new CalculateDamage( param ) );
 
                     actions.push( new InlineAction(( resolve, reject ): void => {
-                        let actions: ActionType[] = [];
+                        let innerActions: ActionType[] = [];
 
                         for ( let i = 0; i < param.targets.length; i++ ) {
-                            actions.push( new Damage( {
+                            innerActions.push( new Damage( {
                                 source: param.source,
                                 damageType: param.damageType,
 
@@ -45,7 +45,7 @@ namespace HsLogic {
                             }) );
                         }
 
-                        resolve( actions );
+                        resolve( innerActions );
                     }) );
 
                     if ( param.notifyMode = NOTIFY_MODE.AFTER_ALL_ACTIONS )
@@ -67,7 +67,7 @@ namespace HsLogic {
      * CalculateDamage
      *
      */
-    class CalculateDamage<P extends DamageTargetsParam> extends Action<P> {
+    export class CalculateDamage<P extends CalculateDamageParam> extends Action<P> {
 
         resolve( self: CalculateDamage<P>, context: HsGameCtx ): PromiseOfActions {
 
@@ -115,7 +115,7 @@ namespace HsLogic {
      * Damage
      *
      */
-    class Damage<P extends DamageParam> extends Action<P> {
+    export class Damage<P extends DamageParam> extends Action<P> {
 
         resolve( self: Damage<P>, context: HsGameCtx ): PromiseOfActions {
 
@@ -174,7 +174,7 @@ namespace HsLogic {
                     if ( param.target.hp > 0 && param.target.hp - param.amount <= 0 )
                         context.lethalMonitor.registerCandidate( param.target, param.source );
 
-                    if ( param.source.sourceCard instanceof Minion && param.damageState === DAMAGE_STATE.DEALT )
+                    if ( param.source.sourceCard instanceof Minion && param.damageState !== DAMAGE_STATE.PREVENTED )
                         ( <Minion>param.source.sourceCard ).tags.removeAll( Def.Stealth_Tag );
 
 

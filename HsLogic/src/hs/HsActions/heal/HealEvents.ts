@@ -18,9 +18,9 @@ namespace HsLogic.event {
 
 
 
-    export class PreHealCalculationEvent<P extends HealTargetsParam> extends CancelableEvent<P> { }
+    export class PreHealCalculationEvent<P extends CalculateHealParam> extends CancelableEvent<P> { }
 
 
 
-    export class PostHealCalculationEvent<P extends HealTargetsParam> extends CancelableEvent<P> { }
+    export class PostHealCalculationEvent<P extends CalculateHealParam> extends CancelableEvent<P> { }
 }

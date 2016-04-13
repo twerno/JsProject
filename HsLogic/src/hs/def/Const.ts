@@ -11,7 +11,7 @@ namespace Def {
     }
 
     export enum SPLIT_MODE {
-        MISSILE, MAD_BOMB
+        ARCANE_MISSILE, MAD_BOMB, ARCANE_HEAL
     }
 
 
@@ -27,7 +27,4 @@ namespace Def {
         LEGANDARY
     }
 
-    export type FSingleTargetActionBuilder<T extends HsLogic.HsEntity> = ( source: ISource, target: T, context: HsGameCtx ) => Action[];
-
-    export type FTargetsActionBuilder<T extends HsLogic.HsEntity> = ( source: ISource, targets: T[], context: HsGameCtx ) => Action[];
 }

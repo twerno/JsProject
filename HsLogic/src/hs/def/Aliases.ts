@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace Def {
 
@@ -19,5 +19,7 @@ namespace Def {
     export type Action = jsLogic.IAction<HsGameCtx>;
     export type HsZones = HsLogic.HsZones;
     export type HsZone = HsLogic.HsZone<Card>;
+    export type Tag = HsLogic.Tag;
+    export type TagClass = HsLogic.TagClass;
 
 }

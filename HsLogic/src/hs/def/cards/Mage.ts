@@ -7,7 +7,7 @@ namespace Def {
 
         triggers: [],
         onPlayAction: {
-            target: TARGET.SINGLE_CHARACTER,
+            targets: TARGET.SINGLE_CHARACTER,
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
 
                 return [
@@ -35,25 +35,23 @@ namespace Def {
         rarity: RARITY.COMMON,
 
         triggers: [],
-        onPlayAction: null
 
-        //enchantments: [],
-        //triggers: [],
+        onPlayAction: {
+            targets: null,
+            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
 
-        //        playActions: [
-        //
-        //            (source: HsSource, context: GameCtx): Action[]=> {
-        //                return [
-        //                    //context.actionFactory.damage.randomlySplitDamage( {
-        //                    //    source: source,
-        //                    //    damageType: DAMAGE_TYPE.DIRECT,
-        //                    //    partsAmount: 3,
-        //                    //    damagePerPart: 1,
-        //                    //    splitMode: SPLIT_MODE.MISSILE
-        //                    //})
-        //                ]
-        //            }
-        //        ],
+                return [
+                    new HsLogic.CalculateAndSplitDamage( {
+                        source: source,
+                        damageType: DAMAGE_TYPE.DIRECT,
+                        amount: 3,
+                        splitMode: SPLIT_MODE.ARCANE_MISSILE
+                    })
+                ];
+
+            }
+
+        }
 
 
     };

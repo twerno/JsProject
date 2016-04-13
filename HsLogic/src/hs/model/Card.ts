@@ -10,6 +10,8 @@ namespace HsLogic {
         uncollectible: boolean;
 
         triggers: Trigger[];
+        tags: ITags;
+        effects: Object[];
         //        enchantments: Object[];
 
 

@@ -1,5 +1,3 @@
-///<reference path="../entity/HsEntity.ts"/>
-
 "use strict";
 
 namespace HsLogic {

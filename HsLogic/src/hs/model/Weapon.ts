@@ -9,8 +9,6 @@ namespace HsLogic {
         attack: number;
         durability: number;
 
-        tags: Def.ITags;
-
         battlecry: Def.IDefAction;
 
         initFromDefinition( def: Def.IWeapon ): void {
@@ -21,7 +19,7 @@ namespace HsLogic {
             this.battlecry = def.battlecry;
 
             for ( let i = 0; i < def.tags.length; i++ )
-                this.tags.register( new def.tags[i]( {
+                this.tags.add( new def.tags[i]( {
                     action: null,
                     caster: this.owner,
                     sourceType: SOURCE_TYPE.NONE,

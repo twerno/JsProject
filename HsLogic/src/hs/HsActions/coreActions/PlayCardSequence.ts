@@ -27,9 +27,9 @@ namespace HsLogic {
      * PlayCard
      *
  	 */
-    export class PlayCard extends Action<PlayCardParam> {
+    export class PlayCardSequence extends Action<PlayCardParam> {
 
-        resolve( self: PlayCard, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayCardSequence, context: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( jsLogic.NO_CONSEQUENCES );
 
@@ -37,13 +37,6 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
                     let param: PlayCardParam = self.param,
                         actions: ActionType[] = [];
-
-                    //                    actions.push(context.actionFactory.acquireTargets({
-                    //                        source: param.source,
-                    //                        targets: param.acquiredTargets,
-                    //                        defActions: param.card.playActions,
-                    //                        cancelAction: param.cancelAction
-                    //                    }));
 
                     // delegate to playSpell, playMinon or playWeapon action
                     if ( param.card instanceof Minion )

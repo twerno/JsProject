@@ -1,4 +1,4 @@
-///<reference path="ActionConsts.ts"/>
+///<reference path="ActionCommons.ts"/>
 
 "use strict";
 

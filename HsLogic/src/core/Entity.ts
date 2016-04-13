@@ -7,7 +7,7 @@ namespace jsLogic {
 	 *
 	 */
     export class Entity {
-        id: number;
+        id: string;
 
         toString(): string {
             return `[${ClassUtils.getNameOfClass( this )}:${this.id}]`;
@@ -27,8 +27,8 @@ namespace jsLogic {
 	 *  generateNewId
 	 *
 	 */
-    export function generateNewId(): number {
-        return ++_entityIdGenerator;
+    export function generateNewId(): string {
+        return ( ++_entityIdGenerator ).toString();
     }
 
 }

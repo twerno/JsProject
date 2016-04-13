@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -18,15 +18,27 @@ namespace HsLogic {
     }
 
 
-    export interface DamageTargetsParam extends IActionParam {
+    export interface SplitDamageParam extends IActionParam {
         damageType: Def.DAMAGE_TYPE,
-        targets: Character[],
         amount: number,
+
+        splitMode: Def.SPLIT_MODE
+    }
+
+
+    export interface DamageTargetsParam extends CalculateDamageParam {
+        targets: Character[],
 
         damageState: DAMAGE_STATE,
         notifyMode: NOTIFY_MODE,
+    }
 
-        customDamagePower?: ( param: DamageTargetsParam, context: HsGameCtx ) => number
+
+    export interface CalculateDamageParam extends IActionParam {
+        damageType: Def.DAMAGE_TYPE,
+        amount: number,
+
+        customDamagePower?: ( param: CalculateDamageParam, context: HsGameCtx ) => number
     }
 
 

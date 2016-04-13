@@ -11,22 +11,15 @@ namespace HsLogic {
     export class InlineActionExt extends jsLogic.InlineActionExt<HsGameCtx> { };
 
 
-    export enum SOURCE_TYPE {
-        MINION,
-        SPELL,
-        HERO_POWER,
-        HERO,
-        NONE
-    }
-
-    export interface ISource extends jsLogic.ISource {
+    export interface ISource {
+        action: jsLogic.IAction<HsGameCtx>,
         caster: Player,
         sourceType: SOURCE_TYPE,
         sourceCard: Card
     }
 
 
-    export interface IActionParam extends jsLogic.IActionParam {
+    export interface IActionParam {
         source: ISource
     }
 
