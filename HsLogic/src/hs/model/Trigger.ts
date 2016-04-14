@@ -9,6 +9,7 @@ namespace HsLogic {
         parent: HsEntity;
         sourceCard: Card;
 
+        keyword: string;
         respondsTo: string[];
         triggerPriority: number;
 
@@ -17,7 +18,7 @@ namespace HsLogic {
         triggerable: Def.FTriggerable;
         actionBuilder: Def.FTriggerActionBulder;
 
-        triggerContext: Object = {};
+        internalCtx: Object = {};
 
 
         constructor( parent: HsEntity, sourceCard: Card, def?: Def.IDefTrigger ) {
@@ -37,6 +38,7 @@ namespace HsLogic {
             else
                 this.respondsTo.push( ClassUtils.getNameOfClass( def.respondsTo ) );
 
+            this.keyword = def.keyword;
             this.triggerPriority = def.triggerPriority || Def.TRIGGER_PRIORITY_DEFAULT;
             this.disable_self_trigger_protection = def.disable_self_trigger_protection || false;
             this.triggerable = def.triggerable || null;
@@ -52,11 +54,11 @@ namespace HsLogic {
 
 
 
-    function enrage( parent: HsEntity, sourceCard: Card ): Trigger {
-        let result: Trigger = new Trigger( parent, sourceCard );
-        result.disable_self_trigger_protection = true;
-        result.respondsTo
+    //function enrage( parent: Character, sourceCard: Card ): Trigger {
+    //    let result: Trigger = new Trigger( parent, sourceCard );
+    //    result.disable_self_trigger_protection = true;
+    //    result.respondsTo
 
-        return result;
-    }
+    //    return result;
+    //}
 }

@@ -2,12 +2,12 @@
 
 namespace Def {
 
-    export enum EFFECT_DURATION {
-        UNTIL_END_OF_TURN,
-        PERMANENT
-    }
+    //export enum EFFECT_DURATION {
+    //    UNTIL_END_OF_TURN,
+    //    PERMANENT
+    //}
 
-    export enum STAT_MOD_MODE { BUFF, SET }
+    //export enum STAT_MOD_MODE { BUFF, SET }
 
     export interface SimplyfyDamageTargetsParam extends IActionParam {
         damageType?: Def.DAMAGE_TYPE,
@@ -20,15 +20,15 @@ namespace Def {
         customDamagePower?: ( param: HsLogic.DamageTargetsParam, context: HsGameCtx ) => number
     }
 
-    export interface MinionStatModParam {
-        source: ISource,
-        targets: Character[],
-        values: {
-            attack?: { add: number } | { set: number },
-            hp?: { add: number } | { set: number }
-        },
-        duration: EFFECT_DURATION
-    }
+    //export interface MinionStatModParam {
+    //    source: ISource,
+    //    targets: Character[],
+    //    values: {
+    //        attack?: { add: number } | { set: number },
+    //        hp?: { add: number } | { set: number }
+    //    },
+    //    duration: EFFECT_DURATION
+    //}
 
     export class DefActionHelper {
 
@@ -52,7 +52,11 @@ namespace Def {
             return null;
         }
 
-        static MinionStatMod( param: MinionStatModParam ): Action {
+        static AttachEnchantment( enchantment: Enchantment ): Action {
+            return null;
+        }
+
+        static DetachEnchantment( enchantment: Enchantment ): Action {
             return null;
         }
 

@@ -171,14 +171,13 @@ namespace HsLogic {
                         param.target.tags.removeAll( Def.Divine_Shield_Tag );
                     }
 
-                    if ( param.target.hp > 0 && param.target.hp - param.amount <= 0 )
+                    if ( param.target.hp() > 0 && param.target.hp() - param.amount <= 0 )
                         context.lethalMonitor.registerCandidate( param.target, param.source );
 
                     if ( param.source.sourceCard instanceof Minion && param.damageState !== DAMAGE_STATE.PREVENTED )
                         ( <Minion>param.source.sourceCard ).tags.removeAll( Def.Stealth_Tag );
 
-
-                    param.target.hp -= param.amount;
+                    param.target.damages += param.amount;
 
                     resolve( jsLogic.NO_CONSEQUENCES );
                 }

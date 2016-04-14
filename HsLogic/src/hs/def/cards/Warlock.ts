@@ -4,61 +4,35 @@ namespace Def {
         name: `Power Overwhelming`,
         cost: 1,
         rarity: RARITY.COMMON,
+        cardClass: CARD_CLASS.WARLOCK,
+
+
 
         triggers: [],
-        onPlayAction: {
+        spellTextAction: {
             targets: TARGET.SINGLE_CHARACTER,
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+                let actions: Action[] = [],
+                    target: Character;
 
-                return [
-                    DefActionHelper.MinionStatMod( {
-                        source: source,
-                        targets: targets,
-                        values: {
-                            attack: { add: 4 },
-                            hp: { add: 4 }
-                        },
-                        duration: EFFECT_DURATION.PERMANENT
-                    }),
+                for ( let i = 0; i < targets.length; i++ )
+                    actions.push(
+                        DefActionHelper.AttachEnchantment(
+                            new HsLogic.AttackHealthEnchantment( source, targets[i], false )
+                                .init( { attack: 4, health: 4 })
+                        )
+                    );
+
+                actions.push(
                     DefActionHelper.AddTag( {
                         source: source,
                         targets: targets,
                         tag: Destroy_At_The_End_of_Turn_Tag
                     })
-                ];
+                );
 
+                return actions;
             }
-
         }
-
-    };
-
-    var Arcane_Missiles: ISpell = {
-        name: `Arcane Missiles`,
-        cost: 1,
-        rarity: RARITY.COMMON,
-
-        triggers: [],
-        onPlayAction: null
-
-        //enchantments: [],
-        //triggers: [],
-
-        //        playActions: [
-        //
-        //            (source: HsSource, context: GameCtx): Action[]=> {
-        //                return [
-        //                    //context.actionFactory.damage.randomlySplitDamage( {
-        //                    //    source: source,
-        //                    //    damageType: DAMAGE_TYPE.DIRECT,
-        //                    //    partsAmount: 3,
-        //                    //    damagePerPart: 1,
-        //                    //    splitMode: SPLIT_MODE.MISSILE
-        //                    //})
-        //                ]
-        //            }
-        //        ],
-
-
     };
 }

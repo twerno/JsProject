@@ -3,13 +3,14 @@
 
 namespace HsLogic {
 
-    export class Minion extends Card {
+    export class Minion extends Card implements ILivingEntity {
         def: Def.IMinion;
 
-        hp: number;
-        maxHp: number;
+        hp(): number { return this.hp() - this.damages };
         attack: number;
-        minion_type: Def.MINION_TYPE;
+        health: number;
+        damages: number = 0;
+        minion_type: string;
 
         battlecry: Def.IDefAction;
 
@@ -20,19 +21,11 @@ namespace HsLogic {
 
             //this.states = [];
 
-            this.hp = def.hp;
-            this.maxHp = def.hp;
             this.attack = def.attack;
-            this.minion_type = def.minion_type;
-            this.battlecry = def.battlecry;
+            this.health = def.health;
 
-            for ( let i = 0; i < def.tags.length; i++ )
-                this.tags.add( new def.tags[i]( {
-                    action: null,
-                    caster: this.owner,
-                    sourceType: SOURCE_TYPE.NONE,
-                    sourceCard: this
-                }) );
+            this.minion_type = def.minion_type;
+            this.battlecry = def.battlecry || null;
         }
     }
 

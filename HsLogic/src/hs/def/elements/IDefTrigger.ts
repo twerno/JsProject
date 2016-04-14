@@ -13,6 +13,8 @@ namespace Def {
 
     export interface IDefTrigger {
 
+        keyword?: string,
+
         triggerPriority?: number,
 
         respondsTo: ActionEventClass | ActionEventClass[],

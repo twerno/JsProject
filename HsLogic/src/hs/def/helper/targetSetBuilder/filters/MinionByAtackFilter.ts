@@ -12,32 +12,32 @@ namespace Def {
 
         lessThen( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp < this.hpValue;
+                && entity.hp() < this.hpValue;
         }
 
         lessThenOrEqualTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp <= this.hpValue;
+                && entity.hp() <= this.hpValue;
         }
 
         greaterThen( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp > this.hpValue;
+                && entity.hp() > this.hpValue;
         }
 
         greaterThenOrEqualTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp >= this.hpValue;
+                && entity.hp() >= this.hpValue;
         }
 
         equalTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp === this.hpValue;
+                && entity.hp() === this.hpValue;
         }
 
         notEqualTo( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
             return entity instanceof HsLogic.Minion
-                && entity.hp !== this.hpValue;
+                && entity.hp() !== this.hpValue;
         }
     }
 }

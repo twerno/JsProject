@@ -16,15 +16,7 @@ namespace HsLogic {
 
             this.attack = def.attack;
             this.durability = def.durability;
-            this.battlecry = def.battlecry;
-
-            for ( let i = 0; i < def.tags.length; i++ )
-                this.tags.add( new def.tags[i]( {
-                    action: null,
-                    caster: this.owner,
-                    sourceType: SOURCE_TYPE.NONE,
-                    sourceCard: this
-                }) );
+            this.battlecry = def.battlecry || null;
         }
     }
 

@@ -149,14 +149,14 @@ namespace HsLogic {
 
                     param.healState = HEAL_STATE.HEALED;
 
-                    param.amount = Math.max( target.hp + param.amount, target.maxHp ) - target.maxHp;
+                    param.amount = Math.max( target.hp() + param.amount, target.health ) - target.health;
 
                     if ( param.target.tags.has( Def.Immune_Tag ) ) {
                         param.amount = 0;
                         param.healState = HEAL_STATE.PREVENTED;
                     }
 
-                    target.hp += param.amount;
+                    param.target.damages -= param.amount;
 
                     resolve( jsLogic.NO_CONSEQUENCES );
                 }

@@ -2,24 +2,25 @@
 
 namespace Def {
 
-    class EnrageContext {
-        enrageTag: Tag
+    export class EnrageContext {
+        enrageTag: Tag;
+        enchantment: HsLogic.AttackHealthEnchantment;
     }
 
-    function enrage(): IDefTrigger {
+
+    export function enrage(
+        internalCtxBuilder: () => EnrageContext,
+        registerEnrage: FTriggerActionBulder,
+        unRegisterEnrage: FTriggerActionBulder ): IDefTrigger {
         return {
+
+            keyword: KEYWORD.ENRAGE,
 
             disable_self_trigger_protection: true,
 
             respondsTo: [HsLogic.event.Damage, HsLogic.event.Heal],
 
-            init: ( trigger: Trigger, context: HsGameCtx ): void => {
-                let triggerCtx: EnrageContext = new EnrageContext();
-                triggerCtx.enrageTag = new Enrage_Tag( {});
-
-                trigger.triggerContext = triggerCtx;
-
-            },
+            init: ( trigger: Trigger, context: HsGameCtx ): void => { trigger.internalCtx = internalCtxBuilder() },
 
             triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
                 if ( event instanceof HsLogic.event.Damage
@@ -30,54 +31,31 @@ namespace Def {
                     && event.param.target === trigger.parent )
                     return true;
 
-                // hpChange - redemption, repentance
+                // currenthpChange - redemption, repentance
+                // maxHpSet - equality, keeper of uldaman
 
                 return false;
             },
 
-            actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] => {
+            actionBuilder( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] {
                 let character: Character = <Character>trigger.parent,
-                    triggCtx: EnrageContext = <EnrageContext>trigger.triggerContext,
-                    actions: Action[] = [];
+                    enraged: boolean = character.hp() !== character.health,
+                    internalCtx: EnrageContext = <EnrageContext>trigger.internalCtx;
 
-                if ( character.hp === character.maxHp && character.tags.has( triggCtx.enrageTag ) ) {
-                    character.tags.remove( triggCtx.enrageTag );
+                if ( !enraged && character.tags.has( internalCtx.enrageTag ) ) {
+                    character.tags.remove( internalCtx.enrageTag );
+                    return unRegisterEnrage( trigger, event, context );
                 }
 
-                else if ( character.hp !== character.maxHp && !character.tags.has( triggCtx.enrageTag ) ) {
-                    character.tags.add( triggCtx.enrageTag );
+                else if ( enraged && !character.tags.has( internalCtx.enrageTag ) ) {
+                    internalCtx.enrageTag = new Enrage_Tag( event.param.source );
+                    character.tags.add( internalCtx.enrageTag );
+                    return registerEnrage( trigger, event, context );
                 }
 
-                return actions;
+                return null;
             }
         }
     }
-
-    //export interface IDefTrigger {
-
-    //    triggerPriority?: number,
-
-    //    respondsTo: ActionEventClass | ActionEventClass[],
-
-    //    // http://hearthstone.gamepedia.com/Advanced_rulebook#Glossary
-    //    // Humble safeguard: Minions are not allowed to trigger on themselves entering play.
-    //    disable_self_trigger_protection?: boolean,
-
-    //    triggerable?: FTriggerable;
-
-    //    actionBuilder: FTriggerActionBulder
-    //}
-
-
-    //var enrage: IDefTrigger = {
-    //    respondsTo: [HsLogic.event.Damage, HsLogic.event.Heal],
-    //    disable_self_trigger_protection: true,
-    //    triggerable: ( self: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
-    //        return true;
-    //    },
-    //    actionBuilder: ( self: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] => {
-    //        return null;
-    //    }
-    //}
 
 }

@@ -13,9 +13,10 @@ namespace Def {
         cost: number,
         rarity: RARITY,
         uncollectible?: boolean,
+        cardClass: string,
 
         triggers: IDefTrigger[],
-        //enchantments?: Object[];
+        tags?: TagClass[],
 
         isPlayalble?: ( source: ISource, context: HsGameCtx ) => boolean;
         isActive?: ( source: ISource, context: HsGameCtx ) => boolean;
@@ -23,18 +24,16 @@ namespace Def {
 
 
     export interface ISpell extends ICard {
-        onPlayAction: IDefAction
+        spellTextAction: IDefAction
     }
 
 
     export interface IMinion extends ICard {
-        hp: number;
+        health: number;
         attack: number;
-        minion_type: MINION_TYPE,
+        minion_type: string,
 
-        battlecry: IDefAction,
-
-        tags: TagClass[],
+        battlecry?: IDefAction,
     }
 
 
@@ -42,10 +41,7 @@ namespace Def {
         attack: number,
         durability: number,
 
-        battlecry: IDefAction,
-
-        tags: TagClass[],
-
+        battlecry?: IDefAction,
     }
 
 }

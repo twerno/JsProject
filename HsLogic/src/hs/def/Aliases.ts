@@ -21,5 +21,6 @@ namespace Def {
     export type HsZone = HsLogic.HsZone<Card>;
     export type Tag = HsLogic.Tag;
     export type TagClass = HsLogic.TagClass;
+    export type Enchantment = HsLogic.Enchantment<HsLogic.Permanent>;
 
 }

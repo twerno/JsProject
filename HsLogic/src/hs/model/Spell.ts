@@ -11,7 +11,7 @@ namespace HsLogic {
         initFromDefinition( def: Def.ISpell ): void {
             super.initFromDefinition( def );
 
-            this.spellAction = def.onPlayAction;
+            this.spellAction = def.spellTextAction;
         }
     }
 

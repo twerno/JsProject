@@ -4,9 +4,10 @@ namespace Def {
         name: `Frost Bolt`,
         cost: 2,
         rarity: RARITY.COMMON,
+        cardClass: CARD_CLASS.MAGE,
 
         triggers: [],
-        onPlayAction: {
+        spellTextAction: {
             targets: TARGET.SINGLE_CHARACTER,
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
 
@@ -33,10 +34,11 @@ namespace Def {
         name: `Arcane Missiles`,
         cost: 1,
         rarity: RARITY.COMMON,
+        cardClass: CARD_CLASS.MAGE,
 
         triggers: [],
 
-        onPlayAction: {
+        spellTextAction: {
             targets: null,
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
 
@@ -52,7 +54,30 @@ namespace Def {
             }
 
         }
+    };
 
+    var Animated_Armor: IMinion = {
+        name: `Animated Armor`,
+        cost: 4,
+        rarity: RARITY.RARE,
+        cardClass: CARD_CLASS.MAGE,
 
+        attack: 4,
+        health: 4,
+        minion_type: MINION_TYPE.GENERAL,
+
+        triggers: [{
+            respondsTo: HsLogic.event.PreDamagePhase,
+            triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
+                return trigger.parent.owner === ( <HsLogic.DamageParam>event.param ).target;
+            },
+            actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] => {
+                ( <HsLogic.DamageParam>event.param ).amount = 1;
+                return null;
+            }
+        }
+        ],
+        battlecry: null,
+        tags: []
     };
 }

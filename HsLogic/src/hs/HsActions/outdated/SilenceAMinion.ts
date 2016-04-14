@@ -22,9 +22,9 @@ namespace HsLogic {
                     //@TODO fix for Shadow Madness
                     //triggers: Def.IDefTargetlessAction[] = minion.triggers.onSilenced;
 
-                    minion.attack = minion.def.attack;
-                    minion.hp += Math.min( minion.def.hp - minion.maxHp, minion.def.hp );
-                    minion.maxHp = minion.def.hp;
+                    //minion.attack = minion.def.attack;
+                    //minion.hp() += Math.min( minion.def.health - minion.maxHp, minion.def.health );
+                    //minion.maxHp = minion.def.health;
 
                     //                    minion.flags = {
                     //                        immune: false,

@@ -36,4 +36,17 @@ namespace HsLogic {
         return ++_orderOfPlayGenerator;
     }
 
+
+    export interface ILivingEntity {
+        def: { attack: number, health: number },
+        hp(): number,
+        health: number,
+        attack: number,
+        damages: number
+    }
+
+    export interface IPermanent {
+        enchantments: Enchantment<Permanent>[]
+    }
+
 }

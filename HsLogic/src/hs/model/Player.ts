@@ -2,15 +2,14 @@
 
 namespace HsLogic {
 
-    export class Player extends HsEntity {
+    export class Player extends HsEntity implements ILivingEntity {
 
-        //        def: Def.IPlayer;
+        def: Def.Minion; //TODO
 
+        hp(): number { return this.hp() - this.damages };
         attack: number;
-
-        hp: number = 30;
-
-        maxHp: number = 30;
+        health: number = 30;
+        damages: number = 0;
 
         manaCrystals: number;
 

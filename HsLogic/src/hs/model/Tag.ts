@@ -17,6 +17,7 @@ namespace HsLogic {
         add( tag: Tag ): void;
         has( tagClass: Tag ): boolean;
         has( tagClass: TagClass ): boolean;
+        doesNotHave( tagClass: Tag ): boolean;
         hasAny( tagClasses: TagClass[] ): boolean;
         remove( tag: Tag ): void;
         removeAll( tagClass: TagClass ): number;

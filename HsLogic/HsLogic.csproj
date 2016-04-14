@@ -21,7 +21,6 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
@@ -64,6 +63,7 @@
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\TriggerFilter.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\ITargetSetBuilder.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\TargetFinder.ts" />
+    <TypeScriptCompile Include="src\hs\def\helper\trigger\Enrage.ts" />
     <TypeScriptCompile Include="src\hs\def\outdated\action\AllTargetsDefAction.ts" />
     <TypeScriptCompile Include="src\hs\def\outdated\action\SingleTargetDefAction.ts" />
     <TypeScriptCompile Include="src\hs\def\outdated\action\TwoStepsTargetsDefAction.ts" />
