@@ -91,7 +91,7 @@ namespace HsLogic {
 
         else if ( splitMode === Def.SPLIT_MODE.MAD_BOMB )
             return Def.TargetFinder.ANY_CHARACTER
-                .addFilter( Def.Filters.OtherThan( source.sourceCard ) )
+                .addFilter( Def.Filter.OtherThan( source.sourceCard ) )
                 .addFilter(( source, entity, context ): boolean => {
                     return entity instanceof Player
                         || ( entity instanceof Minion && entity.body.hp() > 0 );

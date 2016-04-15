@@ -60,4 +60,13 @@ namespace Def {
         ATTACK_HEALTH,
         OTHER
     }
+
+    export enum FILTER_COMPARE_MODE {
+        LESS_THAN,
+        LESS_THAN_OR_EQUAL_TO,
+        EQUAL_TO,
+        GREATER_THAN,
+        GREATER_THAN_OR_EQUAL_TO,
+        NOT_EQUAL_TO
+    }
 }

@@ -11,21 +11,21 @@ namespace Def {
                 includePlayer: true,
                 zones: null,
             })
-                .addFilter( StandardFilters.enemy );
+                .addFilter( Filter.enemy );
         }
 
 
         static get EMEMY_MINION(): ITargetSetBuilder<Minion> {
             return TargetFinder.ANY_MINION
-                .addFilter( StandardFilters.enemy )
-                .addFilter( StandardFilters.minion );
+                .addFilter( Filter.enemy )
+                .addFilter( Filter.minion );
         }
 
 
         static get EMEMY_CHARACTER(): ITargetSetBuilder<Character> {
             return TargetFinder.ANY_CHARACTER
-                .addFilter( StandardFilters.enemy )
-                .addFilter( StandardFilters.character );
+                .addFilter( Filter.enemy )
+                .addFilter( Filter.character );
         }
 
 
@@ -34,7 +34,7 @@ namespace Def {
                 includePlayer: false,
                 zones: ( zones: HsZones ): HsZone[] => { return [zones.weapon] }
             })
-                .addFilter( StandardFilters.enemy );
+                .addFilter( Filter.enemy );
         }
 
 
@@ -43,21 +43,21 @@ namespace Def {
                 includePlayer: true,
                 zones: null,
             })
-                .addFilter( StandardFilters.friendly );
+                .addFilter( Filter.friendly );
         }
 
 
         static get FRIENDLY_MINION(): ITargetSetBuilder<Minion> {
             return TargetFinder.ANY_MINION
-                .addFilter( StandardFilters.friendly )
-                .addFilter( StandardFilters.minion );
+                .addFilter( Filter.friendly )
+                .addFilter( Filter.minion );
         }
 
 
         static get FRIENDLY_CHARACTER(): ITargetSetBuilder<Character> {
             return TargetFinder.ANY_CHARACTER
-                .addFilter( StandardFilters.friendly )
-                .addFilter( StandardFilters.character );
+                .addFilter( Filter.friendly )
+                .addFilter( Filter.character );
         }
 
 
@@ -66,7 +66,7 @@ namespace Def {
                 includePlayer: false,
                 zones: ( zones: HsZones ): HsZone[] => { return [zones.weapon] }
             })
-                .addFilter( StandardFilters.friendly );
+                .addFilter( Filter.friendly );
         }
 
 
@@ -83,7 +83,7 @@ namespace Def {
                 includePlayer: false,
                 zones: ( zones: HsZones ): HsZone[] => { return [zones.battlefield] }
             })
-                .addFilter( StandardFilters.minion );
+                .addFilter( Filter.minion );
         }
     }
 

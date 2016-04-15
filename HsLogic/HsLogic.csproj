@@ -56,11 +56,9 @@
     <TypeScriptCompile Include="src\hs\def\helper\defTargetDefinition\_TARGET.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\builders\EntitySetBuilder.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\builders\TriggerSetBuilder.ts" />
-    <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\EntityFilter.ts" />
-    <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\MinionByAtackFilter.ts" />
-    <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\MinionByHpFilter.ts" />
+    <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\Filters.ts" />
+    <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\TargetFilters.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\StandardFilters.ts" />
-    <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\TriggerFilter.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\ITargetSetBuilder.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\TargetFinder.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\trigger\AuraGenerator.ts" />
@@ -123,15 +121,6 @@
     <TypeScriptCompile Include="src\hs\model\Tag.ts" />
     <TypeScriptCompile Include="src\hs\model\Trigger.ts" />
     <TypeScriptCompile Include="src\hs\model\Weapon.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="web.config" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
