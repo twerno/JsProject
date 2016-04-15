@@ -33,8 +33,9 @@ namespace HsLogic {
             this.cardClass = def.cardClass || Def.CARD_CLASS.NEUTRAL;
 
             this.triggers = [];
-            for ( let i = 0; i < def.triggers.length; i++ )
-                this.triggers.push( new Trigger( this, this, def.triggers[i] ) );
+            if ( def.triggers )
+                for ( let i = 0; i < def.triggers.length; i++ )
+                    this.triggers.push( new Trigger( this, this, def.triggers[i] ) );
 
             if ( def.tags )
                 for ( let i = 0; i < def.tags.length; i++ )

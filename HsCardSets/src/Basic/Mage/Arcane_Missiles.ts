@@ -1,32 +1,33 @@
-﻿///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
-///<reference path="../BasicSet.ts"/>
+﻿/// <reference path="../set.ts" />
+///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 
 "use strict";
 
 namespace Def {
 
     var Arcane_Missiles: ISpell = basicSet.registerCard<ISpell>( {
+
         name: `Arcane Missiles`,
+
         cost: 1,
+        rarity: RARITY.COMMON,
+        cardClass: CARD_CLASS.MAGE,
 
-        //enchantments: [],
-        //triggers: [],
 
-        playActions: [
+        spellTextAction: {
+            targets: null,
+            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
 
-            ( source: HsSource, context: GameCtx ): Action[] => {
                 return [
-                    //context.actionFactory.damage.randomlySplitDamage( {
-                    //    source: source,
-                    //    damageType: DAMAGE_TYPE.DIRECT,
-                    //    partsAmount: 3,
-                    //    damagePerPart: 1,
-                    //    splitMode: SPLIT_MODE.MISSILE
-                    //})
-                ]
+                    new HsLogic.CalculateAndSplitDamage( {
+                        source: source,
+                        damageType: DAMAGE_TYPE.DIRECT,
+                        amount: 3,
+                        splitMode: SPLIT_MODE.ARCANE_MISSILE
+                    })
+                ];
+
             }
-        ],
-
-
+        }
     });
 }

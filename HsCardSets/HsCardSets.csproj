@@ -22,16 +22,103 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\Old Gods\" />
+    <Folder Include="src\Basic\Palladin\" />
+    <Folder Include="src\Basic\Priest\" />
+    <Folder Include="src\Basic\Ranger\" />
+    <Folder Include="src\Basic\Rouge\" />
+    <Folder Include="src\Basic\Shaman\" />
+    <Folder Include="src\Basic\Warlock\" />
+    <Folder Include="src\Basic\Warrior\" />
+    <Folder Include="src\Blackrock Mountain\Druid\" />
+    <Folder Include="src\Blackrock Mountain\Mage\" />
+    <Folder Include="src\Blackrock Mountain\Neutral\" />
+    <Folder Include="src\Blackrock Mountain\Palladin\" />
+    <Folder Include="src\Blackrock Mountain\Priest\" />
+    <Folder Include="src\Blackrock Mountain\Ranger\" />
+    <Folder Include="src\Blackrock Mountain\Rouge\" />
+    <Folder Include="src\Blackrock Mountain\Shaman\" />
+    <Folder Include="src\Blackrock Mountain\Warlock\" />
+    <Folder Include="src\Blackrock Mountain\Warrior\" />
+    <Folder Include="src\Curse of Naxxramas\Druid\" />
+    <Folder Include="src\Curse of Naxxramas\Mage\" />
+    <Folder Include="src\Curse of Naxxramas\Neutral\" />
+    <Folder Include="src\Curse of Naxxramas\Palladin\" />
+    <Folder Include="src\Curse of Naxxramas\Priest\" />
+    <Folder Include="src\Curse of Naxxramas\Ranger\" />
+    <Folder Include="src\Curse of Naxxramas\Rouge\" />
+    <Folder Include="src\Curse of Naxxramas\Shaman\" />
+    <Folder Include="src\Curse of Naxxramas\Warrior\" />
+    <Folder Include="src\Expert\Druid\" />
+    <Folder Include="src\Expert\Mage\" />
+    <Folder Include="src\Expert\Palladin\" />
+    <Folder Include="src\Expert\Priest\" />
+    <Folder Include="src\Expert\Ranger\" />
+    <Folder Include="src\Expert\Rouge\" />
+    <Folder Include="src\Expert\Shaman\" />
+    <Folder Include="src\Expert\Warrior\" />
+    <Folder Include="src\Goblin vs Gnomes\Druid\" />
+    <Folder Include="src\Goblin vs Gnomes\Mage\" />
+    <Folder Include="src\Goblin vs Gnomes\Neutral\" />
+    <Folder Include="src\Goblin vs Gnomes\Palladin\" />
+    <Folder Include="src\Goblin vs Gnomes\Priest\" />
+    <Folder Include="src\Goblin vs Gnomes\Ranger\" />
+    <Folder Include="src\Goblin vs Gnomes\Rouge\" />
+    <Folder Include="src\Goblin vs Gnomes\Shaman\" />
+    <Folder Include="src\Goblin vs Gnomes\Warlock\" />
+    <Folder Include="src\Goblin vs Gnomes\Warrior\" />
+    <Folder Include="src\The Grand Tournament\Druid\" />
+    <Folder Include="src\The Grand Tournament\Mage\" />
+    <Folder Include="src\The Grand Tournament\Neutral\" />
+    <Folder Include="src\The Grand Tournament\Palladin\" />
+    <Folder Include="src\The Grand Tournament\Priest\" />
+    <Folder Include="src\The Grand Tournament\Ranger\" />
+    <Folder Include="src\The Grand Tournament\Rouge\" />
+    <Folder Include="src\The Grand Tournament\Shaman\" />
+    <Folder Include="src\The Grand Tournament\Warlock\" />
+    <Folder Include="src\The Grand Tournament\Warrior\" />
+    <Folder Include="src\The League of Explorers\Druid\" />
+    <Folder Include="src\The League of Explorers\Neutral\" />
+    <Folder Include="src\The League of Explorers\Palladin\" />
+    <Folder Include="src\The League of Explorers\Priest\" />
+    <Folder Include="src\The League of Explorers\Ranger\" />
+    <Folder Include="src\The League of Explorers\Rouge\" />
+    <Folder Include="src\The League of Explorers\Shaman\" />
+    <Folder Include="src\The League of Explorers\Warlock\" />
+    <Folder Include="src\The League of Explorers\Warrior\" />
+    <Folder Include="src\Whispers of the Old Gods\Druid\" />
+    <Folder Include="src\Whispers of the Old Gods\Mage\" />
+    <Folder Include="src\Whispers of the Old Gods\Neutral\" />
+    <Folder Include="src\Whispers of the Old Gods\Palladin\" />
+    <Folder Include="src\Whispers of the Old Gods\Priest\" />
+    <Folder Include="src\Whispers of the Old Gods\Ranger\" />
+    <Folder Include="src\Whispers of the Old Gods\Rouge\" />
+    <Folder Include="src\Whispers of the Old Gods\Shaman\" />
+    <Folder Include="src\Whispers of the Old Gods\Warlock\" />
+    <Folder Include="src\Whispers of the Old Gods\Warrior\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\Basic\BasicSet.ts" />
+    <TypeScriptCompile Include="src\Basic\Neutral\Shattered_Sun_Cleric.ts" />
+    <TypeScriptCompile Include="src\Basic\Set.ts" />
     <TypeScriptCompile Include="src\Basic\Druid\Swipe.ts" />
     <TypeScriptCompile Include="src\Basic\Mage\Frost_Bolt.ts" />
     <TypeScriptCompile Include="src\Basic\Mage\Arcane_Missiles.ts" />
     <TypeScriptCompile Include="src\Basic\Neutral\Mad_Bomber.ts" />
     <TypeScriptCompile Include="src\Basic\Paladin\Consecration.ts" />
     <TypeScriptCompile Include="src\Basic\Paladin\Holy_Wrath.ts" />
+    <TypeScriptCompile Include="src\Blackrock Mountain\Set.ts" />
+    <TypeScriptCompile Include="src\Curse of Naxxramas\Warlock\Mistress_of_Pain.ts" />
+    <TypeScriptCompile Include="src\Expert\Neutral\Stormwind_Champion.ts" />
+    <TypeScriptCompile Include="src\Expert\Neutral\Abomination.ts" />
+    <TypeScriptCompile Include="src\Expert\Neutral\Amani_Berserker.ts" />
+    <TypeScriptCompile Include="src\Expert\Set.ts" />
+    <TypeScriptCompile Include="src\Const.ts" />
+    <TypeScriptCompile Include="src\Curse of Naxxramas\Set.ts" />
+    <TypeScriptCompile Include="src\Expert\Warlock\Power_Overwhelming.ts" />
+    <TypeScriptCompile Include="src\Goblin vs Gnomes\Set.ts" />
+    <TypeScriptCompile Include="src\The League of Explorers\Mage\Animated_Armor.ts" />
+    <TypeScriptCompile Include="src\The Grand Tournament\Set.ts" />
+    <TypeScriptCompile Include="src\The League of Explorers\Set.ts" />
+    <TypeScriptCompile Include="src\Whispers of the Old Gods\Set.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -67,7 +154,7 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind />
-    <TypeScriptOutFile>disc\HsCardSets.js</TypeScriptOutFile>
+    <TypeScriptOutFile>dist\HsCardSets.js</TypeScriptOutFile>
     <TypeScriptOutDir>dist\</TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>

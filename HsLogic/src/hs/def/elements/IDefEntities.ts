@@ -15,7 +15,7 @@ namespace Def {
         uncollectible?: boolean,
         cardClass: string,
 
-        triggers: IDefTrigger[],
+        triggers?: IDefTrigger[],
         tags?: TagClass[],
 
         isPlayalble?: ( source: ISource, context: HsGameCtx ) => boolean;
