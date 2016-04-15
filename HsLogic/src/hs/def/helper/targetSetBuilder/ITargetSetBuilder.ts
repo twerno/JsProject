@@ -1,3 +1,5 @@
+/// <reference path="../../aliases.ts" />
+
 "use strict";
 
 namespace Def {

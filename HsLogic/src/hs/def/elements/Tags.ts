@@ -1,4 +1,5 @@
 ///<reference path="../Aliases.ts"/>
+///<reference path="../../model/Tag.ts"/>
 
 "use strict";
 

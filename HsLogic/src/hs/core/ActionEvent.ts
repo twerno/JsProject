@@ -1,3 +1,4 @@
+/// <reference path="action.ts" />
 ///<reference path="../../core/action/IAction.ts"/>
 
 "use strict";

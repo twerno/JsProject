@@ -1,10 +1,8 @@
+/// <reference path="card.ts" />
 
 "use strict";
 
 namespace HsLogic {
-
-
-
 
     export class Minion extends Card implements ILivingEntity {
         def: Def.IMinion;

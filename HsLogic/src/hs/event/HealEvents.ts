@@ -1,3 +1,5 @@
+/// <reference path="../core/actionevent.ts" />
+
 "use strict";
 
 namespace HsLogic.event {

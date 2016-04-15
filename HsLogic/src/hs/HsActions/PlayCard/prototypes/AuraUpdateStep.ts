@@ -1,3 +1,4 @@
+/// <reference path="../../../core/action.ts" />
 "use strict";
 
 namespace HsLogic {

@@ -1,5 +1,3 @@
-
-
 "use strict";
 
 namespace Def {

@@ -1,3 +1,4 @@
+/// <reference path="card.ts" />
 
 "use strict";
 

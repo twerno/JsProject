@@ -1,3 +1,5 @@
+/// <reference path="hsentity.ts" />
+
 "use strict";
 
 namespace HsLogic {

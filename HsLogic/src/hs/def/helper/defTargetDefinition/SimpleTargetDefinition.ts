@@ -1,3 +1,5 @@
+/// <reference path="../../elements/ideftargetdefinition.ts" />
+
 "use strict";
 
 namespace Def {

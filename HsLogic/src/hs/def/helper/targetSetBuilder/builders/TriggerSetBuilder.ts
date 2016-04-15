@@ -1,3 +1,5 @@
+/// <reference path="../itargetsetbuilder.ts" />
+
 "use strict";
 
 namespace Def {

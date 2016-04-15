@@ -1,3 +1,5 @@
+/// <reference path="../../core/action/inlineaction.ts" />
+/// <reference path="../../core/action/actioncommons.ts" />
 ///<reference path="../../core/action/IAction.ts"/>
 
 "use strict";

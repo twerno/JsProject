@@ -1,3 +1,5 @@
+/// <reference path="../../core/action.ts" />
+
 "use strict";
 
 namespace Def {

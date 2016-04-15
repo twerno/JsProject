@@ -1,4 +1,4 @@
-///<reference path="../../core/Entity.ts"/>
+/// <reference path="../model/card.ts" />
 ///<reference path="../../core/Zone.ts"/>
 
 "use strict";
