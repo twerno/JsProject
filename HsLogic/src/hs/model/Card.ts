@@ -13,7 +13,7 @@ namespace HsLogic {
         triggers: Trigger[];
         tags: ITags;
         effects: Object[];
-        //        enchantments: Object[];
+        enchantments: Enchantment<Permanent>[];
 
 
         constructor( public owner: Player, def?: Def.ICard ) {

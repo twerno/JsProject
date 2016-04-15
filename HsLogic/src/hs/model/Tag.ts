@@ -15,7 +15,8 @@ namespace HsLogic {
 
     export interface ITags {
         add( tag: Tag ): void;
-        has( tagClass: Tag ): boolean;
+        contains( tag: Tag ): boolean;
+        has( tag: Tag ): boolean;
         has( tagClass: TagClass ): boolean;
         doesNotHave( tagClass: Tag ): boolean;
         hasAny( tagClasses: TagClass[] ): boolean;

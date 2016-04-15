@@ -29,8 +29,8 @@ namespace HsLogic {
     export interface DamageTargetsParam extends CalculateDamageParam {
         targets: Character[],
 
-        damageState: DAMAGE_STATE,
-        notifyMode: NOTIFY_MODE,
+        damageState?: DAMAGE_STATE,
+        notifyMode?: NOTIFY_MODE,
     }
 
 

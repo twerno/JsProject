@@ -1,3 +1,5 @@
+
+
 "use strict";
 
 namespace Def {
@@ -35,6 +37,9 @@ namespace Def {
 
     export namespace KEYWORD {
         export const ENRAGE: string = 'ENRAGE';
+        export const LIFE_LINK: string = 'LIFE_LINK';
+        export const DEATHRATTLE: string = 'DEATHRATTLE';
+        export const AURA: string = 'AURA';
     }
 
     export namespace CARD_CLASS {
@@ -53,8 +58,8 @@ namespace Def {
         export const DREAM: string = 'DREAM';
     }
 
-    export enum ENCHANTMENT_TYPE {
-        ATTACH_HEALTH,
+    export enum AURA_TYPE {
+        ATTACK_HEALTH,
         OTHER
     }
 }

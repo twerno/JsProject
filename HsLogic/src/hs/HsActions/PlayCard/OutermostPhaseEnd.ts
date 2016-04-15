@@ -36,7 +36,7 @@ namespace HsLogic {
                     //1. aura Update (Health / Attack) Step
                     actions.push( new AuraUpdateStep( {
                         source: param.source,
-                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
+                        auraType: Def.AURA_TYPE.ATTACK_HEALTH
                     }) );
 
 
@@ -47,7 +47,7 @@ namespace HsLogic {
                     // 3. aura Update (Health/Attack) Step
                     actions.push( new AuraUpdateStep( {
                         source: param.source,
-                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
+                        auraType: Def.AURA_TYPE.ATTACK_HEALTH
                     }) );
 
 
@@ -83,7 +83,7 @@ namespace HsLogic {
             return Def.TargetFinder.ANY_MINION
                 .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
                     return minion instanceof HsLogic.Minion
-                        && ( minion.hp() <= 0
+                        && ( minion.body.hp() <= 0
                             || minion.tags.has( Def.Pending_Destroy_Tag ) );
                 }).buildSet( null, context ).length > 0
         }
@@ -98,7 +98,7 @@ namespace HsLogic {
                     // 3. aura Update (Health/Attack) Step
                     actions.push( new AuraUpdateStep( {
                         source: param.source,
-                        auraUpdateMode: AURA_UPDATE_MODE.ATTACK_HEALTH
+                        auraType: Def.AURA_TYPE.ATTACK_HEALTH
                     }) );
 
 
@@ -111,7 +111,7 @@ namespace HsLogic {
                     // 5. aura Update (Other) Step
                     actions.push( new AuraUpdateStep( {
                         source: param.source,
-                        auraUpdateMode: AURA_UPDATE_MODE.OTHER
+                        auraType: Def.AURA_TYPE.OTHER
                     }) );
 
 

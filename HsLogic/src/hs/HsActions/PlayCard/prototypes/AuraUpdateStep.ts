@@ -2,13 +2,9 @@
 
 namespace HsLogic {
 
-    export enum AURA_UPDATE_MODE {
-        ATTACK_HEALTH,
-        OTHER
-    }
 
     export interface IAuraUpdateParam extends IActionParam {
-        auraUpdateMode: AURA_UPDATE_MODE,
+        auraType: Def.AURA_TYPE,
     }
 
     /**
@@ -24,4 +20,10 @@ namespace HsLogic {
                 });
         }
     }
+}
+
+namespace HsLogic.event {
+
+    export class AuraUpdateEvent<P extends IAuraUpdateParam> extends ActionEvent<P> { }
+
 }

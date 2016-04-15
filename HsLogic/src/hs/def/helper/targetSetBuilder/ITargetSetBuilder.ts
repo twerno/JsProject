@@ -2,23 +2,23 @@
 
 namespace Def {
 
-    export type IDefSetFilter = ( source: ISource, entity: Entity, context: HsGameCtx ) => boolean;
+    export type IDefSetFilter<T extends Entity> = ( source: ISource, entity: T, context: HsGameCtx ) => boolean;
 
 
-    export abstract class ITargetSetBuilder {
+    export abstract class ITargetSetBuilder<T extends Entity> {
 
-        private _filters: IDefSetFilter[] = [];
+        private _filters: IDefSetFilter<T>[] = [];
 
         protected abstract _internalBuildSet( source: ISource, context: HsGameCtx ): Entity[];
 
 
-        addFilter( filter: IDefSetFilter ): ITargetSetBuilder {
+        addFilter( filter: IDefSetFilter<T> ): ITargetSetBuilder<T> {
             this._filters.push( filter );
             return this;
         }
 
 
-        buildSet<T extends Entity>( source: ISource, context: HsGameCtx ): T[] {
+        buildSet( source: ISource, context: HsGameCtx ): T[] {
             return <T[]>( this._internalBuildSet( source, context ).sort( this.compare ) );
         }
 
@@ -26,7 +26,7 @@ namespace Def {
         protected testAgainstFilters( source: ISource, entity: Entity, context: HsGameCtx ): boolean {
 
             for ( let i = 0; i < this._filters.length; i++ ) {
-                if ( !this._filters[i]( source, entity, context ) )
+                if ( !this._filters[i]( source, <T>entity, context ) )
                     return false;
             }
             return true;

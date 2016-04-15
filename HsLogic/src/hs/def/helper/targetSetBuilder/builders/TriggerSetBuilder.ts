@@ -2,7 +2,7 @@
 
 namespace Def {
 
-    export class TriggerSetBuilder extends ITargetSetBuilder {
+    export class TriggerSetBuilder extends ITargetSetBuilder<Trigger> {
 
         private _eventType: string;
 

@@ -8,7 +8,7 @@ namespace Def {
     export type Player = HsLogic.Player;
     export type Character = HsLogic.Character;
     export type Weapon = HsLogic.Weapon;
-    export type Target = Character | Weapon;
+    export type Permanent = Character | Weapon;
     export type ISource = HsLogic.ISource;
     export type HsCancelableParam = HsLogic.IHsCancelableParam;
     export type HsGameCtx = HsLogic.HsGameCtx;

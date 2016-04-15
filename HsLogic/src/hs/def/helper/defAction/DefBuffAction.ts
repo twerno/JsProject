@@ -60,6 +60,10 @@ namespace Def {
             return null;
         }
 
+        static DetachEnchantments( enchantment: Enchantment[] ): Action {
+            return null;
+        }
+
 
     }
 

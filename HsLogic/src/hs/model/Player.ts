@@ -4,12 +4,9 @@ namespace HsLogic {
 
     export class Player extends HsEntity implements ILivingEntity {
 
-        def: Def.Minion; //TODO
+        def: Def.IMinion; //TODO
+        body: MinionBody = new MinionBody();
 
-        hp(): number { return this.hp() - this.damages };
-        attack: number;
-        health: number = 30;
-        damages: number = 0;
 
         manaCrystals: number;
 
@@ -19,13 +16,9 @@ namespace HsLogic {
 
         heroPower: any;
 
-        //        flags: Def.IFlags = {};
-
         triggers: Trigger[];
 
         tags: ITags;
-        effects: Object[];
-
 
         constructor( public name: string ) {
             super( null, null );

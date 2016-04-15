@@ -6,8 +6,8 @@ namespace Def {
     export class TargetFinder {
 
 
-        static get ENEMY_HERO(): ITargetSetBuilder {
-            return new EntitySetBuilder( {
+        static get ENEMY_HERO(): ITargetSetBuilder<Player> {
+            return new EntitySetBuilder<Player>( {
                 includePlayer: true,
                 zones: null,
             })
@@ -15,22 +15,22 @@ namespace Def {
         }
 
 
-        static get EMEMY_MINION(): ITargetSetBuilder {
+        static get EMEMY_MINION(): ITargetSetBuilder<Minion> {
             return TargetFinder.ANY_MINION
                 .addFilter( StandardFilters.enemy )
                 .addFilter( StandardFilters.minion );
         }
 
 
-        static get EMEMY_CHARACTER(): ITargetSetBuilder {
+        static get EMEMY_CHARACTER(): ITargetSetBuilder<Character> {
             return TargetFinder.ANY_CHARACTER
                 .addFilter( StandardFilters.enemy )
                 .addFilter( StandardFilters.character );
         }
 
 
-        static get EMEMY_WEAPON(): ITargetSetBuilder {
-            return new EntitySetBuilder( {
+        static get EMEMY_WEAPON(): ITargetSetBuilder<Weapon> {
+            return new EntitySetBuilder<Weapon>( {
                 includePlayer: false,
                 zones: ( zones: HsZones ): HsZone[] => { return [zones.weapon] }
             })
@@ -38,8 +38,8 @@ namespace Def {
         }
 
 
-        static get FRIENDLY_HERO(): ITargetSetBuilder {
-            return new EntitySetBuilder( {
+        static get FRIENDLY_HERO(): ITargetSetBuilder<Player> {
+            return new EntitySetBuilder<Player>( {
                 includePlayer: true,
                 zones: null,
             })
@@ -47,22 +47,22 @@ namespace Def {
         }
 
 
-        static get FRIENDLY_MINION(): ITargetSetBuilder {
+        static get FRIENDLY_MINION(): ITargetSetBuilder<Minion> {
             return TargetFinder.ANY_MINION
                 .addFilter( StandardFilters.friendly )
                 .addFilter( StandardFilters.minion );
         }
 
 
-        static get FRIENDLY_CHARACTER(): ITargetSetBuilder {
+        static get FRIENDLY_CHARACTER(): ITargetSetBuilder<Character> {
             return TargetFinder.ANY_CHARACTER
                 .addFilter( StandardFilters.friendly )
                 .addFilter( StandardFilters.character );
         }
 
 
-        static get FRIENDLY_WEAPON(): ITargetSetBuilder {
-            return new EntitySetBuilder( {
+        static get FRIENDLY_WEAPON(): ITargetSetBuilder<Weapon> {
+            return new EntitySetBuilder<Weapon>( {
                 includePlayer: false,
                 zones: ( zones: HsZones ): HsZone[] => { return [zones.weapon] }
             })
@@ -70,16 +70,16 @@ namespace Def {
         }
 
 
-        static get ANY_CHARACTER(): ITargetSetBuilder {
-            return new EntitySetBuilder( {
+        static get ANY_CHARACTER(): ITargetSetBuilder<Character> {
+            return new EntitySetBuilder<Character>( {
                 includePlayer: true,
                 zones: ( zones: HsZones ): HsZone[] => { return [zones.battlefield] }
             });
         }
 
 
-        static get ANY_MINION(): ITargetSetBuilder {
-            return new EntitySetBuilder( {
+        static get ANY_MINION(): ITargetSetBuilder<Minion> {
+            return new EntitySetBuilder<Minion>( {
                 includePlayer: false,
                 zones: ( zones: HsZones ): HsZone[] => { return [zones.battlefield] }
             })

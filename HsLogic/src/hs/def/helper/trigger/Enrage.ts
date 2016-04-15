@@ -7,11 +7,14 @@ namespace Def {
         enchantment: HsLogic.AttackHealthEnchantment;
     }
 
+    export interface IEnrageParam<T extends EnrageContext> {
+        init: ( trigger: Trigger, context: HsGameCtx ) => T,
+        enrage: FInnerTriggActionBuilder<T>,
+        backToNormal: FInnerTriggActionBuilder<T>
+    }
 
-    export function enrage(
-        internalCtxBuilder: () => EnrageContext,
-        registerEnrage: FTriggerActionBulder,
-        unRegisterEnrage: FTriggerActionBulder ): IDefTrigger {
+
+    export function enrage<T extends EnrageContext>( param: IEnrageParam<T> ): IDefTrigger {
         return {
 
             keyword: KEYWORD.ENRAGE,
@@ -20,7 +23,11 @@ namespace Def {
 
             respondsTo: [HsLogic.event.Damage, HsLogic.event.Heal],
 
-            init: ( trigger: Trigger, context: HsGameCtx ): void => { trigger.internalCtx = internalCtxBuilder() },
+
+            init: ( trigger: Trigger, context: HsGameCtx ): void => {
+                trigger.internalCtx = param.init( trigger, context );
+            },
+
 
             triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
                 if ( event instanceof HsLogic.event.Damage
@@ -37,20 +44,22 @@ namespace Def {
                 return false;
             },
 
-            actionBuilder( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] {
-                let character: Character = <Character>trigger.parent,
-                    enraged: boolean = character.hp() !== character.health,
-                    internalCtx: EnrageContext = <EnrageContext>trigger.internalCtx;
 
-                if ( !enraged && character.tags.has( internalCtx.enrageTag ) ) {
+            actionBuilder( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action | Action[] {
+                let character: Character = <Character>trigger.parent,
+                    internalCtx: T = <T>trigger.internalCtx,
+                    damaged: boolean = character.body.damages !== 0,
+                    enraged: boolean = character.tags.contains( internalCtx.enrageTag );
+
+                if ( !damaged && enraged ) {
                     character.tags.remove( internalCtx.enrageTag );
-                    return unRegisterEnrage( trigger, event, context );
+                    return param.enrage( trigger, event, internalCtx, context );
                 }
 
-                else if ( enraged && !character.tags.has( internalCtx.enrageTag ) ) {
+                else if ( damaged && !enraged ) {
                     internalCtx.enrageTag = new Enrage_Tag( event.param.source );
                     character.tags.add( internalCtx.enrageTag );
-                    return registerEnrage( trigger, event, context );
+                    return param.backToNormal( trigger, event, internalCtx, context );
                 }
 
                 return null;

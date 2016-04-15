@@ -16,6 +16,9 @@ namespace HsLogic {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
+                    param.healState = HEAL_STATE.PENDING;
+                    param.notifyMode = param.notifyMode || NOTIFY_MODE.AFTER_EVERY_ACTION;
+
                     actions.push( new CalculateHeal( param ) );
 
                     actions.push( new InlineAction(( responce, reject ): void => {
@@ -149,14 +152,14 @@ namespace HsLogic {
 
                     param.healState = HEAL_STATE.HEALED;
 
-                    param.amount = Math.max( target.hp() + param.amount, target.health ) - target.health;
+                    param.amount = Math.max( target.body.hp() + param.amount, target.body.health ) - target.body.health;
 
                     if ( param.target.tags.has( Def.Immune_Tag ) ) {
                         param.amount = 0;
                         param.healState = HEAL_STATE.PREVENTED;
                     }
 
-                    param.target.damages -= param.amount;
+                    param.target.body.damages = Math.max( 0, param.target.body.damages - param.amount );
 
                     resolve( jsLogic.NO_CONSEQUENCES );
                 }

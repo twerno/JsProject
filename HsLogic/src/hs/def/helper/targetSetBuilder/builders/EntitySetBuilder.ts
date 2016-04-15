@@ -8,7 +8,7 @@ namespace Def {
     }
 
 
-    export class EntitySetBuilder extends ITargetSetBuilder {
+    export class EntitySetBuilder<T extends Entity> extends ITargetSetBuilder<T> {
 
         constructor( protected param: IDefTargetProperties ) { super(); }
 

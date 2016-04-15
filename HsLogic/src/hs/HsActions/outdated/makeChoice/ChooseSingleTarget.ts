@@ -23,10 +23,10 @@ namespace HsLogic {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        results: Def.Target[];
+                        results: Permanent[];
 
                     //@TODO - umozliwic uzytkownikowi dokonanie wyboru
-                    results = MathUtils.selectAtRandom<Def.Target>( param.availableTargets, { amount: 1 }) || [];
+                    results = MathUtils.selectAtRandom<Permanent>( param.availableTargets, { amount: 1 }) || [];
                     if ( results.length > 0 )
                         param.targets.push( results[0] );
 

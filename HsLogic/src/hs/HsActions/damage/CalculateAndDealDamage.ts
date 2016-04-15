@@ -27,6 +27,9 @@ namespace HsLogic {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
+                    param.damageState = DAMAGE_STATE.PENDING;
+                    param.notifyMode = param.notifyMode || NOTIFY_MODE.AFTER_EVERY_ACTION;
+
                     actions.push( new CalculateDamage( param ) );
 
                     actions.push( new InlineAction(( resolve, reject ): void => {
@@ -171,13 +174,13 @@ namespace HsLogic {
                         param.target.tags.removeAll( Def.Divine_Shield_Tag );
                     }
 
-                    if ( param.target.hp() > 0 && param.target.hp() - param.amount <= 0 )
+                    if ( param.target.body.hp() > 0 && param.target.body.hp() - param.amount <= 0 )
                         context.lethalMonitor.registerCandidate( param.target, param.source );
 
                     if ( param.source.sourceCard instanceof Minion && param.damageState !== DAMAGE_STATE.PREVENTED )
                         ( <Minion>param.source.sourceCard ).tags.removeAll( Def.Stealth_Tag );
 
-                    param.target.damages += param.amount;
+                    param.target.body.damages = Math.max( 0, param.target.body.damages + param.amount );
 
                     resolve( jsLogic.NO_CONSEQUENCES );
                 }

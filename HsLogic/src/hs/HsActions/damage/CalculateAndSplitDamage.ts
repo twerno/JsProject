@@ -54,7 +54,7 @@ namespace HsLogic {
                         availableTargets: Character[];
 
                     availableTargets = splitMode2TargetSetBuilder( param.splitMode, param.source )
-                        .buildSet<Character>( param.source, context );
+                        .buildSet( param.source, context );
 
                     target = MathUtils.selectOneAtRandom<Character>( availableTargets );
 
@@ -79,28 +79,28 @@ namespace HsLogic {
     } // class SplitDamage
 
 
-    export function splitMode2TargetSetBuilder( splitMode: Def.SPLIT_MODE, source: ISource ): Def.ITargetSetBuilder {
+    export function splitMode2TargetSetBuilder( splitMode: Def.SPLIT_MODE, source: ISource ): Def.ITargetSetBuilder<Character> {
 
         if ( splitMode === Def.SPLIT_MODE.ARCANE_MISSILE )
             return Def.TargetFinder.EMEMY_CHARACTER
                 .addFilter(( source, entity, context ): boolean => {
                     return entity instanceof Player
-                        || ( entity instanceof Minion && entity.hp() > 0 );
+                        || ( entity instanceof Minion && entity.body.hp() > 0 );
                 });
 
         else if ( splitMode === Def.SPLIT_MODE.MAD_BOMB )
             return Def.TargetFinder.ANY_CHARACTER
-                .addFilter( Def.EntityFilter.VALUE( source.sourceCard ).other_than )
+                .addFilter( Def.Filters.OtherThan( source.sourceCard ) )
                 .addFilter(( source, entity, context ): boolean => {
                     return entity instanceof Player
-                        || ( entity instanceof Minion && entity.hp() > 0 );
+                        || ( entity instanceof Minion && entity.body.hp() > 0 );
                 });
 
         else if ( splitMode === Def.SPLIT_MODE.ARCANE_HEAL )
             return Def.TargetFinder.FRIENDLY_CHARACTER
                 .addFilter(( source, entity, context ): boolean => {
                     return entity instanceof Player
-                        || ( entity instanceof Minion && entity.damages > 0 );
+                        || ( entity instanceof Minion && entity.body.damages > 0 );
                 });
 
         else

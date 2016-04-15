@@ -33,9 +33,9 @@ namespace HsLogic {
                     let minions: Minion[] = Def.TargetFinder.ANY_MINION
                         .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
                             return minion instanceof HsLogic.Minion
-                                && ( minion.hp() <= 0
+                                && ( minion.body.hp() <= 0
                                     || minion.tags.has( Def.Pending_Destroy_Tag ) );
-                        }).buildSet<Minion>( null, context );
+                        }).buildSet( null, context );
 
                     // process them
                     for ( let i = 0; i < minions.length; i++ ) {

@@ -56,7 +56,7 @@ namespace HsLogic {
                         availableTargets: Character[];
 
                     availableTargets = splitMode2TargetSetBuilder( param.splitMode, param.source )
-                        .buildSet<Character>( param.source, context );
+                        .buildSet( param.source, context );
 
                     target = MathUtils.selectOneAtRandom<Character>( availableTargets );
 

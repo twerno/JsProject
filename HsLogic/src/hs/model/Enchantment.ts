@@ -5,7 +5,7 @@ namespace HsLogic {
 
     export abstract class Enchantment<T extends Permanent> {
 
-        type: Def.ENCHANTMENT_TYPE;
+        type: Def.AURA_TYPE;
         priority: number = 1;
         orderOfPlay: number;
 
@@ -43,7 +43,7 @@ namespace HsLogic {
         constructor( source: ISource, target: Character, public isAura: boolean = false ) {
             super( source, target, isAura );
 
-            this.type = Def.ENCHANTMENT_TYPE.ATTACH_HEALTH;
+            this.type = Def.AURA_TYPE.ATTACK_HEALTH;
 
             if ( this.isAura )
                 this.priority = 2;
@@ -60,31 +60,43 @@ namespace HsLogic {
         }
 
         apply(): void {
+            let body: MinionBody = this.target.body;
 
             // attack
             if ( isDelta( this.param.attack ) )
-                this.target.attack += <number>this.param.attack;
+                body.attack += <number>this.param.attack;
 
             else if ( isSetter( this.param.attack ) )
-                this.target.attack = ( <ISetter>this.param.attack ).set;
+                body.attack = ( <ISetter>this.param.attack ).set;
 
 
+            let health: number | ISetter = this.param.health;
             // health
-            if ( isDelta( this.param.health ) )
-                this.target.health += <number>this.param.health;
+            if ( isDelta( health ) ) {
+                body.health += health;
+                if ( health < 0 )
+                    body.damages = Math.max( 0, body.damages + health );
+            }
 
-            else if ( isSetter( this.param.health ) ) {
-                this.target.health = ( <ISetter>this.param.health ).set;
-                this.target.damages = 0;
+            else if ( isSetter( health ) ) {
+                body.health = health.set;
+                body.damages = 0;
             }
 
         }
 
         replaceOfRemove(): AttackHealthEnchantment {
-            let param: AttackHealthEnchantmentParam = { attack: 0, health: 0 };
+            let param: AttackHealthEnchantmentParam = { attack: 0, health: 0 },
+                body: MinionBody = this.target.body;;
 
             if ( isSetter( this.param.attack ) )
                 param.attack = { set: this.target.def.attack };
+
+            let health: number | ISetter = this.param.health;
+
+            // revert of health increase
+            if ( isDelta( health ) && health > 0 )
+                body.damages = Math.max( 0, body.damages - health );
 
             if ( isSetter( this.param.health ) )
                 param.health = { set: this.target.def.health };

@@ -1,3 +1,5 @@
+"use strict";
+
 namespace Def {
 
     var Frost_Bolt: ISpell = {
@@ -71,12 +73,11 @@ namespace Def {
             triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
                 return trigger.parent.owner === ( <HsLogic.DamageParam>event.param ).target;
             },
-            actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] => {
+            actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action => {
                 ( <HsLogic.DamageParam>event.param ).amount = 1;
                 return null;
             }
-        }
-        ],
+        }],
         battlecry: null,
         tags: []
     };

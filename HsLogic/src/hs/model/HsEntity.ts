@@ -36,13 +36,16 @@ namespace HsLogic {
         return ++_orderOfPlayGenerator;
     }
 
+    export class MinionBody {
+        hp(): number { return this.hp() - this.damages };
+        health: number;
+        attack: number;
+        damages: number;
+    }
 
     export interface ILivingEntity {
         def: { attack: number, health: number },
-        hp(): number,
-        health: number,
-        attack: number,
-        damages: number
+        body: MinionBody
     }
 
     export interface IPermanent {

@@ -7,7 +7,7 @@ namespace Def {
     }
 
     export interface TargetDefinitionParam {
-        availableTargets: ITargetSetBuilder,
+        availableTargets: ITargetSetBuilder<Permanent>,
         availibleTargetsRequiredNumber: number,
         numberOfTargets: number,
         pickMode: PICK_MODE
@@ -16,12 +16,12 @@ namespace Def {
 
     export class SimpleTargetDefinition extends IDefTargetDefinition<TargetDefinitionParam> {
 
-        availableTargets( source: ISource, context: HsGameCtx ): Target[] {
-            return this.param.availableTargets.buildSet<Target>( source, context );
+        availableTargets( source: ISource, context: HsGameCtx ): Permanent[] {
+            return this.param.availableTargets.buildSet( source, context );
         }
 
 
-        isAvailibleTargetsSetValid( availableTargets: Target[], context: HsGameCtx ): boolean {
+        isAvailibleTargetsSetValid( availableTargets: Permanent[], context: HsGameCtx ): boolean {
             return availableTargets.length >= ( this.param.availibleTargetsRequiredNumber || 0 );
         }
 
@@ -34,7 +34,7 @@ namespace Def {
         }
 
 
-        arePickedTargetsValid( availableTargets: Target[], picked: Target[], context: HsGameCtx ): boolean {
+        arePickedTargetsValid( availableTargets: Permanent[], picked: Permanent[], context: HsGameCtx ): boolean {
             return ( this.param.availibleTargetsRequiredNumber === 0 && ( picked.length in [0, this.param.numberOfTargets] ) )
                 || picked.length === this.param.availibleTargetsRequiredNumber;
         }

@@ -2,6 +2,7 @@
 
 namespace Def {
 
+    //TODO - przerobic tak jak otherThan
     export class TriggerFilter {
 
         constructor( protected owner: Player ) { }

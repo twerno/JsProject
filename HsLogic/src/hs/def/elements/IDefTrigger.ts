@@ -3,7 +3,8 @@
 namespace Def {
 
     export type FTriggerable = ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ) => boolean;
-    export type FTriggerActionBulder = ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ) => Action[];
+    export type FTriggerActionBulder = ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ) => Action | Action[];
+    export type FInnerTriggActionBuilder<T> = ( trigger: Trigger, event: ActionEvent, innerCtx: T, context: HsGameCtx ) => Action | Action[];
 
 
     export const TRIGGER_PRIORITY_LOWEST = 100;

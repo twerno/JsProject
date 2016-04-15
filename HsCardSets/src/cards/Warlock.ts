@@ -35,4 +35,20 @@ namespace Def {
             }
         }
     };
+
+
+    var Mistress_of_Pain: IMinion = {
+        name: `Mistress of Pain`,
+        cost: 2,
+        rarity: RARITY.RARE,
+        cardClass: CARD_CLASS.WARLOCK,
+
+        attack: 1,
+        health: 4,
+        minion_type: MINION_TYPE.DEMON,
+
+        triggers: [LifeLink()],
+        battlecry: null,
+        tags: []
+    };
 }

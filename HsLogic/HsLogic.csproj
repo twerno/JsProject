@@ -22,6 +22,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\hs\helper\" />
+  </ItemGroup>
+  <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
     <TypeScriptCompile Include="src\commons\MathUtils.ts" />
@@ -41,9 +44,6 @@
     <TypeScriptCompile Include="src\hs\core\context\IContextUtils.ts" />
     <TypeScriptCompile Include="src\hs\core\HsZone.ts" />
     <TypeScriptCompile Include="src\hs\def\Aliases.ts" />
-    <TypeScriptCompile Include="src\hs\def\cards\Mage.ts" />
-    <TypeScriptCompile Include="src\hs\def\cards\Neutrals.ts" />
-    <TypeScriptCompile Include="src\hs\def\cards\Warlock.ts" />
     <TypeScriptCompile Include="src\hs\def\Const.ts" />
     <TypeScriptCompile Include="src\hs\def\elements\IDefAction.ts" />
     <TypeScriptCompile Include="src\hs\def\elements\IDefEntities.ts" />
@@ -63,10 +63,17 @@
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\filters\TriggerFilter.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\ITargetSetBuilder.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\targetSetBuilder\TargetFinder.ts" />
+    <TypeScriptCompile Include="src\hs\def\helper\trigger\AuraGenerator.ts" />
+    <TypeScriptCompile Include="src\hs\def\helper\trigger\Deathrattle.ts" />
     <TypeScriptCompile Include="src\hs\def\helper\trigger\Enrage.ts" />
+    <TypeScriptCompile Include="src\hs\def\helper\trigger\LifeLink.ts" />
+    <TypeScriptCompile Include="src\hs\def\helper\trigger\MinionOriginAuraGenerator.ts" />
     <TypeScriptCompile Include="src\hs\def\outdated\action\AllTargetsDefAction.ts" />
     <TypeScriptCompile Include="src\hs\def\outdated\action\SingleTargetDefAction.ts" />
     <TypeScriptCompile Include="src\hs\def\outdated\action\TwoStepsTargetsDefAction.ts" />
+    <TypeScriptCompile Include="src\hs\event\DamageEvents.ts" />
+    <TypeScriptCompile Include="src\hs\event\DrawCardEvents.ts" />
+    <TypeScriptCompile Include="src\hs\event\HealEvents.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsEnchantmentActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
@@ -76,7 +83,6 @@
     <TypeScriptCompile Include="src\hs\hsActions\damage\CalculateAndDealDamage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\damage\CalculateAndSplitDamage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\damage\DamageCommons.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\damage\DamageEvents.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\damage\MultistepDamage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\EmptyAction.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\event\DispatchEvent.ts" />
@@ -84,7 +90,6 @@
     <TypeScriptCompile Include="src\hs\hsActions\heal\CalculateAndHeal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\CalculateAndSplitHeal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\HealCommons.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\heal\HealEvents.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\MultistepHeal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\outdated\AddGeneratedCardIntoHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\outdated\DestroyCardInPlay.ts" />
@@ -113,15 +118,20 @@
     <TypeScriptCompile Include="src\hs\model\Enchantment.ts" />
     <TypeScriptCompile Include="src\hs\model\HsEntity.ts" />
     <TypeScriptCompile Include="src\hs\model\Minion.ts" />
-    <TypeScriptCompile Include="src\hs\model\PermanentState\IPerrmanent.ts" />
-    <TypeScriptCompile Include="src\hs\model\PermanentState\PermanentState.ts" />
-    <TypeScriptCompile Include="src\hs\model\PermanentState\PermanentStateCalculator.ts" />
-    <TypeScriptCompile Include="src\hs\model\PermanentState\PermanentStateHelper.ts" />
     <TypeScriptCompile Include="src\hs\model\Player.ts" />
     <TypeScriptCompile Include="src\hs\model\Spell.ts" />
     <TypeScriptCompile Include="src\hs\model\Tag.ts" />
     <TypeScriptCompile Include="src\hs\model\Trigger.ts" />
     <TypeScriptCompile Include="src\hs\model\Weapon.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

@@ -36,7 +36,7 @@ namespace HsLogic {
                     // Dominant Player === active player (for sake of simplicity)
                     // Dominant Player Triggers
                     triggers = self._getDominantPlayerTriggers( context.activePlayer )
-                        .buildSet<Trigger>( param.source, context );
+                        .buildSet( param.source, context );
 
                     // Dominant Player Queue
                     actions.push( new ProcessQueue( {
@@ -53,7 +53,7 @@ namespace HsLogic {
                         // Double safeguard
                         // Subtrack triggers that already had been triggered by dominant player
                         triggers = self._getSecondaryPlayerTriggers( context.activePlayer, doneByDominantPlayer )
-                            .buildSet<Trigger>( param.source, context );
+                            .buildSet( param.source, context );
 
                         // Secondary Player Queue
                         actions.push( new ProcessQueue( {
@@ -71,13 +71,13 @@ namespace HsLogic {
         // resolve( self: DispatchEvent<P>
 
 
-        protected _getDominantPlayerTriggers( player: Player ): Def.ITargetSetBuilder {
+        protected _getDominantPlayerTriggers( player: Player ): Def.ITargetSetBuilder<Trigger> {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.TriggerFilter.OWNER( player ).owns_trigger );
         }
 
 
-        protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.ITargetSetBuilder {
+        protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.ITargetSetBuilder<Trigger> {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.TriggerFilter.OWNER( player ).DOES_NOT_own_trigger )
 

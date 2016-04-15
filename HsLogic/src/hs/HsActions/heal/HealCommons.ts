@@ -32,8 +32,8 @@ namespace HsLogic {
     export interface HealTargetsParam extends CalculateHealParam {
         targets: Character[],
 
-        healState: HEAL_STATE,
-        notifyMode: NOTIFY_MODE,
+        healState?: HEAL_STATE,
+        notifyMode?: NOTIFY_MODE,
     }
 
 
