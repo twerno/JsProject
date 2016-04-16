@@ -7,8 +7,8 @@ namespace HsLogic {
     export class Trigger extends HsEntity {
         def: Def.IDefTrigger;
 
-        get owner(): Player { return this.parent.owner }
-        parent: Card | Player;
+        get owner(): Player { return this.attachedTo.owner }
+        attachedTo: Card | Player;
         sourceCard: Card;
 
         keyword: string;
@@ -23,10 +23,10 @@ namespace HsLogic {
         internalCtx: Object = {};
 
 
-        constructor( parent: Card | Player, sourceCard: Card, def?: Def.IDefTrigger ) {
-            super( parent.owner, def );
+        constructor( attachedTo: Card | Player, sourceCard: Card, def?: Def.IDefTrigger ) {
+            super( attachedTo.owner, def );
 
-            this.parent = parent || null;
+            this.attachedTo = attachedTo || null;
             this.sourceCard = sourceCard || null;
         }
 
@@ -40,7 +40,7 @@ namespace HsLogic {
             else
                 this.respondsTo.push( ClassUtils.getNameOfClass( def.respondsTo ) );
 
-            this.keyword = def.keyword;
+            this.keyword = def.keyword || Def.KEYWORD.NONE;
             this.triggerPriority = def.triggerPriority || Def.TRIGGER_PRIORITY_DEFAULT;
             this.enable_self_trigger_protection = enableSelfTriggerProtectionVal( def.enable_self_trigger_protection );
             this.triggerable = def.triggerable || null;
@@ -53,7 +53,7 @@ namespace HsLogic {
         }
 
         getSourceType(): SOURCE_TYPE {
-            return this.parent.getSourceType();
+            return this.attachedTo.getSourceType();
         }
 
     } // class Trigger
@@ -63,7 +63,7 @@ namespace HsLogic {
     function enableSelfTriggerProtectionVal( value: boolean ): boolean {
         if ( value == null
             || value === undefined )
-            return false;
+            return true;
         else
             return value;
     }

@@ -6,7 +6,7 @@ namespace HsLogic {
 
     export interface DrawParam extends IActionParam {
         targetPlayer: Player,
-        drawnCard: Card
+        drawnCard?: Card
     }
 
 

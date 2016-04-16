@@ -15,12 +15,17 @@ namespace Def {
     }
 
     export enum CARD_RARITY {
-        //        FREE,
         COMMON,
         RARE,
         EPIC,
         LEGANDARY
     }
+
+    //export enum CARD_TYPE {
+    //    MINON,
+    //    SPELL,
+    //    WEAPON
+    //}
 
     export namespace MINION_TYPE {
         export const BEAST: string = 'BEAST';
@@ -38,6 +43,8 @@ namespace Def {
         export const LIFE_LINK: string = 'LIFE_LINK';
         export const DEATHRATTLE: string = 'DEATHRATTLE';
         export const AURA: string = 'AURA';
+        export const ENCHANT: string = 'ENCHANT';
+        export const NONE: string = 'NONE';
     }
 
     export namespace CARD_CLASS {

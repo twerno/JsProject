@@ -17,10 +17,10 @@ namespace Def.Filter {
 
 
 
-    export function character_targetable_by_spell_or_hero_power( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
-        return character( source, entity, context )
-            && targetable_by_spell_or_hero_power( source, entity, context );
-    }
+    //export function character_targetable_by_spell_or_hero_power( source: ISource, entity: HsLogic.HsEntity, context: HsGameCtx ): boolean {
+    //    return character( source, entity, context )
+    //        && targetable_by_spell_or_hero_power( source, entity, context );
+    //}
 
 
 

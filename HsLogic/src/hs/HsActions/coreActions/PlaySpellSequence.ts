@@ -63,7 +63,8 @@ namespace HsLogic {
 
                             // step 4 - spellTextPhase
                             if ( param.card.spellAction )
-                                innerActions.concat( param.card.spellAction.actionBuilder( param.source, param.targets, context ) );
+                                innerActions.concat(
+                                    param.card.spellAction.actionBuilder( param.card.getSource(), param.targets, context ) );
 
 
                             // step 5 - onAfterPlaySpell

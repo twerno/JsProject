@@ -31,11 +31,11 @@ namespace Def {
 
             triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
                 if ( event instanceof HsLogic.event.Damage
-                    && event.param.target === trigger.parent )
+                    && event.param.target === trigger.attachedTo )
                     return true;
 
                 if ( event instanceof HsLogic.event.Heal
-                    && event.param.target === trigger.parent )
+                    && event.param.target === trigger.attachedTo )
                     return true;
 
                 // currenthpChange - redemption, repentance
@@ -46,7 +46,7 @@ namespace Def {
 
 
             actionBuilder( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action | Action[] {
-                let character: Character = <Character>trigger.parent,
+                let character: Character = <Character>trigger.attachedTo,
                     internalCtx: T = <T>trigger.internalCtx,
                     damaged: boolean = character.body.damages !== 0,
                     enraged: boolean = character.tags.contains( internalCtx.enrageTag );

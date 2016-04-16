@@ -5,40 +5,41 @@
 
 namespace Def {
 
-    //var Holy_Wrath: ISpell = classicSet.registerCard<ISpell>( {
-    //    name: `Holy wrath`,
-    //    cost: 5,
+    var Holy_Wrath: ISpell = classicSet.registerCard<ISpell>( {
 
-    //    //triggers: [],
-    //    //enchantments: [],
+        name: `Holy wrath`,
+        cost: 5,
+        metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.RARE ),
 
-    //    playActions: [
-    //        new SingleTargetDefAction<Character>( {
-    //            availableTargets: SetBuilderHelper.BATTLEFIELD
-    //                .addFilter( StandardFilters.character )
-    //                .addFilter( StandardFilters.targetable_by_spell_or_hero_power ),
 
-    //            actionBuilder: ( source: HsSource, target: Character, context: GameCtx ): Action[] => {
-    //                let drawCardParam: HsLogic.DrawParam = {
-    //                    source: source,
-    //                    targetPlayer: source.caster,
-    //                    drawnCard: null
-    //                };
-    //                return [
-    //                    context.actionFactory.drawCard( drawCardParam ),
+        spellTextAction: {
+            targets: SINGLE_REQUIRED_TARGET( TargetFinder.ANY_SPELL_TARGETABLE_CHARACTER ),
 
-    //                    new jsLogic.InlineAction(( resolve, reject ): void => {
+            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+                let param: HsLogic.DrawParam = {
+                    source: source,
+                    targetPlayer: source.player
+                };
 
-    //                        if ( drawCardParam.drawnCard )
-    //                            resolve(
-    //                                DealDirectDamageToTarget( drawCardParam.drawnCard.cost )( source, target, context )
-    //                            );
-    //                        else
-    //                            resolve( jsLogic.NO_CONSEQUENCES );
-    //                    })
-    //                ]
-    //            }
-    //        })
-    //    ]
-    //});
+                return [
+                    context.actionFactory.drawCard( param ),
+
+                    new jsLogic.InlineActionExt(
+                        (): boolean => { return param.drawnCard !== null },
+                        ( resolve, reject ): void => {
+                            resolve(
+                                new HsLogic.CalculateAndDealDamage( {
+                                    source: source,
+                                    damageType: DAMAGE_TYPE.DIRECT,
+                                    amount: param.drawnCard.baseCost,
+                                    targets: targets
+                                }) )
+                        }
+                    )
+                ];
+
+            }
+        } // spellTextAction
+
+    });
 }

@@ -14,15 +14,19 @@ namespace Def {
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.RARE ),
 
-        triggers: [{
-            respondsTo: HsLogic.event.PreDamagePhase,
-            triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
-                return trigger.owner === ( <HsLogic.DamageParam>event.param ).target;
-            },
-            actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] => {
-                ( <HsLogic.DamageParam>event.param ).amount = 1;
-                return null;
+        triggers: [
+            {
+                respondsTo: HsLogic.event.PreDamagePhase,
+
+                triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
+                    return trigger.owner === ( <HsLogic.DamageParam>event.param ).target;
+                },
+
+                actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] => {
+                    ( <HsLogic.DamageParam>event.param ).amount = 1;
+                    return null;
+                }
             }
-        }]
+        ]
     });
 }

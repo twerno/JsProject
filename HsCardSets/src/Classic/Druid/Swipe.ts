@@ -13,7 +13,7 @@ namespace Def {
 
         spellTextAction: {
 
-            targets: SINGLE_REQUIRED_TARGET( TargetFinder.EMEMY_TARGETABLE_CHARACTER ),
+            targets: SINGLE_REQUIRED_TARGET( TargetFinder.EMEMY_SPELL_TARGETABLE_CHARACTER ),
 
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
                 let otherTargets: Character[] = TargetFinder.EMEMY_CHARACTER

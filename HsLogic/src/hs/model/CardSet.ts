@@ -16,6 +16,10 @@ namespace HsLogic {
             return card;
         }
 
+        //registerMinion( minion: Def.IMinion ): Def.IMinion {
+        //    minion.metadata.
+        //}
+
 
         count(): number {
             return this._map.size;

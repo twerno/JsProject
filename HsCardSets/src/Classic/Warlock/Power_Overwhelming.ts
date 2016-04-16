@@ -8,21 +8,20 @@ namespace Def {
     var Power_Overwhelming: ISpell = classicSet.registerCard<ISpell>( {
 
         name: `Power Overwhelming`,
-
         cost: 1,
         metadata: metadata( CARD_CLASS.WARLOCK, CARD_RARITY.COMMON ),
 
 
         spellTextAction: {
-            targets: TARGET.SINGLE_CHARACTER,
-            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
-                let actions: Action[] = [],
-                    target: Character;
+            targets: SINGLE_REQUIRED_TARGET( TargetFinder.FRIENDLY_SPELL_TARGETABLE_MINION ),
 
-                for ( let i = 0; i < targets.length; i++ )
+            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+                let actions: Action[] = [];
+
+                for ( let target of targets )
                     actions.push(
                         DefActionHelper.AttachEnchantment(
-                            new HsLogic.AttackHealthEnchantment( source, targets[i], false )
+                            new HsLogic.AttackHealthEnchantment( source, target, false )
                                 .init( { attack: 4, health: 4 })
                         )
                     );

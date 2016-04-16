@@ -20,7 +20,7 @@ namespace Def {
 
                 enrage: ( trigger: Trigger, event: ActionEvent, internalCtx: EnrageContext, context: HsGameCtx ): Action => {
                     internalCtx.enchantment =
-                        new HsLogic.AttackHealthEnchantment( event.param.source, <Character>trigger.parent, false )
+                        new HsLogic.AttackHealthEnchantment( event.param.source, <Character>trigger.attachedTo, false )
                             .init( { attack: 3, health: 0 });
 
                     return DefActionHelper.AttachEnchantment( internalCtx.enchantment );
