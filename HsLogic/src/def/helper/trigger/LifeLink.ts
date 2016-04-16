@@ -13,9 +13,6 @@ namespace Def {
             respondsTo: [HsLogic.event.Damage],
 
 
-            init: ( trigger: Trigger, context: HsGameCtx ): void => { },
-
-
             triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
                 return event instanceof HsLogic.event.Damage
                     && event.param.source.sourceCard === trigger.sourceCard

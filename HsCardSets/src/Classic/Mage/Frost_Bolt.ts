@@ -24,7 +24,7 @@ namespace Def {
                         amount: 3,
                         targets: targets
                     }),
-                    DefActionHelper.AddTag( {
+                    DefActionHelper.BuildAddTag( {
                         source: source,
                         targets: targets,
                         tag: Freeze_Tag

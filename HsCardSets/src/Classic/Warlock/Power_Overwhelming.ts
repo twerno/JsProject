@@ -27,7 +27,7 @@ namespace Def {
                     );
 
                 actions.push(
-                    DefActionHelper.AddTag( {
+                    DefActionHelper.BuildAddTag( {
                         source: source,
                         targets: targets,
                         tag: Destroy_At_The_End_of_Turn_Tag

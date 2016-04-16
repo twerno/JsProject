@@ -20,8 +20,6 @@ namespace HsLogic {
         triggerable: Def.FTriggerable;
         actionBuilder: Def.FTriggerActionBulder;
 
-        internalCtx: Object = {};
-
 
         constructor( attachedTo: Card | Player, sourceCard: Card, def?: Def.IDefTrigger ) {
             super( attachedTo.owner, def );

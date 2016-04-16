@@ -15,19 +15,11 @@ namespace Def {
         metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.COMMON ),
 
         triggers: [
-            enrage<EnrageContext>( {
-                init: (): EnrageContext => { return new EnrageContext() },
+            enrage( {
 
-                enrage: ( trigger: Trigger, event: ActionEvent, internalCtx: EnrageContext, context: HsGameCtx ): Action => {
-                    internalCtx.enchantment =
-                        new HsLogic.AttackHealthEnchantment( event.param.source, <Character>trigger.attachedTo, false )
-                            .init( { attack: 3, health: 0 });
-
-                    return DefActionHelper.AttachEnchantment( internalCtx.enchantment );
-                },
-
-                backToNormal: ( trigger: Trigger, event: ActionEvent, internalCtx: EnrageContext, context: HsGameCtx ): Action => {
-                    return DefActionHelper.DetachEnchantment( internalCtx.enchantment );
+                enrage: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): HsLogic.Enchantment<Permanent> => {
+                    return new HsLogic.AttackHealthEnchantment( event.param.source, <Character>trigger.attachedTo )
+                        .init( { attack: 3, health: 0 });
                 }
             })
         ],

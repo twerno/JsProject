@@ -54,8 +54,6 @@
     <TypeScriptCompile Include="src\def\elements\Tags.ts" />
     <TypeScriptCompile Include="src\def\helper\defAction\DefBuffAction.ts" />
     <TypeScriptCompile Include="src\def\helper\defTargetDefinition\SimpleTargetDefinition.ts" />
-    <TypeScriptCompile Include="src\def\helper\defTargetDefinition\_OPTIONAL_TARGET.ts" />
-    <TypeScriptCompile Include="src\def\helper\defTargetDefinition\_TARGET.ts" />
     <TypeScriptCompile Include="src\def\helper\targetSetBuilder\builders\EntitySetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetSetBuilder\builders\TriggerSetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetSetBuilder\filters\Filters.ts" />

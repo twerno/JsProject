@@ -16,9 +16,6 @@ namespace Def {
             respondsTo: [HsLogic.event.Death],
 
 
-            init: ( trigger: Trigger, context: HsGameCtx ): void => { },
-
-
             triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
                 return event instanceof HsLogic.event.Death
                     && event.param.target === trigger.sourceCard;

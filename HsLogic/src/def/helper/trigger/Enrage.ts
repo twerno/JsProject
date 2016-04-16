@@ -2,19 +2,16 @@
 
 namespace Def {
 
-    export class EnrageContext {
-        enrageTag: Tag;
-        enchantment: HsLogic.AttackHealthEnchantment;
-    }
 
-    export interface IEnrageParam<T extends EnrageContext> {
-        init: ( trigger: Trigger, context: HsGameCtx ) => T,
-        enrage: FInnerTriggActionBuilder<T>,
-        backToNormal: FInnerTriggActionBuilder<T>
+    export interface IEnrageParam {
+        enrage: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ) => HsLogic.Enchantment<Permanent>;
     }
 
 
-    export function enrage<T extends EnrageContext>( param: IEnrageParam<T> ): IDefTrigger {
+    export function enrage( param: IEnrageParam ): IDefTrigger {
+        let enrageTag: Tag,
+            enchantment: HsLogic.Enchantment<Permanent>;
+
         return {
 
             keyword: KEYWORD.ENRAGE,
@@ -22,11 +19,6 @@ namespace Def {
             enable_self_trigger_protection: true,
 
             respondsTo: [HsLogic.event.Damage, HsLogic.event.Heal],
-
-
-            init: ( trigger: Trigger, context: HsGameCtx ): void => {
-                trigger.internalCtx = param.init( trigger, context );
-            },
 
 
             triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
@@ -47,19 +39,25 @@ namespace Def {
 
             actionBuilder( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action | Action[] {
                 let character: Character = <Character>trigger.attachedTo,
-                    internalCtx: T = <T>trigger.internalCtx,
                     damaged: boolean = character.body.damages !== 0,
-                    enraged: boolean = character.tags.contains( internalCtx.enrageTag );
+                    enraged: boolean = character.tags.contains( enrageTag );
 
                 if ( !damaged && enraged ) {
-                    character.tags.remove( internalCtx.enrageTag );
-                    return param.enrage( trigger, event, internalCtx, context );
+                    return [
+                        DefActionHelper.RemoveTag( character, enrageTag ),
+                        DefActionHelper.DetachEnchantment( enchantment )
+                    ];
                 }
 
                 else if ( damaged && !enraged ) {
-                    internalCtx.enrageTag = new Enrage_Tag( event.param.source );
-                    character.tags.add( internalCtx.enrageTag );
-                    return param.backToNormal( trigger, event, internalCtx, context );
+                    enchantment = param.enrage( trigger, event, context );
+                    if ( enchantment ) {
+                        enrageTag = new Enrage_Tag( event.param.source );
+                        return [
+                            DefActionHelper.AddTag( character, enrageTag ),
+                            DefActionHelper.AttachEnchantment( enchantment )
+                        ];
+                    }
                 }
 
                 return null;
