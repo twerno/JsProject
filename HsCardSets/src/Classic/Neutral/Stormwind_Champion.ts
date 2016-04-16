@@ -8,33 +8,31 @@ namespace Def {
     var Stormwind_Champion: IMinion = classicSet.registerCard<IMinion>( {
 
         name: `Stormwind Champion`,
-
         cost: 7,
         attack: 6,
         health: 6,
-
-        rarity: RARITY.COMMON,
-        cardClass: CARD_CLASS.NEUTRAL,
         minion_type: MINION_TYPE.GENERAL,
+        metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.COMMON ),
+
 
         triggers: [
-            AuraGenerator( {
+            AuraGenerator<Minion>( {
                 auraType: AURA_TYPE.ATTACK_HEALTH,
 
-                rebuildAura: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Enchantment[] => {
-                    let result: Enchantment[] = [];
-                    TargetFinder.FRIENDLY_MINION
+                targets: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Minion[] => {
+                    return TargetFinder.FRIENDLY_MINION
                         .addFilter( Filter.OtherThan( trigger.sourceCard ) )
-                        .buildSet( event.param.source, context )
-                        .forEach(( minion ) => {
-                            result.push( new HsLogic.AttackHealthEnchantment( {
-                                action: null,
-                                caster: trigger.sourceCard.owner,
-                                sourceType: HsLogic.SOURCE_TYPE.MINION,
-                                sourceCard: trigger.sourceCard
-                            }, minion, true )
+                        .buildSet( trigger.getSource(), context );
+                },
+
+                rebuildAura: ( trigger: Trigger, targets: Minion[], context: HsGameCtx ): Enchantment[] => {
+                    let result: Enchantment[] = [];
+
+                    targets.forEach(( minion ) => {
+                        result.push(
+                            new HsLogic.AttackHealthEnchantment( trigger.getSource(), minion, true )
                                 .init( { attack: 1, health: 1 }) )
-                        });
+                    });
 
                     return result;
                 }

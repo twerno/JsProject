@@ -10,8 +10,7 @@ namespace Def {
         name: `Power Overwhelming`,
 
         cost: 1,
-        rarity: RARITY.COMMON,
-        cardClass: CARD_CLASS.WARLOCK,
+        metadata: metadata( CARD_CLASS.WARLOCK, CARD_RARITY.COMMON ),
 
 
         spellTextAction: {

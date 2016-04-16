@@ -14,6 +14,10 @@ namespace HsLogic {
 
             this.spellAction = def.spellTextAction;
         }
+
+        getSourceType(): SOURCE_TYPE {
+            return SOURCE_TYPE.SPELL;
+        }
     }
 
 }

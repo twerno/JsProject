@@ -37,5 +37,9 @@ namespace HsLogic {
         //            this.hero = def.hero;
         //            this.heroPower = def.heroPower;
         //        }
+
+        getSourceType(): SOURCE_TYPE {
+            return SOURCE_TYPE.PLAYER;
+        }
     }
 }

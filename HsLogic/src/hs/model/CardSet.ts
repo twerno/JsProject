@@ -10,11 +10,10 @@ namespace HsLogic {
             if ( this._map.has( card.name ) )
                 throw new Error( `Attempt to duplicate value: ${card}` );
 
+            card.metadata.set = this.name;
             Object.freeze( card );
             this._map.set( card.name, card );
             return card;
-
-            //validacja typu i obiektu
         }
 
 

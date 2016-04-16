@@ -42,4 +42,14 @@ namespace Def {
         }
     }
 
+
+    export function SINGLE_REQUIRED_TARGET( availableTargets: ITargetSetBuilder<Permanent> ): SimpleTargetDefinition {
+        return new SimpleTargetDefinition( {
+            availableTargets: availableTargets,
+            availibleTargetsRequiredNumber: 1,
+            numberOfTargets: 1,
+            pickMode: PICK_MODE.USER_CHOICE
+        });
+    }
+
 }

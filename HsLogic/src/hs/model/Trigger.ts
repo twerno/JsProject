@@ -8,14 +8,14 @@ namespace HsLogic {
         def: Def.IDefTrigger;
 
         get owner(): Player { return this.parent.owner }
-        parent: HsEntity;
+        parent: Card | Player;
         sourceCard: Card;
 
         keyword: string;
         respondsTo: string[];
         triggerPriority: number;
 
-        disable_self_trigger_protection: boolean;
+        enable_self_trigger_protection: boolean;
 
         triggerable: Def.FTriggerable;
         actionBuilder: Def.FTriggerActionBulder;
@@ -23,7 +23,7 @@ namespace HsLogic {
         internalCtx: Object = {};
 
 
-        constructor( parent: HsEntity, sourceCard: Card, def?: Def.IDefTrigger ) {
+        constructor( parent: Card | Player, sourceCard: Card, def?: Def.IDefTrigger ) {
             super( parent.owner, def );
 
             this.parent = parent || null;
@@ -42,25 +42,29 @@ namespace HsLogic {
 
             this.keyword = def.keyword;
             this.triggerPriority = def.triggerPriority || Def.TRIGGER_PRIORITY_DEFAULT;
-            this.disable_self_trigger_protection = def.disable_self_trigger_protection || false;
+            this.enable_self_trigger_protection = enableSelfTriggerProtectionVal( def.enable_self_trigger_protection );
             this.triggerable = def.triggerable || null;
             this.actionBuilder = def.actionBuilder;
         }
 
 
         static SELF_TRIGGER_PROTECTOR( trigger: Trigger, event: ActionEvent<IActionParam>, context: HsGameCtx ): boolean {
-            return trigger.sourceCard !== event.param.source.sourceCard;
+            return trigger.sourceCard !== event.param.source.entity;
+        }
+
+        getSourceType(): SOURCE_TYPE {
+            return this.parent.getSourceType();
         }
 
     } // class Trigger
 
 
 
-    //function enrage( parent: Character, sourceCard: Card ): Trigger {
-    //    let result: Trigger = new Trigger( parent, sourceCard );
-    //    result.disable_self_trigger_protection = true;
-    //    result.respondsTo
-
-    //    return result;
-    //}
+    function enableSelfTriggerProtectionVal( value: boolean ): boolean {
+        if ( value == null
+            || value === undefined )
+            return false;
+        else
+            return value;
+    }
 }

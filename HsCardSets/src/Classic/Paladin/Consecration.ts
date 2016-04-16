@@ -5,33 +5,29 @@
 
 namespace Def {
 
-    var Frost_Bolt: ISpell = basicSet.registerCard<ISpell>( {
+    var Consecration: ISpell = classicSet.registerCard<ISpell>( {
 
-        name: `Frost Bolt`,
-
-        cost: 2,
-        rarity: RARITY.COMMON,
-        cardClass: CARD_CLASS.MAGE,
+        name: `Consecration`,
+        cost: 4,
+        metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.COMMON ),
 
         spellTextAction: {
-            targets: TARGET.SINGLE_CHARACTER,
+            targets: null,
+
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
 
                 return [
                     new HsLogic.CalculateAndDealDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
-                        amount: 3,
-                        targets: targets
-                    }),
-                    DefActionHelper.AddTag( {
-                        source: source,
-                        targets: targets,
-                        tag: Freeze_Tag
+                        amount: 2,
+                        targets: TargetFinder.EMEMY_CHARACTER.buildSet( source, context )
                     })
                 ];
 
             }
-        }
+        } // spellTextAction
+
+
     });
 }

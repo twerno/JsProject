@@ -20,6 +20,10 @@ namespace HsLogic {
             this.minion_type = def.minion_type;
             this.battlecry = def.battlecry || null;
         }
+
+        getSourceType(): SOURCE_TYPE {
+            return SOURCE_TYPE.MINION;
+        }
     }
 
 }

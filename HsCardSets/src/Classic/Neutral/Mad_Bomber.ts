@@ -5,29 +5,27 @@
 
 namespace Def {
 
-    var Arcane_Missiles: ISpell = basicSet.registerCard<ISpell>( {
+    var Mad_Bomber: IMinion = classicSet.registerCard<IMinion>( {
 
-        name: `Arcane Missiles`,
+        name: `Mad Bomber`,
+        cost: 2,
+        attack: 3,
+        health: 2,
+        metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.COMMON ),
+        minion_type: MINION_TYPE.GENERAL,
 
-        cost: 1,
-        rarity: RARITY.COMMON,
-        cardClass: CARD_CLASS.MAGE,
-
-
-        spellTextAction: {
+        battlecry: {
             targets: null,
             actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
-
                 return [
                     new HsLogic.CalculateAndSplitDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         amount: 3,
-                        splitMode: SPLIT_MODE.ARCANE_MISSILE
+                        splitMode: SPLIT_MODE.MAD_BOMB
                     })
                 ];
-
             }
-        }
+        },
     });
 }

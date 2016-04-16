@@ -19,6 +19,10 @@ namespace HsLogic {
             this.durability = def.durability;
             this.battlecry = def.battlecry || null;
         }
+
+        getSourceType(): SOURCE_TYPE {
+            return SOURCE_TYPE.PLAYER;
+        }
     }
 
 }

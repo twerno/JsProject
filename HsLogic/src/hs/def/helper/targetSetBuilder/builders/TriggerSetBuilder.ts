@@ -22,7 +22,7 @@ namespace Def {
             this.addFilter(( source: ISource, trigger: Trigger, context: HsGameCtx ): boolean => {
                 return trigger instanceof HsLogic.Trigger
                     && trigger.respondsTo.indexOf( self._eventType ) !== -1
-                    && ( !trigger.disable_self_trigger_protection
+                    && ( !trigger.enable_self_trigger_protection
                         || HsLogic.Trigger.SELF_TRIGGER_PROTECTOR( trigger, self._event, context ) );
             })
         }

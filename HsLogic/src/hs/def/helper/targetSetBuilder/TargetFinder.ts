@@ -29,6 +29,12 @@ namespace Def {
         }
 
 
+        static get EMEMY_TARGETABLE_CHARACTER(): ITargetSetBuilder<Character> {
+            return TargetFinder.EMEMY_CHARACTER
+                .addFilter( Filter.character_targetable_by_spell_or_hero_power );
+        }
+
+
         static get EMEMY_WEAPON(): ITargetSetBuilder<Weapon> {
             return new EntitySetBuilder<Weapon>( {
                 includePlayer: false,

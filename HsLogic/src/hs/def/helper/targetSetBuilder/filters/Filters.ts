@@ -2,11 +2,26 @@
 
 namespace Def.Filter {
 
-    export function OtherThan( otherThan: Entity ): IDefSetFilter<Entity> {
+    export function OtherThan( otherThan: Entity | Entity[] ): IDefSetFilter<Entity> {
         return ( source: ISource, entity: Entity, context: HsGameCtx ): boolean => {
-            return otherThan !== entity;
+
+            if ( otherThan instanceof Array )
+                for ( let entityFromArray of otherThan ) {
+                    if ( entityFromArray === entity )
+                        return false;
+                }
+            else
+                return otherThan !== entity;
         }
     }
+
+
+    export function OtherThanSource(): IDefSetFilter<Entity> {
+        return ( source: ISource, entity: Entity, context: HsGameCtx ): boolean => {
+            return source.entity !== entity;
+        }
+    }
+
 
     export function Attack( mode: FILTER_COMPARE_MODE, value: number ): IDefSetFilter<Character> {
         return ( source: ISource, entity: Character, context: HsGameCtx ): boolean => {
@@ -32,6 +47,7 @@ namespace Def.Filter {
                 throw new Error( `Unknown FILTER_COMPARE_MODE: ${mode}!` );
         }
     }
+
 
     export function Hp( mode: FILTER_COMPARE_MODE, value: number ): IDefSetFilter<Character> {
         return ( source: ISource, entity: Character, context: HsGameCtx ): boolean => {

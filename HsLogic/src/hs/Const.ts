@@ -10,7 +10,7 @@ namespace HsLogic {
         MINION,
         SPELL,
         HERO_POWER,
-        HERO,
+        PLAYER,
         NONE
     }
 }

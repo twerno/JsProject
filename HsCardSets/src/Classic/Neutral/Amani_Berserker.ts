@@ -11,10 +11,8 @@ namespace Def {
         cost: 2,
         attack: 2,
         health: 3,
-
-        rarity: RARITY.COMMON,
-        cardClass: CARD_CLASS.NEUTRAL,
         minion_type: MINION_TYPE.GENERAL,
+        metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.COMMON ),
 
         triggers: [
             enrage<EnrageContext>( {

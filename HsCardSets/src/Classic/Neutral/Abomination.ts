@@ -11,21 +11,15 @@ namespace Def {
         cost: 5,
         attack: 4,
         health: 4,
-
-        rarity: RARITY.RARE,
-        cardClass: CARD_CLASS.NEUTRAL,
         minion_type: MINION_TYPE.GENERAL,
+        metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.RARE ),
 
         triggers: [
             Deathrattle( {
 
                 action: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action => {
-                    let source: HsLogic.ISource = {
-                        action: event.param.source.action,
-                        caster: trigger.owner,
-                        sourceType: HsLogic.SOURCE_TYPE.MINION,
-                        sourceCard: trigger.sourceCard
-                    };
+                    let source: ISource = trigger.sourceCard.getSource();
+
                     return new HsLogic.CalculateAndDealDamage( {
                         source: source,
                         targets: TargetFinder.ANY_CHARACTER.buildSet( source, context ),

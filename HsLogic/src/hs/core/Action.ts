@@ -14,10 +14,10 @@ namespace HsLogic {
 
 
     export interface ISource {
-        action: jsLogic.IAction<HsGameCtx>,
-        caster: Player,
+        //action: jsLogic.IAction<HsGameCtx>,
+        player: Player,
         sourceType: SOURCE_TYPE,
-        sourceCard: Card
+        entity: HsEntity
     }
 
 

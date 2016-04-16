@@ -19,7 +19,7 @@ namespace Def {
 
             keyword: KEYWORD.ENRAGE,
 
-            disable_self_trigger_protection: true,
+            enable_self_trigger_protection: true,
 
             respondsTo: [HsLogic.event.Damage, HsLogic.event.Heal],
 

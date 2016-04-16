@@ -11,9 +11,7 @@ namespace Def {
     export interface ICard {
         name: string,
         cost: number,
-        rarity: RARITY,
-        uncollectible?: boolean,
-        cardClass: string,
+        metadata: IMetadata,
 
         triggers?: IDefTrigger[],
         tags?: TagClass[],

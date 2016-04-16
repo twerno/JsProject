@@ -46,6 +46,7 @@
     <TypeScriptCompile Include="src\hs\def\Aliases.ts" />
     <TypeScriptCompile Include="src\hs\def\Const.ts" />
     <TypeScriptCompile Include="src\hs\def\elements\IDefAction.ts" />
+    <TypeScriptCompile Include="src\hs\def\elements\IDefMetadata.ts" />
     <TypeScriptCompile Include="src\hs\def\elements\IDefEntities.ts" />
     <TypeScriptCompile Include="src\hs\def\elements\IDefTargetDefinition.ts" />
     <TypeScriptCompile Include="src\hs\def\elements\IDefTrigger.ts" />

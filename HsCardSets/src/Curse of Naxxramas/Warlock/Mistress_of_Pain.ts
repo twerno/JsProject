@@ -12,10 +12,9 @@ namespace Def {
         cost: 2,
         attack: 1,
         health: 4,
-
-        rarity: RARITY.RARE,
-        cardClass: CARD_CLASS.WARLOCK,
         minion_type: MINION_TYPE.DEMON,
+        metadata: metadata( CARD_CLASS.WARLOCK, CARD_RARITY.RARE ),
+
 
         triggers: [
             LifeLink()

@@ -23,6 +23,18 @@ namespace HsLogic {
             super( owner );
             def && this.initFromDefinition( def );
         }
+
+        getSource(): ISource {
+            return {
+                player: this.owner,
+                entity: this,
+                sourceType: this.getSourceType()
+            }
+        }
+
+        getSourceType(): SOURCE_TYPE {
+            return SOURCE_TYPE.NONE;
+        }
     }
 
 

@@ -14,7 +14,7 @@ namespace Def {
         ARCANE_MISSILE, MAD_BOMB, ARCANE_HEAL
     }
 
-    export enum RARITY {
+    export enum CARD_RARITY {
         //        FREE,
         COMMON,
         RARE,

@@ -8,9 +8,6 @@ namespace HsLogic {
         def: Def.ICard;
         name: string;
         baseCost: number;
-        rarity: Def.RARITY;
-        uncollectible: boolean;
-        cardClass: string;
 
         triggers: Trigger[];
         tags: ITags;
@@ -28,9 +25,6 @@ namespace HsLogic {
 
             this.name = def.name;
             this.baseCost = def.cost;
-            this.rarity = def.rarity;
-            this.uncollectible = def.uncollectible || false;
-            this.cardClass = def.cardClass || Def.CARD_CLASS.NEUTRAL;
 
             this.triggers = [];
             if ( def.triggers )
@@ -40,10 +34,10 @@ namespace HsLogic {
             if ( def.tags )
                 for ( let i = 0; i < def.tags.length; i++ )
                     this.tags.add( new def.tags[i]( {
-                        action: null,
-                        caster: this.owner,
+                        //action: null,
+                        player: this.owner,
                         sourceType: SOURCE_TYPE.NONE,
-                        sourceCard: this
+                        entity: this
                     }) );
         }
     }

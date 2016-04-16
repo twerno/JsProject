@@ -22,7 +22,7 @@ namespace Def {
 
         // http://hearthstone.gamepedia.com/Advanced_rulebook#Glossary
         // Humble safeguard: Minions are not allowed to trigger on themselves entering play.
-        disable_self_trigger_protection?: boolean,
+        enable_self_trigger_protection?: boolean,
 
         triggerable?: FTriggerable;
 

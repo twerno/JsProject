@@ -178,8 +178,8 @@ namespace HsLogic {
                     if ( param.target.body.hp() > 0 && param.target.body.hp() - param.amount <= 0 )
                         context.lethalMonitor.registerCandidate( param.target, param.source );
 
-                    if ( param.source.sourceCard instanceof Minion && param.damageState !== DAMAGE_STATE.PREVENTED )
-                        ( <Minion>param.source.sourceCard ).tags.removeAll( Def.Stealth_Tag );
+                    if ( param.source.entity instanceof Minion && param.damageState !== DAMAGE_STATE.PREVENTED )
+                        ( <Minion>param.source.entity ).tags.removeAll( Def.Stealth_Tag );
 
                     param.target.body.damages = Math.max( 0, param.target.body.damages + param.amount );
 

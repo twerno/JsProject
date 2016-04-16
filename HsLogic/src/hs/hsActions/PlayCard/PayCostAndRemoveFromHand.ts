@@ -16,7 +16,7 @@ namespace HsLogic {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        player: Player = param.source.caster,
+                        player: Player = param.source.player,
                         card: Card = param.card;
 
                     if ( player.filled_mana_crystals < card.baseCost )
