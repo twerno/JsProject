@@ -25,7 +25,7 @@ namespace Def {
 
                 return new HsLogic.CalculateAndHeal( {
                     source: param.source,
-                    targets: [trigger.owner],
+                    targets: [trigger.owner.hero],
                     amount: param.amount,
                     cancelAction: { value: false }
                 });

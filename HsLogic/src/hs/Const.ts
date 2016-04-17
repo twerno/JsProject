@@ -2,7 +2,7 @@
 
 namespace HsLogic {
 
-    export type Character = Player | Minion;
+    export type Character = Minion | Hero;
     export type Permanent = Character | Weapon;
 
 
@@ -11,6 +11,7 @@ namespace HsLogic {
         SPELL,
         HERO_POWER,
         PLAYER,
+        HERO,
         NONE
     }
 }

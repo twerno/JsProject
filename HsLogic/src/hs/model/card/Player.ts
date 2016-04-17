@@ -4,17 +4,12 @@
 
 namespace HsLogic {
 
-    export class Player extends Entity implements ILivingEntity {
-
-        def: Def.IMinion; //TODO
-        body: MinionBody = new MinionBody();
-
+    export class Player extends Entity {
 
         manaCrystals: number;
-
         filled_mana_crystals: number;
 
-        hero: any;
+        hero: Hero;
 
         heroPower: any;
 

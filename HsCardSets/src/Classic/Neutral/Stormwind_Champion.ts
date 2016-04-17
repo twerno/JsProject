@@ -16,7 +16,7 @@ namespace Def {
 
 
         triggers: [
-            AuraGenerator<Minion>( {
+            Aura<Minion>( {
                 auraType: AURA_TYPE.ATTACK_HEALTH,
 
                 targets: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Minion[] => {

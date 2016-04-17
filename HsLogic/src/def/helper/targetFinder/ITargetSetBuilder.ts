@@ -4,17 +4,17 @@
 
 namespace Def {
 
-    export type IDefSetFilter<T extends Entity> = ( source: ISource, entity: T, gameCtx: HsGameCtx ) => boolean;
+    export type ITargetSetBuilderFilter<T extends Entity> = ( source: ISource, entity: T, gameCtx: HsGameCtx ) => boolean;
 
 
     export abstract class ITargetSetBuilder<T extends Entity> {
 
-        private _filters: IDefSetFilter<T>[] = [];
+        private _filters: ITargetSetBuilderFilter<T>[] = [];
 
         protected abstract _internalBuildSet( source: ISource, gameCtx: HsGameCtx ): Entity[];
 
 
-        addFilter( filter: IDefSetFilter<T> ): ITargetSetBuilder<T> {
+        addFilter( filter: ITargetSetBuilderFilter<T> ): ITargetSetBuilder<T> {
             this._filters.push( filter );
             return this;
         }

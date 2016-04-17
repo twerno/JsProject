@@ -2,7 +2,7 @@
 
 namespace Def.Filter {
 
-    export function OtherThan( otherThan: Entity | Entity[] ): IDefSetFilter<Entity> {
+    export function OtherThan( otherThan: Entity | Entity[] ): ITargetSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
 
             if ( otherThan instanceof Array )
@@ -16,14 +16,14 @@ namespace Def.Filter {
     }
 
 
-    export function OtherThanSource(): IDefSetFilter<Entity> {
+    export function OtherThanSource(): ITargetSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
             return source.entity !== entity;
         }
     }
 
 
-    export function Attack( mode: FILTER_COMPARE_MODE, value: number ): IDefSetFilter<Character> {
+    export function Attack( mode: FILTER_COMPARE_MODE, value: number ): ITargetSetBuilderFilter<Character> {
         return ( source: ISource, entity: Character, gameCtx: HsGameCtx ): boolean => {
             if ( mode === FILTER_COMPARE_MODE.EQUAL_TO )
                 return entity.body.attack === value;
@@ -49,7 +49,7 @@ namespace Def.Filter {
     }
 
 
-    export function Hp( mode: FILTER_COMPARE_MODE, value: number ): IDefSetFilter<Character> {
+    export function Hp( mode: FILTER_COMPARE_MODE, value: number ): ITargetSetBuilderFilter<Character> {
         return ( source: ISource, entity: Character, gameCtx: HsGameCtx ): boolean => {
             if ( mode === FILTER_COMPARE_MODE.EQUAL_TO )
                 return entity.body.hp() === value;
@@ -75,14 +75,14 @@ namespace Def.Filter {
     }
 
 
-    export function TriggersOwnedBy( player: Player ): IDefSetFilter<Trigger> {
+    export function TriggersOwnedBy( player: Player ): ITargetSetBuilderFilter<Trigger> {
         return ( source: ISource, entity: Trigger, gameCtx: HsGameCtx ): boolean => {
             return entity.owner === player;
         }
     }
 
 
-    export function TriggersNotOwnedBy( player: Player ): IDefSetFilter<Trigger> {
+    export function TriggersNotOwnedBy( player: Player ): ITargetSetBuilderFilter<Trigger> {
         return ( source: ISource, entity: Trigger, gameCtx: HsGameCtx ): boolean => {
             return entity.owner !== player;
         }

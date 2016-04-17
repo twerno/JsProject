@@ -2,14 +2,14 @@
 
 namespace Def {
 
-    export interface IAuraGeneratorParam<T extends Permanent> {
+    export interface IAuraParam<T extends Permanent> {
         auraType: AURA_TYPE,
         targets: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ) => T[],
         rebuildAura: ( trigger: Trigger, targets: Permanent[], gameCtx: HsGameCtx ) => Enchantment[]
     }
 
 
-    export function AuraGenerator<T extends Permanent>( param: IAuraGeneratorParam<T> ): IDefTrigger {
+    export function Aura<T extends Permanent>( param: IAuraParam<T> ): IDefTrigger {
         let enchantments: Enchantment[] = [];
 
         return {

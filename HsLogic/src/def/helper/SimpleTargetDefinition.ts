@@ -1,4 +1,4 @@
-/// <reference path="../../elements/ideftargetdefinition.ts" />
+/// <reference path="../elements/ideftargetdefinition.ts" />
 
 "use strict";
 
