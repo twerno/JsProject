@@ -5,7 +5,7 @@ namespace HsLogic {
 
     export class MultistepHeal<P extends MultistepHealParam> extends Action<P> {
 
-        resolve( self: MultistepHeal<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: MultistepHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -19,7 +19,7 @@ namespace HsLogic {
                     }
 
                     if ( param.notifyEventMode === NOTIFY_MODE.AFTER_ALL_STEPS )
-                        actions.push( new DispatchSavedEvents( event.Heal, context ) );
+                        actions.push( new DispatchSavedEvents( event.Heal, gameCtx ) );
 
                     resolve( actions );
                 }

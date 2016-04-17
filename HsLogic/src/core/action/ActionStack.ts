@@ -2,7 +2,7 @@
 
 "use strict";
 
-namespace jsLogic {
+namespace jsAction {
 
     export type OnActionResolving = ( action: IAction<IContext>, resolvable: boolean ) => void;
     export type OnActionResolved = ( action: IAction<IContext>, executionTime?: number ) => void;
@@ -16,7 +16,7 @@ namespace jsLogic {
     }
 
     /**
-     *  ActionStack<IContext>
+     *  ActionStack<Icontext>
      * 
      */
     export class ActionStack {

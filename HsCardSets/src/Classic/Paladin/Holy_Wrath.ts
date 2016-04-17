@@ -15,16 +15,16 @@ namespace Def {
         spellTextAction: {
             targets: SINGLE_REQUIRED_TARGET( TargetFinder.ANY_SPELL_TARGETABLE_CHARACTER ),
 
-            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+            actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
                 let param: HsLogic.DrawParam = {
                     source: source,
                     targetPlayer: source.player
                 };
 
                 return [
-                    context.actionFactory.drawCard( param ),
+                    gameCtx.actionFactory.drawCard( param ),
 
-                    new jsLogic.InlineActionExt(
+                    new HsLogic.InlineActionExt(
                         (): boolean => { return param.drawnCard !== null },
                         ( resolve, reject ): void => {
                             resolve(

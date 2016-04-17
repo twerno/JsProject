@@ -1,4 +1,4 @@
-/// <reference path="../../hs/model/tag.ts" />
+/// <reference path="../../hs/model/mechanic/tag.ts" />
 ///<reference path="../Aliases.ts"/>
 
 "use strict";

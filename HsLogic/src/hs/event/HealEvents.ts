@@ -11,7 +11,7 @@ namespace HsLogic.event {
 
     export class Heal<P extends HealParam> extends ActionEvent<P> {
 
-        valid( context: HsGameCtx ): boolean {
+        valid( gameCtx: HsGameCtx ): boolean {
             return this.param.healState === HEAL_STATE.HEALED
                 && this.param.amount > 0;
         }

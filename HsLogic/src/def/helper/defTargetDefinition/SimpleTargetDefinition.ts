@@ -18,25 +18,25 @@ namespace Def {
 
     export class SimpleTargetDefinition extends IDefTargetDefinition<TargetDefinitionParam> {
 
-        availableTargets( source: ISource, context: HsGameCtx ): Permanent[] {
-            return this.param.availableTargets.buildSet( source, context );
+        availableTargets( source: ISource, gameCtx: HsGameCtx ): Permanent[] {
+            return this.param.availableTargets.buildSet( source, gameCtx );
         }
 
 
-        isAvailibleTargetsSetValid( availableTargets: Permanent[], context: HsGameCtx ): boolean {
+        isAvailibleTargetsSetValid( availableTargets: Permanent[], gameCtx: HsGameCtx ): boolean {
             return availableTargets.length >= ( this.param.availibleTargetsRequiredNumber || 0 );
         }
 
 
-        acquireTargetsAction( param: AcquireTargetsActionParam, context: HsGameCtx ): Action {
+        acquireTargetsAction( param: AcquireTargetsActionParam, gameCtx: HsGameCtx ): Action {
             if ( this.param.pickMode === PICK_MODE.RANDOM )
-                return context.actionFactory.makeAChoice.singleTarget( param );
+                return gameCtx.actionFactory.makeAChoice.singleTarget( param );
             else
-                return context.actionFactory.makeAChoice.singleTarget( param );
+                return gameCtx.actionFactory.makeAChoice.singleTarget( param );
         }
 
 
-        arePickedTargetsValid( availableTargets: Permanent[], picked: Permanent[], context: HsGameCtx ): boolean {
+        arePickedTargetsValid( availableTargets: Permanent[], picked: Permanent[], gameCtx: HsGameCtx ): boolean {
             return ( this.param.availibleTargetsRequiredNumber === 0 && ( picked.length in [0, this.param.numberOfTargets] ) )
                 || picked.length === this.param.availibleTargetsRequiredNumber;
         }

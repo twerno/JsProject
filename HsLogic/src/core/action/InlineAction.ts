@@ -1,12 +1,16 @@
-///<reference path="ActionCommons.ts"/>
+/// <reference path="iAction.ts" />
 
 "use strict";
 
-namespace jsLogic {
+namespace jsAction {
 
     export type FPromiseExecutor<T> = ( resolve: ( value?: T | PromiseLike<T> ) => void, reject: ( reason?: any ) => void ) => void;
 
 
+    /**
+     *  InlineAction<Icontext>
+     * 
+     */
     export class InlineAction<T extends IContext> extends IAction<T> {
 
         resolve( self: InlineAction<T>, context: T ): Promise<IAction<IContext> | IAction<IContext>[]> {
@@ -18,6 +22,10 @@ namespace jsLogic {
     }
 
 
+    /**
+     *  InlineActionExt<Icontext>
+     * 
+     */
     export class InlineActionExt<T extends IContext> extends InlineAction<T> {
 
         resolvable( context: T ): boolean {
@@ -26,6 +34,7 @@ namespace jsLogic {
             else
                 return super.resolvable( context );
         }
+
 
         constructor( protected resolvableCheck: () => boolean, executor: FPromiseExecutor<IActionType | IActionType[]> ) {
             super( executor );

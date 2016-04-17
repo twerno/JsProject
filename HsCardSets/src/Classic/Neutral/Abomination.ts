@@ -17,12 +17,12 @@ namespace Def {
         triggers: [
             Deathrattle( {
 
-                action: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action => {
+                action: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {
                     let source: ISource = trigger.sourceCard.getSource();
 
                     return new HsLogic.CalculateAndDealDamage( {
                         source: source,
-                        targets: TargetFinder.ANY_CHARACTER.buildSet( source, context ),
+                        targets: TargetFinder.ANY_CHARACTER.buildSet( source, gameCtx ),
                         amount: 4,
                         damageType: DAMAGE_TYPE.DIRECT
                     });

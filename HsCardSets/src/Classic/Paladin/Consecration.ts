@@ -14,14 +14,14 @@ namespace Def {
         spellTextAction: {
             targets: null,
 
-            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+            actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
                     new HsLogic.CalculateAndDealDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         amount: 2,
-                        targets: TargetFinder.EMEMY_CHARACTER.buildSet( source, context )
+                        targets: TargetFinder.EMEMY_CHARACTER.buildSet( source, gameCtx )
                     })
                 ];
 

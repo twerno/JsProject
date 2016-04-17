@@ -10,7 +10,7 @@ namespace HsLogic {
      */
     export class CalculateAndHeal<P extends HealTargetsParam> extends Action<P> {
 
-        resolve( self: CalculateAndHeal<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: CalculateAndHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -41,7 +41,7 @@ namespace HsLogic {
 
 
                     if ( param.notifyMode = NOTIFY_MODE.AFTER_ALL_ACTIONS )
-                        actions.push( new DispatchSavedEvents( event.Heal, context ) );
+                        actions.push( new DispatchSavedEvents( event.Heal, gameCtx ) );
 
                     resolve( actions );
                 }
@@ -61,7 +61,7 @@ namespace HsLogic {
      */
     export class CalculateHeal<P extends CalculateHealParam> extends Action<P> {
 
-        resolve( self: CalculateHeal<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: CalculateHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -72,7 +72,7 @@ namespace HsLogic {
 
 
                     // Auchenai Soulpriest
-                    actions.push( new event.PreHealCalculationEvent( param ).dispatch( context ) );
+                    actions.push( new event.PreHealCalculationEvent( param ).dispatch( gameCtx ) );
 
 
                     // calculate heal
@@ -83,17 +83,17 @@ namespace HsLogic {
                         ( resolve, reject ): void => {
 
                             if ( param.customHealPowerCalculator )
-                                param.amount = param.customHealPowerCalculator( param, context );
+                                param.amount = param.customHealPowerCalculator( param, gameCtx );
                             else
-                                param.amount += context.powerMgr.getHealPower( param.source );
+                                param.amount += gameCtx.powerMgr.getHealPower( param.source );
 
-                            resolve( jsLogic.NO_CONSEQUENCES );
+                            resolve( jsAction.NO_CONSEQUENCES );
                         }
                     ) );
 
 
                     // Prophet Velens
-                    actions.push( new event.PostHealCalculationEvent( param ).dispatch( context ) );
+                    actions.push( new event.PostHealCalculationEvent( param ).dispatch( gameCtx ) );
 
                     resolve( actions );
                 }
@@ -111,7 +111,7 @@ namespace HsLogic {
      */
     export class Heal<P extends HealParam> extends Action<P> {
 
-        resolve( self: Heal<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: Heal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -120,12 +120,12 @@ namespace HsLogic {
 
                     param.amount = Math.max( 0, param.amount );
 
-                    actions.push( new event.PreHealPhase( param ).dispatch( context ) );
+                    actions.push( new event.PreHealPhase( param ).dispatch( gameCtx ) );
 
                     actions.push( new InternalHeal( param ) );
 
                     actions.push( new event.Heal( param )
-                        .dispatchOrSave( context, (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
+                        .dispatchOrSave( gameCtx, (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
                     );
 
                     resolve( actions );
@@ -144,7 +144,7 @@ namespace HsLogic {
      */
     class InternalHeal<P extends HealParam> extends Action<P> {
 
-        resolve( self: InternalHeal<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: InternalHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -162,7 +162,7 @@ namespace HsLogic {
 
                     param.target.body.damages = Math.max( 0, param.target.body.damages - param.amount );
 
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    resolve( jsAction.NO_CONSEQUENCES );
                 }
             ); // return new Promise
 

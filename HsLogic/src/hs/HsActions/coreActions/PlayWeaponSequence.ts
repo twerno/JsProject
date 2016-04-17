@@ -23,23 +23,23 @@ namespace HsLogic {
 
     export class PlayWeaponSequence<P extends PlayWeaponParam> extends Action<P> {
 
-        resolve( self: PlayWeaponSequence<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayWeaponSequence<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
-                return Promise.resolve( jsLogic.NO_CONSEQUENCES );
+                return Promise.resolve( jsAction.NO_CONSEQUENCES );
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [],
-                        weaponZone: HsZone<Weapon> = context.zonesOf( param.player ).weapon,
+                        weaponZone: Zone<Weapon> = gameCtx.gameBoard.zonesOf( param.player ).weapon,
                         oldWeapon: Weapon = weaponZone.getRawArray()[0] || null;
 
                     // pay cost & remove from hand
-                    actions.push( context.actionFactory.payCostAndRemoveFromHand( param ) );
+                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
                     actions.push(
-                        //context.actionFactory.dispatch( new OnPlayPhaseEvent( param ) )
+                        //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) )
                     );
 
                     // step 3 - equipping Phase
@@ -47,7 +47,7 @@ namespace HsLogic {
                     // destroy old weapon
                     if ( oldWeapon ) {
                         weaponZone.removeEntity( oldWeapon );
-                        context.zonesOf( param.player ).graveyard.addEntity( oldWeapon );
+                        gameCtx.gameBoard.zonesOf( param.player ).graveyard.addEntity( oldWeapon );
                     }
 
                     // equip new weapon

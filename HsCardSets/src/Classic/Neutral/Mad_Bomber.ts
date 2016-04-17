@@ -16,7 +16,7 @@ namespace Def {
 
         battlecry: {
             targets: null,
-            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+            actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
                 return [
                     new HsLogic.CalculateAndSplitDamage( {
                         source: source,

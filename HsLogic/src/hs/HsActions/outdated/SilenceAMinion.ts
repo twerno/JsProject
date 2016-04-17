@@ -13,7 +13,7 @@ namespace HsLogic {
  	 */
     export class SilenceAMinion<P extends ISilenceAMinionParam> extends Action<P> {
 
-        resolve( self: SilenceAMinion<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: SilenceAMinion<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -44,9 +44,9 @@ namespace HsLogic {
                     //                    minion.counters = {};
                     //                    minion.markers = new jsLogic.MarkersList();
 
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    resolve( jsAction.NO_CONSEQUENCES );
                     //                    resolve([
-                    //                        context.actionFactory.executeTargetlessTriggers({
+                    //                        gameCtx.actionFactory.executeTargetlessTriggers({
                     //                            source: param.source,
                     //                            defActions: triggers
                     //                        })

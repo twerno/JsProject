@@ -15,7 +15,7 @@ namespace Def {
         spellTextAction: {
             targets: SINGLE_REQUIRED_TARGET( TargetFinder.FRIENDLY_SPELL_TARGETABLE_MINION ),
 
-            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+            actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
                 let actions: Action[] = [];
 
                 for ( let target of targets )

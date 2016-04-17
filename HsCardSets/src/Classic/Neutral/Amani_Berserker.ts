@@ -17,7 +17,7 @@ namespace Def {
         triggers: [
             enrage( {
 
-                enrage: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): HsLogic.Enchantment<Permanent> => {
+                enrage: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): HsLogic.Enchantment<Permanent> => {
                     return new HsLogic.AttackHealthEnchantment( event.param.source, <Character>trigger.attachedTo )
                         .init( { attack: 3, health: 0 });
                 }

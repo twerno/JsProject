@@ -13,14 +13,14 @@ namespace Def {
             respondsTo: [HsLogic.event.Damage],
 
 
-            triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
+            triggerable: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): boolean => {
                 return event instanceof HsLogic.event.Damage
                     && event.param.source.sourceCard === trigger.sourceCard
                     && event.param.amount > 0;
             },
 
 
-            actionBuilder( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action | Action[] {
+            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] {
                 let param: HsLogic.DamageParam = <HsLogic.DamageParam>event.param;
 
                 return new HsLogic.CalculateAndHeal( {

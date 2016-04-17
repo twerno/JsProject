@@ -15,14 +15,14 @@
 //
 //    export class TwoStepsTargetsDefAction<T extends HsLogic.HsEntity> extends SingleTargetDefAction<T> {
 //
-//        actions( source: ISource, targets: ITargets, context: HsGameCtx ): Action[] {
-//            let result: Action[] = super.actions( source, targets, context ),
+//        actions( source: ISource, targets: ITargets, gameCtx: HsGameCtx ): Action[] {
+//            let result: Action[] = super.actions( source, targets, gameCtx ),
 //                step1Target: T = this.getSingleTarget( targets );
 //
 //
 //            if ( step1Target !== null ) {
-//                let step2Targets: T[] = <T[]>this.twoStepParam.step2.availableTargets( step1Target ).buildSet( source, context );
-//                result.concat( this.twoStepParam.step2.actionBuilder( source, step2Targets, context ) );
+//                let step2Targets: T[] = <T[]>this.twoStepParam.step2.availableTargets( step1Target ).buildSet( source, gameCtx );
+//                result.concat( this.twoStepParam.step2.actionBuilder( source, step2Targets, gameCtx ) );
 //            }
 //
 //            return result;

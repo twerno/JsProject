@@ -16,14 +16,14 @@ namespace Def {
             respondsTo: [HsLogic.event.Death],
 
 
-            triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
+            triggerable: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): boolean => {
                 return event instanceof HsLogic.event.Death
                     && event.param.target === trigger.sourceCard;
             },
 
 
-            actionBuilder( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action | Action[] {
-                return param.action( trigger, event, context );
+            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] {
+                return param.action( trigger, event, gameCtx );
             }
         }
     }

@@ -19,13 +19,13 @@ namespace HsLogic {
         }
 
 
-        resolvable( context: HsGameCtx ): boolean {
+        resolvable( gameCtx: HsGameCtx ): boolean {
             return this.event
-                && this.event.valid( context );
+                && this.event.valid( gameCtx );
         }
 
 
-        resolve( self: DispatchEvent, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: DispatchEvent, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -36,8 +36,8 @@ namespace HsLogic {
 
                     // Dominant Player === active player (for sake of simplicity)
                     // Dominant Player Triggers
-                    triggers = self._getDominantPlayerTriggers( context.activePlayer )
-                        .buildSet( param.source, context );
+                    triggers = self._getDominantPlayerTriggers( gameCtx.activePlayer )
+                        .buildSet( param.source, gameCtx );
 
                     // Dominant Player Queue
                     actions.push( new ProcessQueue( {
@@ -53,8 +53,8 @@ namespace HsLogic {
 
                         // Double safeguard
                         // Subtrack triggers that already had been triggered by dominant player
-                        triggers = self._getSecondaryPlayerTriggers( context.activePlayer, doneByDominantPlayer )
-                            .buildSet( param.source, context );
+                        triggers = self._getSecondaryPlayerTriggers( gameCtx.activePlayer, doneByDominantPlayer )
+                            .buildSet( param.source, gameCtx );
 
                         // Secondary Player Queue
                         actions.push( new ProcessQueue( {
@@ -83,7 +83,7 @@ namespace HsLogic {
                 .addFilter( Def.Filter.TriggersNotOwnedBy( player ) )
 
                 // Double safeguard
-                .addFilter(( source: ISource, trigger: Trigger, context: HsGameCtx ): boolean => {
+                .addFilter(( source: ISource, trigger: Trigger, gameCtx: HsGameCtx ): boolean => {
                     return triggeredByDominantPlayer.indexOf( trigger ) === -1;
                 });
         }
@@ -100,7 +100,7 @@ namespace HsLogic {
 
     class ProcessQueue<P extends QueueParam> extends Action<P> {
 
-        resolve( self: ProcessQueue<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: ProcessQueue<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -112,11 +112,11 @@ namespace HsLogic {
 
                         actions.push( new InlineActionExt(
                             (): boolean => {
-                                return trigger.triggerable( trigger, param.event, context );
+                                return trigger.triggerable( trigger, param.event, gameCtx );
                             },
                             ( resolve, reject ): void => {
                                 param.done.push( trigger );
-                                resolve( trigger.actionBuilder( trigger, param.event, context ) );
+                                resolve( trigger.actionBuilder( trigger, param.event, gameCtx ) );
                             }
                         ) );
                     }

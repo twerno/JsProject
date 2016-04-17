@@ -9,23 +9,16 @@ namespace HsLogic {
         has( eventClass: ActionEventClass ): boolean;
     }
 
-    export interface IPendingEvents {
-        summon: event.Summon[],
-        death: ActionEvent<IActionParam>[],
-        //general: ActionEvent<IActionParam>[]
-    }
 
-    export interface PowerMgr {
+
+    export interface IPowerMgr {
         getHealPower( source: ISource ): number;
         getDamagePower( source: ISource, damageType: Def.DAMAGE_TYPE ): number;
     }
 
-    //export interface LethalMonitorElement {
-    //    target: Character,
-    //    SourceBuffer: ISource
-    //}
 
-    export interface LethalMonitor {
+
+    export interface ILethalMonitor {
         registerCandidate( target: Character, source: ISource ): void;
         clear(): void;
         getSourceFor( target: Character ): ISource;

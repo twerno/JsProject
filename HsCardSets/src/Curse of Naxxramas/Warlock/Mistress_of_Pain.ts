@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Mistress_of_Pain: IMinion = curseSet.registerCard<IMinion>( {
+    var Mistress_of_Pain: IMinion = naxxSet.registerCard<IMinion>( {
 
         name: `Mistress of Pain`,
 

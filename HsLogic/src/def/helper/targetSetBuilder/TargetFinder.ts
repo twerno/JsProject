@@ -38,7 +38,7 @@ namespace Def {
         static get EMEMY_WEAPON(): ITargetSetBuilder<Weapon> {
             return new EntitySetBuilder<Weapon>( {
                 includePlayer: false,
-                zones: ( zones: HsZones ): HsZone[] => { return [zones.weapon] }
+                zones: ( zones: Zones ): Zone[] => { return [zones.weapon] }
             })
                 .addFilter( Filter.enemy );
         }
@@ -76,7 +76,7 @@ namespace Def {
         static get FRIENDLY_WEAPON(): ITargetSetBuilder<Weapon> {
             return new EntitySetBuilder<Weapon>( {
                 includePlayer: false,
-                zones: ( zones: HsZones ): HsZone[] => { return [zones.weapon] }
+                zones: ( zones: Zones ): Zone[] => { return [zones.weapon] }
             })
                 .addFilter( Filter.friendly );
         }
@@ -85,7 +85,7 @@ namespace Def {
         static get ANY_CHARACTER(): ITargetSetBuilder<Character> {
             return new EntitySetBuilder<Character>( {
                 includePlayer: true,
-                zones: ( zones: HsZones ): HsZone[] => { return [zones.battlefield] }
+                zones: ( zones: Zones ): Zone[] => { return [zones.battlefield] }
             });
         }
 
@@ -99,7 +99,7 @@ namespace Def {
         static get ANY_MINION(): ITargetSetBuilder<Minion> {
             return new EntitySetBuilder<Minion>( {
                 includePlayer: false,
-                zones: ( zones: HsZones ): HsZone[] => { return [zones.battlefield] }
+                zones: ( zones: Zones ): Zone[] => { return [zones.battlefield] }
             })
                 .addFilter( Filter.minion );
         }

@@ -12,13 +12,13 @@ namespace HsLogic {
     export abstract class ActionEvent<P extends IActionParam> {
         get type(): string { return ClassUtils.getNameOfClass( this ) }
 
-        valid( context: HsGameCtx ): boolean { return true }
+        valid( gameCtx: HsGameCtx ): boolean { return true }
 
-        dispatch( context: HsGameCtx ): ActionType {
+        dispatch( gameCtx: HsGameCtx ): ActionType {
             return new DispatchEvent( this );
         }
 
-        dispatchOrSave( context: HsGameCtx, check: () => boolean ): ActionType {
+        dispatchOrSave( gameCtx: HsGameCtx, check: () => boolean ): ActionType {
             let param: P = this.param,
                 self: ActionEvent<P> = this;
 
@@ -26,8 +26,8 @@ namespace HsLogic {
                 if ( check && check() )
                     resolve( new DispatchEvent( self ) );
                 else {
-                    context.eventMgr.save( self );
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    gameCtx.eventMgr.save( self );
+                    resolve( jsAction.NO_CONSEQUENCES );
                 }
             });
         }
@@ -41,7 +41,7 @@ namespace HsLogic {
 
     export abstract class CancelableEvent<P extends IHsCancelableParam> extends ActionEvent<P> {
 
-        valid( context: HsGameCtx ): boolean {
+        valid( gameCtx: HsGameCtx ): boolean {
             return this.param.cancelAction.value;
         }
     }

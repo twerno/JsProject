@@ -19,13 +19,13 @@ namespace Def {
             AuraGenerator<Minion>( {
                 auraType: AURA_TYPE.ATTACK_HEALTH,
 
-                targets: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Minion[] => {
+                targets: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Minion[] => {
                     return TargetFinder.FRIENDLY_MINION
                         .addFilter( Filter.OtherThan( trigger.sourceCard ) )
-                        .buildSet( trigger.getSource(), context );
+                        .buildSet( trigger.getSource(), gameCtx );
                 },
 
-                rebuildAura: ( trigger: Trigger, targets: Minion[], context: HsGameCtx ): Enchantment[] => {
+                rebuildAura: ( trigger: Trigger, targets: Minion[], gameCtx: HsGameCtx ): Enchantment[] => {
                     let result: Enchantment[] = [];
 
                     targets.forEach(( minion ) => {

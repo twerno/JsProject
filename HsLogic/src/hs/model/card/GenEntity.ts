@@ -1,12 +1,11 @@
-///<reference path="../../core/Entity.ts"/>
-
+/// <reference path="../../../core/entity.ts" />
 
 "use strict";
 
 namespace HsLogic {
 
 
-    export class HsEntity extends jsLogic.Entity {
+    export class Entity extends jsAction.Entity {
         def: Object;
 
         orderOfPlay: number;
@@ -48,12 +47,7 @@ namespace HsLogic {
         return ++_orderOfPlayGenerator;
     }
 
-    export class MinionBody {
-        hp(): number { return this.hp() - this.damages };
-        health: number;
-        attack: number;
-        damages: number;
-    }
+
 
     export interface ILivingEntity {
         def: { attack: number, health: number },

@@ -5,7 +5,7 @@
 namespace HsLogic {
 
     export interface ITargetsParam extends IActionParam {
-        targets: HsEntity[],
+        targets: Entity[],
     }
 
     export interface ICharactersParam extends IActionParam {
@@ -13,7 +13,7 @@ namespace HsLogic {
     }
 
     export interface ISingleTargetParam extends IActionParam {
-        target: HsEntity,
+        target: Entity,
     }
 
     export interface ISingleCharacterParam extends IActionParam {
@@ -24,7 +24,7 @@ namespace HsLogic {
 
     export class HsEnchantmentActionFactory<T extends HsGameCtx> {
 
-        freeze( param: ICharactersParam ): jsLogic.IAction<T> {
+        freeze( param: ICharactersParam ): jsAction.IAction<T> {
             return null;
         }
     }

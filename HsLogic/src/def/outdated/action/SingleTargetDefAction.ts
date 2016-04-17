@@ -22,19 +22,19 @@
 //                return null;
 //        }
 //
-//        acquireTargets( param: HsCancelableParam, targets: ITarget, context: HsGameCtx ): Action {
-//            return context.actionFactory.makeAChoice.singleTarget( {
+//        acquireTargets( param: HsCancelableParam, targets: ITarget, gameCtx: HsGameCtx ): Action {
+//            return gameCtx.actionFactory.makeAChoice.singleTarget( {
 //                source: param.source,
 //                cancelAction: param.cancelAction,
 //                sets: {
-//                    source: this.param.availableTargets.buildSet<Entity>( param.source, context ),
+//                    source: this.param.availableTargets.buildSet<Entity>( param.source, gameCtx ),
 //                    result: targets.target
 //                },
 //            })
 //        }
 //
-//        actions( source: ISource, targets: ITargets, context: HsGameCtx ): Action[] {
-//            return this.param.actionBuilder( source, this.getSingleTarget( targets ), context );
+//        actions( source: ISource, targets: ITargets, gameCtx: HsGameCtx ): Action[] {
+//            return this.param.actionBuilder( source, this.getSingleTarget( targets ), gameCtx );
 //        }
 //
 //        constructor( public param: ISingleTargetParam<T> ) { super() }

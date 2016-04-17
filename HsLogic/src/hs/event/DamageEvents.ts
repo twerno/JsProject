@@ -6,7 +6,7 @@ namespace HsLogic.event {
 
     export class Damage<P extends DamageParam> extends ActionEvent<P> {
 
-        valid( context: HsGameCtx ): boolean {
+        valid( gameCtx: HsGameCtx ): boolean {
             return this.param.damageState === DAMAGE_STATE.DEALT
                 && this.param.amount > 0;
         }

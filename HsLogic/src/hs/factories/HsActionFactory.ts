@@ -1,5 +1,4 @@
-///<reference path="../core/HsZone.ts"/>
-
+/// <reference path="../model/zone.ts" />
 
 "use strict";
 
@@ -20,7 +19,7 @@ namespace HsLogic {
         get makeAChoice(): MakeChoiceActionFactory<T> { return this._makeAChoice }
 
 
-        silenceAMinion( param: ISilenceAMinionParam ): jsLogic.IAction<T> {
+        silenceAMinion( param: ISilenceAMinionParam ): jsAction.IAction<T> {
             return new SilenceAMinion( param );
         }
 
@@ -77,19 +76,19 @@ namespace HsLogic {
             return new PayCostAndRemoveFromHand( param );
         }
 
-        playCard( param: PlayCardParam ): jsLogic.IAction<T> {
+        playCard( param: PlayCardParam ): jsAction.IAction<T> {
             return new PlayCardSequence( param );
         }
 
-        playMinion( param: PlayMinionParam ): jsLogic.IAction<T> {
+        playMinion( param: PlayMinionParam ): jsAction.IAction<T> {
             return new PlayMinionSequence( param );
         }
 
-        playSpell( param: PlaySpellParam ): jsLogic.IAction<T> {
+        playSpell( param: PlaySpellParam ): jsAction.IAction<T> {
             return new PlaySpellSequence( param );
         }
 
-        playWeapon( param: PlayWeaponParam ): jsLogic.IAction<T> {
+        playWeapon( param: PlayWeaponParam ): jsAction.IAction<T> {
             return new PlayWeaponSequence( param );
         }
     }

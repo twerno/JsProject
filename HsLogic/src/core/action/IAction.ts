@@ -1,8 +1,19 @@
-///<reference path="ActionCommons.ts"/>
-
 "use strict";
 
-namespace jsLogic {
+namespace jsAction {
+
+    export type IActionType = IAction<IContext>;
+    export type PromiseOfActions = Promise<IActionType | IActionType[]>;
+
+    export interface IContext { }
+
+    export const NO_CONSEQUENCES: any = null;
+
+    export const UNLIMITED: number = 0;
+    export const _30_SECONDS: number = 30 * 1000;
+    export const _10_SECONDS: number = 10 * 1000;
+    export const _5_SECONDS: number = 5 * 1000;
+
 
 	/**
      *  IAction<T>
@@ -15,12 +26,7 @@ namespace jsLogic {
         // first on results list are first to resolve
         abstract resolve( self: IActionType, context: T ): Promise<IAction<IContext> | IAction<IContext>[]>;
 
-
-        //constructor( public source: ISource ) { }
-
-
         resolvable( context: T ): boolean { return true }
-
 
         get timelimit(): number { return _5_SECONDS; }
         get className(): string { return ClassUtils.getNameOfClass( this ) }

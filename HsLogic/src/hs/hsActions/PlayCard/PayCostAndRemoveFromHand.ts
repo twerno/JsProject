@@ -9,7 +9,7 @@ namespace HsLogic {
  	 */
     export class PayCostAndRemoveFromHand<P extends PlayCardParam> extends Action<P> {
 
-        resolve( self: PayCostAndRemoveFromHand<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: PayCostAndRemoveFromHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
                 return Promise.resolve( [] );
 
@@ -24,9 +24,9 @@ namespace HsLogic {
 
                     player.filled_mana_crystals -= card.baseCost;
 
-                    context.zonesOf( player ).hand.removeEntity( card );
+                    gameCtx.gameBoard.zonesOf( player ).hand.removeEntity( card );
 
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    resolve( jsAction.NO_CONSEQUENCES );
                 }
             ); // return new Promise
 

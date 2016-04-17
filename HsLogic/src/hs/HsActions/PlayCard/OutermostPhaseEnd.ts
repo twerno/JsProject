@@ -27,7 +27,7 @@ namespace HsLogic {
  	 */
     export class OutermostPhaseEnd<P extends IActionParam> extends Action<P> {
 
-        resolve( self: OutermostPhaseEnd<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: OutermostPhaseEnd<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
@@ -42,7 +42,7 @@ namespace HsLogic {
 
 
                     // 2. SummonResolutionStep 
-                    actions.push( new DispatchSavedEvents( event.Summon, context ) );
+                    actions.push( new DispatchSavedEvents( event.Summon, gameCtx ) );
 
 
                     // 3. aura Update (Health/Attack) Step
@@ -80,16 +80,16 @@ namespace HsLogic {
  	 */
     export class DeathPhase<P extends IActionParam> extends Action<P> {
 
-        resolvable( context: HsGameCtx ): boolean {
+        resolvable( gameCtx: HsGameCtx ): boolean {
             return Def.TargetFinder.ANY_MINION
-                .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
+                .addFilter(( source: ISource, minion: Entity, gameCtx: HsGameCtx ): boolean => {
                     return minion instanceof HsLogic.Minion
                         && ( minion.body.hp() <= 0
                             || minion.tags.has( Def.Pending_Destroy_Tag ) );
-                }).buildSet( null, context ).length > 0
+                }).buildSet( null, gameCtx ).length > 0
         }
 
-        resolve( self: DeathPhase<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: DeathPhase<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
@@ -117,7 +117,7 @@ namespace HsLogic {
 
 
                     // 4. Process DeathEvents: deathrattle, onDeath, secrets
-                    actions.push( new DispatchSavedEvents( event.Death, context ) );
+                    actions.push( new DispatchSavedEvents( event.Death, gameCtx ) );
 
 
                     // 5. check for pending_destroy or lethal damage and rerun DeathPhase

@@ -15,12 +15,12 @@ namespace HsLogic {
  	 */
     export class Discard<P extends PlayerAndCardParam> extends Action<P> {
 
-        resolve( self: Discard<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: Discard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        zones: HsZones = context.zonesOf( param.player );
+                        zones: Zones = gameCtx.gameBoard.zonesOf( param.player );
 
                     if ( !param || !param.card ) {
                         reject( new Error( `No card to discard!` ) );
@@ -31,7 +31,7 @@ namespace HsLogic {
                     zones.graveyard.addEntity( param.card );
 
                     resolve( [
-                        //context.actionFactory.dispatch<HsGameCtx, P>( new OnAfterDiscardEvent<P>( param ) )
+                        //gameCtx.actionFactory.dispatch<HsGameCtx, P>( new OnAfterDiscardEvent<P>( param ) )
                     ] );
                 });
         }

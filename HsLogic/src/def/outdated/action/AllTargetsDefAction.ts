@@ -14,13 +14,13 @@
 //            return <T[]>( ( targets && targets.targets ) || [] );
 //        }
 //
-//        acquireTargets( param: HsCancelableParam, targets: ITargets, context: HsGameCtx ): Action {
-//            targets.targets = this.param.availableTargets.buildSet<HsLogic.HsEntity>( param.source, context );
+//        acquireTargets( param: HsCancelableParam, targets: ITargets, gameCtx: HsGameCtx ): Action {
+//            targets.targets = this.param.availableTargets.buildSet<HsLogic.HsEntity>( param.source, gameCtx );
 //            return null;
 //        }
 //
-//        actions( source: ISource, targets: ITargets, context: HsGameCtx ): Action[] {
-//            return this.param.actionBuilder( source, this.getAllTargets( targets ), context );
+//        actions( source: ISource, targets: ITargets, gameCtx: HsGameCtx ): Action[] {
+//            return this.param.actionBuilder( source, this.getAllTargets( targets ), gameCtx );
 //        }
 //
 //        constructor( public param: IAllTargetsParam<T> ) { super() }

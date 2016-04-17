@@ -30,9 +30,9 @@ namespace HsLogic {
  	 */
     export class PlayCardSequence extends Action<PlayCardParam> {
 
-        resolve( self: PlayCardSequence, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayCardSequence, gameCtx: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
-                return Promise.resolve( jsLogic.NO_CONSEQUENCES );
+                return Promise.resolve( jsAction.NO_CONSEQUENCES );
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -41,13 +41,13 @@ namespace HsLogic {
 
                     // delegate to playSpell, playMinon or playWeapon action
                     if ( param.card instanceof Minion )
-                        actions.push( context.actionFactory.playMinion( <PlayMinionParam>param ) );
+                        actions.push( gameCtx.actionFactory.playMinion( <PlayMinionParam>param ) );
 
                     else if ( param.card instanceof Spell )
-                        actions.push( context.actionFactory.playSpell( <PlaySpellParam>param ) );
+                        actions.push( gameCtx.actionFactory.playSpell( <PlaySpellParam>param ) );
 
                     else if ( param.card instanceof Weapon )
-                        actions.push( context.actionFactory.playWeapon( <PlayWeaponParam>param ) );
+                        actions.push( gameCtx.actionFactory.playWeapon( <PlayWeaponParam>param ) );
 
                     else
                         reject( new Error( `Unsuported object class: ${param.card}` ) );

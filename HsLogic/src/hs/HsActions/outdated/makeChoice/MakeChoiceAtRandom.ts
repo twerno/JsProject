@@ -3,12 +3,12 @@
 
 namespace HsLogic {
 
-    export interface IChooseActionParamSets<T extends HsEntity> {
+    export interface IChooseActionParamSets<T extends Entity> {
         source: T[],
         result: T[]
     }
 
-    export interface MakeAChoiceAtRandomParam<T extends HsEntity> extends IActionParam {
+    export interface MakeAChoiceAtRandomParam<T extends Entity> extends IActionParam {
         sets: IChooseActionParamSets<T>,
         props: MathUtils.ISelectAtRandomProperties
     }
@@ -18,15 +18,15 @@ namespace HsLogic {
      * MakeChoiceAtRandom
      *
  	 */
-    export class MakeChoiceAtRandom<T extends HsEntity, P extends MakeAChoiceAtRandomParam<T>> extends Action<P> {
-        resolve( self: MakeChoiceAtRandom<T, P>, context: HsGameCtx ): PromiseOfActions {
+    export class MakeChoiceAtRandom<T extends Entity, P extends MakeAChoiceAtRandomParam<T>> extends Action<P> {
+        resolve( self: MakeChoiceAtRandom<T, P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param;
 
                     param.sets.result.concat( MathUtils.selectAtRandom<T>( param.sets.source, param.props ) );
 
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    resolve( jsAction.NO_CONSEQUENCES );
                 });
         }
     }

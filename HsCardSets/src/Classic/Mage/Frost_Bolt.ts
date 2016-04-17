@@ -15,7 +15,7 @@ namespace Def {
         spellTextAction: {
             targets: SINGLE_REQUIRED_TARGET( TargetFinder.ANY_SPELL_TARGETABLE_CHARACTER ),
 
-            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+            actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
                     new HsLogic.CalculateAndDealDamage( {

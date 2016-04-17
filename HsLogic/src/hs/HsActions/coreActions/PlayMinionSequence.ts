@@ -13,8 +13,8 @@ namespace HsLogic {
          *    if the minion associated with a Summon Event is no longer in play at the time it is resolved, then nothing queues
          */
         export class GenSummonMinionEventextends<P extends PlayCardParam> extends ActionEvent<P> {
-            valid( context: HsGameCtx ): boolean {
-                return context.zonesOf( this.param.card.owner )
+            valid( gameCtx: HsGameCtx ): boolean {
+                return gameCtx.gameBoard.zonesOf( this.param.card.owner )
                     .battlefield.has( this.param.card );
             }
         }
@@ -25,9 +25,9 @@ namespace HsLogic {
 
         export class Summon extends GenSummonMinionEventextends<PlayMinionParam> {
 
-            //valid( context: HsGameCtx ): boolean {
+            //valid( gameCtx: HsGameCtx ): boolean {
             //    let card: Card = this.param.card;
-            //    return context.zonesOf( card.owner ).battlefield.has( card );
+            //    return gameCtx.gameBoard.zonesOf( card.owner ).battlefield.has( card );
             //}
 
         }
@@ -57,7 +57,7 @@ namespace HsLogic {
        */
     export class PlayMinionSequence<P extends PlayMinionParam> extends Action<P> {
 
-        resolve( self: PlayMinionSequence<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: PlayMinionSequence<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
 
                 ( resolve, reject ): void => {
@@ -65,10 +65,10 @@ namespace HsLogic {
                         actions: ActionType[] = [];
 
                     // pay cost & remove from hand
-                    actions.push( context.actionFactory.payCostAndRemoveFromHand( param ) );
+                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // 2. enters the battlefied  
-                    context.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
+                    gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
 
                     // pre summon reaction bug
                     // http://hearthstone.gamepedia.com/Advanced_rulebook#Cobalt_Guardian.2FMurloc_Tidecaller_Pre-Summon_Reaction_Bug
@@ -76,7 +76,7 @@ namespace HsLogic {
                     //@TODO interrupt following phases if then minion dies (battlecry still goes)
 
                     // 3. create SummonEvent 
-                    context.eventMgr.save( new event.Summon( param ) );
+                    gameCtx.eventMgr.save( new event.Summon( param ) );
 
 
                     // 4. onPlayPhase

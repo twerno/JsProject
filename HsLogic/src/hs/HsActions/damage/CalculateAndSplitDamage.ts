@@ -11,7 +11,7 @@ namespace HsLogic {
      */
     export class CalculateAndSplitDamage<P extends SplitDamageParam> extends Action<P> {
 
-        resolve( self: CalculateAndSplitDamage<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: CalculateAndSplitDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -45,7 +45,7 @@ namespace HsLogic {
 	 */
     class SplitDamage<P extends SplitDamageParam> extends Action<P> {
 
-        resolve( self: SplitDamage<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: SplitDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -55,7 +55,7 @@ namespace HsLogic {
                         availableTargets: Character[];
 
                     availableTargets = splitMode2TargetSetBuilder( param.splitMode, param.source )
-                        .buildSet( param.source, context );
+                        .buildSet( param.source, gameCtx );
 
                     target = MathUtils.selectOneAtRandom<Character>( availableTargets );
 
@@ -84,7 +84,7 @@ namespace HsLogic {
 
         if ( splitMode === Def.SPLIT_MODE.ARCANE_MISSILE )
             return Def.TargetFinder.EMEMY_CHARACTER
-                .addFilter(( source, entity, context ): boolean => {
+                .addFilter(( source, entity, gameCtx ): boolean => {
                     return entity instanceof Player
                         || ( entity instanceof Minion && entity.body.hp() > 0 );
                 });
@@ -92,14 +92,14 @@ namespace HsLogic {
         else if ( splitMode === Def.SPLIT_MODE.MAD_BOMB )
             return Def.TargetFinder.ANY_CHARACTER
                 .addFilter( Def.Filter.OtherThan( source.entity ) )
-                .addFilter(( source, entity, context ): boolean => {
+                .addFilter(( source, entity, gameCtx ): boolean => {
                     return entity instanceof Player
                         || ( entity instanceof Minion && entity.body.hp() > 0 );
                 });
 
         else if ( splitMode === Def.SPLIT_MODE.ARCANE_HEAL )
             return Def.TargetFinder.FRIENDLY_CHARACTER
-                .addFilter(( source, entity, context ): boolean => {
+                .addFilter(( source, entity, gameCtx ): boolean => {
                     return entity instanceof Player
                         || ( entity instanceof Minion && entity.body.damages > 0 );
                 });

@@ -10,11 +10,11 @@ namespace HsLogic {
  	 */
     export class MillCard<P extends CardParam> extends Action<P> {
 
-        resolve( self: MillCard<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: MillCard<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        graveyard: HsZone<Card> = context.zonesOf( param.card.owner ).graveyard;
+                        graveyard: Zone<Card> = gameCtx.gameBoard.zonesOf( param.card.owner ).graveyard;
 
                     graveyard.addEntity( param.card );
                 });

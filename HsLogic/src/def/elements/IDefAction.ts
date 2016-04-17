@@ -4,7 +4,7 @@ namespace Def {
 
     export interface IDefAction {
         targets: IDefTargetDefinition<Object>;
-        actionBuilder( source: ISource, targets: Permanent[], context: HsGameCtx ): Action[];
+        actionBuilder( source: ISource, targets: Permanent[], gameCtx: HsGameCtx ): Action[];
     }
 
 }

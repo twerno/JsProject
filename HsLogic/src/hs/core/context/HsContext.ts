@@ -2,48 +2,26 @@
 
 namespace HsLogic {
 
-    export class HsGameCtx implements jsLogic.IContext {
+    export class HsGameCtx implements jsAction.IContext {
 
         actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
 
-        activePlayer: Player = null;
+
+
+        powerMgr: IPowerMgr;
+
+        lethalMonitor: ILethalMonitor = new LethalMonitor();
+
+
 
         players: Player[] = [];
 
-        zonesMap: Collection.IStringMap<HsZones> = {};
+        activePlayer: Player = null;
 
-        powerMgr: PowerMgr;
-
-        lethalMonitor: LethalMonitor;
+        gameBoard: GameBoard;
 
 
-        zonesOf( player: jsLogic.Entity ): HsZones {
-            let result: HsZones = null;
 
-            if ( player instanceof jsLogic.Entity )
-                result = this.zonesMap[player.id]
-
-            if ( result )
-                return result;
-            else
-                throw new Error( `No zones defined for player: ${player}.` );
-        }
-
-
-        zoneOf<T extends Card>( player: jsLogic.Entity, zoneId: string ): HsZone<T> {
-            return <HsZone<T>>this.zonesOf( player ).get( zoneId );
-        }
-
-
-        zonesOfActivePlayer(): HsZones {
-            return this.zonesOf( this.activePlayer );
-        }
-
-        pendingEvents: IPendingEvents = {
-            summon: [],
-            death: []
-        };
-
-        eventMgr: IEventMgr;
+        eventMgr: IEventMgr = new EventMgr();
     }
 }

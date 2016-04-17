@@ -1,6 +1,6 @@
 "use strict";
 
-namespace jsLogic {
+namespace jsAction {
 
 
     /**

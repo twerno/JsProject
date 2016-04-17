@@ -8,9 +8,9 @@ namespace HsLogic {
      * Sequence
      *
  	 */
-    export class Sequence extends jsLogic.IAction<HsGameCtx> {
+    export class Sequence extends jsAction.IAction<HsGameCtx> {
 
-        resolve( self: Sequence, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: Sequence, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
 
@@ -19,8 +19,8 @@ namespace HsLogic {
                     while ( self.innerActions && self.innerActions.length > 0 )
                         actions.push( self.innerActions.shift() );
 
-                    //actions.push(context.actionFactory.auraUpdateStep(self.source));
-                    actions.push( context.actionFactory.deathCreationStep( { source: self.source }) );
+                    //actions.push(gameCtx.actionFactory.auraUpdateStep(self.source));
+                    actions.push( gameCtx.actionFactory.deathCreationStep( { source: self.source }) );
 
                     resolve( actions );
                 });

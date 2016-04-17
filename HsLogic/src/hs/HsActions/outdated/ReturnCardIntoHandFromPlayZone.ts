@@ -4,7 +4,7 @@
 namespace HsLogic {
 
     export interface ReturnCardIntoOwnersHandParam extends IActionParam {
-        sourceZone: HsZone<Card>,
+        sourceZone: Zone<Card>,
         card: Card
     }
 
@@ -17,14 +17,14 @@ namespace HsLogic {
  	 */
     export class ReturnCardIntoOwnersHandFrom<P extends ReturnCardIntoOwnersHandParam> extends Action<P> {
 
-        resolve( self: ReturnCardIntoOwnersHandFrom<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: ReturnCardIntoOwnersHandFrom<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        hand: HsZone<Card> = context.zonesOf( param.card.owner ).hand;
+                        hand: Zone<Card> = gameCtx.gameBoard.zonesOf( param.card.owner ).hand;
 
                     if ( hand.isFull ) {
-                        //resolve([context.actionFactory.markAsDestroyed(param.source, param.card)]);
+                        //resolve([gameCtx.actionFactory.markAsDestroyed(param.source, param.card)]);
                     }
                     else {
                         param.sourceZone.removeEntity( param.card );

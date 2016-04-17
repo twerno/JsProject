@@ -1,23 +1,22 @@
 /// <reference path="../../core/action/inlineaction.ts" />
-/// <reference path="../../core/action/actioncommons.ts" />
 ///<reference path="../../core/action/IAction.ts"/>
 
 "use strict";
 
 namespace HsLogic {
 
-    export type ActionType = jsLogic.IAction<HsGameCtx>;
+    export type ActionType = jsAction.IAction<HsGameCtx>;
     export type PromiseOfActions = Promise<ActionType | ActionType[]>;
-    export type FActionBuilder<P extends IActionParam> = ( param: P, context: HsGameCtx ) => Action<P>;
-    export class InlineAction extends jsLogic.InlineAction<HsGameCtx> { };
-    export class InlineActionExt extends jsLogic.InlineActionExt<HsGameCtx> { };
+    export type FActionBuilder<P extends IActionParam> = ( param: P, gameCtx: HsGameCtx ) => Action<P>;
+    export class InlineAction extends jsAction.InlineAction<HsGameCtx> { };
+    export class InlineActionExt extends jsAction.InlineActionExt<HsGameCtx> { };
 
 
     export interface ISource {
         //action: jsLogic.IAction<HsGameCtx>,
         player: Player,
         sourceType: SOURCE_TYPE,
-        entity: HsEntity
+        entity: Entity
     }
 
 
@@ -38,11 +37,11 @@ namespace HsLogic {
     }
 
 
-    export abstract class Action<P extends IActionParam> extends jsLogic.IAction<HsGameCtx> {
+    export abstract class Action<P extends IActionParam> extends jsAction.IAction<HsGameCtx> {
 
         constructor( public param: P ) { super() }
 
-        abstract resolve( self: Action<P>, context: HsGameCtx ): PromiseOfActions;
+        abstract resolve( self: Action<P>, gameCtx: HsGameCtx ): PromiseOfActions;
     }
 
 }

@@ -10,7 +10,7 @@ namespace HsLogic {
 
     export class Battlecry<P extends PlayCardParam> extends Action<P> {
 
-        resolve( self: Battlecry<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: Battlecry<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -22,7 +22,7 @@ namespace HsLogic {
 
                     if ( card.battlecry )
                         actions.concat(
-                            card.battlecry.actionBuilder( param.card.getSource(), param.targets, context ) );
+                            card.battlecry.actionBuilder( param.card.getSource(), param.targets, gameCtx ) );
 
                     resolve( actions );
                 }

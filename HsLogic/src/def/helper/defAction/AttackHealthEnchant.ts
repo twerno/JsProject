@@ -20,7 +20,7 @@ namespace Def {
         return {
             targets: param.targets,
 
-            actionBuilder: ( source: ISource, targets: Character[], context: HsGameCtx ): Action[] => {
+            actionBuilder: ( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] => {
                 let actions: Action[] = [],
                     trigger: Trigger;
 
@@ -35,7 +35,7 @@ namespace Def {
                         trigger = new HsLogic.Trigger( target, <Card>source.entity, {
                             respondsTo: [HsLogic.event.EndOfTurn],
                             enable_self_trigger_protection: true,
-                            actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action | Action[] => {
+                            actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] => {
                                 return [
                                     DefActionHelper.DetachEnchantment( enchant ),
                                     DefActionHelper.unregisterTrigger( trigger )

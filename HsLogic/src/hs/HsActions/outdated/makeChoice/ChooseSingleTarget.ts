@@ -16,7 +16,7 @@ namespace HsLogic {
      *
  	 */
     export class ChooseSingleTarget<P extends Def.AcquireTargetsActionParam> extends Action<P> {
-        resolve( self: ChooseSingleTarget<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: ChooseSingleTarget<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             if ( self.param.cancelAction.value )
                 return Promise.resolve( [] );
@@ -31,7 +31,7 @@ namespace HsLogic {
                     if ( results.length > 0 )
                         param.targets.push( results[0] );
 
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    resolve( jsAction.NO_CONSEQUENCES );
                 });
         }
     }

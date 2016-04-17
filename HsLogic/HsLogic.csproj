@@ -29,7 +29,6 @@
     <TypeScriptCompile Include="src\commons\Collection.ts" />
     <TypeScriptCompile Include="src\commons\MathUtils.ts" />
     <TypeScriptCompile Include="src\commons\StringUtils.ts" />
-    <TypeScriptCompile Include="src\core\action\ActionCommons.ts" />
     <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
     <TypeScriptCompile Include="src\core\action\IAction.ts" />
     <TypeScriptCompile Include="src\core\action\InlineAction.ts" />
@@ -41,9 +40,10 @@
     <TypeScriptCompile Include="src\hs\Const.ts" />
     <TypeScriptCompile Include="src\hs\core\Action.ts" />
     <TypeScriptCompile Include="src\hs\core\ActionEvent.ts" />
+    <TypeScriptCompile Include="src\hs\core\context\GameBoard.ts" />
     <TypeScriptCompile Include="src\hs\core\context\HsContext.ts" />
     <TypeScriptCompile Include="src\hs\core\context\IContextUtils.ts" />
-    <TypeScriptCompile Include="src\hs\core\HsZone.ts" />
+    <TypeScriptCompile Include="src\hs\model\Zone.ts" />
     <TypeScriptCompile Include="src\def\Aliases.ts" />
     <TypeScriptCompile Include="src\def\Const.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefAction.ts" />
@@ -111,16 +111,16 @@
     <TypeScriptCompile Include="src\hs\hsActions\technical\Fatigue.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\ShuffleDeck.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\ShuffleGeneratedCardIntoDeck.ts" />
-    <TypeScriptCompile Include="src\hs\model\Card.ts" />
+    <TypeScriptCompile Include="src\hs\model\card\Card.ts" />
     <TypeScriptCompile Include="src\hs\model\CardSet.ts" />
-    <TypeScriptCompile Include="src\hs\model\Enchantment.ts" />
-    <TypeScriptCompile Include="src\hs\model\HsEntity.ts" />
-    <TypeScriptCompile Include="src\hs\model\Minion.ts" />
-    <TypeScriptCompile Include="src\hs\model\Player.ts" />
-    <TypeScriptCompile Include="src\hs\model\Spell.ts" />
-    <TypeScriptCompile Include="src\hs\model\Tag.ts" />
-    <TypeScriptCompile Include="src\hs\model\Trigger.ts" />
-    <TypeScriptCompile Include="src\hs\model\Weapon.ts" />
+    <TypeScriptCompile Include="src\hs\model\mechanic\Enchantment.ts" />
+    <TypeScriptCompile Include="src\hs\model\card\GenEntity.ts" />
+    <TypeScriptCompile Include="src\hs\model\card\Minion.ts" />
+    <TypeScriptCompile Include="src\hs\model\card\Player.ts" />
+    <TypeScriptCompile Include="src\hs\model\card\Spell.ts" />
+    <TypeScriptCompile Include="src\hs\model\mechanic\Tag.ts" />
+    <TypeScriptCompile Include="src\hs\model\mechanic\Trigger.ts" />
+    <TypeScriptCompile Include="src\hs\model\card\Weapon.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

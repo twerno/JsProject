@@ -10,12 +10,12 @@ namespace HsLogic {
         }
 
 
-        resolvable( context: HsGameCtx ): boolean {
+        resolvable( gameCtx: HsGameCtx ): boolean {
             return ( this.events || [] ).length !== 0;
         }
 
 
-        resolve( self: DispatchEvent, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: DispatchEvent, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -33,8 +33,8 @@ namespace HsLogic {
 
     export class DispatchSavedEvents extends DispatchEvents {
 
-        constructor( eventClass: ActionEventClass, context: HsGameCtx ) {
-            super( context.eventMgr.get( eventClass ) )
+        constructor( eventClass: ActionEventClass, gameCtx: HsGameCtx ) {
+            super( gameCtx.eventMgr.get( eventClass ) )
         }
     }
 

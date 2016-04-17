@@ -11,7 +11,7 @@ namespace HsLogic {
      */
     export class CalculateAndSplitHeal<P extends SplitHealParam> extends Action<P> {
 
-        resolve( self: CalculateAndSplitHeal<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: CalculateAndSplitHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -47,7 +47,7 @@ namespace HsLogic {
 	 */
     class SplitHeal<P extends SplitHealParam> extends Action<P> {
 
-        resolve( self: SplitHeal<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: SplitHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -57,7 +57,7 @@ namespace HsLogic {
                         availableTargets: Character[];
 
                     availableTargets = splitMode2TargetSetBuilder( param.splitMode, param.source )
-                        .buildSet( param.source, context );
+                        .buildSet( param.source, gameCtx );
 
                     target = MathUtils.selectOneAtRandom<Character>( availableTargets );
 

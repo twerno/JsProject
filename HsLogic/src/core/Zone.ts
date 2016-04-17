@@ -3,7 +3,7 @@
 
 "use strict";
 
-namespace jsLogic {
+namespace jsAction {
 
 	/**
 	 * Zone<T extends Entity>

@@ -15,10 +15,10 @@ namespace Def {
 
             targets: SINGLE_REQUIRED_TARGET( TargetFinder.EMEMY_SPELL_TARGETABLE_CHARACTER ),
 
-            actionBuilder( source: ISource, targets: Character[], context: HsGameCtx ): Action[] {
+            actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
                 let otherTargets: Character[] = TargetFinder.EMEMY_CHARACTER
                     .addFilter( Filter.OtherThan( targets ) )
-                    .buildSet( source, context );
+                    .buildSet( source, gameCtx );
 
                 return [
                     new HsLogic.MultistepDamage( {

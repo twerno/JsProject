@@ -21,7 +21,7 @@ namespace HsLogic {
      */
     export class CalculateAndDealDamage<P extends DamageTargetsParam> extends Action<P> {
 
-        resolve( self: CalculateAndDealDamage<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: CalculateAndDealDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -53,7 +53,7 @@ namespace HsLogic {
                     }) );
 
                     if ( param.notifyMode = NOTIFY_MODE.AFTER_ALL_ACTIONS )
-                        actions.push( new DispatchSavedEvents( event.Damage, context ) );
+                        actions.push( new DispatchSavedEvents( event.Damage, gameCtx ) );
 
                     resolve( actions );
                 }
@@ -73,7 +73,7 @@ namespace HsLogic {
      */
     export class CalculateDamage<P extends CalculateDamageParam> extends Action<P> {
 
-        resolve( self: CalculateDamage<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: CalculateDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -81,7 +81,7 @@ namespace HsLogic {
                         actions: ActionType[] = [];
 
 
-                    actions.push( new event.PreDamageCalculationEvent( param ).dispatch( context ) );
+                    actions.push( new event.PreDamageCalculationEvent( param ).dispatch( gameCtx ) );
 
 
                     // calculate damage
@@ -89,17 +89,17 @@ namespace HsLogic {
                         ( resolve, reject ): void => {
 
                             if ( param.customDamagePower )
-                                param.amount += param.customDamagePower( param, context );
+                                param.amount += param.customDamagePower( param, gameCtx );
                             else
-                                param.amount += context.powerMgr.getDamagePower( param.source, param.damageType );
+                                param.amount += gameCtx.powerMgr.getDamagePower( param.source, param.damageType );
 
-                            resolve( jsLogic.NO_CONSEQUENCES );
+                            resolve( jsAction.NO_CONSEQUENCES );
                         }
                     ) );
 
 
                     // Prophet Velens
-                    actions.push( new event.PostDamageCalculationEvent( param ).dispatch( context ) );
+                    actions.push( new event.PostDamageCalculationEvent( param ).dispatch( gameCtx ) );
 
 
                     resolve( actions );
@@ -121,7 +121,7 @@ namespace HsLogic {
      */
     export class Damage<P extends DamageParam> extends Action<P> {
 
-        resolve( self: Damage<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: Damage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -130,12 +130,12 @@ namespace HsLogic {
 
                     param.amount = Math.max( 0, param.amount );
 
-                    actions.push( new event.PreDamagePhase( param ).dispatch( context ) );
+                    actions.push( new event.PreDamagePhase( param ).dispatch( gameCtx ) );
 
                     actions.push( new InternalDamage( param ) );
 
                     actions.push( new event.Damage( param )
-                        .dispatchOrSave( context,
+                        .dispatchOrSave( gameCtx,
                         (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
                     );
 
@@ -157,7 +157,7 @@ namespace HsLogic {
      */
     class InternalDamage<P extends DamageParam> extends Action<P> {
 
-        resolve( self: InternalDamage<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: InternalDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -176,14 +176,14 @@ namespace HsLogic {
                     }
 
                     if ( param.target.body.hp() > 0 && param.target.body.hp() - param.amount <= 0 )
-                        context.lethalMonitor.registerCandidate( param.target, param.source );
+                        gameCtx.lethalMonitor.registerCandidate( param.target, param.source );
 
                     if ( param.source.entity instanceof Minion && param.damageState !== DAMAGE_STATE.PREVENTED )
                         ( <Minion>param.source.entity ).tags.removeAll( Def.Stealth_Tag );
 
                     param.target.body.damages = Math.max( 0, param.target.body.damages + param.amount );
 
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    resolve( jsAction.NO_CONSEQUENCES );
                 }
             );   // return new Promise
 

@@ -18,11 +18,11 @@ namespace Def {
             {
                 respondsTo: HsLogic.event.PreDamagePhase,
 
-                triggerable: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): boolean => {
+                triggerable: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): boolean => {
                     return trigger.owner === ( <HsLogic.DamageParam>event.param ).target;
                 },
 
-                actionBuilder: ( trigger: Trigger, event: ActionEvent, context: HsGameCtx ): Action[] => {
+                actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                     ( <HsLogic.DamageParam>event.param ).amount = 1;
                     return null;
                 }

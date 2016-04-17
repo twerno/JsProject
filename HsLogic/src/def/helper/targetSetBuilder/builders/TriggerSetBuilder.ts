@@ -19,50 +19,50 @@ namespace Def {
         protected init(): void {
             let self: TriggerSetBuilder = this;
 
-            this.addFilter(( source: ISource, trigger: Trigger, context: HsGameCtx ): boolean => {
+            this.addFilter(( source: ISource, trigger: Trigger, gameCtx: HsGameCtx ): boolean => {
                 return trigger instanceof HsLogic.Trigger
                     && trigger.respondsTo.indexOf( self._eventType ) !== -1
                     && ( !trigger.enable_self_trigger_protection
-                        || HsLogic.Trigger.SELF_TRIGGER_PROTECTOR( trigger, self._event, context ) );
+                        || HsLogic.Trigger.SELF_TRIGGER_PROTECTOR( trigger, self._event, gameCtx ) );
             })
         }
 
 
-        protected _internalBuildSet( source: ISource, context: HsGameCtx ): any[] {
+        protected _internalBuildSet( source: ISource, gameCtx: HsGameCtx ): any[] {
             let result: any[] = [],
                 player: Player,
-                zones: HsLogic.HsZones;
+                zones: HsLogic.Zones;
 
-            for ( let i = 0; i < context.players.length; i++ ) {
-                player = context.players[i];
-                zones = context.zonesOf( player );
+            for ( let i = 0; i < gameCtx.players.length; i++ ) {
+                player = gameCtx.players[i];
+                zones = gameCtx.gameBoard.zonesOf( player );
 
-                result.concat( this._getApplicableTriggers( player.triggers, source, context ) );
+                result.concat( this._getApplicableTriggers( player.triggers, source, gameCtx ) );
 
-                result.concat( this._locateTriggerInside( zones.battlefield.getRawArray(), source, context ) );
-                result.concat( this._locateTriggerInside( zones.weapon.getRawArray(), source, context ) );
-                result.concat( this._locateTriggerInside( zones.hand.getRawArray(), source, context ) );
-                result.concat( this._locateTriggerInside( zones.secret.getRawArray(), source, context ) );
+                result.concat( this._locateTriggerInside( zones.battlefield.getRawArray(), source, gameCtx ) );
+                result.concat( this._locateTriggerInside( zones.weapon.getRawArray(), source, gameCtx ) );
+                result.concat( this._locateTriggerInside( zones.hand.getRawArray(), source, gameCtx ) );
+                result.concat( this._locateTriggerInside( zones.secret.getRawArray(), source, gameCtx ) );
             }
             return result;
         }
 
 
-        protected _locateTriggerInside( cards: Card[], source: ISource, context: HsGameCtx ): Trigger[] {
+        protected _locateTriggerInside( cards: Card[], source: ISource, gameCtx: HsGameCtx ): Trigger[] {
             let result: any[] = [];
 
             for ( let i = 0; i < cards.length; i++ )
-                result.concat( this._getApplicableTriggers( cards[i].triggers, source, context ) );
+                result.concat( this._getApplicableTriggers( cards[i].triggers, source, gameCtx ) );
 
             return result;
         }
 
 
-        protected _getApplicableTriggers( triggers: Trigger[], source: ISource, context: HsGameCtx ): Trigger[] {
+        protected _getApplicableTriggers( triggers: Trigger[], source: ISource, gameCtx: HsGameCtx ): Trigger[] {
             let result: any[] = [];
 
             for ( let i = 0; i < triggers.length; i++ )
-                if ( this.testAgainstFilters( source, triggers[i], context ) )
+                if ( this.testAgainstFilters( source, triggers[i], gameCtx ) )
                     result.push( triggers[i] );
 
             return result;

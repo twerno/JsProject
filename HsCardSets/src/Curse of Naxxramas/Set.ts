@@ -5,6 +5,6 @@
 
 namespace Def {
 
-    export var curseSet: HsLogic.CardSet<ICard> = new HsLogic.CardSet<ICard>( Sets.CURSE_OF_NAXXRAMAS );
+    export var naxxSet: HsLogic.CardSet<ICard> = new HsLogic.CardSet<ICard>( Sets.CURSE_OF_NAXXRAMAS );
 
 }

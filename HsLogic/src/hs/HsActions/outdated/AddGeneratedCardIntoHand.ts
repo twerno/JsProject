@@ -15,12 +15,12 @@ namespace HsLogic {
  	 */
     export class AddGeneratedCardIntoHand<P extends PlayerAndCardParam> extends Action<P> {
 
-        resolve( self: AddGeneratedCardIntoHand<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: AddGeneratedCardIntoHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
 
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        hand: HsZone<Card> = context.zonesOf( param.player ).hand;
+                        hand: Zone<Card> = gameCtx.gameBoard.zonesOf( param.player ).hand;
 
                     if ( !hand.isFull )
                         hand.addEntity( param.card );

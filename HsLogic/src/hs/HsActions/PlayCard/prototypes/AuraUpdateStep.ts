@@ -14,7 +14,7 @@ namespace HsLogic {
  	 */
     export class AuraUpdateStep<P extends IAuraUpdateParam> extends Action<P> {
 
-        resolve( self: AuraUpdateStep<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: AuraUpdateStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     resolve( null );

@@ -22,7 +22,7 @@ namespace HsLogic {
  	 */
     export class DeathCreationStep<P extends IActionParam> extends Action<P> {
 
-        resolve( self: DeathCreationStep<P>, context: HsGameCtx ): PromiseOfActions {
+        resolve( self: DeathCreationStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
@@ -32,30 +32,30 @@ namespace HsLogic {
 
                     // find minions to be destroyed
                     let minions: Minion[] = Def.TargetFinder.ANY_MINION
-                        .addFilter(( source: ISource, minion: HsEntity, context: HsGameCtx ): boolean => {
+                        .addFilter(( source: ISource, minion: Entity, gameCtx: HsGameCtx ): boolean => {
                             return minion instanceof HsLogic.Minion
                                 && ( minion.body.hp() <= 0
                                     || minion.tags.has( Def.Pending_Destroy_Tag ) );
-                        }).buildSet( null, context );
+                        }).buildSet( null, gameCtx );
 
                     // process them
                     for ( let i = 0; i < minions.length; i++ ) {
 
                         source = minions[i].tags.getFirstSource( Def.Pending_Destroy_Tag )
                         if ( !source )
-                            source = context.lethalMonitor.getSourceFor( minions[i] );
+                            source = gameCtx.lethalMonitor.getSourceFor( minions[i] );
 
-                        context.eventMgr.save( new event.Death( {
+                        gameCtx.eventMgr.save( new event.Death( {
                             source: source,
                             target: minions[i],
                             position: 0
                         }) );
 
                         //  remove from battlefield
-                        context.zonesOf( minions[i].owner ).battlefield.removeEntity( minions[i] );
+                        gameCtx.gameBoard.zonesOf( minions[i].owner ).battlefield.removeEntity( minions[i] );
                     }
 
-                    resolve( jsLogic.NO_CONSEQUENCES );
+                    resolve( jsAction.NO_CONSEQUENCES );
                 });
         }
     }
