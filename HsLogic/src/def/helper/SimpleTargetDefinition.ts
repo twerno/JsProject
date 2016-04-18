@@ -28,11 +28,11 @@ namespace Def {
         }
 
 
-        acquireTargetsAction( param: AcquireTargetsActionParam, gameCtx: HsGameCtx ): Action {
+        acquireTargetsAction( param: HsLogic.AcquireTargetsActionParam, gameCtx: HsGameCtx ): Action {
             if ( this.param.pickMode === PICK_MODE.RANDOM )
-                return gameCtx.actionFactory.makeAChoice.singleTarget( param );
+                return null;
             else
-                return gameCtx.actionFactory.makeAChoice.singleTarget( param );
+                return gameCtx.actionFactory.singleTarget( param );
         }
 
 

@@ -25,6 +25,7 @@ namespace HsLogic {
         getFirst( tagClass: TagClass ): Tag;
         getFirstSource( tagClass: TagClass ): HsLogic.ISource;
         list(): Tag[];
+        count( tagClass: TagClass ): number;
     }
 
 }

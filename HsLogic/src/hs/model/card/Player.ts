@@ -13,7 +13,7 @@ namespace HsLogic {
 
         heroPower: any;
 
-        triggers: Trigger[];
+        //triggers: Trigger[];
 
         tags: ITags;
 

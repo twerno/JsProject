@@ -3,23 +3,17 @@
 
 namespace HsLogic {
 
-    //export interface IChooseSingleTargetParam<T extends HsEntity> extends IHsCancelableParam {
-    //    sets: {
-    //        source: T[],
-    //        result: T
-    //    }
-    //}
-
+    export interface AcquireTargetsActionParam extends HsLogic.IHsCancelableParam {
+        availableTargets: Permanent[],
+        targets: Permanent[]
+    }
 
     /**
      * ChooseSingleTarget
      *
  	 */
-    export class ChooseSingleTarget<P extends Def.AcquireTargetsActionParam> extends Action<P> {
+    export class ChooseSingleTarget<P extends AcquireTargetsActionParam> extends CancelableAction<P> {
         resolve( self: ChooseSingleTarget<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-
-            if ( self.param.cancelAction.value )
-                return Promise.resolve( [] );
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {

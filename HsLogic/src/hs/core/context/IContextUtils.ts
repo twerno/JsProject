@@ -12,8 +12,8 @@ namespace HsLogic {
 
 
     export interface IPowerMgr {
-        getHealPower( source: ISource ): number;
-        getDamagePower( source: ISource, damageType: Def.DAMAGE_TYPE ): number;
+        healPower( source: ISource ): number;
+        damagePower( source: ISource, damageType: Def.DAMAGE_TYPE ): number;
     }
 
 

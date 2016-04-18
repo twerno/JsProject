@@ -37,7 +37,7 @@ namespace Def {
                 player = gameCtx.players[i];
                 zones = gameCtx.gameBoard.zonesOf( player );
 
-                result.concat( this._getApplicableTriggers( player.triggers, source, gameCtx ) );
+                result.concat( this._getApplicableTriggers( player.hero.triggers, source, gameCtx ) );
 
                 result.concat( this._locateTriggerInside( zones.battlefield.getRawArray(), source, gameCtx ) );
                 result.concat( this._locateTriggerInside( zones.weapon.getRawArray(), source, gameCtx ) );

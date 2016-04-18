@@ -85,7 +85,7 @@ namespace HsLogic {
                             if ( param.customHealPowerCalculator )
                                 param.amount = param.customHealPowerCalculator( param, gameCtx );
                             else
-                                param.amount += gameCtx.powerMgr.getHealPower( param.source );
+                                param.amount += gameCtx.powerMgr.healPower( param.source );
 
                             resolve( jsAction.NO_CONSEQUENCES );
                         }

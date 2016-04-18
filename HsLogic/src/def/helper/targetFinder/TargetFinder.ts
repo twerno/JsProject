@@ -6,9 +6,9 @@ namespace Def {
     export class TargetFinder {
 
 
-        static get ENEMY_HERO(): ITargetSetBuilder<Player> {
-            return new EntitySetBuilder<Player>( {
-                includePlayer: true,
+        static get ENEMY_HERO(): ITargetSetBuilder<Hero> {
+            return new EntitySetBuilder<Hero>( {
+                includeHeroes: true,
                 zones: null,
             })
                 .addFilter( Filter.enemy );
@@ -37,16 +37,16 @@ namespace Def {
 
         static get EMEMY_WEAPON(): ITargetSetBuilder<Weapon> {
             return new EntitySetBuilder<Weapon>( {
-                includePlayer: false,
+                includeHeroes: false,
                 zones: ( zones: Zones ): Zone[] => { return [zones.weapon] }
             })
                 .addFilter( Filter.enemy );
         }
 
 
-        static get FRIENDLY_HERO(): ITargetSetBuilder<Player> {
-            return new EntitySetBuilder<Player>( {
-                includePlayer: true,
+        static get FRIENDLY_HERO(): ITargetSetBuilder<Hero> {
+            return new EntitySetBuilder<Hero>( {
+                includeHeroes: true,
                 zones: null,
             })
                 .addFilter( Filter.friendly );
@@ -75,7 +75,7 @@ namespace Def {
 
         static get FRIENDLY_WEAPON(): ITargetSetBuilder<Weapon> {
             return new EntitySetBuilder<Weapon>( {
-                includePlayer: false,
+                includeHeroes: false,
                 zones: ( zones: Zones ): Zone[] => { return [zones.weapon] }
             })
                 .addFilter( Filter.friendly );
@@ -84,7 +84,7 @@ namespace Def {
 
         static get ANY_CHARACTER(): ITargetSetBuilder<Character> {
             return new EntitySetBuilder<Character>( {
-                includePlayer: true,
+                includeHeroes: true,
                 zones: ( zones: Zones ): Zone[] => { return [zones.battlefield] }
             });
         }
@@ -98,7 +98,7 @@ namespace Def {
 
         static get ANY_MINION(): ITargetSetBuilder<Minion> {
             return new EntitySetBuilder<Minion>( {
-                includePlayer: false,
+                includeHeroes: false,
                 zones: ( zones: Zones ): Zone[] => { return [zones.battlefield] }
             })
                 .addFilter( Filter.minion );

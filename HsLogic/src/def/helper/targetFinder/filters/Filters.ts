@@ -5,13 +5,14 @@ namespace Def.Filter {
     export function OtherThan( otherThan: Entity | Entity[] ): ITargetSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
 
-            if ( otherThan instanceof Array )
+            if ( otherThan instanceof Array ) {
                 for ( let entityFromArray of otherThan ) {
                     if ( entityFromArray === entity )
                         return false;
                 }
-            else
-                return otherThan !== entity;
+            }
+
+            return otherThan !== entity;
         }
     }
 
@@ -75,15 +76,15 @@ namespace Def.Filter {
     }
 
 
-    export function TriggersOwnedBy( player: Player ): ITargetSetBuilderFilter<Trigger> {
-        return ( source: ISource, entity: Trigger, gameCtx: HsGameCtx ): boolean => {
+    export function ownedBy( player: Player ): ITargetSetBuilderFilter<Entity> {
+        return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
             return entity.owner === player;
         }
     }
 
 
-    export function TriggersNotOwnedBy( player: Player ): ITargetSetBuilderFilter<Trigger> {
-        return ( source: ISource, entity: Trigger, gameCtx: HsGameCtx ): boolean => {
+    export function notOwnedBy( player: Player ): ITargetSetBuilderFilter<Entity> {
+        return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
             return entity.owner !== player;
         }
     }

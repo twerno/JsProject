@@ -26,4 +26,10 @@ namespace Def {
     export class Silenced_Tag extends HsLogic.Tag { silencable: boolean = false }
     export class Summoning_Sickness_Tag extends HsLogic.Tag { silencable: boolean = false }
 
+
+
+    export class SpellPower_Tag extends HsLogic.Tag { silencable: boolean = false }
+    export class HealPower_Tag extends HsLogic.Tag { silencable: boolean = false }
+    export class PingPower_Tag extends HsLogic.Tag { silencable: boolean = false }
+
 }

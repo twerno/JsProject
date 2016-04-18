@@ -91,7 +91,7 @@ namespace HsLogic {
                             if ( param.customDamagePower )
                                 param.amount += param.customDamagePower( param, gameCtx );
                             else
-                                param.amount += gameCtx.powerMgr.getDamagePower( param.source, param.damageType );
+                                param.amount += gameCtx.powerMgr.damagePower( param.source, param.damageType );
 
                             resolve( jsAction.NO_CONSEQUENCES );
                         }

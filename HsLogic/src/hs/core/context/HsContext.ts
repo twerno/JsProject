@@ -8,7 +8,7 @@ namespace HsLogic {
 
 
 
-        powerMgr: IPowerMgr;
+        powerMgr: IPowerMgr = new PowerManager();
 
         lethalMonitor: ILethalMonitor = new LethalMonitor();
 

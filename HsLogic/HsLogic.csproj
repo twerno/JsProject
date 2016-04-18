@@ -45,7 +45,10 @@
     <TypeScriptCompile Include="src\hs\core\context\HsContext.ts" />
     <TypeScriptCompile Include="src\hs\core\context\IContextUtils.ts" />
     <TypeScriptCompile Include="src\hs\core\context\LethalMonitor.ts" />
+    <TypeScriptCompile Include="src\hs\core\context\PowerManager.ts" />
     <TypeScriptCompile Include="src\hs\model\card\Hero.ts" />
+    <TypeScriptCompile Include="src\hs\model\mechanic\enchantments\TagManagerEnchantment.ts" />
+    <TypeScriptCompile Include="src\hs\model\mechanic\enchantments\AttackHealthEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\model\Zone.ts" />
     <TypeScriptCompile Include="src\def\Aliases.ts" />
     <TypeScriptCompile Include="src\def\Const.ts" />
@@ -54,7 +57,7 @@
     <TypeScriptCompile Include="src\def\elements\IDefEntities.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefTargetDefinition.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefTrigger.ts" />
-    <TypeScriptCompile Include="src\def\helper\Tags.ts" />
+    <TypeScriptCompile Include="src\def\mechanics\Tags.ts" />
     <TypeScriptCompile Include="src\def\helper\ActionBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\SimpleTargetDefinition.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\EntitySetBuilder.ts" />

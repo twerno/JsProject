@@ -4,10 +4,10 @@ namespace Def.Filter {
 
     export function targetable_by_spell_or_hero_power( source: ISource, entity: HsLogic.Entity, gameCtx: HsGameCtx ): boolean {
 
-        if ( entity instanceof HsLogic.Player || entity instanceof HsLogic.Minion )
+        if ( entity instanceof HsLogic.Hero || entity instanceof HsLogic.Minion )
             return !entity.tags.has( Def.Elusive_Tag )
-                && ( !entity.tags.has( Def.Immune_Tag ) || entity.owner === source.player )
-                && ( !entity.tags.has( Def.Stealth_Tag ) || entity.owner === source.player );
+                && ( entity.owner === source.player
+                    || !entity.tags.hasAny( [Def.Immune_Tag, Def.Stealth_Tag] ) );
 
         if ( entity instanceof HsLogic.Weapon )
             return true;
@@ -26,7 +26,7 @@ namespace Def.Filter {
 
     export function targetable_by_minion( source: ISource, entity: HsLogic.Entity, gameCtx: HsGameCtx ): boolean {
 
-        if ( entity instanceof HsLogic.Player || entity instanceof HsLogic.Minion )
+        if ( entity instanceof HsLogic.Hero || entity instanceof HsLogic.Minion )
             return entity.owner === source.player
                 || !entity.tags.hasAny( [Def.Elusive_Tag, Def.Immune_Tag, Def.Stealth_Tag] );
 

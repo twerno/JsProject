@@ -10,7 +10,7 @@ namespace Def.Filter {
 
 
     export function hero( source: ISource, entity: HsLogic.Entity, gameCtx: HsGameCtx ): boolean {
-        return entity instanceof HsLogic.Player;
+        return entity instanceof HsLogic.Hero;
     }
 
 
@@ -26,7 +26,7 @@ namespace Def.Filter {
 
 
     export function friendly( source: ISource, entity: HsLogic.Entity, gameCtx: HsGameCtx ): boolean {
-        return entity === source.player
+        return entity === source.player.hero
             || entity.owner === source.player;
     }
 

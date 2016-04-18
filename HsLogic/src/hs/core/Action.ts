@@ -39,9 +39,21 @@ namespace HsLogic {
 
     export abstract class Action<P extends IActionParam> extends jsAction.IAction<HsGameCtx> {
 
-        constructor( public param: P ) { super() }
+        constructor( public param: P ) {
+            super();
+
+            if ( isHsCancelableParam( param )
+                && !( this instanceof CancelableAction ) )
+                console.error( 'Use CancelableAction class for IHsCancelableParam.' );
+        }
 
         abstract resolve( self: Action<P>, gameCtx: HsGameCtx ): PromiseOfActions;
+    }
+
+
+    export abstract class CancelableAction<P extends IHsCancelableParam> extends Action<P> {
+
+        resolvable( context: HsGameCtx ): boolean { return !this.param.cancelAction.value }
     }
 
 }
