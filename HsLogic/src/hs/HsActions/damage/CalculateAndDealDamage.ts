@@ -165,12 +165,12 @@ namespace HsLogic {
 
                     param.damageState = DAMAGE_STATE.DEALT;
 
-                    if ( param.target.tags.has( Def.Immune_Tag ) ) {
+                    if ( param.target.tags.contains( Def.Immune_Tag ) ) {
                         param.amount = 0;
                         param.damageState = DAMAGE_STATE.PREVENTED;
                     }
 
-                    if ( param.amount > 0 && param.target.tags.has( Def.Divine_Shield_Tag ) ) {
+                    if ( param.amount > 0 && param.target.tags.contains( Def.Divine_Shield_Tag ) ) {
                         param.amount = 0;
                         param.target.tags.removeAll( Def.Divine_Shield_Tag );
                     }

@@ -10,7 +10,7 @@ namespace HsLogic {
         baseCost: number;
 
         triggers: Trigger[];
-        tags: ITags;
+        tags: Tags;
         effects: Object[];
         enchantments: Enchantment<Permanent>[];
 

@@ -85,7 +85,7 @@ namespace HsLogic {
                 .addFilter(( source: ISource, minion: Entity, gameCtx: HsGameCtx ): boolean => {
                     return minion instanceof HsLogic.Minion
                         && ( minion.body.hp() <= 0
-                            || minion.tags.has( Def.Pending_Destroy_Tag ) );
+                            || minion.tags.contains( Def.Pending_Destroy_Tag ) );
                 }).buildSet( null, gameCtx ).length > 0
         }
 

@@ -155,7 +155,7 @@ namespace HsLogic {
 
                     param.amount = Math.max( target.body.hp() + param.amount, target.body.health ) - target.body.health;
 
-                    if ( param.target.tags.has( Def.Immune_Tag ) ) {
+                    if ( param.target.tags.contains( Def.Immune_Tag ) ) {
                         param.amount = 0;
                         param.healState = HEAL_STATE.PREVENTED;
                     }

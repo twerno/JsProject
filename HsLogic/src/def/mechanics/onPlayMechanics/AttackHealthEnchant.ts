@@ -34,7 +34,7 @@ namespace Def {
                     if ( param.expireMode === EXPIRE_MODE.UNTIL_END_OF_TURN ) {
                         trigger = new HsLogic.Trigger( target, <Card>source.entity, {
                             respondsTo: [HsLogic.event.EndOfTurn],
-                            enable_self_trigger_protection: true,
+                            enable_self_trigger_protection: false,
                             actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] => {
                                 return [
                                     DefActionHelper.DetachEnchantment( enchant ),

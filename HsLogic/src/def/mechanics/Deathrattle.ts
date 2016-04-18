@@ -11,7 +11,7 @@ namespace Def {
 
             keyword: KEYWORD.DEATHRATTLE,
 
-            enable_self_trigger_protection: true,
+            enable_self_trigger_protection: false,
 
             respondsTo: [HsLogic.event.Death],
 

@@ -22,4 +22,5 @@ namespace HsLogic {
             return 0;
         }
     }
+
 }

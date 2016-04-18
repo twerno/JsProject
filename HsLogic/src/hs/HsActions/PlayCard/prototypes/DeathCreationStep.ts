@@ -35,13 +35,13 @@ namespace HsLogic {
                         .addFilter(( source: ISource, minion: Entity, gameCtx: HsGameCtx ): boolean => {
                             return minion instanceof HsLogic.Minion
                                 && ( minion.body.hp() <= 0
-                                    || minion.tags.has( Def.Pending_Destroy_Tag ) );
+                                    || minion.tags.contains( Def.Pending_Destroy_Tag ) );
                         }).buildSet( null, gameCtx );
 
                     // process them
                     for ( let i = 0; i < minions.length; i++ ) {
 
-                        source = minions[i].tags.getFirstSource( Def.Pending_Destroy_Tag )
+                        source = minions[i].tags.getSourceOfOne( Def.Pending_Destroy_Tag )
                         if ( !source )
                             source = gameCtx.lethalMonitor.getSourceFor( minions[i] );
 

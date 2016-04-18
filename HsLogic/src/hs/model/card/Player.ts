@@ -13,9 +13,7 @@ namespace HsLogic {
 
         heroPower: any;
 
-        //triggers: Trigger[];
-
-        tags: ITags;
+        tags: Tags;
 
         constructor( public name: string ) {
             super( null, null );

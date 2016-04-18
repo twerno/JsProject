@@ -8,7 +8,7 @@ namespace Def {
 
             keyword: KEYWORD.LIFE_LINK,
 
-            enable_self_trigger_protection: true,
+            enable_self_trigger_protection: false,
 
             respondsTo: [HsLogic.event.Damage],
 

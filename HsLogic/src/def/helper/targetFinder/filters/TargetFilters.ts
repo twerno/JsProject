@@ -5,7 +5,7 @@ namespace Def.Filter {
     export function targetable_by_spell_or_hero_power( source: ISource, entity: HsLogic.Entity, gameCtx: HsGameCtx ): boolean {
 
         if ( entity instanceof HsLogic.Hero || entity instanceof HsLogic.Minion )
-            return !entity.tags.has( Def.Elusive_Tag )
+            return !entity.tags.contains( Def.Elusive_Tag )
                 && ( entity.owner === source.player
                     || !entity.tags.hasAny( [Def.Immune_Tag, Def.Stealth_Tag] ) );
 
