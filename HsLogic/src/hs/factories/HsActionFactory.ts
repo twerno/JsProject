@@ -4,6 +4,8 @@
 
 namespace HsLogic {
 
+
+
     export class HsActionFactory<T extends HsGameCtx> {
 
         singleTarget( param: AcquireTargetsActionParam ): jsAction.IAction<T> {

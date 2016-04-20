@@ -48,6 +48,10 @@ namespace HsLogic {
         }
 
         abstract resolve( self: Action<P>, gameCtx: HsGameCtx ): PromiseOfActions;
+
+        static build<P extends IActionParam>( param: P ): jsAction.IAction<HsGameCtx> {
+            throw new Error( 'Not implemented yet' )
+        }
     }
 
 

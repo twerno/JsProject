@@ -61,6 +61,10 @@ namespace HsLogic {
 
         } // resolve(self: CalculateAndDealDamage
 
+        //        static build(param: DamageTargetsParam): CalculateAndDealDamage<DamageTargetsParam> {
+        //            return new CalculateAndDealDamage(param);
+        //        }
+
     }  // class CalculateAndDealDamage
 
 

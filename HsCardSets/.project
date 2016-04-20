@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>JSProjectECMA6</name>
+	<name>HsCardSets</name>
 	<comment></comment>
 	<projects>
+		<project>HsLogic</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -12,7 +13,6 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.palantir.typescript.typeScriptNature</nature>
 	</natures>
 	<linkedResources>
@@ -20,11 +20,6 @@
 			<name>std-lib</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>std-lib/lib.d.ts</name>
-			<type>1</type>
-			<location>C:/twerno/moje/JSProject/JSProjectECMA6/std-lib/lib.es6.d.ts</location>
 		</link>
 	</linkedResources>
 </projectDescription>

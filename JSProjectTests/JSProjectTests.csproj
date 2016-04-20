@@ -22,12 +22,12 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\hsTest\HsCtxtBuilder.ts" />
     <TypeScriptCompile Include="src\Main.ts" />
     <TypeScriptCompile Include="src\rpc\RpcTests.ts" />
     <TypeScriptCompile Include="src\rpc\TestObjectFactory.ts" />
     <TypeScriptCompile Include="src\smartObject\SmartObjectBasicTests.ts" />
     <TypeScriptCompile Include="src\smartObject\TestObjectFactory.ts" />
-    <TypeScriptCompile Include="src\tsUnit.ts" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

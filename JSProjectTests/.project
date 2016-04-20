@@ -3,6 +3,8 @@
 	<name>JSProjectTests</name>
 	<comment></comment>
 	<projects>
+		<project>HsCardSets</project>
+		<project>HsLogic</project>
 		<project>JSProjectECMA6</project>
 	</projects>
 	<buildSpec>

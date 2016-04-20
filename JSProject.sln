@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProject", "JSProject\JSProject.csproj", "{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProjectTests", "JSProjectTests\JSProjectTests.csproj", "{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{974F47B9-2B2B-47B1-8060-17655826A1E2} = {974F47B9-2B2B-47B1-8060-17655826A1E2}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProjectECMA6", "JSProjectECMA6\JSProjectECMA6.csproj", "{974F47B9-2B2B-47B1-8060-17655826A1E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HsLogic", "HsLogic\HsLogic.csproj", "{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}"
 EndProject
@@ -33,10 +28,6 @@ Global
 		{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{974F47B9-2B2B-47B1-8060-17655826A1E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{974F47B9-2B2B-47B1-8060-17655826A1E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{974F47B9-2B2B-47B1-8060-17655826A1E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{974F47B9-2B2B-47B1-8060-17655826A1E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19A5C9D4-3350-4DD3-822C-20F69B7F33DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
