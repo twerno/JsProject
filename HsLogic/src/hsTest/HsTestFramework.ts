@@ -2,29 +2,43 @@
 
 namespace HsTest {
 
-
-    interface ValidatorContext {
-        errors: string[],
-        passed: number
+    enum CtxValidatorState {
+        TESTING, VALID, ERROR
     }
 
+    interface CtxValidatorResult {
+        actionName: string,
+        state: CtxValidatorState,
+    }
 
-    interface ContextValidator {
+    interface TestResult {
+        testClass: string,
+        validations: CtxValidatorResult[]
+
+    }
+
+    //interface ValidatorContext {
+    //    errors: string[],
+    //    passed: number
+    //}
+
+
+    interface HsGameCtxValidator {
 
         timeLimit?: number,
 
         respondsTo: HsLogic.ActionType,
 
-        resolvableAction?: ( action: HsLogic.ActionType, hsGameCtx: HsLogic.HsGameCtx ) => boolean
+        validatable?: ( action: HsLogic.ActionType, hsGameCtx: HsLogic.HsGameCtx ) => boolean
 
-        validate: ( action: HsLogic.ActionType, hsGameCtx: HsLogic.HsGameCtx, validatorCtx: ValidatorContext ) => void;
+        validate: ( action: HsLogic.ActionType, hsGameCtx: HsLogic.HsGameCtx, testResult: TestResult ) => void;
     }
 
 
     interface HsTest {
         hsGameCtxBuilder: () => HsLogic.HsGameCtx,
         action: () => HsLogic.ActionType,
-        validators: ContextValidator[]
+        validators: HsGameCtxValidator[]
     }
 
 
@@ -34,12 +48,18 @@ namespace HsTest {
         private stack: jsAction.ActionStack;
         private cursor: number = -1;
 
+
+
+
         private runNext(): void {
 
         }
 
         constructor( public test: HsTest ) {
             this.hsGameCtx = test.hsGameCtxBuilder();
+
+
+            var self: TestRunner
             this.stack = new jsAction.ActionStack(
                 ( action, resolvable ) => { },
                 ( action, executionTime ) => { },
@@ -51,6 +71,11 @@ namespace HsTest {
 
 
     class TestEngine {
+        public resolveTest( test: HsTest ): Promise<TestResult> {
+            return new Promise<TestResult>(( resolve, reject ) => {
+
+            });
+        }
     }
 
 }
