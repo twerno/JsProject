@@ -2,13 +2,16 @@
 
 namespace HsLogic {
 
-    export class CardSet<T extends Def.ICard> {
+    export class CardSet {
 
-        private _map: Map<string, T> = new Map<string, T>();
+        private _map: Map<string, Def.ICard> = new Map<string, Def.ICard>();
 
-        registerCard<C extends T>( card: C ): C {
+        private registerCard( card: Def.ICard ): Def.ICard {
             if ( this._map.has( card.name ) )
                 throw new Error( `Attempt to duplicate value: ${card}` );
+
+            if ( card.metadata.cardType === Def.UNDEFINED )
+                throw new Error( `Type of card "${card.name}" of set "${this.name}" is UNDEFINED` );
 
             card.metadata.set = this.name;
             Object.freeze( card );
@@ -16,9 +19,19 @@ namespace HsLogic {
             return card;
         }
 
-        //registerMinion( minion: Def.IMinion ): Def.IMinion {
-        //    minion.metadata.
-        //}
+
+        registerMinion( minionDef: Def.IMinion ): Def.IMinion {
+            minionDef.metadata.cardType = Def.CARD_TYPE.MINION;
+            this.registerCard( minionDef );
+            return minionDef;
+        }
+
+
+        registerSpell( spellDef: Def.ISpell ): Def.ISpell {
+            spellDef.metadata.cardType = Def.CARD_TYPE.SPELL;
+            this.registerCard( spellDef );
+            return spellDef;
+        }
 
 
         count(): number {
@@ -26,7 +39,7 @@ namespace HsLogic {
         }
 
 
-        cards(): IterableIterator<T> {
+        cards(): IterableIterator<Def.ICard> {
             return this._map.values();
         }
 

@@ -1,11 +1,11 @@
-﻿/// <reference path="../set.ts" />
+/// <reference path="../set.ts" />
 ///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 
 "use strict";
 
 namespace Def {
 
-    var Shattered_Sun_Cleric: IMinion = classicSet.registerCard<IMinion>( {
+    var Shattered_Sun_Cleric: IMinion = classicSet.registerMinion( {
 
         name: `Shattered Sun Cleric`,
         cost: 2,

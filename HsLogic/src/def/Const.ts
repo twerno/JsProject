@@ -21,12 +21,6 @@ namespace Def {
         LEGANDARY
     }
 
-    //export enum CARD_TYPE {
-    //    MINON,
-    //    SPELL,
-    //    WEAPON
-    //}
-
     export namespace MINION_TYPE {
         export const BEAST: string = 'BEAST';
         export const DEMON: string = 'DEMON';
@@ -76,4 +70,16 @@ namespace Def {
         GREATER_THAN_OR_EQUAL_TO,
         NOT_EQUAL_TO
     }
+
+    export namespace CARD_TYPE {
+        export const MINION: string = 'MINION';
+        export const SPELL: string = 'SPELL';
+        export const WEAPON: string = 'WEAPON';
+        export const SECRET: string = 'SECRET';
+        export const HERO: string = 'HERO';
+        export const HERO_POWER: string = 'HERO_POWER';
+    }
+
+
+    export const UNDEFINED: string = 'UNDEFINED';
 }

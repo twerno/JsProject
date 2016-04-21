@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Holy_Wrath: ISpell = classicSet.registerCard<ISpell>( {
+    var Holy_Wrath: ISpell = classicSet.registerSpell( {
 
         name: `Holy wrath`,
         cost: 5,

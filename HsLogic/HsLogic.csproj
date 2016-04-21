@@ -27,6 +27,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
     <TypeScriptCompile Include="src\commons\Collection.ts" />
+    <TypeScriptCompile Include="src\commons\CommonUtils.ts" />
     <TypeScriptCompile Include="src\commons\MathUtils.ts" />
     <TypeScriptCompile Include="src\commons\StringUtils.ts" />
     <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
@@ -57,8 +58,10 @@
     <TypeScriptCompile Include="src\def\mechanics\LifeLink.ts" />
     <TypeScriptCompile Include="src\def\mechanics\onPlayMechanics\AttackHealthEnchant.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Tags.ts" />
-    <TypeScriptCompile Include="src\hsTest\DrawTest.ts" />
+    <TypeScriptCompile Include="src\hsTest\HsCtxBuilder.ts" />
     <TypeScriptCompile Include="src\hsTest\HsTestFramework.ts" />
+    <TypeScriptCompile Include="src\hsTest\TestCommons.ts" />
+    <TypeScriptCompile Include="src\hsTest\TestSequenceRunner.ts" />
     <TypeScriptCompile Include="src\hs\Const.ts" />
     <TypeScriptCompile Include="src\hs\core\Action.ts" />
     <TypeScriptCompile Include="src\hs\core\ActionEvent.ts" />

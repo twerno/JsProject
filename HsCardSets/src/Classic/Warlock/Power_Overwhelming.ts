@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Power_Overwhelming: ISpell = classicSet.registerCard<ISpell>( {
+    var Power_Overwhelming: ISpell = classicSet.registerSpell( {
 
         name: `Power Overwhelming`,
         cost: 1,

@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Swipe: ISpell = classicSet.registerCard<ISpell>( {
+    var Swipe: ISpell = classicSet.registerSpell( {
 
         name: `Swipe`,
         cost: 2,

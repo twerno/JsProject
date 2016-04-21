@@ -1,11 +1,11 @@
-﻿/// <reference path="../set.ts" />
+/// <reference path="../set.ts" />
 ///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 
 "use strict";
 
 namespace Def {
 
-    var Stormwind_Champion: IMinion = classicSet.registerCard<IMinion>( {
+    var Stormwind_Champion: IMinion = classicSet.registerMinion( {
 
         name: `Stormwind Champion`,
         cost: 7,

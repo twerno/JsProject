@@ -1,11 +1,11 @@
-﻿/// <reference path="../set.ts" />
+/// <reference path="../set.ts" />
 ///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 
 "use strict";
 
 namespace Def {
 
-    var Mistress_of_Pain: IMinion = naxxSet.registerCard<IMinion>( {
+    var Mistress_of_Pain: IMinion = naxxSet.registerMinion( {
 
         name: `Mistress of Pain`,
 

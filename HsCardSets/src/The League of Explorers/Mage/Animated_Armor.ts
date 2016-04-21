@@ -1,11 +1,11 @@
-﻿/// <reference path="../set.ts" />
+/// <reference path="../set.ts" />
 ///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 
 "use strict";
 
 namespace Def {
 
-    var Animated_Armor: IMinion = leagueSet.registerCard<IMinion>( {
+    var Animated_Armor: IMinion = leagueSet.registerMinion( {
 
         name: `Animated Armor`,
         cost: 4,

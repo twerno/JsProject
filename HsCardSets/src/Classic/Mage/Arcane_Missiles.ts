@@ -1,11 +1,11 @@
-﻿/// <reference path="../set.ts" />
+/// <reference path="../set.ts" />
 ///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 
 "use strict";
 
 namespace Def {
 
-    var Arcane_Missiles: ISpell = classicSet.registerCard<ISpell>( {
+    var Arcane_Missiles: ISpell = classicSet.registerSpell( {
 
         name: `Arcane Missiles`,
         cost: 1,

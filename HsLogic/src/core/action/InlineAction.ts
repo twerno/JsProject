@@ -4,8 +4,6 @@
 
 namespace jsAction {
 
-    export type FPromiseExecutor<T> = ( resolve: ( value?: T | PromiseLike<T> ) => void, reject: ( reason?: any ) => void ) => void;
-
 
     /**
      *  InlineAction<Icontext>
@@ -18,7 +16,7 @@ namespace jsAction {
         }
 
 
-        constructor( protected executor: FPromiseExecutor<IActionType | IActionType[]> ) { super() }
+        constructor( protected executor: CommonUtils.PromiseWorker<IActionType | IActionType[]> ) { super() }
     }
 
 
@@ -36,7 +34,7 @@ namespace jsAction {
         }
 
 
-        constructor( protected resolvableCheck: () => boolean, executor: FPromiseExecutor<IActionType | IActionType[]> ) {
+        constructor( protected resolvableCheck: () => boolean, executor: CommonUtils.PromiseWorker<IActionType | IActionType[]> ) {
             super( executor );
         }
     }

@@ -4,6 +4,9 @@ namespace jsAction {
 
     export type IActionType = IAction<IContext>;
     export type PromiseOfActions = Promise<IActionType | IActionType[]>;
+    export interface IActionClass {
+        new (): IAction<IContext>;
+    }
 
     export interface IContext { }
 

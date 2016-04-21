@@ -22,14 +22,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\hsTest\HsCtxtBuilder.ts" />
-    <TypeScriptCompile Include="src\Main.ts" />
-    <TypeScriptCompile Include="src\rpc\RpcTests.ts" />
-    <TypeScriptCompile Include="src\rpc\TestObjectFactory.ts" />
-    <TypeScriptCompile Include="src\smartObject\SmartObjectBasicTests.ts" />
-    <TypeScriptCompile Include="src\smartObject\TestObjectFactory.ts" />
+    <Folder Include="src\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="html\app.css" />
     <Content Include="html\Tests.html" />
@@ -39,6 +33,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>JSProjectTests</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>HsTests</AssemblyName>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />

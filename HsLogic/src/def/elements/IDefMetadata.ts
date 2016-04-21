@@ -6,7 +6,8 @@ namespace Def {
         cardClass: string,
         rarity: CARD_RARITY,
         collectible: boolean,
-        set: string
+        set: string,
+        cardType: string
     }
 
     export function metadata( cardClass: string, rarity: CARD_RARITY, collectible: boolean = true ): IMetadata {
@@ -14,7 +15,8 @@ namespace Def {
             cardClass: cardClass,
             rarity: rarity,
             collectible: collectible,
-            set: 'UNDEFINED'
+            set: Def.UNDEFINED,
+            cardType: Def.UNDEFINED
         };
     }
 
