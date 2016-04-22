@@ -30,7 +30,7 @@ namespace HsLogic {
  	 */
 
 
-    export class PlaySpellSequence<P extends PlaySpellParam> extends Action<P> {
+    export class PlaySpellSequence<P extends PlaySpellParam> extends CancelableAction<P> {
 
         resolve( self: PlaySpellSequence<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )
@@ -45,7 +45,7 @@ namespace HsLogic {
                     actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
-                    actions.push(); //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
+                    //actions.push(); //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
                     actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
 
@@ -63,8 +63,8 @@ namespace HsLogic {
 
                             // step 4 - spellTextPhase
                             if ( param.card.spellAction )
-                                innerActions.concat(
-                                    param.card.spellAction.actionBuilder( param.card.getSource(), param.targets, gameCtx ) );
+                                innerActions.push.apply( innerActions,
+                                    param.card.spellAction.actionBuilder( param.source, param.targets, gameCtx ) );
 
 
                             // step 5 - onAfterPlaySpell

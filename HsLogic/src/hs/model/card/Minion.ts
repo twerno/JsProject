@@ -12,7 +12,12 @@ namespace HsLogic {
 
         battlecry: Def.IDefAction;
 
-        initFromDefinition( def: Def.IMinion ): void {
+        init(): Minion {
+            super.init();
+            return this;
+        }
+
+        protected initFromDefinition( def: Def.IMinion ): void {
             super.initFromDefinition( def );
 
             this.body.attack = def.attack;
@@ -29,7 +34,7 @@ namespace HsLogic {
 
 
     export class MinionBody {
-        hp(): number { return this.hp() - this.damages };
+        hp(): number { return this.health - this.damages };
         health: number;
         attack: number;
         damages: number;

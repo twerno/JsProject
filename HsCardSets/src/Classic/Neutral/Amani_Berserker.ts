@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Amani_Berserker: IMinion = classicSet.registerMinion( {
+    export var Amani_Berserker: IMinion = classicSet.registerMinion( {
 
         name: `Amani Berserker`,
         cost: 2,

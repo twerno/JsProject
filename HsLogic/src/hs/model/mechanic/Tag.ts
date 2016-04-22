@@ -16,7 +16,7 @@ namespace HsLogic {
 
 
     export class Tags {
-        private tags: Tag[];
+        private tags: Tag[] = [];
 
         add( tag: Tag ): void {
             if ( !this.contains( tag ) )

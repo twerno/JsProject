@@ -50,21 +50,23 @@ namespace HsLogic {
 
                     // Secondary Player Queue
                     actions.push( new InlineAction(( resolve, reject ): void => {
-
+                        let innerActions: ActionType[] = [];
                         // Double safeguard
                         // Subtrack triggers that already had been triggered by dominant player
                         triggers = self._getSecondaryPlayerTriggers( gameCtx.activePlayer, doneByDominantPlayer )
                             .buildSet( param.source, gameCtx );
 
                         // Secondary Player Queue
-                        actions.push( new ProcessQueue( {
+                        innerActions.push( new ProcessQueue( {
                             source: param.source,
                             event: self.event,
                             triggers: triggers,
                             done: []
                         }) );
-                    }) );
+                        resolve( innerActions );
 
+                    }) );
+                    resolve( actions );
                 }
 
             ); // return new Promise

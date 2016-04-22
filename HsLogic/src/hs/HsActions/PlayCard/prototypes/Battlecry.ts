@@ -21,7 +21,7 @@ namespace HsLogic {
                     //@TODO Fix for Brann Bronzebeard 
 
                     if ( card.battlecry )
-                        actions.concat(
+                        actions.push.apply( actions,
                             card.battlecry.actionBuilder( param.card.getSource(), param.targets, gameCtx ) );
 
                     resolve( actions );

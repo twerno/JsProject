@@ -12,7 +12,7 @@ namespace HsLogic {
         sourceCard: Card;
 
         keyword: string;
-        respondsTo: string[];
+        respondsTo: string[] = [];
         triggerPriority: number;
 
         enable_self_trigger_protection: boolean;
@@ -22,14 +22,18 @@ namespace HsLogic {
 
 
         constructor( attachedTo: Card | Player, sourceCard: Card, def?: Def.IDefTrigger ) {
-            super( attachedTo.owner, def );
+            super( null, def );
 
             this.attachedTo = attachedTo || null;
             this.sourceCard = sourceCard || null;
         }
 
+        init(): Trigger {
+            super.init();
+            return this;
+        }
 
-        initFromDefinition( def: Def.IDefTrigger ): void {
+        protected initFromDefinition( def: Def.IDefTrigger ): void {
             super.initFromDefinition( def );
 
             if ( def.respondsTo instanceof Array )
@@ -53,6 +57,8 @@ namespace HsLogic {
         getSourceType(): SOURCE_TYPE {
             return this.attachedTo.getSourceType();
         }
+
+        set owner( dummy: Player ) { /* dummy */ }
 
     } // class Trigger
 

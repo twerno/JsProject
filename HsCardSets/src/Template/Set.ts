@@ -5,6 +5,6 @@
 
 namespace Def {
 
-    export var templateSet: HsLogic.CardSet = new HsLogic.CardSet('TEMPLATE');
+    export var templateSet: HsLogic.CardSet = new HsLogic.CardSet( 'TEMPLATE' );
 
 }

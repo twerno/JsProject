@@ -24,7 +24,7 @@ namespace HsLogic {
                 ( resolve, reject ): void => {
                     let param: P = self.param;
 
-                    param.sets.result.concat( MathUtils.selectAtRandom<T>( param.sets.source, param.props ) );
+                    param.sets.result.push.apply( param.sets.result, MathUtils.selectAtRandom<T>( param.sets.source, param.props ) );
 
                     resolve( jsAction.NO_CONSEQUENCES );
                 });

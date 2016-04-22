@@ -101,12 +101,13 @@
     <TypeScriptCompile Include="src\Classic\Paladin\Holy_Wrath.ts" />
     <TypeScriptCompile Include="src\Classic\Set.ts" />
     <TypeScriptCompile Include="src\Classic\Warlock\Power_Overwhelming.ts" />
-    <TypeScriptCompile Include="src\Curse of Naxxramas\Warlock\Mistress_of_Pain.ts" />
     <TypeScriptCompile Include="src\Const.ts" />
     <TypeScriptCompile Include="src\Curse of Naxxramas\Set.ts" />
+    <TypeScriptCompile Include="src\Curse of Naxxramas\Warlock\Mistress_of_Pain.ts" />
     <TypeScriptCompile Include="src\Goblin vs Gnomes\Set.ts" />
-    <TypeScriptCompile Include="src\The League of Explorers\Mage\Animated_Armor.ts" />
+    <TypeScriptCompile Include="src\Template\Set.ts" />
     <TypeScriptCompile Include="src\The Grand Tournament\Set.ts" />
+    <TypeScriptCompile Include="src\The League of Explorers\Mage\Animated_Armor.ts" />
     <TypeScriptCompile Include="src\The League of Explorers\Set.ts" />
     <TypeScriptCompile Include="src\Whispers of the Old Gods\Set.ts" />
   </ItemGroup>

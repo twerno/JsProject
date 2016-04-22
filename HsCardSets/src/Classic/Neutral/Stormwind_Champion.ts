@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Stormwind_Champion: IMinion = classicSet.registerMinion( {
+    export var Stormwind_Champion: IMinion = classicSet.registerMinion( {
 
         name: `Stormwind Champion`,
         cost: 7,

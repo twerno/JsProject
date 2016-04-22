@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Abomination: IMinion = classicSet.registerMinion( {
+    export var Abomination: IMinion = classicSet.registerMinion( {
 
         name: `Abomination`,
         cost: 5,

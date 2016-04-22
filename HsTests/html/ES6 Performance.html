@@ -9,10 +9,60 @@
 <body>
 
 
-    <script src="../../JSProjectECMA6/dist/jsProject6.js"></script>
+
     
     <!-- <script src="../js/tsUnit.js"></script> -->
-    <script src="es6_performance.js"></script>
+    <script>
+	
+	"use strict";
+	class A {}
+	class B extends A{}
+	
+	class Animal {
+		constructor(name, a) { 
+			this.name = name;
+			this.a = a;
+		}
+		move(distanceInMeters) {
+			console.log(`${this.name} moved ${distanceInMeters}m.`);
+		}
+	}
+	
+	class Animal2 extends Animal {
+		constructor(name, b) { 
+			super(name, b);
+		}
+	}
+	
+	"use strict";
+var jsAction;
+(function (jsAction) {
+    /**
+     *  Entity
+     *
+     */
+    class Entity {
+        constructor(owner) {
+            this.owner = owner;
+            this.id = generateNewId();
+        }
+        toString() {
+            return `[${ClassUtils.getNameOfClass(this)}:${this.id}]`;
+        }
+    }
+    jsAction.Entity = Entity;
+    var _entityIdGenerator = 0;
+    /**
+     *  generateNewId
+     *
+     */
+    function generateNewId() {
+        return (++_entityIdGenerator).toString();
+    }
+    jsAction.generateNewId = generateNewId;
+})(jsAction || (jsAction = {}));
+new jsAction.Entity({});
+	</script>
 
 
 </body>

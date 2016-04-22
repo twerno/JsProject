@@ -9,7 +9,12 @@ namespace HsLogic {
 
         spellAction: Def.IDefAction;
 
-        initFromDefinition( def: Def.ISpell ): void {
+        init(): Spell {
+            super.init();
+            return this;
+        }
+
+        protected initFromDefinition( def: Def.ISpell ): void {
             super.initFromDefinition( def );
 
             this.spellAction = def.spellTextAction;

@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Arcane_Missiles: ISpell = classicSet.registerSpell( {
+    export var Arcane_Missiles: ISpell = classicSet.registerSpell( {
 
         name: `Arcane Missiles`,
         cost: 1,

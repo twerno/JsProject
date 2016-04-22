@@ -24,6 +24,7 @@ namespace jsAction {
      */
     export abstract class IAction<T extends IContext> {
 
+        public parent: IAction<IContext> = null;
 
         // actions in natural order
         // first on results list are first to resolve
@@ -34,6 +35,10 @@ namespace jsAction {
         get timelimit(): number { return _5_SECONDS; }
         get className(): string { return ClassUtils.getNameOfClass( this ) }
         toString(): string { return this.className }
+
+        chainStr(): string {
+            return ( this.parent ? this.parent.chainStr() + ' >> ' : '' ) + ClassUtils.getNameOfClass( this );
+        }
     }
 
 }

@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Power_Overwhelming: ISpell = classicSet.registerSpell( {
+    export var Power_Overwhelming: ISpell = classicSet.registerSpell( {
 
         name: `Power Overwhelming`,
         cost: 1,

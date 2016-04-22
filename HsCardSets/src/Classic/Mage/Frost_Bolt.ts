@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Frost_Bolt: ISpell = classicSet.registerSpell( {
+    export var Frost_Bolt: ISpell = classicSet.registerSpell( {
 
         name: `Frost Bolt`,
         cost: 2,

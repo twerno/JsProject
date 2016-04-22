@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -23,6 +23,8 @@ namespace HsLogic {
         zoneOf<T extends Card>( player: jsAction.Entity, zoneId: string ): Zone<T> {
             return <Zone<T>>this.zonesOf( player ).get( zoneId );
         }
+
+
 
     }
 }

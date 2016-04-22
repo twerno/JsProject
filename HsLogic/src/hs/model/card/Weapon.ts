@@ -12,7 +12,12 @@ namespace HsLogic {
 
         battlecry: Def.IDefAction;
 
-        initFromDefinition( def: Def.IWeapon ): void {
+        init(): Weapon {
+            super.init();
+            return this;
+        }
+
+        protected initFromDefinition( def: Def.IWeapon ): void {
             super.initFromDefinition( def );
 
             this.attack = def.attack;

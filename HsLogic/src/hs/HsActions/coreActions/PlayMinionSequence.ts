@@ -1,4 +1,5 @@
 /// <reference path="../../core/action.ts" />
+/// <reference path="../../core/actionevent.ts" />
 
 "use strict";
 
@@ -12,7 +13,7 @@ namespace HsLogic {
          *  Examples:
          *    if the minion associated with a Summon Event is no longer in play at the time it is resolved, then nothing queues
          */
-        export class GenSummonMinionEventextends<P extends PlayCardParam> extends ActionEvent<P> {
+        export class GenSummonMinionEvent<P extends PlayCardParam> extends ActionEvent<P> {
             valid( gameCtx: HsGameCtx ): boolean {
                 return gameCtx.gameBoard.zonesOf( this.param.card.owner )
                     .battlefield.has( this.param.card );
@@ -23,7 +24,7 @@ namespace HsLogic {
         export class PreSummon extends ActionEvent<PlayMinionParam> { }
 
 
-        export class Summon extends GenSummonMinionEventextends<PlayMinionParam> {
+        export class Summon extends GenSummonMinionEvent<PlayMinionParam> {
 
             //valid( gameCtx: HsGameCtx ): boolean {
             //    let card: Card = this.param.card;
@@ -34,11 +35,11 @@ namespace HsLogic {
 
 
 
-        export class AfterPlay extends GenSummonMinionEventextends<PlayCardParam> { }
+        export class AfterPlay extends GenSummonMinionEvent<PlayCardParam> { }
 
 
 
-        export class AfterSummon extends GenSummonMinionEventextends<PlayMinionParam> { }
+        export class AfterSummon extends GenSummonMinionEvent<PlayMinionParam> { }
     }
 
     /**

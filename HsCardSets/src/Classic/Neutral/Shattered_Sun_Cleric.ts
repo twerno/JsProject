@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Shattered_Sun_Cleric: IMinion = classicSet.registerMinion( {
+    export var Shattered_Sun_Cleric: IMinion = classicSet.registerMinion( {
 
         name: `Shattered Sun Cleric`,
         cost: 2,

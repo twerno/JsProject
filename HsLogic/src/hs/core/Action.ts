@@ -26,7 +26,8 @@ namespace HsLogic {
 
 
     export function isHsCancelableParam( param: any ): param is IHsCancelableParam {
-        return param.hasOwnProperty( 'source' )
+        return param
+            && param.hasOwnProperty( 'source' )
             && param.hasOwnProperty( 'cancelAction' )
             && param.cancelAction.hasOwnProperty( 'value' );
     }
@@ -44,7 +45,7 @@ namespace HsLogic {
 
             if ( isHsCancelableParam( param )
                 && !( this instanceof CancelableAction ) )
-                console.error( 'Use CancelableAction class for IHsCancelableParam.' );
+                console.error( `${ClassUtils.getNameOfClass( this )} is not a CancelableAction class.` );
         }
 
         abstract resolve( self: Action<P>, gameCtx: HsGameCtx ): PromiseOfActions;
@@ -57,7 +58,9 @@ namespace HsLogic {
 
     export abstract class CancelableAction<P extends IHsCancelableParam> extends Action<P> {
 
-        resolvable( context: HsGameCtx ): boolean { return !this.param.cancelAction.value }
+        resolvable( context: HsGameCtx ): boolean {
+            return !this.param.cancelAction.value
+        }
     }
 
 }

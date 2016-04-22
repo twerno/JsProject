@@ -34,7 +34,9 @@ namespace jsAction {
 
 
         putOnTop( action: IActionType ): void {
-            if ( action instanceof IAction )
+            if ( !action )
+                return;
+            else if ( action instanceof IAction )
                 this._stackFILO.push( action );
             else
                 throw new Error( `Action has to be an IAction class.` );
@@ -113,7 +115,7 @@ namespace jsAction {
             resolving.stopTimer();
             this._clearTimeout();
 
-            this._addConsequnces( consequences );
+            this._addConsequnces( consequences, resolving.action );
 
             this._currActionInfo = null;
             !this._onActionResolved && ActionStack._postMortemLog<IContext>( resolving, consequences );
@@ -121,16 +123,21 @@ namespace jsAction {
         }
 
 
-        private _addConsequnces( consequences: IActionType | IActionType[] ): void {
+        private _addConsequnces( consequences: IActionType | IActionType[], parent: IActionType ): void {
             let action: IAction<IContext>;
 
             if ( consequences instanceof Array )
                 while ( consequences.length > 0 ) {
                     action = consequences.pop();
-                    action && this.putOnTop( consequences.pop() );
+                    if ( action ) {
+                        this.putOnTop( action );
+                        action.parent = parent;
+                    }
                 }
-            else if ( consequences instanceof IAction )
+            else if ( consequences instanceof IAction ) {
                 this.putOnTop( consequences );
+                consequences.parent = action;
+            }
         }
 
 

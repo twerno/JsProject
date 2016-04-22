@@ -7,7 +7,7 @@ namespace HsLogic {
      * PayCostAndRemoveFromHand
      *
  	 */
-    export class PayCostAndRemoveFromHand<P extends PlayCardParam> extends Action<P> {
+    export class PayCostAndRemoveFromHand<P extends PlayCardParam> extends CancelableAction<P> {
 
         resolve( self: PayCostAndRemoveFromHand<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             if ( self.param.cancelAction.value )

@@ -18,10 +18,22 @@ namespace HsLogic {
 
         activePlayer: Player = null;
 
-        gameBoard: GameBoard;
 
-
+        gameBoard: GameBoard = new GameBoard();
 
         eventMgr: IEventMgr = new EventMgr();
+
+        registerPlayer( player: Player ): void {
+            this.players.push( player );
+            this.gameBoard.zonesMap[player.id] = new Zones( player );
+        }
+
+        get inactivePlayer(): Player {
+            for ( let player of this.players )
+                if ( player !== this.activePlayer )
+                    return player;
+
+            return null;
+        }
     }
 }

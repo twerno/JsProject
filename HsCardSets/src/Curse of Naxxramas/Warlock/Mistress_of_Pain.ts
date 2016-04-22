@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Mistress_of_Pain: IMinion = naxxSet.registerMinion( {
+    export var Mistress_of_Pain: IMinion = naxxSet.registerMinion( {
 
         name: `Mistress of Pain`,
 

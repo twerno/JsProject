@@ -13,10 +13,15 @@ namespace HsLogic {
 
         heroPower: any;
 
-        tags: Tags;
+        tags: Tags = new Tags();
 
         constructor( public name: string ) {
             super( null, null );
+        }
+
+        init(): Player {
+            super.init();
+            return this;
         }
 
 

@@ -37,12 +37,12 @@ namespace Def {
                 player = gameCtx.players[i];
                 zones = gameCtx.gameBoard.zonesOf( player );
 
-                result.concat( this._getApplicableTriggers( player.hero.triggers, source, gameCtx ) );
+                //result.push.apply(result, this._getApplicableTriggers( player.hero.triggers, source, gameCtx ) );
 
-                result.concat( this._locateTriggerInside( zones.battlefield.getRawArray(), source, gameCtx ) );
-                result.concat( this._locateTriggerInside( zones.weapon.getRawArray(), source, gameCtx ) );
-                result.concat( this._locateTriggerInside( zones.hand.getRawArray(), source, gameCtx ) );
-                result.concat( this._locateTriggerInside( zones.secret.getRawArray(), source, gameCtx ) );
+                result.push.apply( result, this._locateTriggerInside( zones.battlefield.getRawArray(), source, gameCtx ) );
+                result.push.apply( result, this._locateTriggerInside( zones.weapon.getRawArray(), source, gameCtx ) );
+                result.push.apply( result, this._locateTriggerInside( zones.hand.getRawArray(), source, gameCtx ) );
+                result.push.apply( result, this._locateTriggerInside( zones.secret.getRawArray(), source, gameCtx ) );
             }
             return result;
         }
@@ -52,7 +52,7 @@ namespace Def {
             let result: any[] = [];
 
             for ( let i = 0; i < cards.length; i++ )
-                result.concat( this._getApplicableTriggers( cards[i].triggers, source, gameCtx ) );
+                result.push.apply( result, this._getApplicableTriggers( cards[i].triggers, source, gameCtx ) );
 
             return result;
         }

@@ -17,10 +17,14 @@ namespace HsLogic {
         }
 
 
-
         constructor( public owner: Player, def?: Object ) {
             super( owner );
-            def && this.initFromDefinition( def );
+            this.def = def || null;
+        }
+
+        init(): Entity {
+            this.def && this.initFromDefinition( this.def );
+            return this;
         }
 
         getSource(): ISource {
@@ -39,10 +43,10 @@ namespace HsLogic {
 
     var _orderOfPlayGenerator: number = 0;
 
-	/**
-	 *  orderOfPlayGenerator
-	 *
-	 */
+    /**
+     *  orderOfPlayGenerator
+     *
+     */
     export function orderOfPlayGen(): number {
         return ++_orderOfPlayGenerator;
     }

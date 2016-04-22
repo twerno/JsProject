@@ -22,11 +22,16 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\" />
+    <TypeScriptCompile Include="src\HsCtxBuilder.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="html\app.css" />
     <Content Include="html\Tests.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\hsTest\" />
+    <Folder Include="src\rpc\" />
+    <Folder Include="src\smartObject\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

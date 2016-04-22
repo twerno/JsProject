@@ -9,18 +9,22 @@ namespace HsLogic {
         name: string;
         baseCost: number;
 
-        triggers: Trigger[];
-        tags: Tags;
-        effects: Object[];
-        enchantments: Enchantment<Permanent>[];
+        triggers: Trigger[] = [];
+        tags: Tags = new Tags();
+
+        enchantments: Enchantment<Permanent>[] = [];
 
 
-        constructor( public owner: Player, def?: Def.ICard ) {
+        constructor( owner: Player, def?: Def.ICard ) {
             super( owner, def );
         }
 
+        init(): Card {
+            super.init();
+            return this;
+        }
 
-        initFromDefinition( def: Def.ICard ): void {
+        protected initFromDefinition( def: Def.ICard ): void {
             super.initFromDefinition( def );
 
             this.name = def.name;
@@ -34,7 +38,6 @@ namespace HsLogic {
             if ( def.tags )
                 for ( let i = 0; i < def.tags.length; i++ )
                     this.tags.add( new def.tags[i]( {
-                        //action: null,
                         player: this.owner,
                         sourceType: SOURCE_TYPE.NONE,
                         entity: this

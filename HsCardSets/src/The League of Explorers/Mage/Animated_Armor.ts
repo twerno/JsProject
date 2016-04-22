@@ -5,7 +5,7 @@
 
 namespace Def {
 
-    var Animated_Armor: IMinion = leagueSet.registerMinion( {
+    export var Animated_Armor: IMinion = leagueSet.registerMinion( {
 
         name: `Animated Armor`,
         cost: 4,

@@ -15,13 +15,19 @@ namespace HsTest {
 
 
 
+
     export enum TestResultState {
         NOT_RESOLVABLE, RESOLVING, UNTESTED, PASSED, FAILED, RESOLVING_ERROR, TEST_ERROR
+    }
+
+    export enum TestSequenceResultState {
+        PASSED, FAILED, RESOLVING_ERROR, TEST_ERROR, UNRESOLVED_TEST_LEFT
     }
 
 
     export interface TestResult {
         actionClass: string,
+        chain: string,
         state: TestResultState,
         param: {
             before: HsLogic.IActionParam,
@@ -34,6 +40,7 @@ namespace HsTest {
     export interface TestSequenceResult {
         testClass: string,
         testResults: TestResult[],
+        state: TestSequenceResultState,
         error: Error
     }
 
@@ -42,7 +49,7 @@ namespace HsTest {
 
         timeLimit?: number,
 
-        respondsTo: IActionClass,
+        toBeTested: IActionClass,
 
         testable?: ( action: ActionType, hsGameCtx: HsGameCtx ) => boolean
 
@@ -52,8 +59,8 @@ namespace HsTest {
 
     export interface TestSequence {
         hsGameCtxBuilder: () => HsGameCtx,
-        action: () => ActionType,
-        tests: Test[]
+        actions: ( hsGameCtx: HsGameCtx ) => ActionType[],
+        tests: Test[],
     }
 
 }
