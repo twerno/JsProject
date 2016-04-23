@@ -27,14 +27,19 @@ var testSeq: HsTest.TestSequence = {
         ];
     },
 
-    tests: []
+    tests: [],
+
+    consequencesMonitorExcludes: [jsAction.InlineAction, jsAction.InlineActionExt]
 }
 
 var Result: HsTest.TestSequenceResult = null;
 testSeq.hsGameCtxBuilder();
 var testEngine: HsTest.TestEngine = new HsTest.TestEngine();
 testEngine.resolveTest( testSeq )
-    .then(( result: HsTest.TestSequenceResult ): void => { console.log( result ); Result = result })
+    .then(( result: HsTest.TestSequenceResult ): void => {
+        let drawer: HsTest.TestSequenceResultDrawer = new HsTest.TestSequenceResultDrawer();
+        document.write( drawer.getHtml( result ) );
+        console.log( result );
+        Result = result;
+    })
     .catch(( error: Error ): void => { throw error });
-
-

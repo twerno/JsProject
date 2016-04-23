@@ -48,42 +48,47 @@ namespace HsTest {
         }
 
         private _onResolving( action: ActionType, resolvable: boolean ): void {
-            this.testSeqResult.testResults.push( {
-                actionClass: action.className,
-                chain: action.chainStr(),
-                state: resolvable ? TestResultState.RESOLVING : TestResultState.NOT_RESOLVABLE,
-                param: {
-                    before: this.getParamFrom( action ),
-                    after: null
-                }
-            });
+            if ( !DbgUtils.excludedAction( action, this.testSeq.consequencesMonitorExcludes ) )
+                this.testSeqResult.testResults.push( {
+                    actionClass: action.className,
+                    chain: DbgUtils.actionChainStrExclude( action, this.testSeq.consequencesMonitorExcludes ),
+                    state: resolvable ? TestResultState.RESOLVING : TestResultState.NOT_RESOLVABLE,
+                    param: {
+                        before: this.getParamFrom( action ),
+                        after: null
+                    }
+                });
         }
 
         private _onResolved( action: ActionType, executionTime: number ): void {
-            let unitTestResult: TestResult = this.lastTestResult();
-            unitTestResult.param.after = this.getParamFrom( action );
-            unitTestResult.executionTime = executionTime;
+            if ( !DbgUtils.excludedAction( action, this.testSeq.consequencesMonitorExcludes ) ) {
+                let testResult: TestResult = this.lastTestResult();
+                testResult.param.after = this.getParamFrom( action );
+                testResult.executionTime = executionTime;
 
-            try {
-                unitTestResult.state = this.performTest( action );
-                if ( unitTestResult.state === TestResultState.PASSED )
-                    this.passedCount++;
-            } catch ( error ) {
-                unitTestResult.state = TestResultState.TEST_ERROR;
-                this.testSeqResult.error = error;
+                try {
+                    testResult.state = this.performTest( action );
+                    if ( testResult.state === TestResultState.PASSED )
+                        this.passedCount++;
+                } catch ( error ) {
+                    testResult.state = TestResultState.TEST_ERROR;
+                    this.testSeqResult.error = error;
 
-                this.closeTest( TestSequenceResultState.TEST_ERROR );
-                return;
+                    this.closeTest( TestSequenceResultState.TEST_ERROR );
+                    return;
+                }
             }
 
             this.resolveNext();
         }
 
         private _onError( action: ActionType, error: Error, executionTime: number ): void {
-            let unitTestResult: TestResult = this.lastTestResult();
-            unitTestResult.state = TestResultState.RESOLVING_ERROR;
-            unitTestResult.param.after = this.getParamFrom( action );
-            unitTestResult.executionTime = executionTime;
+            if ( !DbgUtils.excludedAction( action, this.testSeq.consequencesMonitorExcludes ) ) {
+                let testResult: TestResult = this.lastTestResult();
+                testResult.state = TestResultState.RESOLVING_ERROR;
+                testResult.param.after = this.getParamFrom( action );
+                testResult.executionTime = executionTime;
+            }
             this.testSeqResult.error = error;
 
             this.closeTest( TestSequenceResultState.RESOLVING_ERROR );
@@ -127,13 +132,7 @@ namespace HsTest {
 
         private getParamFrom( action: jsAction.IActionType ): HsLogic.IActionParam {
             if ( action instanceof HsLogic.Action )
-                return JSON.parse( JSON.stringify( action.param,
-                    ( key, value ): any => {
-                        if ( value instanceof jsAction.Entity )
-                            return `[${ClassUtils.getNameOfClass( value )}:${value.id}]`;
-                        else
-                            return value;
-                    }) );
+                return JSON.parse( DbgUtils.model2JSON( action.param ) );
             else
                 return null;
         }

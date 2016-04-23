@@ -5,7 +5,7 @@ namespace jsAction {
     export type IActionType = IAction<IContext>;
     export type PromiseOfActions = Promise<IActionType | IActionType[]>;
     export interface IActionClass {
-        new (): IAction<IContext>;
+        new ( a?: any, b?: any ): IAction<IContext>;
     }
 
     export interface IContext { }
@@ -35,10 +35,6 @@ namespace jsAction {
         get timelimit(): number { return _5_SECONDS; }
         get className(): string { return ClassUtils.getNameOfClass( this ) }
         toString(): string { return this.className }
-
-        chainStr(): string {
-            return ( this.parent ? this.parent.chainStr() + ' >> ' : '' ) + ClassUtils.getNameOfClass( this );
-        }
     }
 
 }

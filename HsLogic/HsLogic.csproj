@@ -58,6 +58,8 @@
     <TypeScriptCompile Include="src\def\mechanics\LifeLink.ts" />
     <TypeScriptCompile Include="src\def\mechanics\onPlayMechanics\AttackHealthEnchant.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Tags.ts" />
+    <TypeScriptCompile Include="src\helpers\DbgUtils.ts" />
+    <TypeScriptCompile Include="src\hsTest\drawer\TestSequenceResultDrawer.ts" />
     <TypeScriptCompile Include="src\hsTest\HsCtxBuilder.ts" />
     <TypeScriptCompile Include="src\hsTest\HsTestFramework.ts" />
     <TypeScriptCompile Include="src\hsTest\TestCommons.ts" />

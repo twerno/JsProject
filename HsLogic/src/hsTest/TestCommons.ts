@@ -61,6 +61,7 @@ namespace HsTest {
         hsGameCtxBuilder: () => HsGameCtx,
         actions: ( hsGameCtx: HsGameCtx ) => ActionType[],
         tests: Test[],
+        consequencesMonitorExcludes?: jsAction.IActionClass[]
     }
 
 }
