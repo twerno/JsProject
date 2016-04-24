@@ -7,25 +7,30 @@ namespace HsTest {
     export class TestSequenceResultDrawer {
 
         getHtml( result: TestSequenceResult ): string {
-            let html: string = '';
+            let html: string = '<ul><li>';
             html += `<div class='${this.getHeaderStyle( result.state )}'>`
             html += this.testSequenceResultHead( result );
 
-            html += '<ul>';
+            html += `<ul id='${result.id}' class='collapse'>`;
             for ( let test of result.testResults ) {
                 html += this.getTestHtml( test );
             }
 
-            html += '</ul></div>'
+            html += '</ul></div>';
+            html += '</li></ul>';
             return html
         }
 
 
 
         testSequenceResultHead( result: TestSequenceResult ): string {
-            return result.testClass + ( result.error ? ': ' + result.error.message : '' );
+            let html: string = '';
+            html += `<h3>`;
+            html += `<button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#${result.id}">+</button> `;
+            html += `${result.testTitle}</h3>`;
+            html += result.error ? ': ' + result.error.message : '';
+            return html;
         }
-
 
 
         getHeaderStyle( state: TestSequenceResultState ): string {
@@ -39,16 +44,13 @@ namespace HsTest {
 
         getTestHtml( result: TestResult ): string {
             let html: string = '';
-            html += `<li><div class=${this.getTestHeaderStyle( result.state )}>`;
+            html += `<li><div class=${this.getTestHeaderStyle( result.state )}><h4>`;
+            html += `<button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#${result.id}">+</button> `;
             html += result.chain;
+            html += '</h4>';
 
-            html += '<table><tr><td>'
-            if ( result.param && result.param.before )
-                html += this.getParamHtml( result.param.before );
-            html += '</td><td>';
-            if ( result.param && result.param.after )
-                html += this.getParamHtml( result.param.after );
-            html += '</td></tr></table>';
+            if ( result.param && ( result.param.before || result.param.after ) )
+                html += this.getParamHtml( result.id, result.param.before, result.param.after );
 
             html += '</div></li>';
             return html;
@@ -69,20 +71,66 @@ namespace HsTest {
 
 
 
-        getParamHtml( param: IAnyMap ): string {
-            let html: string = '<ul>';
+        getParamHtml( id: string, paramBefore: any, paramAfter: any ): string {
+            let html: string = '',
+                keys: string[] = this.deepMergeKeys( paramBefore, paramAfter ),
+                val1: any,
+                val2: any,
+                style: string;
 
-            for ( let key in param ) {
-                html += '<li>' + key + ': ';
-                if ( typeof ( param[key] ) === 'object' )
-                    html += this.getParamHtml( param[key] );
-                else
-                    html += JSON.stringify( param[key] );
-                html += '</li>';
+            html += `<div id='${id}' class='collapse'>`;
+            html += `<table class='table' style='width:92%; margin-left:2%;'>`;
+            html += '<thead><tr><th>Key</th><th>Before</th><th>After</th></tr></thead>';
+
+            for ( let key of keys ) {
+                val1 = this.deepKeyValue( key, paramBefore );
+                val2 = this.deepKeyValue( key, paramAfter );
+                style = val1 === val2 ? '' : 'danger';
+
+                html += `<tr class='${style}'>`;
+                html += `<td>${key}</td>`;
+                html += `<td>${val1}</td>`;
+                html += `<td>${val2}</td>`;
+
             }
 
-            html += '</ul>';
+            html += '</table></div>';
             return html;
+        }
+
+
+        protected deepMergeKeys( paramBefore: IAnyMap, paramAfter: IAnyMap ): string[] {
+            let result: string[] = this.deepMineKeys( '', paramBefore );
+
+            for ( let key of this.deepMineKeys( '', paramAfter ) )
+                if ( result.indexOf( key ) === -1 )
+                    result.push( key );
+
+            return result;
+        }
+
+        protected deepMineKeys( masterKey: string, map: any ): string[] {
+            let result: string[] = [],
+                computedKey: string;
+
+            if ( map && typeof ( map ) === 'object' )
+                for ( let key of Object.keys( map ) ) {
+                    computedKey = masterKey ? masterKey + '.' + key : key;
+                    if ( typeof ( map ) !== 'object' )
+                        result.push( computedKey );
+                    result = result.concat( this.deepMineKeys( computedKey, map[key] ) );
+                }
+            else
+                result.push( masterKey );
+            return result;
+        }
+
+        protected deepKeyValue( deepKey: string, map: any ): any {
+            let dotIdx: number = deepKey.indexOf( '.' );
+            if ( dotIdx > -1 )
+                return this.deepKeyValue( deepKey.substr( dotIdx + 1 ), map[deepKey.substr( 0, dotIdx )] );
+            else
+                return map[deepKey];
         }
 
     }

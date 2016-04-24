@@ -20,14 +20,21 @@ namespace HsLogic {
     }
 
 
+    export function isActionParam( param: any ): param is IActionParam {
+        return param
+            && param.hasOwnProperty( 'source' )
+            && param['source'].hasOwnProperty( 'player' )
+            && param['source'].hasOwnProperty( 'sourceType' )
+            && param['source'].hasOwnProperty( 'entity' );
+    }
+
     export interface IActionParam {
         source: ISource
     }
 
 
     export function isHsCancelableParam( param: any ): param is IHsCancelableParam {
-        return param
-            && param.hasOwnProperty( 'source' )
+        return isActionParam( param )
             && param.hasOwnProperty( 'cancelAction' )
             && param.cancelAction.hasOwnProperty( 'value' );
     }

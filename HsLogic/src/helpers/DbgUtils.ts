@@ -13,23 +13,25 @@ namespace DbgUtils {
                     return trigger2JSON( value );
                 else if ( value instanceof jsAction.Entity )
                     return `[${ClassUtils.getNameOfClass( value )}:${value.id}]`;
+                else if ( typeof ( value ) === 'string' )
+                    return value
                 else
                     return value;
             });
     }
 
     export function card2JSON( card: HsLogic.Card ): string {
-        return `[${ClassUtils.getNameOfClass( card )}:${card.id}; '${card.name}']`;
+        return `{id: ${card.id}, name: '${card.name}'}`;
     }
 
     export function player2JSON( player: HsLogic.Player ): string {
-        return `[${ClassUtils.getNameOfClass( player )}:${player.id}; '${player.name}']`;
+        return `{id: ${player.id}, name: '${player.name}'}`;
     }
 
     export function trigger2JSON( trigger: HsLogic.Trigger ): string {
         let eventStr: string = trigger.respondsTo.join( ',' );
 
-        return `[Trigger:${trigger.id}; '${trigger.keyword}'; '${eventStr}'; ${model2JSON( trigger.attachedTo )}]`;
+        return `{event: '${trigger.respondsTo.join( ', ' )}', keyword: '${trigger.keyword}', parent: ${model2JSON( trigger.attachedTo )}}`;
     }
 
     export function actionChainStr( action: jsAction.IActionType ): string {
@@ -37,6 +39,9 @@ namespace DbgUtils {
     }
 
     export function actionChainStrExclude( action: jsAction.IActionType, excludes: jsAction.IActionClass[] ): string {
+        if ( !action )
+            return '';
+
         if ( excludedAction( action, excludes ) )
             return ( action.parent ? actionChainStrExclude( action.parent, excludes ) : '' );
 
@@ -51,4 +56,21 @@ namespace DbgUtils {
         return false;
     }
 
+
+    export function testTitle( actions: jsAction.IActionType[] ): string {
+        let result: string[] = [],
+            title: string;
+
+        for ( let action of actions ) {
+            title = ClassUtils.getNameOfClass( action );
+            if ( action instanceof HsLogic.Action
+                && HsLogic.isActionParam( action.param )
+                && action.param.source.entity instanceof HsLogic.Card )
+                title += ': ' + action.param.source.entity.name;
+            result.push( title );
+        }
+        return '[' + result.join( ' ,' ) + ']';
+    }
+
+    //export function ac
 }

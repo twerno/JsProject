@@ -26,6 +26,7 @@ namespace HsTest {
 
 
     export interface TestResult {
+        id: string,
         actionClass: string,
         chain: string,
         state: TestResultState,
@@ -38,7 +39,8 @@ namespace HsTest {
 
 
     export interface TestSequenceResult {
-        testClass: string,
+        id: string,
+        testTitle: string,
         testResults: TestResult[],
         state: TestSequenceResultState,
         error: Error

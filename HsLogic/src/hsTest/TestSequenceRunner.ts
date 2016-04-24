@@ -4,6 +4,10 @@
 
 namespace HsTest {
 
+    var resultIdGen: number = 0;
+    function resultId(): string {
+        return 'test_' + ( resultIdGen++ ).toString();
+    }
 
     export class TestSequenceRunner {
         private hsGameCtx: HsLogic.HsGameCtx;
@@ -22,12 +26,14 @@ namespace HsTest {
         execute( testSeq: TestSequence, hsGameCtx?: HsLogic.HsGameCtx ) {
             this.hsGameCtx = hsGameCtx || testSeq.hsGameCtxBuilder();
             this.testSeq = testSeq;
+            let actions: ActionType[] = this.testSeq.actions( this.hsGameCtx );
 
-            for ( let a of this.testSeq.actions( this.hsGameCtx ) )
+            for ( let a of actions )
                 this.stack.putOnTop( a );
 
             this.testSeqResult = {
-                testClass: ClassUtils.getNameOfClass( testSeq ),
+                id: resultId(),
+                testTitle: DbgUtils.testTitle( actions ) + ':',
                 testResults: [],
                 state: null,
                 error: null
@@ -50,6 +56,7 @@ namespace HsTest {
         private _onResolving( action: ActionType, resolvable: boolean ): void {
             if ( !DbgUtils.excludedAction( action, this.testSeq.consequencesMonitorExcludes ) )
                 this.testSeqResult.testResults.push( {
+                    id: resultId(),
                     actionClass: action.className,
                     chain: DbgUtils.actionChainStrExclude( action, this.testSeq.consequencesMonitorExcludes ),
                     state: resolvable ? TestResultState.RESOLVING : TestResultState.NOT_RESOLVABLE,
