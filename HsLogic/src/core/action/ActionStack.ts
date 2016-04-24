@@ -136,7 +136,7 @@ namespace jsAction {
                 }
             else if ( consequences instanceof IAction ) {
                 this.putOnTop( consequences );
-                consequences.parent = action;
+                consequences.parent = parent;
             }
         }
 
