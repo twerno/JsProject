@@ -52,7 +52,7 @@ namespace HsLogic {
                         resolve( innerActions );
                     }) );
 
-                    if ( param.notifyMode = NOTIFY_MODE.AFTER_ALL_ACTIONS )
+                    if ( param.notifyMode === NOTIFY_MODE.AFTER_ALL_ACTIONS )
                         actions.push( new DispatchSavedEvents( event.Damage, gameCtx ) );
 
                     resolve( actions );
@@ -60,10 +60,6 @@ namespace HsLogic {
             ); // return new Promise
 
         } // resolve(self: CalculateAndDealDamage
-
-        //        static build(param: DamageTargetsParam): CalculateAndDealDamage<DamageTargetsParam> {
-        //            return new CalculateAndDealDamage(param);
-        //        }
 
     }  // class CalculateAndDealDamage
 
@@ -140,7 +136,9 @@ namespace HsLogic {
 
                     actions.push( new event.Damage( param )
                         .dispatchOrSave( gameCtx,
-                        (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
+                        (): boolean => {
+                            return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION
+                        })
                     );
 
                     resolve( actions );

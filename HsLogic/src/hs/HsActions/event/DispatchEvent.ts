@@ -93,21 +93,21 @@ namespace HsLogic {
 
 
 
-    interface QueueParam extends IActionParam {
+    export interface QueueParam extends IActionParam {
         event: ActionEvent<IActionParam>,
         triggers: Trigger[],
         done: Trigger[]
     }
 
 
-    class ProcessQueue<P extends QueueParam> extends Action<P> {
+    export class ProcessQueue<P extends QueueParam> extends Action<P> {
 
         resolve( self: ProcessQueue<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
                 ( resolve, reject ): void => {
                     let param: P = self.param,
-                        actions: ActionType[];
+                        actions: ActionType[] = [];
 
                     for ( let i = 0; i < param.triggers.length; i++ ) {
                         let trigger = param.triggers[i];

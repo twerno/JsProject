@@ -28,12 +28,13 @@ namespace HsTest {
     export interface TestResult {
         id: string,
         actionClass: string,
-        chain: string,
+        chain: string[],
         state: TestResultState,
         param: {
             before: HsLogic.IActionParam,
             after: HsLogic.IActionParam
         },
+        eventClass: string,
         executionTime?: number
     }
 

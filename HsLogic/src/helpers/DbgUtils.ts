@@ -13,25 +13,23 @@ namespace DbgUtils {
                     return trigger2JSON( value );
                 else if ( value instanceof jsAction.Entity )
                     return `[${ClassUtils.getNameOfClass( value )}:${value.id}]`;
-                else if ( typeof ( value ) === 'string' )
-                    return value
                 else
                     return value;
             });
     }
 
     export function card2JSON( card: HsLogic.Card ): string {
-        return `{id: ${card.id}, name: '${card.name}'}`;
+        return `${ClassUtils.getNameOfClass( card )}[${card.id}]: '${card.name}'`;
     }
 
     export function player2JSON( player: HsLogic.Player ): string {
-        return `{id: ${player.id}, name: '${player.name}'}`;
+        return `${ClassUtils.getNameOfClass( player )}[${player.id}]: '${player.name}'`;
     }
 
     export function trigger2JSON( trigger: HsLogic.Trigger ): string {
         let eventStr: string = trigger.respondsTo.join( ',' );
 
-        return `{event: '${trigger.respondsTo.join( ', ' )}', keyword: '${trigger.keyword}', parent: ${model2JSON( trigger.attachedTo )}}`;
+        return `{event: '${trigger.respondsTo.join( ', ' )}', keyword: '${trigger.keyword}', parent: ${model2JSON( trigger.attachedTo )} } `;
     }
 
     export function actionChainStr( action: jsAction.IActionType ): string {
@@ -46,6 +44,19 @@ namespace DbgUtils {
             return ( action.parent ? actionChainStrExclude( action.parent, excludes ) : '' );
 
         return ( action.parent ? actionChainStrExclude( action.parent, excludes ) + ' >> ' : '' ) + action.className;
+    }
+
+    export function actionChainStrExclude2( action: jsAction.IActionType, excludes: jsAction.IActionClass[] ): string[] {
+        if ( !action )
+            return [];
+
+        if ( excludedAction( action, excludes ) )
+            return ( action.parent ? actionChainStrExclude2( action.parent, excludes ) : [] );
+
+        if ( action.parent )
+            return actionChainStrExclude2( action.parent, excludes ).concat( action.className );
+        else
+            return [action.className];
     }
 
     export function excludedAction( action: jsAction.IActionType, excludes: jsAction.IActionClass[] ): boolean {
@@ -72,5 +83,4 @@ namespace DbgUtils {
         return '[' + result.join( ' ,' ) + ']';
     }
 
-    //export function ac
 }

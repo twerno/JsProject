@@ -6,6 +6,7 @@
 *.js
 *.map
 
+!HsTests/html/*.js
 
 
 ## Ignore Visual Studio temporary files, build results, and

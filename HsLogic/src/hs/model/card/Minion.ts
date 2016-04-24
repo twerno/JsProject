@@ -35,9 +35,9 @@ namespace HsLogic {
 
     export class MinionBody {
         hp(): number { return this.health - this.damages };
-        health: number;
-        attack: number;
-        damages: number;
+        health: number = 0;
+        attack: number = 0;
+        damages: number = 0;
     }
 
 }

@@ -40,7 +40,7 @@ namespace HsLogic {
                     }) );
 
 
-                    if ( param.notifyMode = NOTIFY_MODE.AFTER_ALL_ACTIONS )
+                    if ( param.notifyMode === NOTIFY_MODE.AFTER_ALL_ACTIONS )
                         actions.push( new DispatchSavedEvents( event.Heal, gameCtx ) );
 
                     resolve( actions );

@@ -58,7 +58,8 @@ namespace HsTest {
                 this.testSeqResult.testResults.push( {
                     id: resultId(),
                     actionClass: action.className,
-                    chain: DbgUtils.actionChainStrExclude( action, this.testSeq.consequencesMonitorExcludes ),
+                    eventClass: ( <HsLogic.DispatchEvent>action ).event instanceof HsLogic.ActionEvent ? ClassUtils.getNameOfClass(( <HsLogic.DispatchEvent>action ).event ) : null,
+                    chain: DbgUtils.actionChainStrExclude2( action, this.testSeq.consequencesMonitorExcludes ),
                     state: resolvable ? TestResultState.RESOLVING : TestResultState.NOT_RESOLVABLE,
                     param: {
                         before: this.getParamFrom( action ),
@@ -138,6 +139,8 @@ namespace HsTest {
 
 
         private getParamFrom( action: jsAction.IActionType ): HsLogic.IActionParam {
+            if ( action instanceof HsLogic.DispatchEvent )
+                return JSON.parse( DbgUtils.model2JSON( action.event ) );
             if ( action instanceof HsLogic.Action )
                 return JSON.parse( DbgUtils.model2JSON( action.param ) );
             else

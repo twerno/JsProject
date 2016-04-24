@@ -4,9 +4,9 @@
 namespace HsLogic {
 
     export enum NOTIFY_MODE {
-        AFTER_EVERY_ACTION,
-        AFTER_ALL_ACTIONS,
-        AFTER_ALL_STEPS
+        AFTER_EVERY_ACTION = <any>"AFTER_EVERY_ACTION",
+        AFTER_ALL_ACTIONS = <any>"AFTER_ALL_ACTIONS",
+        AFTER_ALL_STEPS = <any>"AFTER_ALL_STEPS",
     }
 
     export enum HEAL_STATE {

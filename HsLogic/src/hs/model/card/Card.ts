@@ -33,7 +33,7 @@ namespace HsLogic {
             this.triggers = [];
             if ( def.triggers )
                 for ( let i = 0; i < def.triggers.length; i++ )
-                    this.triggers.push( new Trigger( this, this, def.triggers[i] ) );
+                    this.triggers.push( new Trigger( this, this, def.triggers[i] ).init() );
 
             if ( def.tags )
                 for ( let i = 0; i < def.tags.length; i++ )

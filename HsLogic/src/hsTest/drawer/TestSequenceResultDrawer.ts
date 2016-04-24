@@ -11,13 +11,13 @@ namespace HsTest {
             html += `<div class='${this.getHeaderStyle( result.state )}'>`
             html += this.testSequenceResultHead( result );
 
-            html += `<ul id='${result.id}' class='collapse'>`;
+            html += `<ul><div id='${result.id}' class='collapse'>`;
             for ( let test of result.testResults ) {
                 html += this.getTestHtml( test );
             }
 
             html += '</ul></div>';
-            html += '</li></ul>';
+            html += '</li></div></ul>';
             return html
         }
 
@@ -43,13 +43,20 @@ namespace HsTest {
 
 
         getTestHtml( result: TestResult ): string {
-            let html: string = '';
+            let html: string = '',
+                hasParams: boolean = ( result.param !== null && ( result.param.before !== null || result.param.after !== null ) ),
+                chain: string[] = result.chain;
             html += `<li><div class=${this.getTestHeaderStyle( result.state )}><h4>`;
-            html += `<button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#${result.id}">+</button> `;
-            html += result.chain;
+            html += `<button type="button" class="btn btn-default btn-xs" ${!hasParams ? 'disabled="disabled"' : ''} data-toggle="collapse" data-target="#${result.id}">+</button> `;
+
+            if ( result.actionClass === ClassUtils.getNameOfClass( HsLogic.DispatchEvent ) )
+                chain = result.chain.slice( 0, result.chain.length - 1 ).concat( 'Event: ' + result.eventClass );
+
+            html += chain.join( ' >> ' );
+
             html += '</h4>';
 
-            if ( result.param && ( result.param.before || result.param.after ) )
+            if ( hasParams )
                 html += this.getParamHtml( result.id, result.param.before, result.param.after );
 
             html += '</div></li>';

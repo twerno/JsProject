@@ -5,7 +5,9 @@ namespace HsLogic {
 
 
     export enum DAMAGE_STATE {
-        PENDING, DEALT, PREVENTED
+        PENDING = <any>"PENDING",
+        DEALT = <any>"DEALT",
+        PREVENTED = <any>"PREVENTED",
     }
 
 

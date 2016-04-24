@@ -29,7 +29,7 @@ var testSeq: HsTest.TestSequence = {
 
     tests: [],
 
-    consequencesMonitorExcludes: [jsAction.InlineAction, jsAction.InlineActionExt]
+    consequencesMonitorExcludes: [jsAction.InlineAction, jsAction.InlineActionExt, HsLogic.ProcessQueue]
 }
 
 var Result: HsTest.TestSequenceResult = null;
