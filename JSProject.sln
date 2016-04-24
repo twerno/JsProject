@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSProject", "JSProject\JSProject.csproj", "{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HsTests", "HsTests\HsTests.csproj", "{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9436EB95-BA6B-433B-998A-E6EB9E1F091E} = {9436EB95-BA6B-433B-998A-E6EB9E1F091E}
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBF6EEFA-4508-4193-B73A-A8D32E6E589B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F334EFF-FA0B-4F18-ABF0-90FA7E6C632C}.Release|Any CPU.ActiveCfg = Release|Any CPU
