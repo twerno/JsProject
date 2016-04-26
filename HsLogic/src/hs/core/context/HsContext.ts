@@ -6,6 +6,8 @@ namespace HsLogic {
 
         actionFactory: HsActionFactory<HsGameCtx> = new HsActionFactory<HsGameCtx>();
 
+        techActionFactory: TechActionFactory<HsGameCtx> = new TechActionFactory<HsGameCtx>();
+
 
 
         powerMgr: IPowerMgr = new PowerManager();

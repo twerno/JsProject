@@ -12,18 +12,18 @@ namespace HsLogic {
 
     export class RemoveTag<P extends RemoveTagParam> extends Action<P> {
 
-        resolve(self: RemoveTag<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: RemoveTag<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param;
 
-                    for (let target of param.targets)
-                        target.tags.remove(param.tag);
+                    for ( let target of param.targets )
+                        target.tags.remove( param.tag );
 
-                    resolve(jsAction.NO_CONSEQUENCES);
+                    resolve( jsAction.NO_CONSEQUENCES );
                 }
-                );
+            );
         }
     }
 

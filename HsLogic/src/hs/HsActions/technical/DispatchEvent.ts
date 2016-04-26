@@ -14,21 +14,21 @@ namespace HsLogic {
 
     export class DispatchEvent extends Action<IActionParam> {
 
-        constructor(public event: ActionEvent<IActionParam>) {
-            super(null)
+        constructor( public event: ActionEvent<IActionParam> ) {
+            super( null )
         }
 
 
-        resolvable(gameCtx: HsGameCtx): boolean {
+        resolvable( gameCtx: HsGameCtx ): boolean {
             return this.event
-                && this.event.valid(gameCtx);
+                && this.event.valid( gameCtx );
         }
 
 
-        resolve(self: DispatchEvent, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: DispatchEvent, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: IActionParam = self.event.param,
                         actions: ActionType[] = [],
                         triggers: Trigger[],
@@ -36,57 +36,57 @@ namespace HsLogic {
 
                     // Dominant Player === active player (for sake of simplicity)
                     // Dominant Player Triggers
-                    triggers = self._getDominantPlayerTriggers(gameCtx.activePlayer)
-                        .buildSet(param.source, gameCtx);
+                    triggers = self._getDominantPlayerTriggers( gameCtx.activePlayer )
+                        .buildSet( param.source, gameCtx );
 
                     // Dominant Player Queue
-                    actions.push(new ProcessQueue({
+                    actions.push( new ProcessQueue( {
                         source: param.source,
                         event: self.event,
                         triggers: triggers,
                         done: doneByDominantPlayer
-                    }));
+                    }) );
 
 
                     // Secondary Player Queue
-                    actions.push(new InlineAction((resolve, reject): void => {
+                    actions.push( new InlineAction(( resolve, reject ): void => {
                         let innerActions: ActionType[] = [];
                         // Double safeguard
                         // Subtrack triggers that already had been triggered by dominant player
-                        triggers = self._getSecondaryPlayerTriggers(gameCtx.activePlayer, doneByDominantPlayer)
-                            .buildSet(param.source, gameCtx);
+                        triggers = self._getSecondaryPlayerTriggers( gameCtx.activePlayer, doneByDominantPlayer )
+                            .buildSet( param.source, gameCtx );
 
                         // Secondary Player Queue
-                        innerActions.push(new ProcessQueue({
+                        innerActions.push( new ProcessQueue( {
                             source: param.source,
                             event: self.event,
                             triggers: triggers,
                             done: []
-                        }));
-                        resolve(innerActions);
+                        }) );
+                        resolve( innerActions );
 
-                    }));
-                    resolve(actions);
+                    }) );
+                    resolve( actions );
                 }
 
-                ); // return new Promise
+            ); // return new Promise
         }
         // resolve( self: DispatchEvent<P>
 
 
-        protected _getDominantPlayerTriggers(player: Player): Def.ITargetSetBuilder<Trigger> {
-            return new Def.TriggerSetBuilder(this.event)
-                .addFilter(Def.Filter.ownedBy(player));
+        protected _getDominantPlayerTriggers( player: Player ): Def.ITargetSetBuilder<Trigger> {
+            return new Def.TriggerSetBuilder( this.event )
+                .addFilter( Def.Filter.ownedBy( player ) );
         }
 
 
-        protected _getSecondaryPlayerTriggers(player: Player, triggeredByDominantPlayer: Trigger[]): Def.ITargetSetBuilder<Trigger> {
-            return new Def.TriggerSetBuilder(this.event)
-                .addFilter(Def.Filter.notOwnedBy(player))
+        protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.ITargetSetBuilder<Trigger> {
+            return new Def.TriggerSetBuilder( this.event )
+                .addFilter( Def.Filter.notOwnedBy( player ) )
 
-            // Double safeguard
-                .addFilter((source: ISource, trigger: Trigger, gameCtx: HsGameCtx): boolean => {
-                    return triggeredByDominantPlayer.indexOf(trigger) === -1;
+                // Double safeguard
+                .addFilter(( source: ISource, trigger: Trigger, gameCtx: HsGameCtx ): boolean => {
+                    return triggeredByDominantPlayer.indexOf( trigger ) === -1;
                 });
         }
     }
@@ -102,27 +102,27 @@ namespace HsLogic {
 
     export class ProcessQueue<P extends QueueParam> extends Action<P> {
 
-        resolve(self: ProcessQueue<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: ProcessQueue<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
-                    for (let i = 0; i < param.triggers.length; i++) {
+                    for ( let i = 0; i < param.triggers.length; i++ ) {
                         let trigger = param.triggers[i];
 
-                        actions.push(new InlineActionExt(
+                        actions.push( new InlineActionExt(
                             (): boolean => {
-                                return trigger.triggerable(trigger, param.event, gameCtx);
+                                return trigger.triggerable( trigger, param.event, gameCtx );
                             },
-                            (resolve, reject): void => {
-                                param.done.push(trigger);
-                                resolve(trigger.actionBuilder(trigger, param.event, gameCtx));
+                            ( resolve, reject ): void => {
+                                param.done.push( trigger );
+                                resolve( trigger.actionBuilder( trigger, param.event, gameCtx ) );
                             }
-                            ));
+                        ) );
                     }
-                    resolve(actions);
+                    resolve( actions );
                 });
         }
     }

@@ -33,54 +33,52 @@ namespace HsLogic {
 
     export class PlaySpellSequence<P extends PlaySpellParam> extends CancelableAction<P> {
 
-        resolve(self: PlaySpellSequence<P>, gameCtx: HsGameCtx): PromiseOfActions {
-            if (self.param.cancelAction.value)
-                return Promise.resolve(jsAction.NO_CONSEQUENCES);
+        resolve( self: PlaySpellSequence<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
                     // pay cost & remove from hand
-                    actions.push(gameCtx.actionFactory.payCostAndRemoveFromHand(param));
+                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
-                    actions.push(new OnPlayPhaseEvent(param).dispatch(gameCtx));
-                    actions.push(new OutermostPhaseEnd({ source: param.source }));
+                    actions.push( new OnPlayPhaseEvent( param ).dispatch( gameCtx ) );
+                    actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
 
-                    actions.push(new InlineActionExt(
+                    actions.push( new InlineActionExt(
                         (): boolean => {
                             return !param.cancelAction.value
                         },
-                        (resolve, reject): void => {
+                        ( resolve, reject ): void => {
                             let innerActions: ActionType[] = [];
 
                             // step 3 - onTargetingPhase
                             // the Death Creation Step and Summon Resolution Step are skipped
-                            innerActions.push(new OnTargetingPhaseEvent(param).dispatch(gameCtx));
+                            innerActions.push( new OnTargetingPhaseEvent( param ).dispatch( gameCtx ) );
 
 
                             // step 4 - spellTextPhase
-                            if (param.card.spellAction)
-                                innerActions.push.apply(innerActions,
-                                    param.card.spellAction.actionBuilder(param.source, param.targets, gameCtx));
+                            if ( param.card.spellAction )
+                                innerActions.push.apply( innerActions,
+                                    param.card.spellAction.actionBuilder( param.source, param.targets, gameCtx ) );
 
 
                             // step 5 - onAfterPlaySpell
-                            innerActions.push(new OnAfterSpellPhaseEvent(param).dispatch(gameCtx));
+                            innerActions.push( new OnAfterSpellPhaseEvent( param ).dispatch( gameCtx ) );
 
                             // step 6 - win/loss check, close sequence
-                            innerActions.push(new OutermostPhaseEnd({ source: param.source }));
+                            innerActions.push( new OutermostPhaseEnd( { source: param.source }) );
 
-                            resolve(innerActions);
+                            resolve( innerActions );
                         }
-                        )); // new InlineAction(
+                    ) ); // new InlineAction(
 
-                    resolve(actions);
+                    resolve( actions );
                 }
-                ); // return new Promise
+            ); // return new Promise
 
         } // resolve( self: PlaySpell<P>
 

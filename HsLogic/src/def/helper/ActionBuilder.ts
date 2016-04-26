@@ -4,31 +4,31 @@ namespace Def {
 
     export class DefActionHelper {
 
-        static BuildAddTag(param: { source: ISource, targets: Character | Character[], tag: TagClass }): Action {
+        static BuildAddTag( param: { source: ISource, targets: Character | Character[], tag: TagClass }): Action {
             return null;
         }
 
-        static RemoveTag(targets: Character | Character[], tag: Tag): Action {
+        static RemoveTag( targets: Character | Character[], tag: Tag ): Action {
             return null;
         }
 
-        static AttachEnchantment(enchantment: Enchantment): Action {
+        static AttachEnchantment( enchantment: Enchantment ): Action {
             return null;
         }
 
-        static DetachEnchantment(enchantment: Enchantment): Action {
+        static DetachEnchantment( enchantment: Enchantment ): Action {
             return null;
         }
 
-        static DetachEnchantments(enchantment: Enchantment[]): Action {
+        static DetachEnchantments( enchantment: Enchantment[] ): Action {
             return null;
         }
 
-        static registerTrigger(target: Card | Player, trigger: Trigger): Action {
+        static registerTrigger( target: Card | Player, trigger: Trigger ): Action {
             return null;
         }
 
-        static unregisterTrigger(trigger: Trigger): Action {
+        static unregisterTrigger( trigger: Trigger ): Action {
             return null;
         }
 

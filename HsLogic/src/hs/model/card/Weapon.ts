@@ -12,6 +12,12 @@ namespace HsLogic {
 
         battlecry: Def.IDefAction;
 
+
+        static build( owner: Player, def: Def.IWeapon ): Weapon {
+            return new Weapon( owner, def ).init();
+        }
+
+
         init(): Weapon {
             super.init();
             return this;

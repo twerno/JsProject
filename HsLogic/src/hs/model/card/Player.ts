@@ -11,7 +11,7 @@ namespace HsLogic {
 
         hero: Hero;
 
-        heroPower: any;
+        heroPower: HeroPower;
 
         tags: Tags = new Tags();
 

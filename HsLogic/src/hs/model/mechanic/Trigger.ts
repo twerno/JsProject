@@ -21,7 +21,7 @@ namespace HsLogic {
         actionBuilder: Def.FTriggerActionBulder;
 
 
-        constructor( attachedTo: Card | Player, sourceCard: Card, def?: Def.IDefTrigger ) {
+        constructor( attachedTo: Card | Player, sourceCard: Card, def: Def.IDefTrigger ) {
             super( null, def );
 
             this.attachedTo = attachedTo || null;

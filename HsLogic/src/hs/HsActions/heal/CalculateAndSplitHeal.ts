@@ -6,7 +6,7 @@ namespace HsLogic {
 
 
     /**
-     * CalculateAndSplitDamage
+     * CalculateAndSplitHeal
      *
      */
     export class CalculateAndSplitHeal<P extends SplitHealParam> extends Action<P> {
@@ -35,9 +35,9 @@ namespace HsLogic {
                 }
             ); // return new Promise
 
-        } // resolve(self: CalculateAndSplitDamage
+        } // resolve(self: CalculateAndSplitHeal
 
-    }  // class CalculateAndSplitDamage
+    }  // class CalculateAndSplitHeal
 
 
 

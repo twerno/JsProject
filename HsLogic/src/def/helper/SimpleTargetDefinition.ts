@@ -32,7 +32,7 @@ namespace Def {
             if ( this.param.pickMode === PICK_MODE.RANDOM )
                 return null;
             else
-                return gameCtx.actionFactory.singleTarget( param );
+                return gameCtx.techActionFactory.singleTarget( param );
         }
 
 

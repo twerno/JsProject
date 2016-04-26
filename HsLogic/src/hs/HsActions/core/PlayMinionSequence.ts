@@ -5,6 +5,11 @@
 
 namespace HsLogic {
 
+    export interface SummonMinionParam extends IActionParam {
+        card: Minion,
+        position: number
+    }
+
     export namespace event {
 
         /**
@@ -13,7 +18,7 @@ namespace HsLogic {
          *  Examples:
          *    if the minion associated with a Summon Event is no longer in play at the time it is resolved, then nothing queues
          */
-        export class GenSummonMinionEvent<P extends PlayCardParam> extends ActionEvent<P> {
+        export class GenSummonMinionEvent<P extends SummonMinionParam> extends ActionEvent<P> {
             valid( gameCtx: HsGameCtx ): boolean {
                 return gameCtx.gameBoard.zonesOf( this.param.card.owner )
                     .battlefield.has( this.param.card );
@@ -21,10 +26,10 @@ namespace HsLogic {
         }
 
 
-        export class PreSummon extends ActionEvent<PlayMinionParam> { }
+        export class PreSummonReactionBugEvent extends ActionEvent<SummonMinionParam> { }
 
 
-        export class Summon extends GenSummonMinionEvent<PlayMinionParam> {
+        export class Summon extends GenSummonMinionEvent<SummonMinionParam> {
 
             //valid( gameCtx: HsGameCtx ): boolean {
             //    let card: Card = this.param.card;
@@ -35,11 +40,11 @@ namespace HsLogic {
 
 
 
-        export class AfterPlay extends GenSummonMinionEvent<PlayCardParam> { }
+        export class AfterPlay extends GenSummonMinionEvent<SummonMinionParam> { }
 
 
 
-        export class AfterSummon extends GenSummonMinionEvent<PlayMinionParam> { }
+        export class AfterSummon extends GenSummonMinionEvent<SummonMinionParam> { }
     }
 
     /**
@@ -47,14 +52,15 @@ namespace HsLogic {
      * http://hearthstone.gamepedia.com/Advanced_rulebook#Playing.2Fsummoning_a_minion
      *
      * Phases:
-     *   1. pay & remove from hand - 
+     *   0. pay & remove from hand  -
+     *   1. pre-summon reaction bug - 
      *   2. enters the battlefied 
      *   3. create SummonEvent 
-     *   4. onPlayPhase            - EventAfterPlayPhase
-     *   5. Battlecry Phase        - 
-     *   6. After Play Phase       - 
-     *   7. After Summon Phase     - EventAfterSummon
-     *   8. win/loss check         - outside action: PlayCard?
+     *   4. onPlayPhase             - EventAfterPlayPhase
+     *   5. Battlecry Phase         - 
+     *   6. After Play Phase        - 
+     *   7. After Summon Phase      - EventAfterSummon
+     *   8. win/loss check          - outside action: PlayCard?
        */
     export class PlayMinionSequence<P extends PlayMinionParam> extends Action<P> {
 
@@ -68,11 +74,15 @@ namespace HsLogic {
                     // pay cost & remove from hand
                     actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
-                    // 2. enters the battlefied  
-                    gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
-
                     // pre summon reaction bug
                     // http://hearthstone.gamepedia.com/Advanced_rulebook#Cobalt_Guardian.2FMurloc_Tidecaller_Pre-Summon_Reaction_Bug
+                    actions.push( new event.PreSummonReactionBugEvent( param ).dispatch( gameCtx ) );
+
+                    // 2. enters the battlefied
+                    actions.push( new InlineAction(( resolve, reject ): void => {
+                        gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
+                        resolve( jsAction.NO_CONSEQUENCES );
+                    }) );
 
                     //@TODO interrupt following phases if then minion dies (battlecry still goes)
 

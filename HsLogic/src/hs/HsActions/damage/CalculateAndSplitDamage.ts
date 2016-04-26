@@ -85,7 +85,7 @@ namespace HsLogic {
         if ( splitMode === Def.SPLIT_MODE.ARCANE_MISSILE )
             return Def.TargetFinder.EMEMY_CHARACTER
                 .addFilter(( source, entity, gameCtx ): boolean => {
-                    return entity instanceof Player
+                    return entity instanceof Hero
                         || ( entity instanceof Minion && entity.body.hp() > 0 );
                 });
 
@@ -93,14 +93,14 @@ namespace HsLogic {
             return Def.TargetFinder.ANY_CHARACTER
                 .addFilter( Def.Filter.OtherThan( source.entity ) )
                 .addFilter(( source, entity, gameCtx ): boolean => {
-                    return entity instanceof Player
+                    return entity instanceof Hero
                         || ( entity instanceof Minion && entity.body.hp() > 0 );
                 });
 
         else if ( splitMode === Def.SPLIT_MODE.ARCANE_HEAL )
             return Def.TargetFinder.FRIENDLY_CHARACTER
                 .addFilter(( source, entity, gameCtx ): boolean => {
-                    return entity instanceof Player
+                    return entity instanceof Hero
                         || ( entity instanceof Minion && entity.body.damages > 0 );
                 });
 

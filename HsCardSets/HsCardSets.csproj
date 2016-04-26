@@ -97,6 +97,9 @@
     <TypeScriptCompile Include="src\Classic\Neutral\Mad_Bomber.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Shattered_Sun_Cleric.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Stormwind_Champion.ts" />
+    <TypeScriptCompile Include="src\Classic\Neutral\Violet_Apprentice.ts" />
+    <TypeScriptCompile Include="src\Classic\Neutral\Violet_Teacher.ts" />
+    <TypeScriptCompile Include="src\Classic\Paladin\Silver_Hand_Recruit.ts" />
     <TypeScriptCompile Include="src\Classic\Paladin\Consecration.ts" />
     <TypeScriptCompile Include="src\Classic\Paladin\Holy_Wrath.ts" />
     <TypeScriptCompile Include="src\Classic\Set.ts" />
@@ -105,11 +108,32 @@
     <TypeScriptCompile Include="src\Curse of Naxxramas\Set.ts" />
     <TypeScriptCompile Include="src\Curse of Naxxramas\Warlock\Mistress_of_Pain.ts" />
     <TypeScriptCompile Include="src\Goblin vs Gnomes\Set.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Armor_Up!.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Dagger_Mastery.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Fireblast.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Lesser_Heal.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Life_Tap.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Reinforce.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Shapeshift.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Steady_Shot.ts" />
+    <TypeScriptCompile Include="src\HeroPower\Totemic_Call.ts" />
+    <TypeScriptCompile Include="src\Hero\Druid.ts" />
+    <TypeScriptCompile Include="src\Hero\Hunter.ts" />
+    <TypeScriptCompile Include="src\Hero\Mage.ts" />
+    <TypeScriptCompile Include="src\Hero\Paladin.ts" />
+    <TypeScriptCompile Include="src\Hero\Priest.ts" />
+    <TypeScriptCompile Include="src\Hero\Rogue.ts" />
+    <TypeScriptCompile Include="src\Hero\Shaman.ts" />
+    <TypeScriptCompile Include="src\Hero\Warlock.ts" />
+    <TypeScriptCompile Include="src\Hero\Warrior.ts" />
     <TypeScriptCompile Include="src\Template\Set.ts" />
     <TypeScriptCompile Include="src\The Grand Tournament\Set.ts" />
     <TypeScriptCompile Include="src\The League of Explorers\Mage\Animated_Armor.ts" />
     <TypeScriptCompile Include="src\The League of Explorers\Set.ts" />
     <TypeScriptCompile Include="src\Whispers of the Old Gods\Set.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\Blackrock Mountain\Set.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

@@ -9,6 +9,7 @@ namespace HsTest {
     export interface HsCtxPlayerBuilderParam {
         player: PLAYER,
         active?: boolean,
+        hero: Def.IHero,
         hand?: ICard[],
         deck?: ICard[]
     }
@@ -91,6 +92,7 @@ namespace HsTest {
 
             for ( let p of playerDefs ) {
                 player = this.buildPlayer( p );
+                player.hero = HsLogic.Hero.build( player, p.hero );
                 result.registerPlayer( player );
 
                 if ( p.active )
@@ -129,13 +131,13 @@ namespace HsTest {
 
         protected buildCard( owner: Player, def: ICard ): Card {
             if ( def.metadata.cardType === Def.CARD_TYPE.MINION )
-                return new HsLogic.Minion( owner, def ).init();
+                return HsLogic.Minion.build( owner, <Def.IMinion>def );
 
             if ( def.metadata.cardType === Def.CARD_TYPE.SPELL )
-                return new HsLogic.Spell( owner, def ).init();
+                return HsLogic.Spell.build( owner, <Def.ISpell>def );
 
             if ( def.metadata.cardType === Def.CARD_TYPE.WEAPON )
-                return new HsLogic.Weapon( owner, def ).init();
+                return HsLogic.Weapon.build( owner, <Def.IWeapon>def );
 
             throw new Error( `Unknown type: ${def.metadata.cardType} of card: ${def}.` );
         }

@@ -6,7 +6,8 @@ namespace HsLogic {
 
     export interface PlayCardParam extends IHsCancelableParam {
         card: Minion | Weapon | Spell,
-        targets: Permanent[]
+        targets: Permanent[],
+        manaSpend?: number
     }
 
     export interface PlayMinionParam extends PlayCardParam {

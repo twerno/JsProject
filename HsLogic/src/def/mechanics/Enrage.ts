@@ -44,11 +44,11 @@ namespace Def {
 
                 if ( !damaged && enraged ) {
                     return [
-                        gameCtx.actionFactory.removeTag( {
+                        gameCtx.techActionFactory.removeTag( {
                             source: trigger.getSource(), targets: [character], tag: enrageTag
                         }),
-                        gameCtx.actionFactory.detachEnchantment( {
-                            source: trigger.getSource(), targets: [character], enchantment: enchantment
+                        gameCtx.techActionFactory.detachEnchantment( {
+                            source: trigger.getSource(), target: character, enchantment: enchantment
                         }),
                     ];
                 }
@@ -58,11 +58,11 @@ namespace Def {
                     if ( enchantment ) {
                         enrageTag = new Enrage_Tag( event.param.source );
                         return [
-                            gameCtx.actionFactory.addTag( {
+                            gameCtx.techActionFactory.addTag( {
                                 source: trigger.getSource(), targets: [character], tag: enrageTag
                             }),
-                            gameCtx.actionFactory.attachEnchantment( {
-                                source: trigger.getSource(), targets: [character], enchantment: enchantment
+                            gameCtx.techActionFactory.attachEnchantment( {
+                                source: trigger.getSource(), target: character, enchantment: enchantment
                             }),
                         ];
                     }

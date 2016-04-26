@@ -17,7 +17,12 @@ namespace HsLogic {
         }
 
 
-        constructor( public owner: Player, def?: Object ) {
+        static build( owner: Player, def: Object ): Entity {
+            return new Entity( owner, def ).init();
+        }
+
+
+        constructor( public owner: Player, def: Object ) {
             super( owner );
             this.def = def || null;
         }

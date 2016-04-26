@@ -23,6 +23,7 @@ namespace HsLogic {
                         throw new Error( `NOT enough mana to play ${card}.` );
 
                     player.filled_mana_crystals -= card.baseCost;
+                    param.manaSpend = card.baseCost;
 
                     gameCtx.gameBoard.zonesOf( player ).hand.removeEntity( card );
 

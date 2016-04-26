@@ -6,7 +6,7 @@ namespace HsTest {
 
     var resultIdGen: number = 0;
     function resultId(): string {
-        return 'test_' + (resultIdGen++).toString();
+        return 'test_' + ( resultIdGen++ ).toString();
     }
 
     export class TestSequenceRunner {
@@ -16,48 +16,48 @@ namespace HsTest {
         private actionTestRunner: ActionTestRunner;
 
 
-        constructor(protected resolve: CommonUtils.PromiseResolve<TestSequenceResult>) {
+        constructor( protected resolve: CommonUtils.PromiseResolve<TestSequenceResult> ) {
             let self: TestSequenceRunner = this;
             this.actionTestRunner = new ActionTestRunner(
-                (state: TestSequenceResultState, error: Error, results: ActionTestResult[]) => {
-                    self.onActionTestRunnerFinished(state, error, results)
+                ( state: TestSequenceResultState, error: Error, results: ActionTestResult[] ) => {
+                    self.onActionTestRunnerFinished( state, error, results )
                 });
         }
 
 
-        execute(testSeq: TestSequence, hsGameCtx?: HsLogic.HsGameCtx) {
+        execute( testSeq: TestSequence, hsGameCtx?: HsLogic.HsGameCtx ) {
             let actions: ActionType[];
             this.testSeq = testSeq;
             this.hsGameCtx = hsGameCtx || testSeq.hsGameCtxBuilder();
-            actions = this.testSeq.actions(this.hsGameCtx);
+            actions = this.testSeq.actions( this.hsGameCtx );
 
             this.testSeqResult = {
                 id: resultId(),
-                testTitle: DbgUtils.testTitle(actions) + ':',
+                testTitle: DbgUtils.testTitle( actions ) + ':',
                 testResults: [],
                 state: null,
                 error: null,
                 consequencesMonitorExcludes: this.testSeq.actionMonitor ? this.testSeq.actionMonitor.consequencesMonitorExcludes || [] : []
             }
 
-            this.actionTestRunner.execute(actions, this.hsGameCtx, this.testSeq.actionMonitor);
+            this.actionTestRunner.execute( actions, this.hsGameCtx, this.testSeq.actionMonitor );
         }
 
 
-        onActionTestRunnerFinished(state: TestSequenceResultState, error: Error, results: ActionTestResult[]): void {
+        onActionTestRunnerFinished( state: TestSequenceResultState, error: Error, results: ActionTestResult[] ): void {
             this.testSeqResult.testResults = results;
             this.testSeqResult.error = error;
 
-            if (state === TestSequenceResultState.PASSED)
+            if ( state === TestSequenceResultState.PASSED )
                 this.resolveTests();
             else
-                this.closeTest(state);
+                this.closeTest( state );
         }
 
 
         private resolveTests(): void {
             let testResult: ActionTestResult;
-            for (let test of this.testSeq.tests) {
+            for ( let test of this.testSeq.tests ) {
 
                 testResult = {
                     id: resultId(),
@@ -68,30 +68,30 @@ namespace HsTest {
                     param: { before: null, after: null }
                 };
 
-                this.testSeqResult.testResults.push(testResult);
+                this.testSeqResult.testResults.push( testResult );
 
                 try {
-                    if (test.check(this.hsGameCtx)) {
+                    if ( test.check( this.hsGameCtx ) ) {
                         testResult.state = TestResultState.PASSED;
                     } else {
                         testResult.state = TestResultState.FAILED;
-                        testResult.chain = [typeof (test.errorMsg) === 'string' ? test.errorMsg : (<any>test.errorMsg)(this.hsGameCtx)];
-                        this.closeTest(TestSequenceResultState.FAILED);
+                        testResult.chain = [typeof ( test.errorMsg ) === 'string' ? test.errorMsg : ( <any>test.errorMsg )( this.hsGameCtx )];
+                        this.closeTest( TestSequenceResultState.FAILED );
                         return;
                     }
-                } catch (error) {
+                } catch ( error ) {
                     this.testSeqResult.error = error;
-                    this.closeTest(TestSequenceResultState.TEST_ERROR);
+                    this.closeTest( TestSequenceResultState.TEST_ERROR );
                     return;
                 }
             }
-            this.closeTest(TestSequenceResultState.PASSED);
+            this.closeTest( TestSequenceResultState.PASSED );
         }
 
 
-        private closeTest(state: TestSequenceResultState): void {
+        private closeTest( state: TestSequenceResultState ): void {
             this.testSeqResult.state = state;
-            this.resolve(this.testSeqResult);
+            this.resolve( this.testSeqResult );
         }
     }
 
@@ -106,19 +106,17 @@ namespace HsTest {
         private results: ActionTestResult[] = [];
 
 
-        constructor(private callback: (state: TestSequenceResultState, error: Error, results: ActionTestResult[]) => void) {
+        constructor( private callback: ( state: TestSequenceResultState, error: Error, results: ActionTestResult[] ) => void ) {
             this.buildStack();
         }
 
 
-        execute(actions: ActionType[], hsGameCtx: HsLogic.HsGameCtx, actionMonitor: ActionMonitor) {
+        execute( actions: ActionType[], hsGameCtx: HsLogic.HsGameCtx, actionMonitor: ActionMonitor ) {
             this.hsGameCtx = hsGameCtx;
             this.actionMonitor = actionMonitor;
 
-            for (let a of actions)
-                this.stack.putOnTop(a);
-
-            this.stack.resolveTopAction(this.hsGameCtx);
+            this.stack.putActions( actions );
+            this.stack.resolveTopAction( this.hsGameCtx );
         }
 
 
@@ -126,42 +124,42 @@ namespace HsTest {
             let self: ActionTestRunner = this;
 
             this.stack = new jsAction.ActionStack(
-                (action, resolvable) => { self._onResolving(action, resolvable) },
-                (action, executionTime) => { self._onResolved(action, executionTime) },
-                (action, error, executionTime) => { self._onError(action, error, executionTime) }
-                );
+                ( action, resolvable ) => { self._onResolving( action, resolvable ) },
+                ( action, executionTime ) => { self._onResolved( action, executionTime ) },
+                ( action, error, executionTime ) => { self._onError( action, error, executionTime ) }
+            );
         }
 
 
-        private _onResolving(action: ActionType, resolvable: boolean): void {
-            if (this.actionMonitor)
-                this.results.push({
+        private _onResolving( action: ActionType, resolvable: boolean ): void {
+            if ( this.actionMonitor )
+                this.results.push( {
                     id: resultId(),
                     actionClass: action.className,
-                    eventClass: action instanceof HsLogic.DispatchEvent ? ClassUtils.getNameOfClass(action.event) : '',
-                    chain: DbgUtils.actionChainStr3(action, DbgUtils.dbgActionTitle),
+                    eventClass: action instanceof HsLogic.DispatchEvent ? ClassUtils.getNameOfClass( action.event ) : '',
+                    chain: DbgUtils.actionChainStr3( action, DbgUtils.dbgActionTitle ),
                     state: resolvable ? TestResultState.RESOLVING : TestResultState.NOT_RESOLVABLE,
                     param: {
-                        before: this.getParamFrom(action),
+                        before: this.getParamFrom( action ),
                         after: null
                     }
                 });
         }
 
 
-        private _onResolved(action: ActionType, executionTime: number): void {
-            if (this.actionMonitor) {
+        private _onResolved( action: ActionType, executionTime: number ): void {
+            if ( this.actionMonitor ) {
                 let testResult: ActionTestResult = this.lastTestResult();
-                testResult.param.after = this.getParamFrom(action);
+                testResult.param.after = this.getParamFrom( action );
                 testResult.executionTime = executionTime;
 
                 try {
-                    testResult.state = this.performTest(action);
-                    if (testResult.state === TestResultState.PASSED)
+                    testResult.state = this.performTest( action );
+                    if ( testResult.state === TestResultState.PASSED )
                         this.passedCount++;
-                } catch (error) {
+                } catch ( error ) {
                     testResult.state = TestResultState.TEST_ERROR;
-                    this.closeTest(TestSequenceResultState.TEST_ERROR, error);
+                    this.closeTest( TestSequenceResultState.TEST_ERROR, error );
                     return;
                 }
             }
@@ -170,58 +168,58 @@ namespace HsTest {
         }
 
 
-        private _onError(action: ActionType, error: Error, executionTime: number): void {
-            if (this.actionMonitor) {
+        private _onError( action: ActionType, error: Error, executionTime: number ): void {
+            if ( this.actionMonitor ) {
                 let testResult: ActionTestResult = this.lastTestResult();
                 testResult.state = TestResultState.RESOLVING_ERROR;
-                testResult.param.after = this.getParamFrom(action);
+                testResult.param.after = this.getParamFrom( action );
                 testResult.executionTime = executionTime;
             }
 
-            this.closeTest(TestSequenceResultState.RESOLVING_ERROR, error);
+            this.closeTest( TestSequenceResultState.RESOLVING_ERROR, error );
         }
 
 
         private resolveNext(): void {
-            if (this.actionMonitor
-                && this.lastTestResult().state === TestResultState.FAILED)
-                this.closeTest(TestSequenceResultState.FAILED, null);
+            if ( this.actionMonitor
+                && this.lastTestResult().state === TestResultState.FAILED )
+                this.closeTest( TestSequenceResultState.FAILED, null );
 
-            else if (this.stack.isEmpty()
+            else if ( this.stack.isEmpty()
                 && this.actionMonitor
-                && this.actionMonitor.actionTests.length !== this.passedCount)
-                this.closeTest(TestSequenceResultState.UNRESOLVED_TEST_LEFT, null);
+                && this.actionMonitor.actionTests.length !== this.passedCount )
+                this.closeTest( TestSequenceResultState.UNRESOLVED_TEST_LEFT, null );
 
-            else if (this.stack.isEmpty())
-                this.closeTest(TestSequenceResultState.PASSED, null)
+            else if ( this.stack.isEmpty() )
+                this.closeTest( TestSequenceResultState.PASSED, null )
 
             else
-                this.stack.resolveTopAction(this.hsGameCtx);
+                this.stack.resolveTopAction( this.hsGameCtx );
         }
 
 
-        private closeTest(state: TestSequenceResultState, error: Error): void {
-            this.callback(state, error, this.results);
+        private closeTest( state: TestSequenceResultState, error: Error ): void {
+            this.callback( state, error, this.results );
         }
 
 
-        private performTest(action: jsAction.IActionType): TestResultState {
+        private performTest( action: jsAction.IActionType ): TestResultState {
             let actionTest: ActionTest = this.actionMonitor.actionTests[this.currentTestIdx] || null;
 
-            if (actionTest && action instanceof actionTest.actionClass && actionTest.testable(action, this.hsGameCtx)) {
+            if ( actionTest && action instanceof actionTest.actionClass && actionTest.testable( action, this.hsGameCtx ) ) {
                 this.currentTestIdx++;
-                return actionTest.test(action, this.hsGameCtx) ? TestResultState.PASSED : TestResultState.FAILED;
+                return actionTest.test( action, this.hsGameCtx ) ? TestResultState.PASSED : TestResultState.FAILED;
             }
             else
                 return TestResultState.UNTESTED;
         }
 
 
-        private getParamFrom(action: jsAction.IActionType): HsLogic.IActionParam {
-            if (action instanceof HsLogic.DispatchEvent)
-                return JSON.parse(DbgUtils.model2JSON(action.event));
-            if (action instanceof HsLogic.Action)
-                return JSON.parse(DbgUtils.model2JSON(action.param));
+        private getParamFrom( action: jsAction.IActionType ): HsLogic.IActionParam {
+            if ( action instanceof HsLogic.DispatchEvent )
+                return JSON.parse( DbgUtils.model2JSON( action.event ) );
+            if ( action instanceof HsLogic.Action )
+                return JSON.parse( DbgUtils.model2JSON( action.param ) );
             else
                 return null;
         }

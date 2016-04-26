@@ -15,7 +15,7 @@ namespace Def {
         metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.COMMON ),
 
 
-        battlecry: AttackHealthEnchant( {
+        battlecry: AttackHealthEnchantment( {
             targets: SINGLE_OPTIONAL_TARGET( TargetFinder.FRIENDLY_MINION ),
             values: { attack: 1, health: 1 },
             expireMode: EXPIRE_MODE.PERMANENT

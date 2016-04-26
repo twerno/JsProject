@@ -9,6 +9,12 @@ namespace HsLogic {
 
         spellAction: Def.IDefAction;
 
+
+        static build( owner: Player, def: Def.ISpell ): Spell {
+            return new Spell( owner, def ).init();
+        }
+
+
         init(): Spell {
             super.init();
             return this;

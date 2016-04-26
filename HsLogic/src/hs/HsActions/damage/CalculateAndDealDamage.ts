@@ -166,6 +166,7 @@ namespace HsLogic {
                     let param: P = self.param;
 
                     param.damageState = DAMAGE_STATE.DEALT;
+                    param.amount = Math.abs( param.amount );
 
                     if ( param.target.tags.contains( Def.Immune_Tag ) ) {
                         param.amount = 0;
@@ -183,7 +184,9 @@ namespace HsLogic {
                     if ( param.source.entity instanceof Minion && param.damageState !== DAMAGE_STATE.PREVENTED )
                         ( <Minion>param.source.entity ).tags.removeAll( Def.Stealth_Tag );
 
-                    param.target.body.damages = Math.max( 0, param.target.body.damages + param.amount );
+                    let armorDamages: number = Math.min( param.amount, param.target.body.armor );
+                    param.target.body.armor -= armorDamages;
+                    param.target.body.damages += param.amount - armorDamages;
 
                     resolve( jsAction.NO_CONSEQUENCES );
                 }

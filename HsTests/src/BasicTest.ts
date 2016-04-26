@@ -7,20 +7,27 @@
 var testSeq: HsTest.TestSequence = {
     hsGameCtxBuilder: () => HsTest.HsCtxBuilder.build( {
         players: [
-            { player: HsTest.PLAYER.FIRST, active: true, hand: [Def.Frost_Bolt], deck: [] },
-            { player: HsTest.PLAYER.SECOND }
+            { player: HsTest.PLAYER.FIRST, hero: Def.Priest, active: true, hand: [Def.Frost_Bolt, Def.Arcane_Missiles], deck: [] },
+            { player: HsTest.PLAYER.SECOND, hero: Def.Warlock }
         ],
-        battlefield: [{ owner: HsTest.PLAYER.SECOND, minion: Def.Amani_Berserker }]
+        battlefield: [{ owner: HsTest.PLAYER.SECOND, minion: Def.Amani_Berserker }, { owner: HsTest.PLAYER.FIRST, minion: Def.Violet_Teacher }]
     }),
 
     actions: ( hsGameCtx: HsLogic.HsGameCtx ) => {
-        let spell: HsLogic.Spell = <HsLogic.Spell>hsGameCtx.gameBoard.zonesOf( hsGameCtx.activePlayer ).hand.getRawArray()[0];
+        let frost_bolt: HsLogic.Spell = <HsLogic.Spell>hsGameCtx.gameBoard.zonesOf( hsGameCtx.activePlayer ).hand.getRawArray()[0];
+        let arcane_missiles: HsLogic.Spell = <HsLogic.Spell>hsGameCtx.gameBoard.zonesOf( hsGameCtx.activePlayer ).hand.getRawArray()[1];
         let target: HsLogic.Minion = <HsLogic.Minion>hsGameCtx.gameBoard.zonesOf( hsGameCtx.inactivePlayer ).battlefield.getRawArray()[0];
 
         return [
             hsGameCtx.actionFactory.playSpell( {
-                source: spell.getSource(),
-                card: spell,
+                source: arcane_missiles.getSource(),
+                card: arcane_missiles,
+                targets: [],
+                cancelAction: { value: false }
+            }),
+            hsGameCtx.actionFactory.playSpell( {
+                source: frost_bolt.getSource(),
+                card: frost_bolt,
                 targets: [target],
                 cancelAction: { value: false }
             })

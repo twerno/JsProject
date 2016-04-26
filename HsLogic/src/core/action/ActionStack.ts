@@ -33,6 +33,11 @@ namespace jsAction {
         }
 
 
+        putActions( actions: IActionType[] ): void {
+            for ( let action of actions.reverse() )
+                this.putOnTop( action );
+        }
+
         putOnTop( action: IActionType ): void {
             if ( !action )
                 return;

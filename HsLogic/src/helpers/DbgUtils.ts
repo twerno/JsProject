@@ -96,7 +96,7 @@ namespace DbgUtils {
                 title += ': ' + action.param.source.entity.name;
             result.push( title );
         }
-        return '[' + result.join( ' ,' ) + ']';
+        return '[' + result.join( ', ' ) + ']';
     }
 
 
@@ -120,7 +120,7 @@ namespace DbgUtils {
         else if ( action instanceof HsLogic.AddTag || action instanceof HsLogic.RemoveTag )
             return prefix + `${action.className} (${ClassUtils.getNameOfClass( action.param.tag )} -> ${action.param.targets.join( ', ' )})`
         else if ( action instanceof HsLogic.AttachEnchantment || action instanceof HsLogic.DetachEnchantment )
-            return prefix + `${action.className} (${action.param.enchantment.type} -> ${action.param.targets.join( ', ' )})`
+            return prefix + `${action.className} (${action.param.enchantment.type} -> ${action.param.target})`
         else
             return prefix + action.className
     }

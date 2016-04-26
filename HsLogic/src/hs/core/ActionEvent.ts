@@ -42,7 +42,7 @@ namespace HsLogic {
     export abstract class CancelableEvent<P extends IHsCancelableParam> extends ActionEvent<P> {
 
         valid( gameCtx: HsGameCtx ): boolean {
-            return this.param.cancelAction.value;
+            return !this.param.cancelAction.value;
         }
     }
 }

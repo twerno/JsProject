@@ -4,30 +4,35 @@
 
 namespace HsLogic {
 
-
-
     export class HsActionFactory<T extends HsGameCtx> {
 
-        singleTarget(param: AcquireTargetsActionParam): jsAction.IAction<T> {
-            return new ChooseSingleTarget(param);
+        calculateAndDealDamage( param: DamageTargetsParam ): jsAction.IAction<T> {
+            return new CalculateAndDealDamage( param );
         }
 
-
-        addTag(param: AddTagParam): jsAction.IAction<T> {
-            return new AddTag(param);
+        calculateAndSplitDamage( param: SplitDamageParam ): jsAction.IAction<T> {
+            return new CalculateAndSplitDamage( param );
         }
 
-        removeTag(param: RemoveTagParam): jsAction.IAction<T> {
-            return new RemoveTag(param);
+        calculateAndHeal( param: HealTargetsParam ): jsAction.IAction<T> {
+            return new CalculateAndHeal( param );
         }
 
-        attachEnchantment(param: AttachEnchantmentParam): jsAction.IAction<T> {
-            return new AttachEnchantment(param);
+        calculateAndSplitHeal( param: SplitHealParam ): jsAction.IAction<T> {
+            return new CalculateAndSplitHeal( param );
         }
 
-        detachEnchantment(param: DetachEnchantmentParam): jsAction.IAction<T> {
-            return new DetachEnchantment(param);
-        }  
+        equipHeroPower( param: EquipHeroPowerParam ): jsAction.IAction<T> {
+            return new EquipHeroPower( param );
+        }
+
+        summonMinion( param: SummonMinionParam ): jsAction.IAction<T> {
+            return new SummonMinion( param );
+        }
+
+        gainArmor( param: GainArmorParam ): jsAction.IAction<T> {
+            return new GainArmor( param );
+        }
 
         //        //protected _damageFactory: HsDamageFactory<T> = new HsDamageFactory();
         //        protected _enchantments: HsEnchantmentActionFactory<T> = new HsEnchantmentActionFactory();
@@ -58,16 +63,16 @@ namespace HsLogic {
         //            return new Discard( discardParam );
         //        }
         //
-        drawCard(drawParam: DrawParam): DrawCard<DrawParam> {
-            return new DrawCard(drawParam);
+        drawCard( drawParam: DrawParam ): DrawCard<DrawParam> {
+            return new DrawCard( drawParam );
         }
         //
         //        emptyAction( source: ISource, message: string ): EmptyAction<EmptyActionParam> {
         //            return new EmptyAction( { source: source, message: message, sourceType: SOURCE_TYPE.NONE });
         //        }
         //
-        fatigue(param: TargetPlayerParam): Fatigue<TargetPlayerParam> {
-            return new Fatigue(param);
+        fatigue( param: TargetPlayerParam ): Fatigue<TargetPlayerParam> {
+            return new Fatigue( param );
         }
         //
         //
@@ -87,32 +92,32 @@ namespace HsLogic {
         //            return new ReturnCardIntoOwnersHandFrom( param );
         //        }
         //
-        shuffleDeck(param: TargetPlayerParam): ShuffleDeck<TargetPlayerParam> {
-            return new ShuffleDeck(param);
+        shuffleDeck( param: TargetPlayerParam ): ShuffleDeck<TargetPlayerParam> {
+            return new ShuffleDeck( param );
         }
         //
         //        shuffleGeneratedCardIntoDeck( source: ISource, cards: Card[], owner: Player ): ShuffleGeneratedCardIntoDeck<PlayerAndCardsParam> {
         //            return new ShuffleGeneratedCardIntoDeck( { source: source, cards: cards, player: owner });
         //        }
 
-        payCostAndRemoveFromHand(param: PlayCardParam): PayCostAndRemoveFromHand<PlayCardParam> {
-            return new PayCostAndRemoveFromHand(param);
+        payCostAndRemoveFromHand( param: PlayCardParam ): PayCostAndRemoveFromHand<PlayCardParam> {
+            return new PayCostAndRemoveFromHand( param );
         }
 
-        playCard(param: PlayCardParam): jsAction.IAction<T> {
-            return new PlayCardSequence(param);
+        playCard( param: PlayCardParam ): jsAction.IAction<T> {
+            return new PlayCardSequence( param );
         }
 
-        playMinion(param: PlayMinionParam): jsAction.IAction<T> {
-            return new PlayMinionSequence(param);
+        playMinion( param: PlayMinionParam ): jsAction.IAction<T> {
+            return new PlayMinionSequence( param );
         }
 
-        playSpell(param: PlaySpellParam): jsAction.IAction<T> {
-            return new PlaySpellSequence(param);
+        playSpell( param: PlaySpellParam ): jsAction.IAction<T> {
+            return new PlaySpellSequence( param );
         }
 
-        playWeapon(param: PlayWeaponParam): jsAction.IAction<T> {
-            return new PlayWeaponSequence(param);
+        playWeapon( param: PlayWeaponParam ): jsAction.IAction<T> {
+            return new PlayWeaponSequence( param );
         }
     }
 }

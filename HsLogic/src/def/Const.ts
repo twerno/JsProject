@@ -23,7 +23,7 @@ namespace Def {
         COMMON = <any>"COMMON",
         RARE = <any>"RARE",
         EPIC = <any>"EPIC",
-        LEGANDARY = <any>"LEGANDARY",
+        LEGENDARY = <any>"LEGENDARY",
     }
 
     export namespace MINION_TYPE {
@@ -43,6 +43,7 @@ namespace Def {
         export const DEATHRATTLE: string = 'DEATHRATTLE';
         export const AURA: string = 'AURA';
         export const ENCHANT: string = 'ENCHANT';
+        export const WHENEVER_YOU_CAST_SPELL: string = 'WHENEVER_YOU_CAST_SPELL';
         export const NONE: string = 'NONE';
     }
 

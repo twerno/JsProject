@@ -39,7 +39,9 @@ namespace jsAction {
         }
 
         private _computePosition( position: number ): number {
-            if ( !position || position < 0 )
+            if ( !position )
+                return this._entities.length;
+            if ( position < 0 )
                 return 0;
             else if ( position > this._entities.length )
                 return this._entities.length;

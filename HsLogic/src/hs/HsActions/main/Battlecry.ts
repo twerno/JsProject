@@ -10,23 +10,23 @@ namespace HsLogic {
 
     export class Battlecry<P extends PlayCardParam> extends Action<P> {
 
-        resolve(self: Battlecry<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: Battlecry<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param,
                         card: Minion | Weapon = <Minion | Weapon>param.card,
                         actions: ActionType[] = [];
 
                     //@TODO Fix for Brann Bronzebeard 
 
-                    if (card.battlecry)
-                        actions.push.apply(actions,
-                            card.battlecry.actionBuilder(param.card.getSource(), param.targets, gameCtx));
+                    if ( card.battlecry )
+                        actions.push.apply( actions,
+                            card.battlecry.actionBuilder( param.card.getSource(), param.targets, gameCtx ) );
 
-                    resolve(actions);
+                    resolve( actions );
                 }
-                ); // return new Promise
+            ); // return new Promise
 
         } // resolve(self: Battlecry
 

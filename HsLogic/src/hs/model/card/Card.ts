@@ -15,7 +15,12 @@ namespace HsLogic {
         enchantments: Enchantment<Permanent>[] = [];
 
 
-        constructor( owner: Player, def?: Def.ICard ) {
+        static build( owner: Player, def: Def.ICard ): Card {
+            return new Card( owner, def ).init();
+        }
+
+
+        constructor( owner: Player, def: Def.ICard ) {
             super( owner, def );
         }
 

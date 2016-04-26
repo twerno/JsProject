@@ -10,7 +10,8 @@ namespace Def {
 
     export interface ICard {
         name: string,
-        cost: number,
+        //        text: string,
+        cost?: number,
         metadata: IMetadata,
 
         triggers?: IDefTrigger[],
@@ -22,11 +23,14 @@ namespace Def {
 
 
     export interface ISpell extends ICard {
+        cost: number,
         spellTextAction: IDefAction
     }
 
 
     export interface IMinion extends ICard {
+        cost: number,
+
         health: number;
         attack: number;
         minion_type: string,
@@ -36,10 +40,27 @@ namespace Def {
 
 
     export interface IWeapon extends ICard {
+        cost: number,
+
         attack: number,
         durability: number,
 
         battlecry?: IDefAction,
+    }
+
+
+    export interface IHeroPower {
+        name: string,
+        cost: number,
+
+        ability: IDefAction
+    }
+
+
+    export interface IHero extends IMinion {
+        armor: number,
+
+        equipHeroActions: IDefAction
     }
 
 }

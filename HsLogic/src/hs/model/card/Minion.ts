@@ -12,6 +12,10 @@ namespace HsLogic {
 
         battlecry: Def.IDefAction;
 
+        static build( owner: Player, def: Def.IMinion ): Minion {
+            return new Minion( owner, def ).init();
+        }
+
         init(): Minion {
             super.init();
             return this;
@@ -38,6 +42,7 @@ namespace HsLogic {
         health: number = 0;
         attack: number = 0;
         damages: number = 0;
+        armor: number = 0;
     }
 
 }

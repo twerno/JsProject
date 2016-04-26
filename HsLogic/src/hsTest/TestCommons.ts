@@ -55,9 +55,9 @@ namespace HsTest {
 
         actionClass: IActionClass,
 
-        testable?: (action: ActionType, hsGameCtx: HsGameCtx) => boolean
+        testable?: ( action: ActionType, hsGameCtx: HsGameCtx ) => boolean
 
-        test: (action: ActionType, hsGameCtx: HsGameCtx) => boolean;
+        test: ( action: ActionType, hsGameCtx: HsGameCtx ) => boolean;
     }
 
 
@@ -68,14 +68,14 @@ namespace HsTest {
 
     export interface Test {
         name?: string,
-        errorMsg: string | ((hsGameCtx: HsGameCtx) => string),
-        check: (hsGameCtx: HsGameCtx) => boolean
+        errorMsg: string | ( ( hsGameCtx: HsGameCtx ) => string ),
+        check: ( hsGameCtx: HsGameCtx ) => boolean
     }
 
 
     export interface TestSequence {
         hsGameCtxBuilder: () => HsGameCtx,
-        actions: (hsGameCtx: HsGameCtx) => ActionType[],
+        actions: ( hsGameCtx: HsGameCtx ) => ActionType[],
         actionMonitor: ActionMonitor,
         //        actionTests: ActionTest[],
         //        consequencesMonitorExcludes?: jsAction.IActionClass[],
