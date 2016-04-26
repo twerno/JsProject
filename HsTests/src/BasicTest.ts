@@ -26,11 +26,29 @@ var testSeq: HsTest.TestSequence = {
             })
         ];
     },
+    //    actionMonitor: null,
+    actionMonitor: {
+        actionTests: [],
+        consequencesMonitorExcludes: [jsAction.InlineAction, jsAction.InlineActionExt, HsLogic.ProcessQueue, HsLogic.DispatchEvents/*, HsLogic.DispatchEvent*/],
+    },
 
-    tests: [],
-
-    consequencesMonitorExcludes: [jsAction.InlineAction, jsAction.InlineActionExt, HsLogic.ProcessQueue]
-}
+    tests: [
+        {
+            name: 'Minion destroyed',
+            errorMsg: 'Minion is not dead!',
+            check: ( hsGameCtx: HsLogic.HsGameCtx ): boolean => {
+                return hsGameCtx.gameBoard.zonesOf( hsGameCtx.inactivePlayer ).battlefield.getRawArray().length === 0;
+            }
+        },
+        {
+            name: 'No events left',
+            errorMsg: 'Undispatched events left!',
+            check: ( hsGameCtx: HsLogic.HsGameCtx ): boolean => {
+                return hsGameCtx.eventMgr.isEmpty();
+            }
+        }
+    ]
+};
 
 var Result: HsTest.TestSequenceResult = null;
 testSeq.hsGameCtxBuilder();

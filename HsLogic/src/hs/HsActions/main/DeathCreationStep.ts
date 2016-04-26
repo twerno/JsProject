@@ -1,5 +1,5 @@
-/// <reference path="../../../core/action.ts" />
-/// <reference path="../../../core/ActionEvent.ts" />
+/// <reference path="../../core/action.ts" />
+/// <reference path="../../core/ActionEvent.ts" />
 
 "use strict";
 
@@ -47,17 +47,24 @@ namespace HsLogic {
                         if ( !source )
                             source = gameCtx.lethalMonitor.getSourceFor( minions[i] );
 
-                        gameCtx.eventMgr.save( new event.Death( {
-                            source: source,
-                            target: minions[i],
-                            position: 0
-                        }) );
-
                         //  remove from battlefield
                         gameCtx.gameBoard.zonesOf( minions[i].owner ).battlefield.removeEntity( minions[i] );
+
+                        actions.push(
+                            new event.Death( {
+                                source: source,
+                                target: minions[i],
+                                position: 0
+                            }).dispatch( gameCtx )
+                        );
+                        //                        gameCtx.eventMgr.save(new event.Death({
+                        //                            source: source,
+                        //                            target: minions[i],
+                        //                            position: 0
+                        //                        }));
                     }
 
-                    resolve( jsAction.NO_CONSEQUENCES );
+                    resolve( actions );
                 });
         }
     }

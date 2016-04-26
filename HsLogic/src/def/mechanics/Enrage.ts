@@ -44,8 +44,12 @@ namespace Def {
 
                 if ( !damaged && enraged ) {
                     return [
-                        DefActionHelper.RemoveTag( character, enrageTag ),
-                        DefActionHelper.DetachEnchantment( enchantment )
+                        gameCtx.actionFactory.removeTag( {
+                            source: trigger.getSource(), targets: [character], tag: enrageTag
+                        }),
+                        gameCtx.actionFactory.detachEnchantment( {
+                            source: trigger.getSource(), targets: [character], enchantment: enchantment
+                        }),
                     ];
                 }
 
@@ -54,8 +58,12 @@ namespace Def {
                     if ( enchantment ) {
                         enrageTag = new Enrage_Tag( event.param.source );
                         return [
-                            DefActionHelper.AddTag( character, enrageTag ),
-                            DefActionHelper.AttachEnchantment( enchantment )
+                            gameCtx.actionFactory.addTag( {
+                                source: trigger.getSource(), targets: [character], tag: enrageTag
+                            }),
+                            gameCtx.actionFactory.attachEnchantment( {
+                                source: trigger.getSource(), targets: [character], enchantment: enchantment
+                            }),
                         ];
                     }
                 }

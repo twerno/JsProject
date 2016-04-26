@@ -3,22 +3,27 @@
 namespace Def {
 
     export enum DAMAGE_TYPE {
-        COMBAT, DIRECT, PAY_LIFE, FATIGUE
+        COMBAT = <any>"COMBAT",
+        DIRECT = <any>"DIRECT",
+        PAY_LIFE = <any>"PAY_LIFE",
+        FATIGUE = <any>"FATIGUE"
     }
 
     export enum HEAL_TYPE {
-        DIRECT
+        DIRECT = <any>"DIRECT",
     }
 
     export enum SPLIT_MODE {
-        ARCANE_MISSILE, MAD_BOMB, ARCANE_HEAL
+        ARCANE_MISSILE = <any>"ARCANE_MISSILE",
+        MAD_BOMB = <any>"MAD_BOMB",
+        ARCANE_HEAL = <any>"ARCANE_HEAL",
     }
 
     export enum CARD_RARITY {
-        COMMON,
-        RARE,
-        EPIC,
-        LEGANDARY
+        COMMON = <any>"COMMON",
+        RARE = <any>"RARE",
+        EPIC = <any>"EPIC",
+        LEGANDARY = <any>"LEGANDARY",
     }
 
     export namespace MINION_TYPE {
@@ -58,8 +63,8 @@ namespace Def {
     }
 
     export enum AURA_TYPE {
-        ATTACK_HEALTH,
-        OTHER
+        ATTACK_HEALTH = <any>"ATTACK_HEALTH",
+        OTHER = <any>"OTHER"
     }
 
     export enum FILTER_COMPARE_MODE {

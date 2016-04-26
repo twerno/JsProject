@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 namespace HsLogic {
 
@@ -6,29 +6,34 @@ namespace HsLogic {
         protected _events: ActionEvent<IActionParam>[] = []
 
 
-        save( event: ActionEvent<IActionParam> ): void {
-            this._events.push( event );
+        save(event: ActionEvent<IActionParam>): void {
+            this._events.push(event);
         }
 
 
-        get( eventClass: ActionEventClass ): ActionEvent<IActionParam>[] {
+        get(eventClass: ActionEventClass): ActionEvent<IActionParam>[] {
             let result: ActionEvent<IActionParam>[] = [];
 
-            for ( let event of this._events )
-                if ( event instanceof eventClass )
-                    result.push( event );
+            if (eventClass)
+                for (let event of this._events)
+                    if (event instanceof eventClass)
+                        result.push(event);
 
             return result;
         }
 
 
-        count( eventClass: ActionEventClass ): number {
-            return this.get( eventClass ).length;
+        count(eventClass: ActionEventClass): number {
+            return this.get(eventClass).length;
         }
 
 
-        has( eventClass: ActionEventClass ): boolean {
-            return this.count( eventClass ) > 0;
+        has(eventClass: ActionEventClass): boolean {
+            return this.count(eventClass) > 0;
+        }
+
+        isEmpty(): boolean {
+            return this._events.length === 0;
         }
     }
 

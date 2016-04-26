@@ -1,18 +1,19 @@
 /// <reference path="../../core/action.ts" />
+/// <reference path="../../core/actionEvent.ts" />
 
 "use strict";
 
 namespace HsLogic {
 
-    export class OnPlayPhaseEvent extends ActionEvent<PlayCardParam> {
+    export class OnPlayPhaseEvent extends CancelableEvent<PlayCardParam> {
         static get type(): string { return OnPlayPhaseEvent.name }
     }
 
-    export class OnTargetingPhaseEvent extends ActionEvent<PlayCardParam> {
+    export class OnTargetingPhaseEvent extends CancelableEvent<PlayCardParam> {
         static get type(): string { return OnTargetingPhaseEvent.name }
     }
 
-    export class OnAfterSpellPhaseEvent extends ActionEvent<PlaySpellParam> {
+    export class OnAfterSpellPhaseEvent extends CancelableEvent<PlaySpellParam> {
         static get type(): string { return OnAfterSpellPhaseEvent.name }
     }
 
@@ -32,51 +33,54 @@ namespace HsLogic {
 
     export class PlaySpellSequence<P extends PlaySpellParam> extends CancelableAction<P> {
 
-        resolve( self: PlaySpellSequence<P>, gameCtx: HsGameCtx ): PromiseOfActions {
-            if ( self.param.cancelAction.value )
-                return Promise.resolve( jsAction.NO_CONSEQUENCES );
+        resolve(self: PlaySpellSequence<P>, gameCtx: HsGameCtx): PromiseOfActions {
+            if (self.param.cancelAction.value)
+                return Promise.resolve(jsAction.NO_CONSEQUENCES);
 
             return new Promise<ActionType | ActionType[]>(
-                ( resolve, reject ): void => {
+                (resolve, reject): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
                     // pay cost & remove from hand
-                    actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
+                    actions.push(gameCtx.actionFactory.payCostAndRemoveFromHand(param));
 
                     // step 2 - onPlayPhase
-                    //actions.push(); //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) ) );
-                    actions.push( new OutermostPhaseEnd( { source: param.source }) );
+                    actions.push(new OnPlayPhaseEvent(param).dispatch(gameCtx));
+                    actions.push(new OutermostPhaseEnd({ source: param.source }));
 
 
-                    actions.push( new InlineActionExt(
+                    actions.push(new InlineActionExt(
                         (): boolean => {
                             return !param.cancelAction.value
                         },
-                        ( resolve, reject ): void => {
+                        (resolve, reject): void => {
                             let innerActions: ActionType[] = [];
 
                             // step 3 - onTargetingPhase
                             // the Death Creation Step and Summon Resolution Step are skipped
-                            innerActions.push(); //gameCtx.actionFactory.dispatch( new OnTargetingPhaseEvent( param ) ) );
+                            innerActions.push(new OnTargetingPhaseEvent(param).dispatch(gameCtx));
 
 
                             // step 4 - spellTextPhase
-                            if ( param.card.spellAction )
-                                innerActions.push.apply( innerActions,
-                                    param.card.spellAction.actionBuilder( param.source, param.targets, gameCtx ) );
+                            if (param.card.spellAction)
+                                innerActions.push.apply(innerActions,
+                                    param.card.spellAction.actionBuilder(param.source, param.targets, gameCtx));
 
 
                             // step 5 - onAfterPlaySpell
-                            innerActions.push(); //gameCtx.actionFactory.dispatch( new OnAfterSpellPhaseEvent( param ) ) );
+                            innerActions.push(new OnAfterSpellPhaseEvent(param).dispatch(gameCtx));
 
-                            resolve( innerActions );
+                            // step 6 - win/loss check, close sequence
+                            innerActions.push(new OutermostPhaseEnd({ source: param.source }));
+
+                            resolve(innerActions);
                         }
-                    ) ); // new InlineAction(
+                        )); // new InlineAction(
 
-                    resolve( actions );
+                    resolve(actions);
                 }
-            ); // return new Promise
+                ); // return new Promise
 
         } // resolve( self: PlaySpell<P>
 

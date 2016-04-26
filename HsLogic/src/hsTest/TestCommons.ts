@@ -25,16 +25,16 @@ namespace HsTest {
     }
 
 
-    export interface TestResult {
+    export interface ActionTestResult {
         id: string,
         actionClass: string,
+        eventClass: string,
         chain: string[],
         state: TestResultState,
         param: {
             before: HsLogic.IActionParam,
             after: HsLogic.IActionParam
         },
-        eventClass: string,
         executionTime?: number
     }
 
@@ -42,29 +42,44 @@ namespace HsTest {
     export interface TestSequenceResult {
         id: string,
         testTitle: string,
-        testResults: TestResult[],
+        testResults: ActionTestResult[],
         state: TestSequenceResultState,
-        error: Error
+        error: Error,
+        consequencesMonitorExcludes: jsAction.IActionClass[]
     }
 
 
-    export interface Test {
+    export interface ActionTest {
 
         timeLimit?: number,
 
-        toBeTested: IActionClass,
+        actionClass: IActionClass,
 
-        testable?: ( action: ActionType, hsGameCtx: HsGameCtx ) => boolean
+        testable?: (action: ActionType, hsGameCtx: HsGameCtx) => boolean
 
-        test: ( action: ActionType, hsGameCtx: HsGameCtx ) => boolean;
+        test: (action: ActionType, hsGameCtx: HsGameCtx) => boolean;
+    }
+
+
+    export interface ActionMonitor {
+        actionTests: ActionTest[],
+        consequencesMonitorExcludes?: jsAction.IActionClass[],
+    }
+
+    export interface Test {
+        name?: string,
+        errorMsg: string | ((hsGameCtx: HsGameCtx) => string),
+        check: (hsGameCtx: HsGameCtx) => boolean
     }
 
 
     export interface TestSequence {
         hsGameCtxBuilder: () => HsGameCtx,
-        actions: ( hsGameCtx: HsGameCtx ) => ActionType[],
-        tests: Test[],
-        consequencesMonitorExcludes?: jsAction.IActionClass[]
+        actions: (hsGameCtx: HsGameCtx) => ActionType[],
+        actionMonitor: ActionMonitor,
+        //        actionTests: ActionTest[],
+        //        consequencesMonitorExcludes?: jsAction.IActionClass[],
+        tests: Test[]
     }
 
 }
