@@ -20,17 +20,18 @@ namespace Def {
 
                 for ( let target of targets )
                     actions.push(
-                        DefActionHelper.AttachEnchantment(
-                            new HsLogic.AttackHealthEnchantment( source, target, false )
+                        gameCtx.techActionFactory.attachEnchantment( {
+                            source: source,
+                            enchantment: new HsLogic.AttackHealthEnchantment( source, target, false )
                                 .init( { attack: 4, health: 4 })
-                        )
+                        })
                     );
 
                 actions.push(
-                    DefActionHelper.BuildAddTag( {
+                    gameCtx.techActionFactory.addTag( {
                         source: source,
                         targets: targets,
-                        tag: Destroy_At_The_End_of_Turn_Tag
+                        tag: new Destroy_At_The_End_of_Turn_Tag( source )
                     })
                 );
 

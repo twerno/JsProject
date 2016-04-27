@@ -11,29 +11,29 @@ namespace HsLogic {
      */
     export class CalculateAndSplitHeal<P extends SplitHealParam> extends Action<P> {
 
-        resolve( self: CalculateAndSplitHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve(self: CalculateAndSplitHeal<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                ( resolve, reject ): void => {
+                (resolve, reject): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
-                    actions.push( new CalculateHeal( param ) );
+                    actions.push(new CalculateHeal(param));
 
-                    actions.push( new InlineActionExt(
+                    actions.push(new InlineActionExt(
                         (): boolean => { return !param.cancelAction.value },
-                        ( resolve, reject ): void => {
+                        (resolve, reject): void => {
                             let innerActions: ActionType[] = [];
 
-                            for ( let i = 0; i < param.amount; i++ )
-                                innerActions.push( new SplitHeal( param ) );
+                            for (let i = 0; i < param.amount; i++)
+                                innerActions.push(gameCtx.techActionFactory.splitHeal(param));
 
-                            resolve( innerActions );
-                        }) );
+                            resolve(innerActions);
+                        }));
 
-                    resolve( actions );
+                    resolve(actions);
                 }
-            ); // return new Promise
+                ); // return new Promise
 
         } // resolve(self: CalculateAndSplitHeal
 
@@ -45,24 +45,24 @@ namespace HsLogic {
 	 * SplitHeal
 	 *
 	 */
-    class SplitHeal<P extends SplitHealParam> extends Action<P> {
+    export class SplitHeal<P extends SplitHealParam> extends Action<P> {
 
-        resolve( self: SplitHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve(self: SplitHeal<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                ( resolve, reject ): void => {
+                (resolve, reject): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [],
                         target: Character,
                         availableTargets: Character[];
 
-                    availableTargets = splitMode2TargetSetBuilder( param.splitMode, param.source )
-                        .buildSet( param.source, gameCtx );
+                    availableTargets = splitMode2TargetSetBuilder(param.splitMode, param.source)
+                        .buildSet(param.source, gameCtx);
 
-                    target = MathUtils.selectOneAtRandom<Character>( availableTargets );
+                    target = MathUtils.selectOneAtRandom<Character>(availableTargets);
 
-                    if ( target )
-                        actions.push( new Heal( {
+                    if (target)
+                        actions.push(gameCtx.techActionFactory.heal({
                             source: param.source,
 
                             target: target,
@@ -70,11 +70,11 @@ namespace HsLogic {
 
                             healState: HEAL_STATE.PENDING,
                             notifyMode: NOTIFY_MODE.AFTER_EVERY_ACTION
-                        }) );
+                        }));
 
-                    resolve( actions );
+                    resolve(actions);
                 }
-            ); // return new Promise
+                ); // return new Promise
 
         } // resolve(self: SplitHeal
 

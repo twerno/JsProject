@@ -46,7 +46,6 @@
     <TypeScriptCompile Include="src\def\elements\IDefMetadata.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefTargetDefinition.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefTrigger.ts" />
-    <TypeScriptCompile Include="src\def\helper\ActionBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\SimpleTargetDefinition.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\EntitySetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\TriggerSetBuilder.ts" />
@@ -82,12 +81,9 @@
     <TypeScriptCompile Include="src\hs\event\DrawCardEvents.ts" />
     <TypeScriptCompile Include="src\hs\event\HealEvents.ts" />
     <TypeScriptCompile Include="src\hs\event\TurnEvents.ts" />
-    <TypeScriptCompile Include="src\hs\factories\GlobalActionFactory.ts" />
-    <TypeScriptCompile Include="src\hs\factories\TechActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsActionFactory.ts" />
-    <TypeScriptCompile Include="src\hs\factories\HsEnchantmentActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
-    <TypeScriptCompile Include="src\hs\factories\MakeChoiceActionFactory.ts" />
+    <TypeScriptCompile Include="src\hs\factories\TechActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\DrawCard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\PlayCardSequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\PlayMinionSequence.ts" />
@@ -104,6 +100,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\heal\MultistepHeal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\Battlecry.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\DeathCreationStep.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\EquipWeapon.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\GainArmor.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\OutermostPhaseEnd.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\SummonMinion.ts" />
@@ -124,14 +121,14 @@
     <TypeScriptCompile Include="src\hs\hsActions\secondary\Fatigue.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\secondary\PayCostAndRemoveFromHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\secondary\ShuffleDeck.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\UnregisterTrigger.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterTrigger.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\AddTag.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\AttachEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DetachEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvent.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvents.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterTrigger.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RemoveTag.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\technical\UnregisterTrigger.ts" />
     <TypeScriptCompile Include="src\hs\model\CardSet.ts" />
     <TypeScriptCompile Include="src\hs\model\card\Card.ts" />
     <TypeScriptCompile Include="src\hs\model\card\GenEntity.ts" />

@@ -41,13 +41,13 @@ namespace HsLogic {
         damageType: Def.DAMAGE_TYPE,
         amount: number,
 
-        customDamagePower?: ( param: CalculateDamageParam, gameCtx: HsGameCtx ) => number
+        customDamagePower?: (param: CalculateDamageParam, gameCtx: HsGameCtx) => number
     }
 
 
     export interface MultistepDamageParam extends IActionParam {
         steps: DamageTargetsParam[],
-        notifyEventMode: NOTIFY_MODE
+        notifyMode: NOTIFY_MODE
     }
 
 }

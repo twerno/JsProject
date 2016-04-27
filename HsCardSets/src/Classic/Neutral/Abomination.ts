@@ -20,7 +20,7 @@ namespace Def {
                 action: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {
                     let source: ISource = trigger.sourceCard.getSource();
 
-                    return new HsLogic.CalculateAndDealDamage( {
+                    return gameCtx.actionFactory.calculateAndDealDamage( {
                         source: source,
                         targets: TargetFinder.ANY_CHARACTER.buildSet( source, gameCtx ),
                         amount: 4,

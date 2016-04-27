@@ -17,8 +17,7 @@ namespace Def {
 
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
                 let param: HsLogic.DrawParam = {
-                    source: source,
-                    targetPlayer: source.player
+                    source: source, targetPlayer: source.player
                 };
 
                 return [
@@ -28,7 +27,7 @@ namespace Def {
                         (): boolean => { return param.drawnCard !== null },
                         ( resolve, reject ): void => {
                             resolve(
-                                new HsLogic.CalculateAndDealDamage( {
+                                gameCtx.actionFactory.calculateAndDealDamage( {
                                     source: source,
                                     damageType: DAMAGE_TYPE.DIRECT,
                                     amount: param.drawnCard.baseCost,

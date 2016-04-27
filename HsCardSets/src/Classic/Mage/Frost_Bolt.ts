@@ -18,16 +18,16 @@ namespace Def {
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
-                    new HsLogic.CalculateAndDealDamage( {
+                    gameCtx.actionFactory.calculateAndDealDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         amount: 3,
                         targets: targets
                     }),
-                    DefActionHelper.BuildAddTag( {
+                    gameCtx.techActionFactory.addTag( {
                         source: source,
                         targets: targets,
-                        tag: Freeze_Tag
+                        tag: new Freeze_Tag( source )
                     })
                 ];
 

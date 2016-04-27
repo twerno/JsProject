@@ -11,27 +11,27 @@ namespace HsLogic {
      */
     export class CalculateAndSplitDamage<P extends SplitDamageParam> extends Action<P> {
 
-        resolve( self: CalculateAndSplitDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve(self: CalculateAndSplitDamage<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                ( resolve, reject ): void => {
+                (resolve, reject): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
-                    actions.push( new CalculateDamage( param ) );
+                    actions.push(gameCtx.techActionFactory.calculateDamage(param));
 
-                    actions.push( new InlineAction(( resolve, reject ): void => {
+                    actions.push(new InlineAction((resolve, reject): void => {
                         let innerActions: ActionType[] = [];
 
-                        for ( let i = 0; i < param.amount; i++ )
-                            innerActions.push( new SplitDamage( param ) );
+                        for (let i = 0; i < param.amount; i++)
+                            innerActions.push(gameCtx.techActionFactory.splitDamage(param));
 
-                        resolve( innerActions );
-                    }) );
+                        resolve(innerActions);
+                    }));
 
-                    resolve( actions );
+                    resolve(actions);
                 }
-            ); // return new Promise
+                ); // return new Promise
 
         } // resolve(self: CalculateAndSplitDamage
 
@@ -43,24 +43,24 @@ namespace HsLogic {
 	 * SplitDamage
 	 *
 	 */
-    class SplitDamage<P extends SplitDamageParam> extends Action<P> {
+    export class SplitDamage<P extends SplitDamageParam> extends Action<P> {
 
-        resolve( self: SplitDamage<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve(self: SplitDamage<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                ( resolve, reject ): void => {
+                (resolve, reject): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [],
                         target: Character,
                         availableTargets: Character[];
 
-                    availableTargets = splitMode2TargetSetBuilder( param.splitMode, param.source )
-                        .buildSet( param.source, gameCtx );
+                    availableTargets = splitMode2TargetSetBuilder(param.splitMode, param.source)
+                        .buildSet(param.source, gameCtx);
 
-                    target = MathUtils.selectOneAtRandom<Character>( availableTargets );
+                    target = MathUtils.selectOneAtRandom<Character>(availableTargets);
 
-                    if ( target )
-                        actions.push( new Damage( {
+                    if (target)
+                        actions.push(gameCtx.techActionFactory.damage({
                             source: param.source,
                             damageType: param.damageType,
 
@@ -69,42 +69,42 @@ namespace HsLogic {
 
                             damageState: DAMAGE_STATE.PENDING,
                             notifyMode: NOTIFY_MODE.AFTER_EVERY_ACTION
-                        }) );
+                        }));
 
-                    resolve( actions );
+                    resolve(actions);
                 }
-            ); // return new Promise
+                ); // return new Promise
 
         } // resolve(self: SplitDamage
 
     } // class SplitDamage
 
 
-    export function splitMode2TargetSetBuilder( splitMode: Def.SPLIT_MODE, source: ISource ): Def.ITargetSetBuilder<Character> {
+    export function splitMode2TargetSetBuilder(splitMode: Def.SPLIT_MODE, source: ISource): Def.ITargetSetBuilder<Character> {
 
-        if ( splitMode === Def.SPLIT_MODE.ARCANE_MISSILE )
+        if (splitMode === Def.SPLIT_MODE.ARCANE_MISSILE)
             return Def.TargetFinder.EMEMY_CHARACTER
-                .addFilter(( source, entity, gameCtx ): boolean => {
+                .addFilter((source, entity, gameCtx): boolean => {
                     return entity instanceof Hero
-                        || ( entity instanceof Minion && entity.body.hp() > 0 );
+                        || (entity instanceof Minion && entity.body.hp() > 0);
                 });
 
-        else if ( splitMode === Def.SPLIT_MODE.MAD_BOMB )
+        else if (splitMode === Def.SPLIT_MODE.MAD_BOMB)
             return Def.TargetFinder.ANY_CHARACTER
-                .addFilter( Def.Filter.OtherThan( source.entity ) )
-                .addFilter(( source, entity, gameCtx ): boolean => {
+                .addFilter(Def.Filter.OtherThan(source.entity))
+                .addFilter((source, entity, gameCtx): boolean => {
                     return entity instanceof Hero
-                        || ( entity instanceof Minion && entity.body.hp() > 0 );
+                        || (entity instanceof Minion && entity.body.hp() > 0);
                 });
 
-        else if ( splitMode === Def.SPLIT_MODE.ARCANE_HEAL )
+        else if (splitMode === Def.SPLIT_MODE.ARCANE_HEAL)
             return Def.TargetFinder.FRIENDLY_CHARACTER
-                .addFilter(( source, entity, gameCtx ): boolean => {
+                .addFilter((source, entity, gameCtx): boolean => {
                     return entity instanceof Hero
-                        || ( entity instanceof Minion && entity.body.damages > 0 );
+                        || (entity instanceof Minion && entity.body.damages > 0);
                 });
 
         else
-            throw new Error( `Unknown SPLIT_MODE ${splitMode}!` );
+            throw new Error(`Unknown SPLIT_MODE ${splitMode}!`);
     }
 }

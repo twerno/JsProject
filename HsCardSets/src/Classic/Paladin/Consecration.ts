@@ -17,7 +17,7 @@ namespace Def {
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
-                    new HsLogic.CalculateAndDealDamage( {
+                    gameCtx.actionFactory.calculateAndDealDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         amount: 2,

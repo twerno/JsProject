@@ -5,24 +5,23 @@ namespace HsLogic {
 
 
     export interface RegisterTriggerParam extends IActionParam {
-        target: Permanent,
         trigger: Trigger
     }
 
 
     export class RegisterTrigger<P extends RegisterTriggerParam> extends Action<P> {
 
-        resolve( self: RegisterTrigger<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve(self: RegisterTrigger<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                ( resolve, reject ): void => {
+                (resolve, reject): void => {
                     let param: P = self.param;
 
-                    param.target.triggers.push( param.trigger );
+                    param.trigger.attachedTo.triggers.push(param.trigger);
 
-                    resolve( jsAction.NO_CONSEQUENCES );
+                    resolve(jsAction.NO_CONSEQUENCES);
                 }
-            );
+                );
         }
     }
 

@@ -18,7 +18,7 @@ namespace Def {
             targets: null,
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
                 return [
-                    new HsLogic.CalculateAndSplitDamage( {
+                    gameCtx.actionFactory.calculateAndSplitDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
                         amount: 3,

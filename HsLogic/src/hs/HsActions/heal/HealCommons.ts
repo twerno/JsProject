@@ -6,11 +6,12 @@ namespace HsLogic {
     export enum NOTIFY_MODE {
         AFTER_EVERY_ACTION = <any>"AFTER_EVERY_ACTION",
         AFTER_ALL_ACTIONS = <any>"AFTER_ALL_ACTIONS",
-        AFTER_ALL_STEPS = <any>"AFTER_ALL_STEPS",
     }
 
     export enum HEAL_STATE {
-        PENDING, HEALED, PREVENTED
+        PENDING = <any>"PENDING",
+        HEALED = <any>"HEALED",
+        PREVENTED = <any>"PREVENTED",
     }
 
 
@@ -41,12 +42,12 @@ namespace HsLogic {
     export interface CalculateHealParam extends IHsCancelableParam {
         amount: number,
 
-        customHealPowerCalculator?: ( param: CalculateHealParam, gameCtx: HsGameCtx ) => number
+        customHealPowerCalculator?: (param: CalculateHealParam, gameCtx: HsGameCtx) => number
     }
 
 
     export interface MultistepHealParam extends IActionParam {
         steps: HealTargetsParam[],
-        notifyEventMode: NOTIFY_MODE
+        notifyMode: NOTIFY_MODE
     }
 }

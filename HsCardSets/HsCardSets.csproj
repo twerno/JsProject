@@ -25,6 +25,7 @@
     <Folder Include="src\Blackrock Mountain\Druid\" />
     <Folder Include="src\Blackrock Mountain\Mage\" />
     <Folder Include="src\Blackrock Mountain\Neutral\" />
+    <Folder Include="src\Blackrock Mountain\Paladin\" />
     <Folder Include="src\Blackrock Mountain\Palladin\" />
     <Folder Include="src\Blackrock Mountain\Priest\" />
     <Folder Include="src\Blackrock Mountain\Ranger\" />
@@ -41,6 +42,7 @@
     <Folder Include="src\Curse of Naxxramas\Druid\" />
     <Folder Include="src\Curse of Naxxramas\Mage\" />
     <Folder Include="src\Curse of Naxxramas\Neutral\" />
+    <Folder Include="src\Curse of Naxxramas\Paladin\" />
     <Folder Include="src\Curse of Naxxramas\Palladin\" />
     <Folder Include="src\Curse of Naxxramas\Priest\" />
     <Folder Include="src\Curse of Naxxramas\Ranger\" />
@@ -50,6 +52,7 @@
     <Folder Include="src\Goblin vs Gnomes\Druid\" />
     <Folder Include="src\Goblin vs Gnomes\Mage\" />
     <Folder Include="src\Goblin vs Gnomes\Neutral\" />
+    <Folder Include="src\Goblin vs Gnomes\Paladin\" />
     <Folder Include="src\Goblin vs Gnomes\Palladin\" />
     <Folder Include="src\Goblin vs Gnomes\Priest\" />
     <Folder Include="src\Goblin vs Gnomes\Ranger\" />
@@ -60,6 +63,7 @@
     <Folder Include="src\The Grand Tournament\Druid\" />
     <Folder Include="src\The Grand Tournament\Mage\" />
     <Folder Include="src\The Grand Tournament\Neutral\" />
+    <Folder Include="src\The Grand Tournament\Paladin\" />
     <Folder Include="src\The Grand Tournament\Palladin\" />
     <Folder Include="src\The Grand Tournament\Priest\" />
     <Folder Include="src\The Grand Tournament\Ranger\" />
@@ -69,6 +73,7 @@
     <Folder Include="src\The Grand Tournament\Warrior\" />
     <Folder Include="src\The League of Explorers\Druid\" />
     <Folder Include="src\The League of Explorers\Neutral\" />
+    <Folder Include="src\The League of Explorers\Paladin\" />
     <Folder Include="src\The League of Explorers\Palladin\" />
     <Folder Include="src\The League of Explorers\Priest\" />
     <Folder Include="src\The League of Explorers\Ranger\" />
@@ -79,6 +84,7 @@
     <Folder Include="src\Whispers of the Old Gods\Druid\" />
     <Folder Include="src\Whispers of the Old Gods\Mage\" />
     <Folder Include="src\Whispers of the Old Gods\Neutral\" />
+    <Folder Include="src\Whispers of the Old Gods\Paladin\" />
     <Folder Include="src\Whispers of the Old Gods\Palladin\" />
     <Folder Include="src\Whispers of the Old Gods\Priest\" />
     <Folder Include="src\Whispers of the Old Gods\Ranger\" />
@@ -99,7 +105,6 @@
     <TypeScriptCompile Include="src\Classic\Neutral\Stormwind_Champion.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Violet_Apprentice.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Violet_Teacher.ts" />
-    <TypeScriptCompile Include="src\Classic\Paladin\Silver_Hand_Recruit.ts" />
     <TypeScriptCompile Include="src\Classic\Paladin\Consecration.ts" />
     <TypeScriptCompile Include="src\Classic\Paladin\Holy_Wrath.ts" />
     <TypeScriptCompile Include="src\Classic\Set.ts" />
@@ -116,6 +121,8 @@
     <TypeScriptCompile Include="src\HeroPower\Reinforce.ts" />
     <TypeScriptCompile Include="src\HeroPower\Shapeshift.ts" />
     <TypeScriptCompile Include="src\HeroPower\Steady_Shot.ts" />
+    <TypeScriptCompile Include="src\HeroPower\tokens\Silver_Hand_Recruit.ts" />
+    <TypeScriptCompile Include="src\HeroPower\tokens\Wicked_Knife.ts" />
     <TypeScriptCompile Include="src\HeroPower\Totemic_Call.ts" />
     <TypeScriptCompile Include="src\Hero\Druid.ts" />
     <TypeScriptCompile Include="src\Hero\Hunter.ts" />
@@ -131,9 +138,6 @@
     <TypeScriptCompile Include="src\The League of Explorers\Mage\Animated_Armor.ts" />
     <TypeScriptCompile Include="src\The League of Explorers\Set.ts" />
     <TypeScriptCompile Include="src\Whispers of the Old Gods\Set.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="src\Blackrock Mountain\Set.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

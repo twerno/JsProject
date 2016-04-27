@@ -5,24 +5,23 @@ namespace HsLogic {
 
 
     export interface DetachEnchantmentParam extends IActionParam {
-        target: Permanent,
         enchantment: Enchantment<Permanent>
     }
 
 
     export class DetachEnchantment<P extends DetachEnchantmentParam> extends Action<P> {
 
-        resolve( self: DetachEnchantment<P>, gameCtx: HsGameCtx ): PromiseOfActions {
+        resolve(self: DetachEnchantment<P>, gameCtx: HsGameCtx): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                ( resolve, reject ): void => {
+                (resolve, reject): void => {
                     let param: P = self.param;
 
-                    Collection.removeFrom( param.target.enchantments, param.enchantment );
+                    Collection.removeFrom(param.enchantment.target.enchantments, param.enchantment);
 
-                    resolve( jsAction.NO_CONSEQUENCES );
+                    resolve(jsAction.NO_CONSEQUENCES);
                 }
-            );
+                );
         }
     }
 

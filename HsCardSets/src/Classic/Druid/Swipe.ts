@@ -21,7 +21,7 @@ namespace Def {
                     .buildSet( source, gameCtx );
 
                 return [
-                    new HsLogic.MultistepDamage( {
+                    gameCtx.actionFactory.multistepDamage( {
                         source: source,
                         steps: [
                             {
@@ -37,7 +37,7 @@ namespace Def {
                                 damageType: DAMAGE_TYPE.DIRECT
                             }
                         ],
-                        notifyEventMode: HsLogic.NOTIFY_MODE.AFTER_ALL_STEPS,
+                        notifyMode: HsLogic.NOTIFY_MODE.AFTER_ALL_ACTIONS,
                     })
                 ];
             }
