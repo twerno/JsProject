@@ -9,7 +9,7 @@ namespace Def {
     }
 
     export interface TargetDefinitionParam {
-        availableTargets: ITargetSetBuilder<Permanent>,
+        availableTargets: ISetBuilder<Permanent>,
         availibleTargetsRequiredNumber: number,
         numberOfTargets: number,
         pickMode: PICK_MODE
@@ -44,7 +44,7 @@ namespace Def {
 
 
 
-    export function SINGLE_REQUIRED_TARGET( availableTargets: ITargetSetBuilder<Permanent>, pickMode: PICK_MODE = PICK_MODE.USER_CHOICE ): SimpleTargetDefinition {
+    export function SINGLE_REQUIRED_TARGET( availableTargets: ISetBuilder<Permanent>, pickMode: PICK_MODE = PICK_MODE.USER_CHOICE ): SimpleTargetDefinition {
         return new SimpleTargetDefinition( {
             availableTargets: availableTargets,
             availibleTargetsRequiredNumber: 1,
@@ -55,7 +55,7 @@ namespace Def {
 
 
 
-    export function SINGLE_OPTIONAL_TARGET( availableTargets: ITargetSetBuilder<Permanent>, pickMode: PICK_MODE = PICK_MODE.USER_CHOICE ): SimpleTargetDefinition {
+    export function SINGLE_OPTIONAL_TARGET( availableTargets: ISetBuilder<Permanent>, pickMode: PICK_MODE = PICK_MODE.USER_CHOICE ): SimpleTargetDefinition {
         return new SimpleTargetDefinition( {
             availableTargets: availableTargets,
             availibleTargetsRequiredNumber: 0,

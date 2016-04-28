@@ -2,7 +2,7 @@
 
 namespace Def.Filter {
 
-    export function OtherThan( otherThan: Entity | Entity[] ): ITargetSetBuilderFilter<Entity> {
+    export function OtherThan( otherThan: Entity | Entity[] ): FSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
 
             if ( otherThan instanceof Array ) {
@@ -17,14 +17,14 @@ namespace Def.Filter {
     }
 
 
-    export function OtherThanSource(): ITargetSetBuilderFilter<Entity> {
+    export function OtherThanSource(): FSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
             return source.entity !== entity;
         }
     }
 
 
-    export function Attack( mode: FILTER_COMPARE_MODE, value: number ): ITargetSetBuilderFilter<Character> {
+    export function Attack( mode: FILTER_COMPARE_MODE, value: number ): FSetBuilderFilter<Character> {
         return ( source: ISource, entity: Character, gameCtx: HsGameCtx ): boolean => {
             if ( mode === FILTER_COMPARE_MODE.EQUAL_TO )
                 return entity.body.attack === value;
@@ -50,7 +50,7 @@ namespace Def.Filter {
     }
 
 
-    export function Hp( mode: FILTER_COMPARE_MODE, value: number ): ITargetSetBuilderFilter<Character> {
+    export function Hp( mode: FILTER_COMPARE_MODE, value: number ): FSetBuilderFilter<Character> {
         return ( source: ISource, entity: Character, gameCtx: HsGameCtx ): boolean => {
             if ( mode === FILTER_COMPARE_MODE.EQUAL_TO )
                 return entity.body.hp() === value;
@@ -76,14 +76,14 @@ namespace Def.Filter {
     }
 
 
-    export function ownedBy( player: Player ): ITargetSetBuilderFilter<Entity> {
+    export function ownedBy( player: Player ): FSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
             return entity.owner === player;
         }
     }
 
 
-    export function notOwnedBy( player: Player ): ITargetSetBuilderFilter<Entity> {
+    export function notOwnedBy( player: Player ): FSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
             return entity.owner !== player;
         }

@@ -7,64 +7,72 @@ namespace HsLogic {
 
     export class TechActionFactory<T extends HsGameCtx> {
 
-        singleTarget(param: AcquireTargetsActionParam): jsAction.IAction<T> {
-            return new ChooseSingleTarget(param);
+        inlineAction( executor: CommonUtils.PromiseWorker<ActionType | ActionType[]> ): jsAction.IAction<T> {
+            return new InlineAction( executor );
         }
 
-        addTag(param: AddTagParam): jsAction.IAction<T> {
-            return new AddTag(param);
+        singleTarget( param: AcquireTargetsActionParam ): jsAction.IAction<T> {
+            return new ChooseSingleTarget( param );
         }
 
-        removeTag(param: RemoveTagParam): jsAction.IAction<T> {
-            return new RemoveTag(param);
+        addTag( param: AddTagParam ): jsAction.IAction<T> {
+            return new AddTag( param );
         }
 
-        attachEnchantment(param: AttachEnchantmentParam): jsAction.IAction<T> {
-            return new AttachEnchantment(param);
+        removeTag( param: RemoveTagParam ): jsAction.IAction<T> {
+            return new RemoveTag( param );
         }
 
-        detachEnchantment(param: DetachEnchantmentParam): jsAction.IAction<T> {
-            return new DetachEnchantment(param);
+        attachEnchantment( param: AttachEnchantmentParam ): jsAction.IAction<T> {
+            return new AttachEnchantment( param );
         }
 
-        registerTrigger(param: RegisterTriggerParam): jsAction.IAction<T> {
-            return new RegisterTrigger(param);
+        detachEnchantment( param: DetachEnchantmentParam ): jsAction.IAction<T> {
+            return new DetachEnchantment( param );
         }
 
-        unregisterTrigger(param: UnregisterTriggerParam): jsAction.IAction<T> {
-            return new UnregisterTrigger(param);
+        registerTrigger( param: RegisterTriggerParam ): jsAction.IAction<T> {
+            return new RegisterTrigger( param );
         }
 
-        calculateDamage(param: CalculateDamageParam): jsAction.IAction<T> {
-            return new CalculateDamage(param);
+        unregisterTrigger( param: UnregisterTriggerParam ): jsAction.IAction<T> {
+            return new UnregisterTrigger( param );
         }
 
-        damage(param: DamageParam): jsAction.IAction<T> {
-            return new Damage(param);
+        calculateDamage( param: CalculateDamageParam ): jsAction.IAction<T> {
+            return new CalculateDamage( param );
         }
 
-        internalDamage(param: DamageParam): jsAction.IAction<T> {
-            return new InternalDamage(param);
+        damage( param: DamageParam ): jsAction.IAction<T> {
+            return new Damage( param );
         }
 
-        splitDamage(param: SplitDamageParam): jsAction.IAction<T> {
-            return new SplitDamage(param);
+        internalDamage( param: DamageParam ): jsAction.IAction<T> {
+            return new InternalDamage( param );
         }
 
-        calculateHeal(param: CalculateHealParam): jsAction.IAction<T> {
-            return new CalculateHeal(param);
+        splitDamage( param: SplitDamageParam ): jsAction.IAction<T> {
+            return new SplitDamage( param );
         }
 
-        heal(param: HealParam): jsAction.IAction<T> {
-            return new Heal(param);
+        calculateHeal( param: CalculateHealParam ): jsAction.IAction<T> {
+            return new CalculateHeal( param );
         }
 
-        internalHeal(param: HealParam): jsAction.IAction<T> {
-            return new InternalHeal(param);
+        heal( param: HealParam ): jsAction.IAction<T> {
+            return new Heal( param );
         }
 
-        splitHeal(param: SplitHealParam): jsAction.IAction<T> {
-            return new SplitHeal(param);
+        internalHeal( param: HealParam ): jsAction.IAction<T> {
+            return new InternalHeal( param );
+        }
+
+        splitHeal( param: SplitHealParam ): jsAction.IAction<T> {
+            return new SplitHeal( param );
+        }
+
+        chooseAtRandom( param: ChooseAtRandomParam<any> ): jsAction.IAction<T> {
+            return new ChooseAtRandom<any, ChooseAtRandomParam<any>>( param );
         }
     }
 }

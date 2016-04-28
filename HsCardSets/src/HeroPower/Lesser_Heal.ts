@@ -7,6 +7,10 @@ namespace Def {
 
         cost: 2,
 
+        isActivable: ( source: ISource, gameCtx: HsGameCtx ): boolean => {
+            return TargetFinder.ANY_SPELL_TARGETABLE_CHARACTER.buildSet( source, gameCtx ).length > 0;
+        },
+
         ability: {
             targets: SINGLE_REQUIRED_TARGET( TargetFinder.ANY_SPELL_TARGETABLE_CHARACTER ),
 

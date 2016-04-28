@@ -47,12 +47,15 @@
     <TypeScriptCompile Include="src\def\elements\IDefTargetDefinition.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefTrigger.ts" />
     <TypeScriptCompile Include="src\def\helper\SimpleTargetDefinition.ts" />
+    <TypeScriptCompile Include="src\def\helper\targetFinder\builders\DefMinionSetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\EntitySetBuilder.ts" />
+    <TypeScriptCompile Include="src\def\helper\targetFinder\builders\IEntitySetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\TriggerSetBuilder.ts" />
+    <TypeScriptCompile Include="src\def\helper\targetFinder\filters\DefMinionFilter.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\Filters.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\StandardFilters.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\TargetFilters.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\ITargetSetBuilder.ts" />
+    <TypeScriptCompile Include="src\def\helper\targetFinder\ISetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\TargetFinder.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Aura.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Deathrattle.ts" />
@@ -108,7 +111,6 @@
     <TypeScriptCompile Include="src\hs\hsActions\outdated\DestroyCardInPlay.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\outdated\Discard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\outdated\makeChoice\ChooseSingleTarget.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\makeChoice\MakeChoiceAtRandom.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\outdated\MillCard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\outdated\param\BasicParams.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\outdated\PutCardIntoHand.ts" />
@@ -126,6 +128,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\technical\DetachEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvent.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvents.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\technical\MakeChoiceAtRandom.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterTrigger.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RemoveTag.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\UnregisterTrigger.ts" />

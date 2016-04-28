@@ -37,5 +37,9 @@ namespace HsLogic {
 
             return null;
         }
+
+        consts: ContextConsts = {
+            battlefield_limit: 7
+        }
     }
 }

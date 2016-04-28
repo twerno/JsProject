@@ -1,10 +1,10 @@
-/// <reference path="../itargetsetbuilder.ts" />
+/// <reference path="iEntitySetBuilder.ts" />
 
 "use strict";
 
 namespace Def {
 
-    export class TriggerSetBuilder extends ITargetSetBuilder<Trigger> {
+    export class TriggerSetBuilder extends IEntitySetBuilder<Trigger> {
 
         private _eventType: string;
 

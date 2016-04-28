@@ -25,4 +25,9 @@ namespace HsLogic {
         getSourceFor( target: Character ): ISource;
     }
 
+
+    export interface ContextConsts {
+        battlefield_limit: number;
+    }
+
 }

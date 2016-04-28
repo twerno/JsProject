@@ -7,6 +7,10 @@ namespace Def {
 
         cost: 2,
 
+        isActivable: ( source: ISource, gameCtx: HsGameCtx ): boolean => {
+            return TargetFinder.FRIENDLY_MINION.buildSet( source, gameCtx ).length < gameCtx.consts.battlefield_limit;
+        },
+
         ability: {
             targets: null,
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
@@ -16,9 +20,7 @@ namespace Def {
 
                 return [
                     gameCtx.actionFactory.summonMinion( {
-                        source: source,
-                        card: minion,
-                        position: position
+                        source: source, card: minion, position: position
                     })
                 ]
 

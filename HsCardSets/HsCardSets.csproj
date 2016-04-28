@@ -121,8 +121,12 @@
     <TypeScriptCompile Include="src\HeroPower\Reinforce.ts" />
     <TypeScriptCompile Include="src\HeroPower\Shapeshift.ts" />
     <TypeScriptCompile Include="src\HeroPower\Steady_Shot.ts" />
+    <TypeScriptCompile Include="src\HeroPower\tokens\Healing_Totem.ts" />
+    <TypeScriptCompile Include="src\HeroPower\tokens\Searing_Totem.ts" />
     <TypeScriptCompile Include="src\HeroPower\tokens\Silver_Hand_Recruit.ts" />
+    <TypeScriptCompile Include="src\HeroPower\tokens\Stoneclaw_Totem.ts" />
     <TypeScriptCompile Include="src\HeroPower\tokens\Wicked_Knife.ts" />
+    <TypeScriptCompile Include="src\HeroPower\tokens\Wrath_Of_Air_Totem.ts" />
     <TypeScriptCompile Include="src\HeroPower\Totemic_Call.ts" />
     <TypeScriptCompile Include="src\Hero\Druid.ts" />
     <TypeScriptCompile Include="src\Hero\Hunter.ts" />

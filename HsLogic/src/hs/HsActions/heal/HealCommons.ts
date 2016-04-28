@@ -42,7 +42,7 @@ namespace HsLogic {
     export interface CalculateHealParam extends IHsCancelableParam {
         amount: number,
 
-        customHealPowerCalculator?: (param: CalculateHealParam, gameCtx: HsGameCtx) => number
+        customHealPowerCalculator?: ( param: CalculateHealParam, gameCtx: HsGameCtx ) => number
     }
 
 

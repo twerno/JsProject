@@ -74,13 +74,13 @@ namespace HsLogic {
         // resolve( self: DispatchEvent<P>
 
 
-        protected _getDominantPlayerTriggers( player: Player ): Def.ITargetSetBuilder<Trigger> {
+        protected _getDominantPlayerTriggers( player: Player ): Def.ISetBuilder<Trigger> {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.Filter.ownedBy( player ) );
         }
 
 
-        protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.ITargetSetBuilder<Trigger> {
+        protected _getSecondaryPlayerTriggers( player: Player, triggeredByDominantPlayer: Trigger[] ): Def.ISetBuilder<Trigger> {
             return new Def.TriggerSetBuilder( this.event )
                 .addFilter( Def.Filter.notOwnedBy( player ) )
 

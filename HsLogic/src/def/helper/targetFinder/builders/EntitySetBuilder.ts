@@ -1,4 +1,4 @@
-/// <reference path="../itargetsetbuilder.ts" />
+/// <reference path="iEntitySetBuilder.ts" />
 
 "use strict";
 
@@ -10,11 +10,11 @@ namespace Def {
     }
 
 
-    export class EntitySetBuilder<T extends Entity> extends ITargetSetBuilder<T> {
+    export class EntitySetBuilder<T extends Entity> extends IEntitySetBuilder<T> {
 
         constructor( protected param: IDefTargetProperties ) { super(); }
 
-        protected _internalBuildSet( source: ISource, gameCtx: HsGameCtx ): Entity[] {
+        protected _internalBuildSet( source: ISource, gameCtx: HsGameCtx ): T[] {
             let result: Entity[] = [],
                 zones: Zone[] = null,
                 cards: Card[] = null;
@@ -34,7 +34,7 @@ namespace Def {
                 }
             }
 
-            return result;
+            return <T[]>result;
         }
     }
 }

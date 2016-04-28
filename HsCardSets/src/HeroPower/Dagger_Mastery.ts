@@ -11,6 +11,11 @@ namespace Def {
             targets: null,
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
                 return [
+                    gameCtx.actionFactory.equipWeapon( {
+                        source: source,
+                        targetPlayer: source.player,
+                        weapon: HsLogic.Weapon.build( source.player, Wicked_Knife )
+                    })
 
                 ];
             }

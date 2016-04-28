@@ -57,20 +57,21 @@ namespace HsLogic {
                     // 5. Battlecry Phase
                     actions.push( new Battlecry( param ) );
 
+
                     // old weapon deathrattle triggers
-                    //                    if (oldWeapon)
-                    //                        actions.push(
-                    //                            new ExecuteTargetlessTriggers({
-                    //                                source: param.source,
-                    //                                defActions: oldWeapon.triggers.deathrattle
-                    //                            })
-                    //                            );
+                    if ( oldWeapon )
+                        actions.push(
+                            new event.Death( {
+                                source: param.source, target: oldWeapon, position: 0
+                            }).dispatch( gameCtx )
+                        );
+
 
                     resolve( actions );
                 }
             ); // return new Promise
 
-        } // resolve( self: PlayWeapon<P>
+        } // resolve( self: PlayWeaponSequence<P>
 
     } // export class PlayWeaponSequence
 }

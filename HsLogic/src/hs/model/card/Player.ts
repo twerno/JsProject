@@ -16,8 +16,8 @@ namespace HsLogic {
         triggers: Trigger[] = [];
         tags: Tags = new Tags();
 
-        constructor(public name: string) {
-            super(null, null);
+        constructor( public name: string ) {
+            super( null, null );
         }
 
         init(): Player {

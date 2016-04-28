@@ -10,23 +10,23 @@ namespace HsLogic {
      */
     export class CalculateAndHeal<P extends HealTargetsParam> extends Action<P> {
 
-        resolve(self: CalculateAndHeal<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: CalculateAndHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
                     param.healState = HEAL_STATE.PENDING;
                     param.notifyMode = param.notifyMode || NOTIFY_MODE.AFTER_EVERY_ACTION;
 
-                    actions.push(gameCtx.techActionFactory.calculateHeal(param));
+                    actions.push( gameCtx.techActionFactory.calculateHeal( param ) );
 
-                    actions.push(new InlineAction((responce, reject): void => {
+                    actions.push( new InlineAction(( responce, reject ): void => {
                         let actions: ActionType[] = [];
 
-                        for (let i = 0; i < param.targets.length; i++) {
-                            actions.push(gameCtx.techActionFactory.heal({
+                        for ( let i = 0; i < param.targets.length; i++ ) {
+                            actions.push( gameCtx.techActionFactory.heal( {
                                 source: param.source,
 
                                 target: param.targets[i],
@@ -34,18 +34,18 @@ namespace HsLogic {
 
                                 healState: HEAL_STATE.PENDING,
                                 notifyMode: param.notifyMode
-                            }));
+                            }) );
                         }
-                        resolve(actions);
-                    }));
+                        resolve( actions );
+                    }) );
 
 
-                    if (param.notifyMode === NOTIFY_MODE.AFTER_ALL_ACTIONS)
-                        actions.push(new DispatchSavedEvents(event.Heal, gameCtx));
+                    if ( param.notifyMode === NOTIFY_MODE.AFTER_ALL_ACTIONS )
+                        actions.push( new DispatchSavedEvents( event.Heal, gameCtx ) );
 
-                    resolve(actions);
+                    resolve( actions );
                 }
-                ); // return new Promise
+            ); // return new Promise
 
         } // resolve(self: CalculateAndHeal
 
@@ -61,43 +61,43 @@ namespace HsLogic {
      */
     export class CalculateHeal<P extends CalculateHealParam> extends Action<P> {
 
-        resolve(self: CalculateHeal<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: CalculateHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
-                    param.amount = Math.max(param.amount, 0);
+                    param.amount = Math.max( param.amount, 0 );
 
 
                     // Auchenai Soulpriest
-                    actions.push(new event.PreHealCalculationEvent(param).dispatch(gameCtx));
+                    actions.push( new event.PreHealCalculationEvent( param ).dispatch( gameCtx ) );
 
 
                     // calculate heal
-                    actions.push(new InlineActionExt(
+                    actions.push( new InlineActionExt(
                         (): boolean => {
                             return !param.cancelAction.value
                         },
-                        (resolve, reject): void => {
+                        ( resolve, reject ): void => {
 
-                            if (param.customHealPowerCalculator)
-                                param.amount = param.customHealPowerCalculator(param, gameCtx);
+                            if ( param.customHealPowerCalculator )
+                                param.amount = param.customHealPowerCalculator( param, gameCtx );
                             else
-                                param.amount += gameCtx.powerMgr.healPower(param.source);
+                                param.amount += gameCtx.powerMgr.healPower( param.source );
 
-                            resolve(jsAction.NO_CONSEQUENCES);
+                            resolve( jsAction.NO_CONSEQUENCES );
                         }
-                        ));
+                    ) );
 
 
                     // Prophet Velens
-                    actions.push(new event.PostHealCalculationEvent(param).dispatch(gameCtx));
+                    actions.push( new event.PostHealCalculationEvent( param ).dispatch( gameCtx ) );
 
-                    resolve(actions);
+                    resolve( actions );
                 }
-                ); // return new Promise
+            ); // return new Promise
 
         } // resolve(self: CalculateHeal
 
@@ -111,26 +111,26 @@ namespace HsLogic {
      */
     export class Heal<P extends HealParam> extends Action<P> {
 
-        resolve(self: Heal<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: Heal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
-                    param.amount = Math.max(0, param.amount);
+                    param.amount = Math.max( 0, param.amount );
 
-                    actions.push(new event.PreHealPhase(param).dispatch(gameCtx));
+                    actions.push( new event.PreHealPhase( param ).dispatch( gameCtx ) );
 
-                    actions.push(gameCtx.techActionFactory.internalHeal(param));
+                    actions.push( gameCtx.techActionFactory.internalHeal( param ) );
 
-                    actions.push(new event.Heal(param)
-                        .dispatchOrSave(gameCtx, (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
-                        );
+                    actions.push( new event.Heal( param )
+                        .dispatchOrSave( gameCtx, (): boolean => { return param.notifyMode === NOTIFY_MODE.AFTER_EVERY_ACTION })
+                    );
 
-                    resolve(actions);
+                    resolve( actions );
                 }
-                ); // return new Promise
+            ); // return new Promise
 
         } // resolve(self: Heal
 
@@ -144,27 +144,27 @@ namespace HsLogic {
      */
     export class InternalHeal<P extends HealParam> extends Action<P> {
 
-        resolve(self: InternalHeal<P>, gameCtx: HsGameCtx): PromiseOfActions {
+        resolve( self: InternalHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 
             return new Promise<ActionType | ActionType[]>(
-                (resolve, reject): void => {
+                ( resolve, reject ): void => {
                     let param: P = self.param,
                         target: Character = param.target;
 
                     param.healState = HEAL_STATE.HEALED;
 
-                    param.amount = Math.max(target.body.hp() + param.amount, target.body.health) - target.body.health;
+                    param.amount = Math.max( target.body.hp() + param.amount, target.body.health ) - target.body.health;
 
-                    if (param.target.tags.contains(Def.Immune_Tag)) {
+                    if ( param.target.tags.contains( Def.Immune_Tag ) ) {
                         param.amount = 0;
                         param.healState = HEAL_STATE.PREVENTED;
                     }
 
-                    param.target.body.damages = Math.max(0, param.target.body.damages - param.amount);
+                    param.target.body.damages = Math.max( 0, param.target.body.damages - param.amount );
 
-                    resolve(jsAction.NO_CONSEQUENCES);
+                    resolve( jsAction.NO_CONSEQUENCES );
                 }
-                ); // return new Promise
+            ); // return new Promise
 
         } // resolve(self: InternalHeal
 

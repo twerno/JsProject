@@ -53,7 +53,8 @@ namespace Def {
         name: string,
         cost: number,
 
-        ability: IDefAction
+        ability: IDefAction,
+        isActivable?: ( source: ISource, gameCtx: HsGameCtx ) => boolean;
     }
 
 
