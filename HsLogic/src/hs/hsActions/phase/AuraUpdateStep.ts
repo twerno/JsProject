@@ -17,15 +17,18 @@ namespace HsLogic {
 
         resolve( self: AuraUpdateStep<P>, gameCtx: HsGameCtx ): PromiseOfActions {
             return new Promise<ActionType | ActionType[]>(
+
                 ( resolve, reject ): void => {
-                    resolve( null );
+                    let param: P = this.param;
+
+                    resolve( auraUpdate( param.auraType, gameCtx ) );
                 });
         }
     }
 }
 
-namespace HsLogic.event {
-
-    export class AuraUpdateEvent<P extends IAuraUpdateParam> extends ActionEvent<P> { }
-
-}
+//namespace HsLogic.event {
+//
+//    export class AuraUpdateEvent<P extends IAuraUpdateParam> extends ActionEvent<P> { }
+//
+//}

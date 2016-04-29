@@ -91,7 +91,7 @@ namespace HsLogic {
 
 
                     // 4. onPlayPhase
-                    actions.push( new DispatchEvent( new OnPlayPhaseEvent( param ) ) );
+                    actions.push( gameCtx.phaseActionFactory.playPhase( param ) );
                     actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
 

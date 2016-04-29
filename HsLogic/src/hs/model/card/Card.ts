@@ -12,7 +12,9 @@ namespace HsLogic {
         triggers: Trigger[] = [];
         tags: Tags = new Tags();
 
-        enchantments: Enchantment<Permanent>[] = [];
+        overload: number;
+
+        enchantments: Enchantment<PermanentExt>[] = [];
 
 
         static build( owner: Player, def: Def.ICard ): Card {
@@ -34,6 +36,7 @@ namespace HsLogic {
 
             this.name = def.name;
             this.baseCost = def.cost;
+            this.overload = def.overload || 0;
 
             this.triggers = [];
             if ( def.triggers )

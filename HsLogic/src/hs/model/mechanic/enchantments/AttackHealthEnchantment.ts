@@ -18,8 +18,6 @@ namespace HsLogic {
         constructor( source: ISource, target: Character, isAura: boolean = false ) {
             super( source, target, isAura );
 
-            this.type = Def.AURA_TYPE.ATTACK_HEALTH;
-
             if ( this.isAura )
                 this.priority = 2;
         }
@@ -47,11 +45,8 @@ namespace HsLogic {
 
             let health: number | ISetter = this.param.health;
             // health
-            if ( isDelta( health ) ) {
+            if ( isDelta( health ) )
                 body.health += health;
-                if ( health < 0 )
-                    body.damages = Math.max( 0, body.damages + health );
-            }
 
             else if ( isSetter( health ) ) {
                 body.health = health.set;
@@ -60,12 +55,13 @@ namespace HsLogic {
 
         }
 
-        replaceOfRemove(): AttackHealthEnchantment {
+
+        remove(): void {
             let param: AttackHealthEnchantmentParam = { attack: 0, health: 0 },
                 body: MinionBody = this.target.body;;
 
             if ( isSetter( this.param.attack ) )
-                param.attack = { set: this.target.def.attack };
+                body.attack = this.target.def.attack;
 
             let health: number | ISetter = this.param.health;
 
@@ -74,14 +70,7 @@ namespace HsLogic {
                 body.damages = Math.max( 0, body.damages - health );
 
             if ( isSetter( this.param.health ) )
-                param.health = { set: this.target.def.health };
-
-            if ( param.attack !== 0 || param.health !== 0 ) {
-                return new AttackHealthEnchantment( this.source, this.target, false )
-                    .init( param );
-            }
-
-            return null;
+                body.damages = 0;
         }
     }
 

@@ -7,19 +7,18 @@ namespace HsLogic {
     export class TagManagerEnchantment extends Enchantment<Permanent> {
 
         private _param: TagManagerEnchantmentParam;
-        private registeredTags: Tag[] = [];
+        private tag: Tag = null;
 
-        constructor( source: ISource, target: Character, isAura: boolean = false ) {
-            super( source, target, isAura );
-
-            this.type = Def.AURA_TYPE.OTHER;
+        constructor( source: ISource, public targets: CharacterExt[], isAura: boolean = false ) {
+            super( source, null, isAura );
         }
 
 
         protected validateTarget(): boolean {
             return this.target instanceof Minion
                 || this.target instanceof Hero
-                || this.target instanceof Weapon;
+                || this.target instanceof Weapon
+                || this.target instanceof Player;
         }
 
 
@@ -35,23 +34,18 @@ namespace HsLogic {
 
 
         apply(): void {
-            let tag: Tag;
             this._paramValidator();
-            if ( this.registeredTags.length === 0 ) {
-                for ( let i = 0; i < this._param.amount; i++ ) {
-                    tag = new this._param.tagClass( this.source );
-                    this.registeredTags.push( tag );
-                    this.target.tags.add( tag );
-                }
+            if ( this.tag = null ) {
+                this.tag = new this._param.tagClass( this.source );
+                for ( let target of this.targets )
+                    for ( let i = 0; i < this._param.amount; i++ )
+                        this.target.tags.add( this.tag );
             }
         }
 
-        replaceOfRemove(): AttackHealthEnchantment {
-            for ( let tag of this.registeredTags ) {
-                this.target.tags.remove( tag );
-            }
-
-            return null;
+        remove(): void {
+            for ( let target of this.targets )
+                target.tags.remove( this.tag );
         }
 
 

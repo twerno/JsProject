@@ -12,13 +12,17 @@ namespace Def {
     export type Player = HsLogic.Player;
     export type Character = HsLogic.Character;
     export type Permanent = HsLogic.Permanent;
+    export type CharacterExt = HsLogic.CharacterExt;
+    export type PermanentExt = HsLogic.PermanentExt;
 
 
 
     export type Tag = HsLogic.Tag;
+    export type Aura = HsLogic.Aura;
     export type TagClass = HsLogic.TagClass;
     export type Trigger = HsLogic.Trigger;
-    export type Enchantment = HsLogic.Enchantment<HsLogic.Permanent>;
+    export type Enchantment = HsLogic.Enchantment<HsLogic.PermanentExt>;
+
 
 
 

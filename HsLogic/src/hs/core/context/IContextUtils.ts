@@ -27,7 +27,8 @@ namespace HsLogic {
 
 
     export interface ContextConsts {
-        battlefield_limit: number;
+        battlefield_limit: number,
+        mana_limit: number
     }
 
 }

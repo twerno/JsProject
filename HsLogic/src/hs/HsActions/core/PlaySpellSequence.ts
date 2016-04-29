@@ -5,9 +5,6 @@
 
 namespace HsLogic {
 
-    export class OnPlayPhaseEvent extends CancelableEvent<PlayCardParam> {
-        static get type(): string { return OnPlayPhaseEvent.name }
-    }
 
     export class OnTargetingPhaseEvent extends CancelableEvent<PlayCardParam> {
         static get type(): string { return OnTargetingPhaseEvent.name }
@@ -44,35 +41,35 @@ namespace HsLogic {
                     actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
-                    actions.push( new OnPlayPhaseEvent( param ).dispatch( gameCtx ) );
+                    actions.push( gameCtx.phaseActionFactory.playPhase( param ) );
                     actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
 
                     actions.push( new InlineActionExt(
-                        (): boolean => {
-                            return !param.cancelAction.value
-                        },
+
+                        (): boolean => !param.cancelAction.value,
+
                         ( resolve, reject ): void => {
-                            let innerActions: ActionType[] = [];
+                            let actions: ActionType[] = [];
 
                             // step 3 - onTargetingPhase
                             // the Death Creation Step and Summon Resolution Step are skipped
-                            innerActions.push( new OnTargetingPhaseEvent( param ).dispatch( gameCtx ) );
+                            actions.push( new OnTargetingPhaseEvent( param ).dispatch( gameCtx ) );
 
 
                             // step 4 - spellTextPhase
                             if ( param.card.spellAction )
-                                innerActions.push.apply( innerActions,
+                                actions.push.apply( actions,
                                     param.card.spellAction.actionBuilder( param.source, param.targets, gameCtx ) );
 
 
                             // step 5 - onAfterPlaySpell
-                            innerActions.push( new OnAfterSpellPhaseEvent( param ).dispatch( gameCtx ) );
+                            actions.push( new OnAfterSpellPhaseEvent( param ).dispatch( gameCtx ) );
 
                             // step 6 - win/loss check, close sequence
-                            innerActions.push( new OutermostPhaseEnd( { source: param.source }) );
+                            actions.push( new OutermostPhaseEnd( { source: param.source }) );
 
-                            resolve( innerActions );
+                            resolve( actions );
                         }
                     ) ); // new InlineAction(
 

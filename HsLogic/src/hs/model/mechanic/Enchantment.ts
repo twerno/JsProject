@@ -3,14 +3,12 @@
 namespace HsLogic {
 
 
-    export abstract class Enchantment<T extends Permanent> {
+    export abstract class Enchantment<T extends PermanentExt> {
 
-        type: Def.AURA_TYPE;
         priority: number = 1;
-        orderOfPlay: number;
+        orderOfPlay: Date = new Date();
 
         constructor( public source: ISource, public target: T, public isAura: boolean = false ) {
-            this.orderOfPlay = orderOfPlayGen();
 
             if ( !this.validateTarget )
                 throw new Error( `Target ${target} is not valid for enchantment ${ClassUtils.getNameOfClass( this )}.` );
@@ -18,12 +16,12 @@ namespace HsLogic {
 
         protected abstract validateTarget(): boolean;
         abstract apply(): void;
-        abstract replaceOfRemove(): Enchantment<T>;
+        abstract remove(): void;
 
 
-        compare( a: Enchantment<Permanent>, b: Enchantment<Permanent> ): number {
+        compare( a: Enchantment<T>, b: Enchantment<T> ): number {
             if ( a.priority === b.priority )
-                return a.orderOfPlay - b.orderOfPlay;
+                return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
             else
                 return a.priority - b.priority;
         }

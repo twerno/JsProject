@@ -5,15 +5,22 @@
 namespace HsLogic {
 
 
-    export class Entity extends jsAction.Entity {
+    export interface IOrderable {
+        orderOfPlay: Date
+    }
+
+    //    export function compareOrderable(a: IOrderable, b: IOrderable): number {
+    //        return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
+    //    }
+
+    export class Entity extends jsAction.Entity implements IOrderable {
         def: Object;
 
-        orderOfPlay: number;
+        orderOfPlay: Date = new Date();
 
 
         protected initFromDefinition( def: Object ): void {
             this.def = def;
-            this.orderOfPlay = orderOfPlayGen();
         }
 
 
@@ -27,10 +34,12 @@ namespace HsLogic {
             this.def = def || null;
         }
 
+
         init(): Entity {
             this.def && this.initFromDefinition( this.def );
             return this;
         }
+
 
         getSource(): ISource {
             return {
@@ -40,21 +49,28 @@ namespace HsLogic {
             }
         }
 
+
         getSourceType(): SOURCE_TYPE {
             return SOURCE_TYPE.NONE;
         }
+
+
+        static compare( a: IOrderable, b: IOrderable ): number {
+            return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
+        }
+
     }
 
 
-    var _orderOfPlayGenerator: number = 0;
-
-    /**
-     *  orderOfPlayGenerator
-     *
-     */
-    export function orderOfPlayGen(): number {
-        return ++_orderOfPlayGenerator;
-    }
+    //    var _orderOfPlayGenerator: number = 0;
+    //
+    //    /**
+    //     *  orderOfPlayGenerator
+    //     *
+    //     */
+    //    export function orderOfPlayGen(): number {
+    //        return ++_orderOfPlayGenerator;
+    //    }
 
 
 

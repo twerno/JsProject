@@ -5,7 +5,7 @@ namespace HsLogic {
 
 
     export interface AttachEnchantmentParam extends IActionParam {
-        enchantment: Enchantment<Permanent>
+        enchantment: Enchantment<PermanentExt>
     }
 
 
@@ -18,6 +18,7 @@ namespace HsLogic {
                     let param: P = self.param;
 
                     param.enchantment.target.enchantments.push( param.enchantment );
+                    param.enchantment.apply();
 
                     resolve( jsAction.NO_CONSEQUENCES );
                 }

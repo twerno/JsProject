@@ -6,6 +6,8 @@ namespace HsLogic {
 
         zonesMap: Collection.IStringMap<Zones> = {};
 
+        auras: Aura[] = [];
+
 
         zonesOf( player: jsAction.Entity ): Zones {
             let result: Zones = null;

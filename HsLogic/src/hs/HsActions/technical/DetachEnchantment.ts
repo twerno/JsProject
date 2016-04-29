@@ -5,7 +5,7 @@ namespace HsLogic {
 
 
     export interface DetachEnchantmentParam extends IActionParam {
-        enchantment: Enchantment<Permanent>
+        enchantment: Enchantment<PermanentExt>
     }
 
 
@@ -18,6 +18,7 @@ namespace HsLogic {
                     let param: P = self.param;
 
                     Collection.removeFrom( param.enchantment.target.enchantments, param.enchantment );
+                    param.enchantment.remove();
 
                     resolve( jsAction.NO_CONSEQUENCES );
                 }

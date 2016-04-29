@@ -13,6 +13,7 @@ namespace HsLogic {
 
         heroPower: HeroPower;
 
+        enchantments: Enchantment<PermanentExt>[] = [];
         triggers: Trigger[] = [];
         tags: Tags = new Tags();
 

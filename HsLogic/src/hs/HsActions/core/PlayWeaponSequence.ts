@@ -38,9 +38,7 @@ namespace HsLogic {
                     actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
 
                     // step 2 - onPlayPhase
-                    actions.push(
-                        //gameCtx.actionFactory.dispatch( new OnPlayPhaseEvent( param ) )
-                    );
+                    actions.push( gameCtx.phaseActionFactory.playPhase( param ) );
 
                     // step 3 - equipping Phase
 

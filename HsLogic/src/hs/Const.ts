@@ -4,6 +4,8 @@ namespace HsLogic {
 
     export type Character = Minion | Hero;
     export type Permanent = Character | Weapon;
+    export type CharacterExt = Minion | Hero | Player;
+    export type PermanentExt = Character | Weapon | Player;
 
 
     export enum SOURCE_TYPE {

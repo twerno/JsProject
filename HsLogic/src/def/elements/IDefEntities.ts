@@ -17,6 +17,8 @@ namespace Def {
         triggers?: IDefTrigger[],
         tags?: TagClass[],
 
+        overload?: number,
+
         isPlayalble?: ( source: ISource, gameCtx: HsGameCtx ) => boolean;
         isActive?: ( source: ISource, gameCtx: HsGameCtx ) => boolean;
     }

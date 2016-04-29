@@ -8,6 +8,8 @@ namespace HsLogic {
 
         techActionFactory: TechActionFactory<HsGameCtx> = new TechActionFactory<HsGameCtx>();
 
+        phaseActionFactory: PhaseActionFactory = new PhaseActionFactory();
+
 
 
         powerMgr: IPowerMgr = new PowerManager();
@@ -39,7 +41,8 @@ namespace HsLogic {
         }
 
         consts: ContextConsts = {
-            battlefield_limit: 7
+            battlefield_limit: 7,
+            mana_limit: 10
         }
     }
 }

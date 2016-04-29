@@ -5,7 +5,7 @@ namespace HsLogic {
 
 
     export interface AddTagParam extends IActionParam {
-        targets: Permanent[],
+        targets: ( Permanent | Player )[],
         tag: Tag
     }
 
