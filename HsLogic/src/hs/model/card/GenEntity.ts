@@ -13,11 +13,17 @@ namespace HsLogic {
     //        return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
     //    }
 
-    export class Entity extends jsAction.Entity implements IOrderable {
-        def: Object;
-
+    export class OrderableEntity extends jsAction.Entity implements IOrderable {
         orderOfPlay: Date = new Date();
 
+        static compare( a: IOrderable, b: IOrderable ): number {
+            return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
+        }
+    }
+
+
+    export class Entity extends OrderableEntity {
+        def: Object;
 
         protected initFromDefinition( def: Object ): void {
             this.def = def;
@@ -55,9 +61,7 @@ namespace HsLogic {
         }
 
 
-        static compare( a: IOrderable, b: IOrderable ): number {
-            return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
-        }
+
 
     }
 

@@ -7,25 +7,24 @@ namespace HsLogic {
     export class Aura extends Entity {
         def: Def.IDefAura;
 
-        get owner(): Player { return this.sourceCard.owner }
-        sourceCard: Card;
+        auraBearer: PermanentExt;
 
         auraType: Def.AURA_TYPE;
-        targets: ( self: Aura, gameCtx: HsGameCtx ) => Def.ISetBuilder<PermanentExt>;
-        effectBuilder: ( self: Aura, target: PermanentExt, gameCtx: HsGameCtx ) => ( Enchantment<PermanentExt> | Tag )[];
+        targetBuilder: ( self: Aura, gameCtx: HsGameCtx ) => Def.ISetBuilder<PermanentExt>;
+        effectBuilder: Def.FAuraEffectBuilder;
 
 
         state: {
-            affactedTargets: PermanentExt[]
+            managedEffects: Collection.IStringMap<IAuraManagedEffects>;
         }
 
 
         constructor( sourceCard: Card, def: Def.IDefAura ) {
             super( null, def );
 
-            this.targets = null;
+            this.targetBuilder = null;
             this.effectBuilder = null;
-            this.state = { affactedTargets: null };
+            this.state = { managedEffects: {} };
         }
 
 
@@ -39,19 +38,29 @@ namespace HsLogic {
             super.initFromDefinition( def );
 
             this.auraType = def.auraType;
-            this.targets = def.targets;
+            this.targetBuilder = def.targetBuilder;
             this.effectBuilder = def.effectBuilder;
         }
 
 
         getSourceType(): SOURCE_TYPE {
-            return this.sourceCard.getSourceType();
+            return this.auraBearer.getSourceType();
         }
 
 
+        get owner(): Player {
+            if ( this.auraBearer instanceof Player )
+                return <Player>this.auraBearer
+            else if ( this.auraBearer instanceof Card )
+                return this.auraBearer.owner
+            else
+                return null;
+        }
         set owner( dummy: Player ) { /* dummy */ }
 
     } // class Aura
+
+
 
 
 

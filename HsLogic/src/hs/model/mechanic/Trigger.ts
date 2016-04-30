@@ -7,7 +7,6 @@ namespace HsLogic {
     export class Trigger extends Entity {
         def: Def.IDefTrigger;
 
-        get owner(): Player { return this.attachedTo.owner }
         attachedTo: Card | Player;
         sourceCard: Card;
 
@@ -58,6 +57,15 @@ namespace HsLogic {
             return this.attachedTo.getSourceType();
         }
 
+        eq( trigger: Trigger ): boolean {
+            return this.def === trigger.def
+                && this.sourceCard.id === trigger.sourceCard.id
+                && this.attachedTo.id === trigger.attachedTo.id
+                && this.orderOfPlay === trigger.orderOfPlay;
+        }
+
+
+        get owner(): Player { return this.attachedTo.owner }
         set owner( dummy: Player ) { /* dummy */ }
 
     } // class Trigger

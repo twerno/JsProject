@@ -72,6 +72,14 @@ namespace HsLogic {
             if ( isSetter( this.param.health ) )
                 body.damages = 0;
         }
+
+
+        eq( enchant: Enchantment<PermanentExt> ): boolean {
+            return super.eq( enchant )
+                && enchant instanceof AttackHealthEnchantment
+                && this.param.attack === enchant.param.attack
+                && this.param.health === enchant.param.health;
+        }
     }
 
 
