@@ -41,7 +41,7 @@ namespace HsLogic {
         damageType: Def.DAMAGE_TYPE,
         amount: number,
 
-        customDamagePower?: ( param: CalculateDamageParam, gameCtx: HsGameCtx ) => number
+        customDamageBoostCalculator?: ( param: CalculateDamageParam, gameCtx: HsGameCtx ) => number
     }
 
 

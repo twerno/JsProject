@@ -5,18 +5,18 @@ namespace HsLogic {
 
     export class PowerManager implements IPowerMgr {
 
-        healPower( source: ISource ): number {
+        healBoost( source: ISource, gameCtx: HsGameCtx ): number {
             return source.player.tags.count( Def.HealPower_Tag );
         }
 
-        damagePower( source: ISource, damageType: Def.DAMAGE_TYPE ): number {
-            if ( damageType === Def.DAMAGE_TYPE.DIRECT ) {
+        damageBoost( param: CalculateDamageParam, gameCtx: HsGameCtx ): number {
+            if ( param.damageType === Def.DAMAGE_TYPE.DIRECT ) {
 
-                if ( source.sourceType === SOURCE_TYPE.SPELL )
-                    return source.player.tags.count( Def.SpellPower_Tag );
+                if ( param.source.sourceType === SOURCE_TYPE.SPELL )
+                    return param.source.player.tags.count( Def.SpellPower_Tag );
 
-                else if ( source.sourceType === SOURCE_TYPE.HERO_POWER )
-                    return source.player.tags.count( Def.PingPower_Tag );
+                else if ( param.source.sourceType === SOURCE_TYPE.HERO_POWER )
+                    return param.source.player.tags.count( Def.PingPower_Tag );
 
             }
             return 0;

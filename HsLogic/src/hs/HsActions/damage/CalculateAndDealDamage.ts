@@ -88,10 +88,10 @@ namespace HsLogic {
                     actions.push( new InlineAction(
                         ( resolve, reject ): void => {
 
-                            if ( param.customDamagePower )
-                                param.amount += param.customDamagePower( param, gameCtx );
+                            if ( param.customDamageBoostCalculator )
+                                param.amount += param.customDamageBoostCalculator( param, gameCtx );
                             else
-                                param.amount += gameCtx.powerMgr.damagePower( param.source, param.damageType );
+                                param.amount += gameCtx.powerMgr.damageBoost( param, gameCtx );
 
                             resolve( jsAction.NO_CONSEQUENCES );
                         }

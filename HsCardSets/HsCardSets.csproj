@@ -61,7 +61,6 @@
     <Folder Include="src\Goblin vs Gnomes\Warlock\" />
     <Folder Include="src\Goblin vs Gnomes\Warrior\" />
     <Folder Include="src\The Grand Tournament\Druid\" />
-    <Folder Include="src\The Grand Tournament\Mage\" />
     <Folder Include="src\The Grand Tournament\Neutral\" />
     <Folder Include="src\The Grand Tournament\Paladin\" />
     <Folder Include="src\The Grand Tournament\Palladin\" />
@@ -103,6 +102,7 @@
     <TypeScriptCompile Include="src\Classic\Neutral\Mad_Bomber.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Shattered_Sun_Cleric.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Stormwind_Champion.ts" />
+    <TypeScriptCompile Include="src\Classic\Neutral\Malygos.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Violet_Apprentice.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Violet_Teacher.ts" />
     <TypeScriptCompile Include="src\Classic\Paladin\Consecration.ts" />
@@ -138,6 +138,7 @@
     <TypeScriptCompile Include="src\Hero\Warlock.ts" />
     <TypeScriptCompile Include="src\Hero\Warrior.ts" />
     <TypeScriptCompile Include="src\Template\Set.ts" />
+    <TypeScriptCompile Include="src\The Grand Tournament\Mage\Arcane_Blast.ts" />
     <TypeScriptCompile Include="src\The Grand Tournament\Set.ts" />
     <TypeScriptCompile Include="src\The League of Explorers\Mage\Animated_Armor.ts" />
     <TypeScriptCompile Include="src\The League of Explorers\Set.ts" />

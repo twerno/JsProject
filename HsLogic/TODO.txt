@@ -7,3 +7,5 @@
 
 
 	// nie przerywac przetwarzania triggerow jesli parametr zostanie anulowany w tej samej fazie !!!
+
+	// spellDamageRelated tag?

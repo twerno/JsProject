@@ -16,6 +16,7 @@ namespace Def {
             targets: SINGLE_REQUIRED_TARGET( TargetFinder.ANY_SPELL_TARGETABLE_CHARACTER ),
 
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
+
                 let param: HsLogic.DrawParam = {
                     source: source, targetPlayer: source.player
                 };
@@ -25,6 +26,7 @@ namespace Def {
 
                     new HsLogic.InlineActionExt(
                         (): boolean => { return param.drawnCard !== null },
+
                         ( resolve, reject ): void => {
                             resolve(
                                 gameCtx.actionFactory.calculateAndDealDamage( {

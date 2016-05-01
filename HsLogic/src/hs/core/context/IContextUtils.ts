@@ -13,8 +13,8 @@ namespace HsLogic {
 
 
     export interface IPowerMgr {
-        healPower( source: ISource ): number;
-        damagePower( source: ISource, damageType: Def.DAMAGE_TYPE ): number;
+        healBoost( source: ISource, gameCtx: HsGameCtx ): number;
+        damageBoost( param: CalculateDamageParam, gameCtx: HsGameCtx ): number;
     }
 
 

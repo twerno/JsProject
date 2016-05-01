@@ -82,10 +82,10 @@ namespace HsLogic {
                         },
                         ( resolve, reject ): void => {
 
-                            if ( param.customHealPowerCalculator )
-                                param.amount = param.customHealPowerCalculator( param, gameCtx );
+                            if ( param.customHealBoostCalculator )
+                                param.amount = param.customHealBoostCalculator( param, gameCtx );
                             else
-                                param.amount += gameCtx.powerMgr.healPower( param.source );
+                                param.amount += gameCtx.powerMgr.healBoost( param.source, gameCtx );
 
                             resolve( jsAction.NO_CONSEQUENCES );
                         }

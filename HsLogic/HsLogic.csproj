@@ -58,6 +58,7 @@
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\TargetFilters.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\ISetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\TargetFinder.ts" />
+    <TypeScriptCompile Include="src\def\mechanics\aura\SpellDamage.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Deathrattle.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Enchantment.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Enrage.ts" />
