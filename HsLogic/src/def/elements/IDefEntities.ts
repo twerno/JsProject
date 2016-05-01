@@ -37,6 +37,7 @@ namespace Def {
         attack: number;
         minion_type: string,
 
+        aura?: IDefAura | IDefAura[],
         battlecry?: IDefAction,
     }
 
@@ -47,6 +48,7 @@ namespace Def {
         attack: number,
         durability: number,
 
+        aura?: IDefAura | IDefAura[],
         battlecry?: IDefAction,
     }
 
@@ -55,6 +57,7 @@ namespace Def {
         name: string,
         cost: number,
 
+        //aura?: IDefAura | IDefAura[],
         ability: IDefAction,
         isActivable?: ( source: ISource, gameCtx: HsGameCtx ) => boolean;
     }

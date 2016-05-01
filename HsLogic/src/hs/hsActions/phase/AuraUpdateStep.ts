@@ -19,16 +19,25 @@ namespace HsLogic {
             return new Promise<ActionType | ActionType[]>(
 
                 ( resolve, reject ): void => {
-                    let param: P = this.param;
+                    let actions: ActionType[],
+                        param: P = this.param;
 
-                    resolve( auraUpdate( param.auraType, gameCtx ) );
+                    // rebuild auras
+                    actions = auraUpdate( param.auraType, gameCtx );
+
+                    // refresh enchantments
+                    actions.push( gameCtx.techActionFactory.inlineAction(( resolve, reject ) => {
+                        let entities: PermanentExt[];
+
+                        entities = Def.TargetFinder.ANY_ENCHANTED_PERMANENT_EXT.buildSet( param.source, gameCtx );
+
+                        refreshEnchantments( entities );
+
+                        resolve( jsAction.NO_CONSEQUENCES );
+                    }) );
+
+                    resolve( actions );
                 });
         }
     }
 }
-
-//namespace HsLogic.event {
-//
-//    export class AuraUpdateEvent<P extends IAuraUpdateParam> extends ActionEvent<P> { }
-//
-//}

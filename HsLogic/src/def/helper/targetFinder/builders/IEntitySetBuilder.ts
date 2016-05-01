@@ -1,3 +1,4 @@
+/// <reference path="../isetbuilder.ts" />
 "use strict";
 
 namespace Def {

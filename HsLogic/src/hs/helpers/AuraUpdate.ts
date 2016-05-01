@@ -2,12 +2,6 @@
 
 namespace HsLogic {
 
-    // action level: 
-    //   player Action
-    //   gameLogic
-    //   hsPhases + turnActions 
-    //   technicalActions
-    //   calculateActions
 
     export function auraUpdate( auraType: Def.AURA_TYPE, gameCtx: HsGameCtx ): ActionType[] {
         let actions: ActionType[] = [],
@@ -19,7 +13,7 @@ namespace HsLogic {
             if ( aura.auraType === auraType ) {
 
                 if ( isAuraAlive( aura, gameCtx ) )
-                    refreshAura( aura, gameCtx )
+                    rebuildAura( aura, gameCtx )
 
                 else
                     removeAura( aura, gameCtx );
@@ -30,9 +24,11 @@ namespace HsLogic {
         return actions;
     }
 
+
     export function isAuraAlive( aura: Aura, gameCtx: HsGameCtx ): boolean {
         return true;
     }
+
 
     export function removeAura( aura: Aura, gameCtx: HsGameCtx ): ActionType[] {
         let result: ActionType[] = [],
@@ -50,7 +46,8 @@ namespace HsLogic {
         return result;
     }
 
-    export function refreshAura( aura: Aura, gameCtx: HsGameCtx ): ActionType[] {
+
+    export function rebuildAura( aura: Aura, gameCtx: HsGameCtx ): ActionType[] {
         let result: ActionType[] = [],
             targets: PermanentExt[],
             refreshedEffets: Def.IAuraManagedEffects;
@@ -66,6 +63,7 @@ namespace HsLogic {
 
         return result;
     }
+
 
     export function prepareOperations( aura: Aura, target: PermanentExt, refreshedEffets: Def.IAuraManagedEffects, gameCtx: HsGameCtx ): ActionType[] {
 

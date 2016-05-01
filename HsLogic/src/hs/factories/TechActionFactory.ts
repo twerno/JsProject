@@ -7,6 +7,10 @@ namespace HsLogic {
 
     export class TechActionFactory<T extends HsGameCtx> {
 
+        registerAura( param: RegisterAuraParam ): jsAction.IAction<T> {
+            return new RegisterAura( param );
+        }
+
         inlineAction( executor: CommonUtils.PromiseWorker<ActionType | ActionType[]> ): jsAction.IAction<T> {
             return new InlineAction( executor );
         }

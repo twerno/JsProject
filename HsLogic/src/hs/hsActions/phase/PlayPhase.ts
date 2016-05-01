@@ -43,6 +43,11 @@ namespace HsLogic {
                             resolve( actions );
                         }) );
 
+                    if ( param.card instanceof Minion )
+                        actions.push( gameCtx.techActionFactory.registerAura( {
+                            source: param.source, auras: ( <Minion>param.card ).auras
+                        }) );
+
 
                     resolve( actions );
                 });

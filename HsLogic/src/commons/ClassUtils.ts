@@ -25,4 +25,86 @@ namespace ClassUtils {
     //    return getConstructorName( _constructor );
     //}
 
+
+    export class ObjectValidator {
+
+        private _entries: ObjectValidatorEntry[] = [];
+
+        addType( name: string, type: string, required?: boolean ): ObjectValidator {
+            this._entries.push( new ObjectValidatorEntry( name, type, null, required || true ) );
+
+            return this;
+        }
+
+        addClass( name: string, clazz: Function, required?: boolean ): ObjectValidator {
+            this._entries.push( new ObjectValidatorEntry( name, 'object', clazz, required || true ) );
+            return this;
+        }
+
+        validate( object: Object ): boolean {
+            let value: any;
+
+            for ( let entry of this._entries ) {
+                if ( !deepHasOwnProperty( entry.name, object ) ) {
+                    if ( entry.required )
+                        return false;
+                    else
+                        continue;
+                }
+
+                value = deepKeyValue( entry.name, object );
+                if ( typeof ( value ) !== entry.type
+                    || ( entry.clazz && !( value instanceof entry.clazz ) ) )
+                    return false;
+            }
+
+            return true;
+        }
+
+        static addType( name: string, type: string, required?: boolean ): ObjectValidator {
+            let validator: ObjectValidator = new ObjectValidator();
+            return validator.addType( name, type, required );
+        }
+
+        static addClass( name: string, clazz: Function, required?: boolean ): ObjectValidator {
+            let validator: ObjectValidator = new ObjectValidator();
+            return validator.addClass( name, clazz, required );
+        }
+
+    }
+
+
+    class ObjectValidatorEntry {
+
+        constructor( public name: string, public type: string, public clazz: Function, public required: boolean ) { }
+    }
+
+
+    export function deepHasOwnProperty( deepKey: string, map: any ): any {
+        let dotIdx: number = deepKey.indexOf( '.' ),
+            result: any;
+
+        if ( map === null || map === undefined || typeof ( map ) !== 'object' )
+            return false;
+
+        if ( dotIdx > -1 )
+            return deepHasOwnProperty( deepKey.substr( dotIdx + 1 ), map[deepKey.substr( 0, dotIdx )] );
+        else
+            return map.hasOwnProperty( deepKey );
+    }
+
+
+    export function deepKeyValue( deepKey: string, map: any ): any {
+        let dotIdx: number = deepKey.indexOf( '.' ),
+            result: any;
+
+        if ( map === null || map === undefined || typeof ( map ) !== 'object' )
+            return undefined;
+
+        if ( dotIdx > -1 )
+            return deepKeyValue( deepKey.substr( dotIdx + 1 ), map[deepKey.substr( 0, dotIdx )] );
+        else
+            return map[deepKey];
+    }
+
 }

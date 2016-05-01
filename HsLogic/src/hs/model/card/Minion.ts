@@ -10,6 +10,7 @@ namespace HsLogic {
         body: MinionBody = new MinionBody();
         minion_type: string;
 
+        auras: Aura[] = [];
         battlecry: Def.IDefAction;
 
         static build( owner: Player, def: Def.IMinion ): Minion {
@@ -29,6 +30,12 @@ namespace HsLogic {
 
             this.minion_type = def.minion_type;
             this.battlecry = def.battlecry || null;
+
+            if ( def.aura instanceof Array )
+                for ( let auraDef of <Def.IDefAura[]>def.aura )
+                    this.auras.push( new Aura( this, auraDef ).init() );
+            else if ( def.aura )
+                this.auras.push( new Aura( this, <Def.IDefAura>def.aura ).init() );
         }
 
         getSourceType(): SOURCE_TYPE {

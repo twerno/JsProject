@@ -50,9 +50,9 @@ namespace HsLogic {
         constructor( public param: P ) {
             super();
 
-            if ( isHsCancelableParam( param )
-                && !( this instanceof CancelableAction ) )
-                console.error( `${ClassUtils.getNameOfClass( this )} is not a CancelableAction class.` );
+            //if ( isHsCancelableParam( param )
+            //    && !( this instanceof CancelableAction ) )
+            //    console.error( `${ClassUtils.getNameOfClass( this )} is not a CancelableAction class.` );
         }
 
         abstract resolve( self: Action<P>, gameCtx: HsGameCtx ): PromiseOfActions;

@@ -9,13 +9,14 @@ namespace HsLogic {
 
         auraBearer: PermanentExt;
 
+        priority: number;
         auraType: Def.AURA_TYPE;
         targetBuilder: ( self: Aura, gameCtx: HsGameCtx ) => Def.ISetBuilder<PermanentExt>;
         effectBuilder: Def.FAuraEffectBuilder;
 
 
         state: {
-            managedEffects: Collection.IStringMap<IAuraManagedEffects>;
+            managedEffects: Collection.IStringMap<Def.IAuraManagedEffects>;
         }
 
 
@@ -37,6 +38,10 @@ namespace HsLogic {
         protected initFromDefinition( def: Def.IDefAura ): void {
             super.initFromDefinition( def );
 
+            if ( !Def.isDefAura( def ) )
+                throw new Error( `Not a valid aura definition: ${def}` );
+
+            this.priority = def.priority || 0;
             this.auraType = def.auraType;
             this.targetBuilder = def.targetBuilder;
             this.effectBuilder = def.effectBuilder;
@@ -59,9 +64,5 @@ namespace HsLogic {
         set owner( dummy: Player ) { /* dummy */ }
 
     } // class Aura
-
-
-
-
 
 }

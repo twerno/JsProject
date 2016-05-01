@@ -1,0 +1,9 @@
+﻿    // action level: 
+    //   player Action
+    //   gameLogic
+    //   hsPhases + turnActions 
+    //   technicalActions
+    //   calculateActions
+
+
+	// nie przerywac przetwarzania triggerow jesli parametr zostanie anulowany w tej samej fazie !!!

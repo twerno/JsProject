@@ -9,9 +9,6 @@ namespace HsLogic {
         orderOfPlay: Date
     }
 
-    //    export function compareOrderable(a: IOrderable, b: IOrderable): number {
-    //        return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
-    //    }
 
     export class OrderableEntity extends jsAction.Entity implements IOrderable {
         orderOfPlay: Date = new Date();
@@ -60,27 +57,20 @@ namespace HsLogic {
             return SOURCE_TYPE.NONE;
         }
 
-
-
-
     }
-
-
-    //    var _orderOfPlayGenerator: number = 0;
-    //
-    //    /**
-    //     *  orderOfPlayGenerator
-    //     *
-    //     */
-    //    export function orderOfPlayGen(): number {
-    //        return ++_orderOfPlayGenerator;
-    //    }
-
 
 
     export interface ILivingEntity {
         def: { attack: number, health: number },
         body: MinionBody
+    }
+
+    export function isLivingEntity( x: any ): x is ILivingEntity {
+        return ClassUtils.ObjectValidator
+            .addType( 'def.attack', 'number' )
+            .addType( 'def.health', 'number' )
+            .addClass( 'body', MinionBody )
+            .validate( x );
     }
 
     export interface IPermanent {

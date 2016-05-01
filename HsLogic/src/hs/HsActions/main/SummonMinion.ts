@@ -26,6 +26,11 @@ namespace HsLogic {
                     // http://hearthstone.gamepedia.com/Advanced_rulebook#Cobalt_Guardian.2FMurloc_Tidecaller_Pre-Summon_Reaction_Bug
                     actions.push( new event.PreSummonReactionBugEvent( param ).dispatch( gameCtx ) );
 
+                    // register auras, DO NOT REFRESH THEM YET
+                    actions.push( gameCtx.techActionFactory.registerAura( {
+                        source: param.source, auras: param.card.auras
+                    }) );
+
                     // 2. enters the battlefied
                     actions.push( new InlineAction(( resolve, reject ): void => {
                         gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );

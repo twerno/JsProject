@@ -1,4 +1,5 @@
 /// <reference path="iEntitySetBuilder.ts" />
+/// <reference path="../isetbuilder.ts" />
 
 "use strict";
 
@@ -6,7 +7,8 @@ namespace Def {
 
     export interface IDefTargetProperties {
         zones: ( zones: Zones ) => Zone[],
-        includeHeroes?: boolean
+        includeHeroes?: boolean,
+        includePlayers?: boolean
     }
 
 
@@ -20,6 +22,9 @@ namespace Def {
                 cards: Card[] = null;
 
             for ( let player of gameCtx.players ) {
+
+                if ( this.param.includePlayers && this.testAgainstFilters( source, player, gameCtx ) )
+                    result.push( player );
 
                 if ( this.param.includeHeroes && this.testAgainstFilters( source, player.hero, gameCtx ) )
                     result.push( player.hero );

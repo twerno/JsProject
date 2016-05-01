@@ -52,6 +52,7 @@
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\IEntitySetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\TriggerSetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\DefMinionFilter.ts" />
+    <TypeScriptCompile Include="src\def\helper\targetFinder\filters\TechFilters.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\Filters.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\StandardFilters.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\filters\TargetFilters.ts" />
@@ -89,6 +90,7 @@
     <TypeScriptCompile Include="src\hs\factories\PhaseActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\TechActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\helpers\AuraUpdate.ts" />
+    <TypeScriptCompile Include="src\hs\helpers\RefreshEnchantments.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\DrawCard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\PlayCardSequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\PlayMinionSequence.ts" />
@@ -133,6 +135,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\technical\DetachEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvent.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvents.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterAura.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterTrigger.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RemoveTag.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\UnregisterTrigger.ts" />
@@ -152,6 +155,9 @@
     <TypeScriptCompile Include="src\hs\model\mechanic\Tag.ts" />
     <TypeScriptCompile Include="src\hs\model\mechanic\Trigger.ts" />
     <TypeScriptCompile Include="src\hs\model\Zone.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TODO.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

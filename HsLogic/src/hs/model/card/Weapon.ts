@@ -10,6 +10,7 @@ namespace HsLogic {
         attack: number;
         durability: number;
 
+        auras: Aura[] = [];
         battlecry: Def.IDefAction;
 
 
@@ -29,6 +30,12 @@ namespace HsLogic {
             this.attack = def.attack;
             this.durability = def.durability;
             this.battlecry = def.battlecry || null;
+
+            if ( def.aura instanceof Array )
+                for ( let auraDef of <Def.IDefAura[]>def.aura )
+                    this.auras.push( new Aura( this, auraDef ).init() );
+            else if ( def.aura )
+                this.auras.push( new Aura( this, <Def.IDefAura>def.aura ).init() );
         }
 
         getSourceType(): SOURCE_TYPE {

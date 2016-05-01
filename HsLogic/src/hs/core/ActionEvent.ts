@@ -33,9 +33,9 @@ namespace HsLogic {
         }
 
         constructor( public param: P ) {
-            if ( isHsCancelableParam( param )
-                && !( this instanceof CancelableEvent ) )
-                console.error( `${ClassUtils.getNameOfClass( this )} is not a CancelableEvent class.` );
+            //if ( isHsCancelableParam( param )
+            //    && !( this instanceof CancelableEvent ) )
+            //    console.error( `${ClassUtils.getNameOfClass( this )} is not a CancelableEvent class.` );
         }
     };
 

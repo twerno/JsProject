@@ -104,6 +104,14 @@ namespace Def {
                 .addFilter( Filter.minion );
         }
 
+        static get ANY_ENCHANTED_PERMANENT_EXT(): ISetBuilder<PermanentExt> {
+            return new EntitySetBuilder<PermanentExt>( {
+                includeHeroes: true,
+                includePlayers: true,
+                zones: ( zones: Zones ): Zone[] => { return [zones.battlefield, zones.weapon] }
+            }).addFilter( Filter.hasEnchantments() );
+        }
+
 
         //        static
     }
