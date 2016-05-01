@@ -29,7 +29,7 @@ namespace DbgUtils {
     }
 
     export function trigger2JSON( trigger: HsLogic.Trigger ): string {
-        return `${ClassUtils.getNameOfClass( trigger )}[${trigger.keyword}, ${trigger.orderOfPlay}]; attached_to: ${model2JSON( trigger.attachedTo )}`;
+        return `${ClassUtils.getNameOfClass( trigger )}[${trigger.mechanic}, ${trigger.orderOfPlay}]; attached_to: ${model2JSON( trigger.attachedTo )}`;
     }
 
     export function actionChainStr( action: jsAction.IActionType ): string {

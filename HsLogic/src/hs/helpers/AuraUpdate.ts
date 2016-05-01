@@ -52,12 +52,11 @@ namespace HsLogic {
             targets: PermanentExt[],
             refreshedEffets: Def.IAuraManagedEffects;
 
-        targets = aura.targetBuilder( aura, gameCtx )
-            .buildSet( aura.getSource(), gameCtx );
+        targets = aura.targetBuilder( aura ).buildSet( aura.getSource(), gameCtx );
 
         for ( let target of targets ) {
             refreshedEffets = aura.effectBuilder( aura, target, gameCtx );
-            updateOrderOfPlay( aura, refreshedEffets );
+            updateEffectsData( aura, target, refreshedEffets );
             result = result.concat( prepareOperations( aura, target, refreshedEffets, gameCtx ) );
         }
 
@@ -194,12 +193,19 @@ namespace HsLogic {
     }
 
 
-    function updateOrderOfPlay( aura: Aura, refreshedEffets: Def.IAuraManagedEffects ): void {
+    function updateEffectsData( aura: Aura, target: PermanentExt, refreshedEffets: Def.IAuraManagedEffects ): void {
+        refreshedEffets.target = target;
+        refreshedEffets.tags = refreshedEffets.tags || [];
+        refreshedEffets.triggers = refreshedEffets.triggers || [];
+        refreshedEffets.enchantments = refreshedEffets.enchantments || [];
+
         for ( let trigger of refreshedEffets.triggers )
             trigger.orderOfPlay = aura.orderOfPlay;
 
-        for ( let enchantment of refreshedEffets.enchantments )
+        for ( let enchantment of refreshedEffets.enchantments ) {
             enchantment.orderOfPlay = aura.orderOfPlay;
+            enchantment.isAura = true;
+        }
     }
 
 }

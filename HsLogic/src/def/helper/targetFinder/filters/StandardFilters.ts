@@ -26,8 +26,9 @@ namespace Def.Filter {
 
 
     export function friendly( source: ISource, entity: HsLogic.Entity, gameCtx: HsGameCtx ): boolean {
-        return entity === source.player.hero
-            || entity.owner === source.player;
+        return entity.owner === source.player
+            || entity === source.player.hero
+            || entity === source.player;
     }
 
 

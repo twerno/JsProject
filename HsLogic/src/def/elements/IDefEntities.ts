@@ -37,7 +37,7 @@ namespace Def {
         attack: number;
         minion_type: string,
 
-        aura?: IDefAura | IDefAura[],
+        aura?: IDefAura[],
         battlecry?: IDefAction,
     }
 

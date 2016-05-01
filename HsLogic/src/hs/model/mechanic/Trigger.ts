@@ -10,7 +10,7 @@ namespace HsLogic {
         attachedTo: Card | Player;
         sourceCard: Card;
 
-        keyword: string;
+        mechanic: string;
         respondsTo: string[] = [];
         triggerPriority: number;
 
@@ -41,7 +41,7 @@ namespace HsLogic {
             else
                 this.respondsTo.push( ClassUtils.getNameOfClass( def.respondsTo ) );
 
-            this.keyword = def.keyword || Def.KEYWORD.NONE;
+            this.mechanic = def.mechanic || Def.MECHANIC.NONE;
             this.triggerPriority = def.triggerPriority || Def.TRIGGER_PRIORITY_DEFAULT;
             this.enable_self_trigger_protection = enableSelfTriggerProtectionVal( def.enable_self_trigger_protection );
             this.triggerable = def.triggerable || null;

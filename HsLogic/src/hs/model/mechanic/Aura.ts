@@ -11,7 +11,7 @@ namespace HsLogic {
 
         priority: number;
         auraType: Def.AURA_TYPE;
-        targetBuilder: ( self: Aura, gameCtx: HsGameCtx ) => Def.ISetBuilder<PermanentExt>;
+        targetBuilder: ( aura: Aura ) => Def.ISetBuilder<PermanentExt>;
         effectBuilder: Def.FAuraEffectBuilder;
 
 
@@ -50,6 +50,14 @@ namespace HsLogic {
 
         getSourceType(): SOURCE_TYPE {
             return this.auraBearer.getSourceType();
+        }
+
+        getSource(): ISource {
+            return {
+                player: this.owner,
+                entity: this.auraBearer,
+                sourceType: this.getSourceType()
+            }
         }
 
 

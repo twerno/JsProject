@@ -37,7 +37,7 @@ namespace Def {
         export const GENERAL: string = 'GENERAL';
     }
 
-    export namespace KEYWORD {
+    export namespace MECHANIC {
         export const ENRAGE: string = 'ENRAGE';
         export const LIFE_LINK: string = 'LIFE_LINK';
         export const DEATHRATTLE: string = 'DEATHRATTLE';

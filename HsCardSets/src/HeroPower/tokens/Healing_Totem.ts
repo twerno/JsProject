@@ -12,5 +12,26 @@ namespace Def {
         health: 2,
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.SHAMAN, CARD_RARITY.COMMON, false ),
+
+        triggers: [
+            {
+                mechanic: MECHANIC.NONE,
+
+                respondsTo: [HsLogic.event.EndOfTurn],
+
+                enable_self_trigger_protection: false,
+
+                actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] => {
+                    let source: ISource = trigger.getSource();
+
+                    return gameCtx.actionFactory.calculateAndHeal( {
+                        source: source,
+                        targets: TargetFinder.FRIENDLY_MINION.buildSet( source, gameCtx ),
+                        amount: 1,
+                        cancelAction: { value: false }
+                    });
+                }
+            }
+        ]
     });
 }

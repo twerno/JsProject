@@ -6,7 +6,7 @@ namespace Def {
     export function LifeLink(): IDefTrigger {
         return {
 
-            keyword: KEYWORD.LIFE_LINK,
+            mechanic: MECHANIC.LIFE_LINK,
 
             enable_self_trigger_protection: false,
 

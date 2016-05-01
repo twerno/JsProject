@@ -9,7 +9,7 @@ namespace Def {
     export function Deathrattle<T extends IDeathrattleParam>( param: T ): IDefTrigger {
         return {
 
-            keyword: KEYWORD.DEATHRATTLE,
+            mechanic: MECHANIC.DEATHRATTLE,
 
             enable_self_trigger_protection: false,
 

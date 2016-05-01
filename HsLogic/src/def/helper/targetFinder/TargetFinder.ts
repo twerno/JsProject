@@ -99,7 +99,7 @@ namespace Def {
         static get ANY_MINION(): ISetBuilder<Minion> {
             return new EntitySetBuilder<Minion>( {
                 includeHeroes: false,
-                zones: ( zones: Zones ): Zone[] => { return [zones.battlefield] }
+                zones: ( zones: Zones ): Zone[] => [zones.battlefield]
             })
                 .addFilter( Filter.minion );
         }
@@ -108,8 +108,16 @@ namespace Def {
             return new EntitySetBuilder<PermanentExt>( {
                 includeHeroes: true,
                 includePlayers: true,
-                zones: ( zones: Zones ): Zone[] => { return [zones.battlefield, zones.weapon] }
+                zones: ( zones: Zones ): Zone[] => [zones.battlefield, zones.weapon]
             }).addFilter( Filter.hasEnchantments() );
+        }
+
+        static get PLAYER(): ISetBuilder<Player> {
+            return new EntitySetBuilder<Player>( {
+                includeHeroes: false,
+                includePlayers: true,
+                zones: ( zones: Zones ): Zone[] => []
+            }).addFilter( Filter.friendly );
         }
 
 

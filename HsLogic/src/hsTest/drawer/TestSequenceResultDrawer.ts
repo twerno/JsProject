@@ -88,8 +88,8 @@ namespace HsTest {
             html += `<thead><tr><th style='width: 30%;'>Key</th><th style='width: 35%;'>Before</th><th style='width: 35%;'>After</th></tr></thead>`;
 
             for ( let key of keys ) {
-                val1 = this.deepKeyValue( key, paramBefore );
-                val2 = this.deepKeyValue( key, paramAfter );
+                val1 = this.customDeepKeyValue( key, paramBefore );
+                val2 = this.customDeepKeyValue( key, paramAfter );
                 style = val1 === val2 ? '' : 'danger';
 
                 html += `<tr class='${style}'>`;
@@ -138,19 +138,12 @@ namespace HsTest {
             return [masterKey];
         }
 
-        protected deepKeyValue( deepKey: string, map: any ): any {
-            let dotIdx: number = deepKey.indexOf( '.' ),
-                result: any;
-
-            if ( dotIdx > -1 )
-                return this.deepKeyValue( deepKey.substr( dotIdx + 1 ), map[deepKey.substr( 0, dotIdx )] );
-            else {
-                result = map[deepKey];
-                if ( result instanceof Array && result.length === 0 )
-                    return '[ ]';
-                else
-                    return result;
-            }
+        protected customDeepKeyValue( deepKey: string, map: any ): any {
+            let result: any = ClassUtils.deepKeyValue( deepKey, map );
+            if ( result instanceof Array && result.length === 0 )
+                return '[ ]';
+            else
+                return result;
         }
 
     }

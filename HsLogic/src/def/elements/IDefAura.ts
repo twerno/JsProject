@@ -3,13 +3,13 @@
 namespace Def {
 
     export interface IAuraManagedEffects {
-        target: PermanentExt,
-        tags: Tag[],
-        triggers: Trigger[]
-        enchantments: Enchantment[]
+        target?: PermanentExt,
+        tags?: Tag[],
+        triggers?: Trigger[]
+        enchantments?: Enchantment[]
     }
 
-    export type FAuraEffectBuilder = ( self: Aura, target: PermanentExt, gameCtx: HsGameCtx ) => IAuraManagedEffects;
+    export type FAuraEffectBuilder = ( aura: Aura, target: PermanentExt, gameCtx: HsGameCtx ) => IAuraManagedEffects;
 
     export interface IDefAura {
 
@@ -17,7 +17,7 @@ namespace Def {
 
         auraType: AURA_TYPE,
 
-        targetBuilder: ( self: Aura, gameCtx: HsGameCtx ) => ISetBuilder<PermanentExt>,
+        targetBuilder: ( aura: Aura ) => ISetBuilder<PermanentExt>,
 
         effectBuilder: FAuraEffectBuilder
     }

@@ -34,8 +34,6 @@ namespace HsLogic {
             if ( def.aura instanceof Array )
                 for ( let auraDef of <Def.IDefAura[]>def.aura )
                     this.auras.push( new Aura( this, auraDef ).init() );
-            else if ( def.aura )
-                this.auras.push( new Aura( this, <Def.IDefAura>def.aura ).init() );
         }
 
         getSourceType(): SOURCE_TYPE {

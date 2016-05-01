@@ -13,7 +13,7 @@ namespace Def {
 
     export interface IDefTrigger {
 
-        keyword?: string,
+        mechanic?: string,
 
         triggerPriority?: number,
 

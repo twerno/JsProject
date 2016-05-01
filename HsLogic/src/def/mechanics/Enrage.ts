@@ -14,7 +14,7 @@ namespace Def {
 
         return {
 
-            keyword: KEYWORD.ENRAGE,
+            mechanic: MECHANIC.ENRAGE,
 
             enable_self_trigger_protection: false,
 

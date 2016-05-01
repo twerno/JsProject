@@ -15,28 +15,25 @@ namespace Def {
         metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.COMMON ),
 
 
-        triggers: [
-            Aura<Minion>( {
+        aura: [
+            {
                 auraType: AURA_TYPE.ATTACK_HEALTH,
 
-                targets: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Minion[] => {
+                targetBuilder: ( aura: Aura ): ISetBuilder<PermanentExt> => {
                     return TargetFinder.FRIENDLY_MINION
-                        .addFilter( Filter.OtherThan( trigger.sourceCard ) )
-                        .buildSet( trigger.getSource(), gameCtx );
+                        .addFilter( Filter.OtherThan( aura.auraBearer ) );
                 },
 
-                rebuildAura: ( trigger: Trigger, targets: Minion[], gameCtx: HsGameCtx ): Enchantment[] => {
-                    let result: Enchantment[] = [];
-
-                    targets.forEach(( minion ) => {
-                        result.push(
-                            new HsLogic.AttackHealthEnchantment( trigger.getSource(), minion, true )
-                                .init( { attack: 1, health: 1 }) )
-                    });
-
-                    return result;
+                effectBuilder: ( self: Aura, target: PermanentExt, gameCtx: HsGameCtx ): IAuraManagedEffects => {
+                    return {
+                        enchantments: [
+                            new HsLogic.AttackHealthEnchantment( self.getSource(), <Minion | Hero>target, true )
+                                .init( { attack: 1, health: 1 })
+                        ]
+                    }
                 }
-            })
-        ]
+            }
+        ],
+
     });
 }

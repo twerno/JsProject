@@ -5,7 +5,7 @@ namespace Def {
     export function Whenever_You_Cast_Spell( action: FTriggerActionBulder ): IDefTrigger {
         return {
 
-            keyword: KEYWORD.WHENEVER_YOU_CAST_SPELL,
+            mechanic: MECHANIC.WHENEVER_YOU_CAST_SPELL,
 
             enable_self_trigger_protection: true,
 
