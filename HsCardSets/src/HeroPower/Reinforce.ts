@@ -1,15 +1,19 @@
+/// <reference path="tokens/silver_hand_recruit.ts" />
 "use strict";
 
 namespace Def {
 
     export var Reinforce: IHeroPower = {
-        name: `Reinforce`,
 
+        name: `Reinforce`,
         cost: 2,
+        linked: [Silver_Hand_Recruit],
+
 
         isActivable: ( source: ISource, gameCtx: HsGameCtx ): boolean => {
             return TargetFinder.FRIENDLY_MINION.buildSet( source, gameCtx ).length < gameCtx.consts.battlefield_limit;
         },
+
 
         ability: {
             targets: null,

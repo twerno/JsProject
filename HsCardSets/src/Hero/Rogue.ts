@@ -1,3 +1,5 @@
+/// <reference path="../heropower/dagger_mastery.ts" />
+/// <reference path="../heropower/tokens/wicked_knife.ts" />
 "use strict";
 
 namespace Def {
@@ -11,6 +13,7 @@ namespace Def {
         health: 30,
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.ROGUE, CARD_RARITY.LEGENDARY ),
+        linked: [Dagger_Mastery, Wicked_Knife],
 
         equipHeroActions: {
             targets: null,

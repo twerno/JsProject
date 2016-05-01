@@ -1,3 +1,4 @@
+/// <reference path="../heropower/armor_up!.ts" />
 "use strict";
 
 namespace Def {
@@ -11,6 +12,7 @@ namespace Def {
         health: 30,
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.WARRIOR, CARD_RARITY.LEGENDARY ),
+        linked: [Armor_Up],
 
         equipHeroActions: {
             targets: null,

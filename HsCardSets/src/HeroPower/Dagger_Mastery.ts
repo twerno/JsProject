@@ -1,11 +1,14 @@
+/// <reference path="tokens/wicked_knife.ts" />
 "use strict";
 
 namespace Def {
 
     export var Dagger_Mastery: IHeroPower = {
-        name: `Dagger Mastery`,
 
+        name: `Dagger Mastery`,
         cost: 2,
+        linked: [Wicked_Knife],
+
 
         ability: {
             targets: null,

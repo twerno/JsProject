@@ -1,3 +1,8 @@
+/// <reference path="../heropower/totemic_call.ts" />
+/// <reference path="../heropower/tokens/healing_totem.ts" />
+/// <reference path="../heropower/tokens/searing_totem.ts" />
+/// <reference path="../heropower/tokens/stoneclaw_totem.ts" />
+/// <reference path="../heropower/tokens/wrath_of_air_totem.ts" />
 "use strict";
 
 namespace Def {
@@ -11,6 +16,7 @@ namespace Def {
         health: 30,
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.SHAMAN, CARD_RARITY.LEGENDARY ),
+        linked: [Totemic_Call, Healing_Totem, Searing_Totem, Stoneclaw_Totem, Wrath_Of_Air_Totem],
 
         equipHeroActions: {
             targets: null,

@@ -8,6 +8,7 @@ namespace HsLogic {
         def: Def.ICard;
         name: string;
         baseCost: number;
+        linked: Def.LinkedType[];
 
         triggers: Trigger[] = [];
         tags: Tags = new Tags();
@@ -36,6 +37,7 @@ namespace HsLogic {
 
             this.name = def.name;
             this.baseCost = def.cost;
+            this.linked = def.linked || [];
             this.overload = def.overload || 0;
 
             this.triggers = [];

@@ -1,3 +1,4 @@
+/// <reference path="../heropower/life_tap.ts" />
 "use strict";
 
 namespace Def {
@@ -11,6 +12,7 @@ namespace Def {
         health: 30,
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.WARLOCK, CARD_RARITY.LEGENDARY ),
+        linked: [Life_Tap],
 
         equipHeroActions: {
             targets: null,

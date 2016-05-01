@@ -1,3 +1,4 @@
+/// <reference path="../heropower/steady_shot.ts" />
 "use strict";
 
 namespace Def {
@@ -11,6 +12,7 @@ namespace Def {
         health: 30,
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.HUNTER, CARD_RARITY.LEGENDARY ),
+        linked: [Steady_Shot],
 
         equipHeroActions: {
             targets: null,

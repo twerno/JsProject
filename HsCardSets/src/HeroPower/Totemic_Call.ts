@@ -1,11 +1,17 @@
+/// <reference path="tokens/healing_totem.ts" />
+/// <reference path="tokens/searing_totem.ts" />
+/// <reference path="tokens/stoneclaw_totem.ts" />
+/// <reference path="tokens/wrath_of_air_totem.ts" />
 "use strict";
 
 namespace Def {
 
     export var Totemic_Call: IHeroPower = {
-        name: `Totemic Call`,
 
+        name: `Totemic Call`,
         cost: 2,
+        linked: [Healing_Totem, Searing_Totem, Stoneclaw_Totem, Wrath_Of_Air_Totem],
+
 
         isActivable: ( source: ISource, gameCtx: HsGameCtx ): boolean => {
             return availableTotems( source, gameCtx ).length > 0

@@ -1,4 +1,5 @@
 /// <reference path="../set.ts" />
+/// <reference path="violet_apprentice.ts" />
 ///<reference path="../../../../HsLogic/dist/HsLogic.d.ts"/>
 
 "use strict";
@@ -13,6 +14,8 @@ namespace Def {
         health: 5,
         metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.RARE ),
         minion_type: MINION_TYPE.GENERAL,
+
+        linked: [Violet_Apprentice],
 
         triggers: [
             Whenever_You_Cast_Spell(( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {

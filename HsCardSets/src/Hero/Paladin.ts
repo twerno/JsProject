@@ -1,3 +1,5 @@
+/// <reference path="../heropower/reinforce.ts" />
+/// <reference path="../heropower/tokens/silver_hand_recruit.ts" />
 "use strict";
 
 namespace Def {
@@ -11,6 +13,7 @@ namespace Def {
         health: 30,
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.LEGENDARY ),
+        linked: [Reinforce, Silver_Hand_Recruit],
 
         equipHeroActions: {
             targets: null,

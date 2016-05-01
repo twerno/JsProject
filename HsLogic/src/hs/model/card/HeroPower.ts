@@ -8,6 +8,7 @@ namespace HsLogic {
 
         name: string;
         cost: number;
+        linked: Def.LinkedType[];
         ability: Def.IDefAction;
 
         static build( owner: Player, def: Def.IHeroPower ): HeroPower {
@@ -28,6 +29,7 @@ namespace HsLogic {
 
             this.name = def.name;
             this.cost = def.cost;
+            this.linked = def.linked || [];
             this.ability = def.ability;
         }
 

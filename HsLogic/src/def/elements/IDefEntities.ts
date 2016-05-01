@@ -6,16 +6,19 @@ namespace Def {
     //    hero: any,
     //    heroPower: any
 
-
+    export type LinkedType = ICard | IHeroPower | IHero;
 
     export interface ICard {
         name: string,
         //        text: string,
         cost?: number,
         metadata: IMetadata,
+        linked?: LinkedType[],
 
         triggers?: IDefTrigger[],
         tags?: TagClass[],
+
+
 
         overload?: number,
 
@@ -58,6 +61,7 @@ namespace Def {
         cost: number,
 
         //aura?: IDefAura | IDefAura[],
+        linked?: LinkedType[],
         ability: IDefAction,
         isActivable?: ( source: ISource, gameCtx: HsGameCtx ) => boolean;
     }
