@@ -1,3 +1,4 @@
+/// <reference path="effectmanager.ts" />
 "use strict";
 
 namespace HsLogic {
@@ -26,7 +27,15 @@ namespace HsLogic {
 
 
     export function isAuraAlive( aura: Aura, gameCtx: HsGameCtx ): boolean {
-        return true;
+        if ( aura.auraBearer instanceof Hero
+            || aura.auraBearer instanceof Player )
+            return true
+        else if ( aura.auraBearer instanceof Minion )
+            return gameCtx.gameBoard.zonesOf( aura.auraBearer.owner ).battlefield.has( <Minion>aura.auraBearer )
+        else if ( aura.auraBearer instanceof Weapon )
+            return gameCtx.gameBoard.zonesOf( aura.auraBearer.owner ).weapon.has( <Weapon>aura.auraBearer )
+
+        return false;
     }
 
 
@@ -50,7 +59,7 @@ namespace HsLogic {
     export function rebuildAura( aura: Aura, gameCtx: HsGameCtx ): ActionType[] {
         let result: ActionType[] = [],
             targets: PermanentExt[],
-            refreshedEffets: Def.IAuraManagedEffects;
+            refreshedEffets: Def.IEffects;
 
         targets = aura.targetBuilder( aura ).buildSet( aura.getSource(), gameCtx );
 
@@ -64,136 +73,17 @@ namespace HsLogic {
     }
 
 
-    export function prepareOperations( aura: Aura, target: PermanentExt, refreshedEffets: Def.IAuraManagedEffects, gameCtx: HsGameCtx ): ActionType[] {
+    export function prepareOperations( aura: Aura, target: PermanentExt, refreshedEffets: Def.IEffects, gameCtx: HsGameCtx ): ActionType[] {
 
-        let effects: Def.IAuraManagedEffects = aura.state.managedEffects[target.id];
+        let effects: Def.IEffects = aura.state.managedEffects[target.id];
 
         return tagsOperations( aura.getSource(), target, effects.tags, refreshedEffets.tags, gameCtx )
             .concat( triggersOperations( aura.getSource(), effects.triggers, refreshedEffets.triggers, gameCtx ) )
-            .concat( enchantmentsOperations( aura.getSource(), target, effects.enchantments, refreshedEffets.enchantments, gameCtx ) );
-
+            .concat( enchantmentsOperations( aura.getSource(), effects.enchantments, refreshedEffets.enchantments, gameCtx ) );
     }
 
 
-    function tagsOperations( source: ISource, target: PermanentExt, oldTags: Tag[], newTags: Tag[], gameCtx: HsGameCtx ): ActionType[] {
-        let result: ActionType[] = [],
-            delta: { old: Tag[], new: Tag[], amount: number },
-            tagsDelta: Collection.IStringMap<{ old: Tag[], new: Tag[], amount: number }>;
-
-        for ( let tag of oldTags ) {
-            delta = tagsDelta[ClassUtils.getNameOfClass( tag )];
-            if ( !delta ) {
-                delta = { old: [], new: [], amount: 0 };
-                tagsDelta[ClassUtils.getNameOfClass( tag )] = delta;
-            }
-
-            delta.old.push( tag );
-            delta.amount -= 1;
-
-        }
-
-        for ( let tag of newTags ) {
-            delta = tagsDelta[ClassUtils.getNameOfClass( tag )];
-            if ( !delta ) {
-                delta = { old: [], new: [], amount: 0 };
-                tagsDelta[ClassUtils.getNameOfClass( tag )] = delta;
-            }
-
-            delta.new.push( tag );
-            delta.amount += 1;
-        }
-
-
-        for ( let key in tagsDelta ) {
-            delta = tagsDelta[key];
-            if ( delta.amount > 0 )
-                for ( let i = 0; i < delta.amount; i++ )
-                    result.push( gameCtx.techActionFactory.addTag( {
-                        source: source, tag: delta.new[i], targets: [target]
-                    }) );
-
-            if ( delta.amount < 0 )
-                for ( let i = 0; i < Math.abs( delta.amount ); i++ )
-                    result.push( gameCtx.techActionFactory.removeTag( {
-                        source: source, tag: delta.old[i], targets: [target]
-                    }) );
-
-        }
-
-        return result;
-
-    }
-
-
-    function triggersOperations( source: ISource, oldTriggers: Trigger[], newTriggers: Trigger[], gameCtx: HsGameCtx ): ActionType[] {
-        let result: ActionType[] = [],
-            exists: boolean,
-            equalIds: Collection.IStringMap<boolean> = {};
-
-        for ( let oldTrigger of oldTriggers ) {
-            exists = false;
-            for ( let newTrigger of newTriggers )
-                if ( oldTrigger.eq( newTrigger ) ) {
-                    exists = true;
-                    equalIds[newTrigger.id] = true;
-                    break;
-                }
-
-            if ( !exists )
-                result.push( gameCtx.techActionFactory.unregisterTrigger( {
-                    source: source, trigger: oldTrigger
-                }) );
-        }
-
-
-        for ( let newTrigger of newTriggers ) {
-            if ( equalIds[newTrigger.id] )
-                continue;
-
-            result.push( gameCtx.techActionFactory.registerTrigger( {
-                source: source, trigger: newTrigger
-            }) );
-        }
-
-        return result;
-    }
-
-
-    function enchantmentsOperations( source: ISource, target: PermanentExt, oldEnchantments: Enchantment<PermanentExt>[], newEnchantments: Enchantment<PermanentExt>[], gameCtx: HsGameCtx ): ActionType[] {
-        let result: ActionType[] = [],
-            exists: boolean,
-            equalIds: Collection.IStringMap<boolean> = {};
-
-        for ( let oldEnchant of oldEnchantments ) {
-            exists = false;
-            for ( let newEnchant of newEnchantments )
-                if ( oldEnchant.eq( newEnchant ) ) {
-                    exists = true;
-                    equalIds[newEnchant.id] = true;
-                    break;
-                }
-
-            if ( !exists )
-                result.push( gameCtx.techActionFactory.detachEnchantment( {
-                    source: source, enchantment: oldEnchant
-                }) );
-        }
-
-
-        for ( let newEnchant of newEnchantments ) {
-            if ( equalIds[newEnchant.id] )
-                continue;
-
-            result.push( gameCtx.techActionFactory.attachEnchantment( {
-                source: source, enchantment: newEnchant
-            }) );
-        }
-
-        return result;
-    }
-
-
-    function updateEffectsData( aura: Aura, target: PermanentExt, refreshedEffets: Def.IAuraManagedEffects ): void {
+    function updateEffectsData( aura: Aura, target: PermanentExt, refreshedEffets: Def.IEffects ): void {
         refreshedEffets.target = target;
         refreshedEffets.tags = refreshedEffets.tags || [];
         refreshedEffets.triggers = refreshedEffets.triggers || [];

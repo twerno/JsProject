@@ -16,7 +16,7 @@ namespace HsLogic {
 
 
         state: {
-            managedEffects: Collection.IStringMap<Def.IAuraManagedEffects>;
+            managedEffects: Collection.IStringMap<Def.IEffects>;
         }
 
 

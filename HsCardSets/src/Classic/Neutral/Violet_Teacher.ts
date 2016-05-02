@@ -17,7 +17,7 @@ namespace Def {
 
         linked: [Violet_Apprentice],
 
-        triggers: [
+        mechanics: [
             Whenever_You_Cast_Spell(( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {
                 let minion: Minion = HsLogic.Minion.build( trigger.owner, Violet_Apprentice );
                 let position: number = 0;

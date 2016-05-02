@@ -14,7 +14,7 @@ namespace Def {
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.NEUTRAL, CARD_RARITY.RARE ),
 
-        triggers: [
+        mechanics: [
             Deathrattle( {
 
                 action: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {

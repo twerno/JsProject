@@ -24,7 +24,7 @@ namespace Def {
                         .addFilter( Filter.OtherThan( aura.auraBearer ) );
                 },
 
-                effectBuilder: ( self: Aura, target: PermanentExt, gameCtx: HsGameCtx ): IAuraManagedEffects => {
+                effectBuilder: ( self: Aura, target: PermanentExt, gameCtx: HsGameCtx ): IEffects => {
                     return {
                         enchantments: [
                             new HsLogic.AttackHealthEnchantment( self.getSource(), <Minion | Hero>target, true )

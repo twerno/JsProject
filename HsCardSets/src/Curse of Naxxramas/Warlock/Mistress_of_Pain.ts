@@ -16,7 +16,7 @@ namespace Def {
         metadata: metadata( CARD_CLASS.WARLOCK, CARD_RARITY.RARE ),
 
 
-        triggers: [
+        mechanics: [
             LifeLink()
         ]
     });

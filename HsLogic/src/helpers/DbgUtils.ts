@@ -21,7 +21,7 @@ namespace DbgUtils {
     }
 
     export function card2JSON( card: HsLogic.Card ): string {
-        return `${ClassUtils.getNameOfClass( card )}[${card.id}, ${card.orderOfPlay}]: '${card.name}'`;
+        return `${ClassUtils.getNameOfClass( card )}[${card.id}, ${card.orderOfPlay.toLocaleTimeString()}]: '${card.name}'`;
     }
 
     export function player2JSON( player: HsLogic.Player ): string {
@@ -29,7 +29,7 @@ namespace DbgUtils {
     }
 
     export function trigger2JSON( trigger: HsLogic.Trigger ): string {
-        return `${ClassUtils.getNameOfClass( trigger )}[${trigger.mechanic}, ${trigger.orderOfPlay}]; attached_to: ${model2JSON( trigger.attachedTo )}`;
+        return `${ClassUtils.getNameOfClass( trigger )}[${trigger.mechanic}, ${trigger.orderOfPlay.toLocaleTimeString()}]; attached_to: ${model2JSON( trigger.attachedTo )}`;
     }
 
     export function actionChainStr( action: jsAction.IActionType ): string {
@@ -113,14 +113,14 @@ namespace DbgUtils {
     export function dbgActionTitle( action: jsAction.IActionType ): string {
         let prefix: string = '';
         if ( action instanceof HsLogic.Action && action.param && action.param.source.entity instanceof HsLogic.Trigger )
-            prefix = `[${action.param.source.entity.keyword}] `;
+            prefix = `[${action.param.source.entity.mechanic}] `;
 
         if ( action instanceof HsLogic.DispatchEvent )
             return prefix + `Event: (${ClassUtils.getNameOfClass( action.event )})`
         else if ( action instanceof HsLogic.AddTag || action instanceof HsLogic.RemoveTag )
             return prefix + `${action.className} (${ClassUtils.getNameOfClass( action.param.tag )} -> ${action.param.targets.join( ', ' )})`
         else if ( action instanceof HsLogic.AttachEnchantment || action instanceof HsLogic.DetachEnchantment )
-            return prefix + `${action.className} (${action.param.enchantment.type} -> ${action.param.target})`
+            return prefix + `${action.className} (${ClassUtils.getNameOfClass( action.param.enchantment )} -> ${action.param.enchantment.target})`
         else
             return prefix + action.className
     }

@@ -2,14 +2,14 @@
 
 namespace Def {
 
-    export interface IAuraManagedEffects {
+    export interface IEffects {
         target?: PermanentExt,
         tags?: Tag[],
         triggers?: Trigger[]
         enchantments?: Enchantment[]
     }
 
-    export type FAuraEffectBuilder = ( aura: Aura, target: PermanentExt, gameCtx: HsGameCtx ) => IAuraManagedEffects;
+    export type FAuraEffectBuilder = ( aura: Aura, target: PermanentExt, gameCtx: HsGameCtx ) => IEffects;
 
     export interface IDefAura {
 

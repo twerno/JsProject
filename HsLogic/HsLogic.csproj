@@ -61,6 +61,7 @@
     <TypeScriptCompile Include="src\def\mechanics\aura\SpellDamage.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Deathrattle.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Enchantment.ts" />
+    <TypeScriptCompile Include="src\def\mechanics\EffectManager.ts" />
     <TypeScriptCompile Include="src\def\mechanics\Enrage.ts" />
     <TypeScriptCompile Include="src\def\mechanics\LifeLink.ts" />
     <TypeScriptCompile Include="src\def\mechanics\onPlayMechanics\AttackHealthEnchant.ts" />
@@ -89,6 +90,7 @@
     <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\PhaseActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\factories\TechActionFactory.ts" />
+    <TypeScriptCompile Include="src\hs\helpers\EffectManager.ts" />
     <TypeScriptCompile Include="src\hs\helpers\AuraUpdate.ts" />
     <TypeScriptCompile Include="src\hs\helpers\RefreshEnchantments.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\DrawCard.ts" />
@@ -135,6 +137,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\technical\DetachEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvent.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvents.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\technical\ForceUnregisterAura.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterAura.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterTrigger.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\technical\RemoveTag.ts" />

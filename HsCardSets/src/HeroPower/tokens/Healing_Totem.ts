@@ -13,7 +13,7 @@ namespace Def {
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.SHAMAN, CARD_RARITY.COMMON, false ),
 
-        triggers: [
+        mechanics: [
             {
                 mechanic: MECHANIC.NONE,
 

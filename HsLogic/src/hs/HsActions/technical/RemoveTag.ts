@@ -5,7 +5,7 @@ namespace HsLogic {
 
 
     export interface RemoveTagParam extends IActionParam {
-        targets: ( Permanent | Player )[],
+        targets: ( Card | Player )[],
         tag: Tag
     }
 

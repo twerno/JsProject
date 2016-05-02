@@ -10,7 +10,7 @@ namespace Def {
 
             targetBuilder: ( aura: Aura ) => affects,
 
-            effectBuilder: ( aura: Aura, target: PermanentExt, gameCtx: HsGameCtx ): IAuraManagedEffects => {
+            effectBuilder: ( aura: Aura, target: PermanentExt, gameCtx: HsGameCtx ): IEffects => {
                 let tags: Tag[] = [];
 
                 for ( let i = 0; i < amount; i++ )

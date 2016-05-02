@@ -15,10 +15,8 @@ namespace Def {
         metadata: IMetadata,
         linked?: LinkedType[],
 
-        triggers?: IDefTrigger[],
+        mechanics?: IDefTrigger[],
         tags?: TagClass[],
-
-
 
         overload?: number,
 

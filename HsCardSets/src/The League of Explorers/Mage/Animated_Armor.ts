@@ -14,7 +14,7 @@ namespace Def {
         minion_type: MINION_TYPE.GENERAL,
         metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.RARE ),
 
-        triggers: [
+        mechanics: [
             {
                 respondsTo: HsLogic.event.PreDamagePhase,
 

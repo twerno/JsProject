@@ -11,6 +11,10 @@ namespace HsLogic {
             return new RegisterAura( param );
         }
 
+        forceUnregisterAura( param: RegisterAuraParam ): jsAction.IAction<T> {
+            return new ForceUnregisterAura( param );
+        }
+
         inlineAction( executor: CommonUtils.PromiseWorker<ActionType | ActionType[]> ): jsAction.IAction<T> {
             return new InlineAction( executor );
         }
