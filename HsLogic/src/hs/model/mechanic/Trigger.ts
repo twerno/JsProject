@@ -65,7 +65,14 @@ namespace HsLogic {
         }
 
 
-        get owner(): Player { return this.attachedTo.owner }
+        get owner(): Player {
+            if ( this.attachedTo instanceof Player )
+                return <Player>this.attachedTo
+            else if ( this.attachedTo instanceof Card )
+                return this.attachedTo.owner
+            else
+                return null;
+        }
         set owner( dummy: Player ) { /* dummy */ }
 
     } // class Trigger

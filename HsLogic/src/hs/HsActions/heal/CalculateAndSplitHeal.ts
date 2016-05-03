@@ -18,10 +18,14 @@ namespace HsLogic {
                     let param: P = self.param,
                         actions: ActionType[] = [];
 
+                    actions.push( new event.PreSplitHealEvent( param ).dispatch( gameCtx ) );
+
                     actions.push( new CalculateHeal( param ) );
 
                     actions.push( new InlineActionExt(
+
                         (): boolean => { return !param.cancelAction.value },
+
                         ( resolve, reject ): void => {
                             let innerActions: ActionType[] = [];
 

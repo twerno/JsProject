@@ -77,11 +77,13 @@ namespace HsTest {
                 if ( isBattlefieldMinion( c ) ) {
                     let minion: Card = this.buildCard( player, ( <IBattlefieldMinion>c ).minion );
                     zones.battlefield.addEntity( minion, ( <IBattlefieldMinion>c ).position );
+                    this.registerAuras( <HsLogic.Minion>minion, result );
                 }
 
                 else if ( isBattlefieldWeapon( c ) ) {
                     let weapon: Card = this.buildCard( player, ( <IBattlefieldWeapon>c ).weapon );
                     zones.weapon.addEntity( <HsLogic.Weapon>weapon );
+                    this.registerAuras( <HsLogic.Weapon>weapon, result );
                 }
             }
         }
@@ -150,6 +152,11 @@ namespace HsTest {
                 if ( p !== hsGameCtx.activePlayer )
                     return p;
             return null;
+        }
+
+        protected registerAuras( auraSource: HsLogic.Permanent, gameCtx: HsLogic.HsGameCtx ): void {
+            for ( let aura of auraSource.auras )
+                gameCtx.gameBoard.auras.push( aura );
         }
 
     }

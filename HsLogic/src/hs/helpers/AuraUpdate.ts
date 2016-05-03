@@ -14,10 +14,10 @@ namespace HsLogic {
             if ( aura.auraType === auraType ) {
 
                 if ( isAuraAlive( aura, gameCtx ) )
-                    rebuildAura( aura, gameCtx )
+                    actions = actions.concat( rebuildAura( aura, gameCtx ) );
 
                 else
-                    removeAura( aura, gameCtx );
+                    actions = actions.concat( removeAura( aura, gameCtx ) );
 
             }
         }
@@ -64,7 +64,7 @@ namespace HsLogic {
         targets = aura.targetBuilder( aura ).buildSet( aura.getSource(), gameCtx );
 
         for ( let target of targets ) {
-            refreshedEffets = aura.effectBuilder( aura, target, gameCtx );
+            refreshedEffets = aura.effectBuilder( aura, target, gameCtx ) || {};
             updateEffectsData( aura, target, refreshedEffets );
             result = result.concat( prepareOperations( aura, target, refreshedEffets, gameCtx ) );
         }
@@ -75,11 +75,11 @@ namespace HsLogic {
 
     export function prepareOperations( aura: Aura, target: PermanentExt, refreshedEffets: Def.IEffects, gameCtx: HsGameCtx ): ActionType[] {
 
-        let effects: Def.IEffects = aura.state.managedEffects[target.id];
+        let effects: Def.IEffects = aura.state.managedEffects[target.id] || {};
 
-        return tagsOperations( aura.getSource(), target, effects.tags, refreshedEffets.tags, gameCtx )
-            .concat( triggersOperations( aura.getSource(), effects.triggers, refreshedEffets.triggers, gameCtx ) )
-            .concat( enchantmentsOperations( aura.getSource(), effects.enchantments, refreshedEffets.enchantments, gameCtx ) );
+        return tagsOperations( aura.getSource(), target, effects.tags || [], refreshedEffets.tags, gameCtx )
+            .concat( triggersOperations( aura.getSource(), effects.triggers || [], refreshedEffets.triggers, gameCtx ) )
+            .concat( enchantmentsOperations( aura.getSource(), effects.enchantments || [], refreshedEffets.enchantments, gameCtx ) );
     }
 
 

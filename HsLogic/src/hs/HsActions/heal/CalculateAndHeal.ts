@@ -20,24 +20,30 @@ namespace HsLogic {
                     param.healState = HEAL_STATE.PENDING;
                     param.notifyMode = param.notifyMode || NOTIFY_MODE.AFTER_EVERY_ACTION;
 
+                    actions.push( new event.PreCalculateAndHealEvent( param ).dispatch( gameCtx ) );
+
                     actions.push( gameCtx.techActionFactory.calculateHeal( param ) );
 
-                    actions.push( new InlineAction(( responce, reject ): void => {
-                        let actions: ActionType[] = [];
+                    actions.push( new InlineActionExt(
 
-                        for ( let i = 0; i < param.targets.length; i++ ) {
-                            actions.push( gameCtx.techActionFactory.heal( {
-                                source: param.source,
+                        () => !param.cancelAction.value,
 
-                                target: param.targets[i],
-                                amount: param.amount,
+                        ( resolve, reject ): void => {
+                            let actions: ActionType[] = [];
 
-                                healState: HEAL_STATE.PENDING,
-                                notifyMode: param.notifyMode
-                            }) );
-                        }
-                        resolve( actions );
-                    }) );
+                            for ( let i = 0; i < param.targets.length; i++ ) {
+                                actions.push( gameCtx.techActionFactory.heal( {
+                                    source: param.source,
+
+                                    target: param.targets[i],
+                                    amount: param.amount,
+
+                                    healState: HEAL_STATE.PENDING,
+                                    notifyMode: param.notifyMode
+                                }) );
+                            }
+                            resolve( actions );
+                        }) );
 
 
                     if ( param.notifyMode === NOTIFY_MODE.AFTER_ALL_ACTIONS )
@@ -59,7 +65,7 @@ namespace HsLogic {
      * CalculateHeal
      *
      */
-    export class CalculateHeal<P extends CalculateHealParam> extends Action<P> {
+    export class CalculateHeal<P extends CalculateHealParam> extends CancelableAction<P> {
 
         resolve( self: CalculateHeal<P>, gameCtx: HsGameCtx ): PromiseOfActions {
 

@@ -78,7 +78,7 @@ namespace Def.Filter {
 
     export function ownedBy( player: Player ): FSetBuilderFilter<Entity> {
         return ( source: ISource, entity: Entity, gameCtx: HsGameCtx ): boolean => {
-            return entity.owner === player;
+            return entity.owner === player
         }
     }
 

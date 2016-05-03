@@ -8,6 +8,7 @@ namespace HsLogic {
         def: Def.IDefAura;
 
         auraBearer: PermanentExt;
+        sourceCard: Card;
 
         priority: number;
         auraType: Def.AURA_TYPE;
@@ -20,9 +21,11 @@ namespace HsLogic {
         }
 
 
-        constructor( sourceCard: Card, def: Def.IDefAura ) {
+        constructor( sourceCard: Card, auraBearer: PermanentExt, def: Def.IDefAura ) {
             super( null, def );
 
+            this.auraBearer = auraBearer;
+            this.sourceCard = sourceCard;
             this.targetBuilder = null;
             this.effectBuilder = null;
             this.state = { managedEffects: {} };

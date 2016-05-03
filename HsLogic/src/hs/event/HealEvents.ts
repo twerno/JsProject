@@ -5,6 +5,10 @@
 namespace HsLogic.event {
 
 
+    export class PreCalculateAndHealEvent<P extends HealTargetsParam> extends ActionEvent<P> { }
+    export class PreSplitHealEvent<P extends SplitHealParam> extends ActionEvent<P> { }
+
+
     export class PreHealPhase<P extends HealParam> extends ActionEvent<P> { }
 
 

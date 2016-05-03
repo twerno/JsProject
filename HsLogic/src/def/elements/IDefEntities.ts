@@ -49,7 +49,7 @@ namespace Def {
         attack: number,
         durability: number,
 
-        aura?: IDefAura | IDefAura[],
+        aura?: IDefAura[],
         battlecry?: IDefAction,
     }
 

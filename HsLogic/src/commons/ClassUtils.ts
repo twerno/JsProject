@@ -30,14 +30,14 @@ namespace ClassUtils {
 
         private _entries: ObjectValidatorEntry[] = [];
 
-        addType( name: string, type: string, required?: boolean ): ObjectValidator {
-            this._entries.push( new ObjectValidatorEntry( name, type, null, required || true ) );
+        addType( name: string, type: string, optional?: boolean ): ObjectValidator {
+            this._entries.push( new ObjectValidatorEntry( name, type, null, optional || false ) );
 
             return this;
         }
 
-        addClass( name: string, clazz: Function, required?: boolean ): ObjectValidator {
-            this._entries.push( new ObjectValidatorEntry( name, 'object', clazz, required || true ) );
+        addClass( name: string, clazz: Function, optional?: boolean ): ObjectValidator {
+            this._entries.push( new ObjectValidatorEntry( name, 'object', clazz, optional || false ) );
             return this;
         }
 
@@ -46,10 +46,10 @@ namespace ClassUtils {
 
             for ( let entry of this._entries ) {
                 if ( !deepHasOwnProperty( entry.name, object ) ) {
-                    if ( entry.required )
-                        return false;
-                    else
+                    if ( entry.optional )
                         continue;
+                    else
+                        return false;
                 }
 
                 value = deepKeyValue( entry.name, object );
@@ -61,14 +61,14 @@ namespace ClassUtils {
             return true;
         }
 
-        static addType( name: string, type: string, required?: boolean ): ObjectValidator {
+        static addType( name: string, type: string, optional?: boolean ): ObjectValidator {
             let validator: ObjectValidator = new ObjectValidator();
-            return validator.addType( name, type, required );
+            return validator.addType( name, type, optional );
         }
 
-        static addClass( name: string, clazz: Function, required?: boolean ): ObjectValidator {
+        static addClass( name: string, clazz: Function, optional?: boolean ): ObjectValidator {
             let validator: ObjectValidator = new ObjectValidator();
-            return validator.addClass( name, clazz, required );
+            return validator.addClass( name, clazz, optional );
         }
 
     }
@@ -76,7 +76,7 @@ namespace ClassUtils {
 
     class ObjectValidatorEntry {
 
-        constructor( public name: string, public type: string, public clazz: Function, public required: boolean ) { }
+        constructor( public name: string, public type: string, public clazz: Function, public optional: boolean ) { }
     }
 
 

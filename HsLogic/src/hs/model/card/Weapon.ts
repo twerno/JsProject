@@ -31,11 +31,8 @@ namespace HsLogic {
             this.durability = def.durability;
             this.battlecry = def.battlecry || null;
 
-            if ( def.aura instanceof Array )
-                for ( let auraDef of <Def.IDefAura[]>def.aura )
-                    this.auras.push( new Aura( this, auraDef ).init() );
-            else if ( def.aura )
-                this.auras.push( new Aura( this, <Def.IDefAura>def.aura ).init() );
+            for ( let auraDef of <Def.IDefAura[]>def.aura )
+                this.auras.push( new Aura( this, this, auraDef ).init() );
         }
 
         getSourceType(): SOURCE_TYPE {

@@ -34,7 +34,6 @@
     <Folder Include="src\Blackrock Mountain\Warlock\" />
     <Folder Include="src\Blackrock Mountain\Warrior\" />
     <Folder Include="src\Classic\Palladin\" />
-    <Folder Include="src\Classic\Priest\" />
     <Folder Include="src\Classic\Ranger\" />
     <Folder Include="src\Classic\Rouge\" />
     <Folder Include="src\Classic\Shaman\" />
@@ -107,6 +106,7 @@
     <TypeScriptCompile Include="src\Classic\Neutral\Violet_Teacher.ts" />
     <TypeScriptCompile Include="src\Classic\Paladin\Consecration.ts" />
     <TypeScriptCompile Include="src\Classic\Paladin\Holy_Wrath.ts" />
+    <TypeScriptCompile Include="src\Classic\Priest\Auchenai_Soulpriest.ts" />
     <TypeScriptCompile Include="src\Classic\Set.ts" />
     <TypeScriptCompile Include="src\Classic\Warlock\Power_Overwhelming.ts" />
     <TypeScriptCompile Include="src\Const.ts" />

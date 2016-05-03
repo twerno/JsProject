@@ -16,6 +16,7 @@ namespace jsAction {
     export const _30_SECONDS: number = 30 * 1000;
     export const _10_SECONDS: number = 10 * 1000;
     export const _5_SECONDS: number = 5 * 1000;
+    export const _1_SECONDS: number = 1 * 1000;
 
 
 	/**
@@ -32,7 +33,7 @@ namespace jsAction {
 
         resolvable( context: T ): boolean { return true }
 
-        get timelimit(): number { return _5_SECONDS; }
+        get timelimit(): number { return _1_SECONDS; }
         get className(): string { return ClassUtils.getNameOfClass( this ) }
         toString(): string { return this.className }
     }

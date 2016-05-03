@@ -24,7 +24,7 @@ namespace Def {
 
     export function isDefAura( x: any ): x is IDefAura {
         return ClassUtils.ObjectValidator
-            .addType( 'priority', 'number', false )
+            .addType( 'priority', 'number', true )
             .addType( 'auraType', 'string' )
             .addType( 'targetBuilder', 'function' )
             .addType( 'effectBuilder', 'function' )
