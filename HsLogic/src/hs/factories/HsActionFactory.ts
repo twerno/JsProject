@@ -82,5 +82,13 @@ namespace HsLogic {
         equipWeapon( param: IEquipWeaponParam ): jsAction.IAction<T> {
             return new EquipWeapon( param );
         }
+
+        freeze( param: TargetCharactersParam ): jsAction.IAction<T> {
+            return new Freeze( param );
+        }
+
+        transformMinion( param: TransformMinionParam ): jsAction.IAction<T> {
+            return new TransformMinion( param );
+        }
     }
 }

@@ -24,10 +24,9 @@ namespace Def {
                         amount: 3,
                         targets: targets
                     }),
-                    gameCtx.techActionFactory.addTag( {
+                    gameCtx.actionFactory.freeze( {
                         source: source,
-                        targets: targets,
-                        tag: new Freeze_Tag( source )
+                        targets: targets
                     })
                 ];
 

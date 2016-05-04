@@ -87,12 +87,16 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\Blackrock Mountain\Set.ts" />
     <TypeScriptCompile Include="src\Classic\Druid\Swipe.ts" />
+    <TypeScriptCompile Include="src\Classic\Mage\Arcane_Explosion.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Arcane_Intellect.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Arcane_Missiles.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Flamestrike.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Fireball.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Frost_Nova.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Frost_Bolt.ts" />
+    <TypeScriptCompile Include="src\Classic\Mage\Mirror_Image.ts" />
+    <TypeScriptCompile Include="src\Classic\Mage\Mirror_Image_Token.ts" />
+    <TypeScriptCompile Include="src\Classic\Mage\Water_Elemental.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Abomination.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Amani_Berserker.ts" />
     <TypeScriptCompile Include="src\Classic\Neutral\Mad_Bomber.ts" />

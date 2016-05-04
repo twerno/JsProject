@@ -18,9 +18,8 @@ namespace Def {
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
-                    gameCtx.techActionFactory.addTag( {
+                    gameCtx.actionFactory.freeze( {
                         source: source,
-                        tag: new Freeze_Tag( source ),
                         targets: TargetFinder.ENEMY_MINION.buildSet( source, gameCtx )
                     })
                 ];

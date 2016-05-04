@@ -35,6 +35,9 @@ namespace HsLogic {
             return this._entities.length === 0;
         }
 
+        replace( oldCard: T, newCard: T ): void {
+        }
+
         constructor( public zones: Zones, zoneId: string, maxElements: number ) {
             super( zones, zoneId );
             this.maxElements = ( ( maxElements || 0 ) >= 0 ) ? ( maxElements || 0 ) : -1;

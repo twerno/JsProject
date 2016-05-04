@@ -22,9 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\hs\hsActions\coreActions\" />
-    <Folder Include="src\hs\hsActions\event\" />
-    <Folder Include="src\hs\hsActions\PlayCard\prototypes\" />
+    <Folder Include="src\hs\hsActions\old\param\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
@@ -93,12 +91,12 @@
     <TypeScriptCompile Include="src\hs\helpers\EffectManager.ts" />
     <TypeScriptCompile Include="src\hs\helpers\AuraUpdate.ts" />
     <TypeScriptCompile Include="src\hs\helpers\RefreshEnchantments.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\core\DrawCards.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\core\DrawCard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\core\PlayCardSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\core\PlayMinionSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\core\PlaySpellSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\core\PlayWeaponSequence.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\DrawCards.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\DrawCard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlayCardSequence.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlayMinionSequence.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlaySpellSequence.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\main\PlayWeaponSequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\damage\CalculateAndDealDamage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\damage\CalculateAndSplitDamage.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\damage\DamageCommons.ts" />
@@ -108,26 +106,28 @@
     <TypeScriptCompile Include="src\hs\hsActions\heal\CalculateAndSplitHeal.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\HealCommons.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\heal\MultistepHeal.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\Battlecry.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\EquipWeapon.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\GainArmor.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\SummonMinion.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\AddGeneratedCardIntoHand.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\DestroyCardInPlay.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\Discard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\makeChoice\ChooseSingleTarget.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\MillCard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\param\BasicParams.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\PutCardIntoHand.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\ReturnCardIntoHandFromPlayZone.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\Sequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\ShuffleGeneratedCardIntoDeck.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\outdated\SilenceAMinion.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\secondary\Battlecry.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\secondary\EquipWeapon.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\secondary\TransformMinion.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\secondary\GainArmor.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\secondary\SummonMinion.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\AddGeneratedCardIntoHand.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\DestroyCardInPlay.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\Discard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\makeChoice\ChooseSingleTarget.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\MillCard.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\BasicParam.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\PutCardIntoHand.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\ReturnCardIntoHandFromPlayZone.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\Sequence.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\ShuffleGeneratedCardIntoDeck.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\old\SilenceAMinion.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\phase\AuraUpdateStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\phase\DeathCreationStep.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\phase\DeathPhase.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\phase\OutermostPhaseEnd.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\phase\PlayPhase.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\secondary\Freeze.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\secondary\EquipHeroPower.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\secondary\Fatigue.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\secondary\PayCostAndRemoveFromHand.ts" />
