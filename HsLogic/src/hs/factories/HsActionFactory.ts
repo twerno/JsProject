@@ -46,6 +46,11 @@ namespace HsLogic {
             return new DrawCard( drawParam );
         }
 
+        drawCards( param: DrawCardsParam ): jsAction.IAction<T> {
+            return new DrawCards( param );
+        }
+
+
         fatigue( param: TargetPlayerParam ): Fatigue<TargetPlayerParam> {
             return new Fatigue( param );
         }

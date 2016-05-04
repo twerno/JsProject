@@ -5,11 +5,12 @@
 
 namespace Def {
 
-    export var Consecration: ISpell = classicSet.registerSpell( {
+    export var Arcane_Intellect: ISpell = classicSet.registerSpell( {
 
-        name: `Consecration`,
-        cost: 4,
-        metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.COMMON ),
+        name: `Arcane Intellect`,
+        cost: 3,
+        metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.COMMON ),
+
 
         spellTextAction: {
             targets: null,
@@ -17,17 +18,14 @@ namespace Def {
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
-                    gameCtx.actionFactory.calculateAndDealDamage( {
+                    gameCtx.actionFactory.drawCards( {
                         source: source,
-                        damageType: DAMAGE_TYPE.DIRECT,
                         amount: 2,
-                        targets: TargetFinder.ENEMY_CHARACTER.buildSet( source, gameCtx )
+                        targetPlayer: source.player,
                     })
                 ];
 
             }
-        } // spellTextAction
-
-
+        }
     });
 }

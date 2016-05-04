@@ -5,14 +5,15 @@
 
 namespace Def {
 
-    export var Consecration: ISpell = classicSet.registerSpell( {
+    export var Fireball: ISpell = classicSet.registerSpell( {
 
-        name: `Consecration`,
+        name: `Fireball`,
         cost: 4,
-        metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.COMMON ),
+        metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.COMMON ),
+
 
         spellTextAction: {
-            targets: null,
+            targets: SINGLE_REQUIRED_TARGET( TargetFinder.ANY_SPELL_TARGETABLE_CHARACTER ),
 
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
@@ -20,9 +21,9 @@ namespace Def {
                     gameCtx.actionFactory.calculateAndDealDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
-                        amount: 2,
-                        targets: TargetFinder.ENEMY_CHARACTER.buildSet( source, gameCtx )
-                    })
+                        amount: 6,
+                        targets: targets
+                    }),
                 ];
 
             }

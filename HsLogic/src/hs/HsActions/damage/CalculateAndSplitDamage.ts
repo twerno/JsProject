@@ -83,7 +83,7 @@ namespace HsLogic {
     export function splitMode2TargetSetBuilder( splitMode: Def.SPLIT_MODE, source: ISource ): Def.ISetBuilder<Character> {
 
         if ( splitMode === Def.SPLIT_MODE.ARCANE_MISSILE )
-            return Def.TargetFinder.EMEMY_CHARACTER
+            return Def.TargetFinder.ENEMY_CHARACTER
                 .addFilter(( source, entity, gameCtx ): boolean => {
                     return entity instanceof Hero
                         || ( entity instanceof Minion && entity.body.hp() > 0 );

@@ -5,6 +5,8 @@
 
 namespace Def {
 
+    // http://hearthstone.gamepedia.com/Advanced_rulebook#Drawing_a_Card
+    // Holy Wrath in particular does not require the card to successfully enter your hand.[308]
     export var Holy_Wrath: ISpell = classicSet.registerSpell( {
 
         name: `Holy wrath`,
@@ -24,15 +26,13 @@ namespace Def {
                 return [
                     gameCtx.actionFactory.drawCard( param ),
 
-                    new HsLogic.InlineActionExt(
-                        (): boolean => { return param.drawnCard !== null },
-
+                    new HsLogic.InlineAction(
                         ( resolve, reject ): void => {
                             resolve(
                                 gameCtx.actionFactory.calculateAndDealDamage( {
                                     source: source,
                                     damageType: DAMAGE_TYPE.DIRECT,
-                                    amount: param.drawnCard.baseCost,
+                                    amount: param.drawnCard ? param.drawnCard.baseCost : 0,
                                     targets: targets
                                 }) )
                         }

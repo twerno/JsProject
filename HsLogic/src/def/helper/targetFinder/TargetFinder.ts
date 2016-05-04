@@ -15,27 +15,27 @@ namespace Def {
         }
 
 
-        static get EMEMY_MINION(): ISetBuilder<Minion> {
+        static get ENEMY_MINION(): ISetBuilder<Minion> {
             return TargetFinder.ANY_MINION
                 .addFilter( Filter.enemy )
                 .addFilter( Filter.minion );
         }
 
 
-        static get EMEMY_CHARACTER(): ISetBuilder<Character> {
+        static get ENEMY_CHARACTER(): ISetBuilder<Character> {
             return TargetFinder.ANY_CHARACTER
                 .addFilter( Filter.enemy )
                 .addFilter( Filter.character );
         }
 
 
-        static get EMEMY_SPELL_TARGETABLE_CHARACTER(): ISetBuilder<Character> {
-            return TargetFinder.EMEMY_CHARACTER
+        static get ENEMY_SPELL_TARGETABLE_CHARACTER(): ISetBuilder<Character> {
+            return TargetFinder.ENEMY_CHARACTER
                 .addFilter( Filter.targetable_by_spell_or_hero_power );
         }
 
 
-        static get EMEMY_WEAPON(): ISetBuilder<Weapon> {
+        static get ENEMY_WEAPON(): ISetBuilder<Weapon> {
             return new EntitySetBuilder<Weapon>( {
                 includeHeroes: false,
                 zones: ( zones: Zones ): Zone[] => { return [zones.weapon] }

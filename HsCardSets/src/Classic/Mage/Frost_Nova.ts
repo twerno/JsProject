@@ -5,11 +5,12 @@
 
 namespace Def {
 
-    export var Consecration: ISpell = classicSet.registerSpell( {
+    export var Frost_Nova: ISpell = classicSet.registerSpell( {
 
-        name: `Consecration`,
-        cost: 4,
-        metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.COMMON ),
+        name: `Frost Nova`,
+        cost: 3,
+        metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.COMMON ),
+
 
         spellTextAction: {
             targets: null,
@@ -17,11 +18,10 @@ namespace Def {
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
-                    gameCtx.actionFactory.calculateAndDealDamage( {
+                    gameCtx.techActionFactory.addTag( {
                         source: source,
-                        damageType: DAMAGE_TYPE.DIRECT,
-                        amount: 2,
-                        targets: TargetFinder.ENEMY_CHARACTER.buildSet( source, gameCtx )
+                        tag: new Freeze_Tag( source ),
+                        targets: TargetFinder.ENEMY_MINION.buildSet( source, gameCtx )
                     })
                 ];
 

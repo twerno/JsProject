@@ -5,29 +5,27 @@
 
 namespace Def {
 
-    export var Consecration: ISpell = classicSet.registerSpell( {
+    export var Arcane_Explosion: ISpell = classicSet.registerSpell( {
 
-        name: `Consecration`,
-        cost: 4,
-        metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.COMMON ),
+        name: `Arcane Explosion`,
+        cost: 2,
+        metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.COMMON ),
+
 
         spellTextAction: {
             targets: null,
-
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
 
                 return [
                     gameCtx.actionFactory.calculateAndDealDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
-                        amount: 2,
-                        targets: TargetFinder.ENEMY_CHARACTER.buildSet( source, gameCtx )
+                        amount: 1,
+                        targets: TargetFinder.ENEMY_MINION.buildSet( source, gameCtx )
                     })
                 ];
 
             }
-        } // spellTextAction
-
-
+        }
     });
 }

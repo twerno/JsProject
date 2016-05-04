@@ -13,10 +13,10 @@ namespace Def {
 
         spellTextAction: {
 
-            targets: SINGLE_REQUIRED_TARGET( TargetFinder.EMEMY_SPELL_TARGETABLE_CHARACTER ),
+            targets: SINGLE_REQUIRED_TARGET( TargetFinder.ENEMY_SPELL_TARGETABLE_CHARACTER ),
 
             actionBuilder( source: ISource, targets: Character[], gameCtx: HsGameCtx ): Action[] {
-                let otherTargets: Character[] = TargetFinder.EMEMY_CHARACTER
+                let otherTargets: Character[] = TargetFinder.ENEMY_CHARACTER
                     .addFilter( Filter.OtherThan( targets ) )
                     .buildSet( source, gameCtx );
 

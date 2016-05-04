@@ -93,6 +93,7 @@
     <TypeScriptCompile Include="src\hs\helpers\EffectManager.ts" />
     <TypeScriptCompile Include="src\hs\helpers\AuraUpdate.ts" />
     <TypeScriptCompile Include="src\hs\helpers\RefreshEnchantments.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\core\DrawCards.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\DrawCard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\PlayCardSequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\core\PlayMinionSequence.ts" />

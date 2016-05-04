@@ -3,13 +3,8 @@
 
 namespace HsLogic.event {
 
+    export class CardDrawGlobalEvent<P extends DrawParam> extends ActionEvent<P> { }
 
-    export class OnCardDraw extends ActionEvent<DrawParam> {
-        static get type(): string { return OnCardDraw.name }
-    }
-
-    export class OnCardDrawn extends ActionEvent<DrawParam> {
-        static get type(): string { return OnCardDrawn.name }
-    }
+    export class CardDrawSelfEvent<P extends DrawParam> extends ActionEvent<P> { }
 
 }

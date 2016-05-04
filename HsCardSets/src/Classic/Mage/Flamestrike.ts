@@ -5,11 +5,12 @@
 
 namespace Def {
 
-    export var Consecration: ISpell = classicSet.registerSpell( {
+    export var Flamestrike: ISpell = classicSet.registerSpell( {
 
-        name: `Consecration`,
-        cost: 4,
-        metadata: metadata( CARD_CLASS.PALADIN, CARD_RARITY.COMMON ),
+        name: `Flamestrike`,
+        cost: 7,
+        metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.COMMON ),
+
 
         spellTextAction: {
             targets: null,
@@ -20,9 +21,9 @@ namespace Def {
                     gameCtx.actionFactory.calculateAndDealDamage( {
                         source: source,
                         damageType: DAMAGE_TYPE.DIRECT,
-                        amount: 2,
-                        targets: TargetFinder.ENEMY_CHARACTER.buildSet( source, gameCtx )
-                    })
+                        amount: 4,
+                        targets: TargetFinder.ENEMY_MINION.buildSet( source, gameCtx )
+                    }),
                 ];
 
             }
