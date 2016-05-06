@@ -42,7 +42,8 @@ namespace HsLogic {
 
         consts: ContextConsts = {
             battlefield_limit: 7,
-            mana_limit: 10
+            mana_limit: 10,
+            hand_size_limit: 10,
         }
     }
 }

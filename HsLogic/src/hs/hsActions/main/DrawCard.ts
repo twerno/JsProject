@@ -34,8 +34,8 @@ namespace HsLogic {
                     param.drawnCard = zones.deck.pop() || null;
 
                     if ( param.drawnCard ) {
-                        if ( !zones.hand.isFull() ) {
-                            zones.hand.addEntity( param.drawnCard );
+                        if ( !isHandFull( zones.hand, gameCtx ) ) {
+                            zones.hand.add( param.drawnCard );
 
                             actions.push( new event.CardDrawGlobalEvent( param ).dispatch( gameCtx ) );
 
@@ -43,7 +43,7 @@ namespace HsLogic {
 
                         }
                         else
-                            zones.graveyard.addEntity( param.drawnCard );
+                            zones.graveyard.add( param.drawnCard );
                     }
                     else
                         actions.push( gameCtx.actionFactory.fatigue( {

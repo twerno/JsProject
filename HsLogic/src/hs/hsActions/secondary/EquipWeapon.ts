@@ -30,17 +30,17 @@ namespace HsLogic {
                     let param: P = self.param,
                         actions: ActionType[] = [],
                         weaponZone: Zone<Weapon> = gameCtx.gameBoard.zonesOf( param.targetPlayer ).weapon,
-                        oldWeapon: Weapon = weaponZone.getRawArray()[0] || null;
+                        oldWeapon: Weapon = weaponZone.entities[0] || null;
 
                     // destroy old weapon
                     if ( oldWeapon ) {
-                        weaponZone.removeEntity( oldWeapon );
-                        gameCtx.gameBoard.zonesOf( param.targetPlayer ).graveyard.addEntity( oldWeapon );
+                        weaponZone.remove( oldWeapon );
+                        gameCtx.gameBoard.zonesOf( param.targetPlayer ).graveyard.add( oldWeapon );
                     }
 
 
                     // equip new weapon
-                    weaponZone.addEntity( param.weapon );
+                    weaponZone.add( param.weapon );
 
 
                     // old weapon deathrattle triggers

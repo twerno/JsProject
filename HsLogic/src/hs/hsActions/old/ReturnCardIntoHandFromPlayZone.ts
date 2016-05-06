@@ -23,12 +23,12 @@ namespace HsLogic {
                     let param: P = self.param,
                         hand: Zone<Card> = gameCtx.gameBoard.zonesOf( param.card.owner ).hand;
 
-                    if ( hand.isFull ) {
+                    if ( isHandFull( hand, gameCtx ) ) {
                         //resolve([gameCtx.actionFactory.markAsDestroyed(param.source, param.card)]);
                     }
                     else {
-                        param.sourceZone.removeEntity( param.card );
-                        hand.addEntity( param.card );
+                        param.sourceZone.remove( param.card );
+                        hand.add( param.card );
                         resolve( null );
                     }
                 });

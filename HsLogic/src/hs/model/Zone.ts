@@ -1,79 +1,113 @@
 /// <reference path="card/genentity.ts" />
-///<reference path="../../core/Zone.ts"/>
-
 "use strict";
 
 namespace HsLogic {
 
-    export namespace ZoneConsts {
-        export const HAND_ZONE = 'HAND_ZONE';
-        export const GAME_ZONE = 'GAME_ZONE';
-        export const SECRET_ZONE = 'SECRET_ZONE';
-        export const REMOVED_FROM_PLAY_ZONE = 'REMOVED_ZONE';
-        export const GRAVEYARD_ZONE = 'GRAVEYARD_ZONE';
-        export const DECK_ZONE = 'DECK_ZONE';
-        export const HERO_ZONE = 'HERO_ZONE';
-        export const WEAPON_ZONE = 'WEAPON_ZONE';
-        export const HERO_POWER_ZONE = 'HERO_POWER_ZONE';
 
+    export class Zone<T extends Entity> {
+        protected _entities: T[] = [];
 
-        export const UNLIMITED = -1;
-    }
+        add( entity: T ): void {
+            this._entities.push( entity );
+        }
 
+        remove( entity: T ): void {
+            Collection.removeFrom( this._entities, entity );
+        }
 
-    export class Zone<T extends Card> extends jsAction.Zone<T> {
-        maxElements: number = -1; // -1 - unlimited
+        pop(): T {
+            return this._entities.pop();
+        }
 
-        isFull(): boolean {
-            if ( this.maxElements === -1 )
-                return false;
-            else
-                return this.length >= this.maxElements;
+        replace( oldEntity: T, newEntity: T ): void {
+            let index: number = this._entities.indexOf( oldEntity );
+            if ( index === -1 )
+                throw new Error( `Entity: ${oldEntity} does not exist in ${this}` );
+
+            this._entities[index] = newEntity;
         }
 
         isEmpty(): boolean {
             return this._entities.length === 0;
         }
 
-        replace( oldCard: T, newCard: T ): void {
+        contains( entity: T ): boolean {
+            return this._entities.indexOf( entity ) > -1;
         }
 
-        constructor( public zones: Zones, zoneId: string, maxElements: number ) {
-            super( zones, zoneId );
-            this.maxElements = ( ( maxElements || 0 ) >= 0 ) ? ( maxElements || 0 ) : -1;
-            zones.register( this );
-        }
+        get length(): number { return this._entities.length; }
+
+        get entities(): T[] { return this._entities.slice() }
+
+        constructor( public owner: Player ) { }
     }
 
 
-    export class Zones extends jsAction.ZoneMap<Card, Zone<Card>>{
+    export class Battlefield<T extends Minion> extends Zone<T> {
+
+        add( entity: T ): void {
+            throw new Error( 'use addAt instead' );
+        }
+
+        addAt( entity: T, position: number ): void {
+            this._entities.splice( this._fixPosition( position ), 0, entity );
+            this.updateMinionsPosition();
+        }
+
+        remove( entity: T ): void {
+            super.remove( entity );
+            this.updateMinionsPosition();
+        }
+
+        replace( oldEntity: T, newEntity: T ): void {
+            super.replace( oldEntity, newEntity );
+            this.updateMinionsPosition();
+        }
+
+        private _fixPosition( position: number ): number {
+            return Math.min( Math.max( position || this.length, 0 ), this.length );
+        }
+
+        updateMinionsPosition(): void {
+            for ( let i = 0; i < this._entities.length; i++ )
+                this._entities[i].position = i;
+        }
+
+    }
+
+
+
+
+
+
+
+    export class Zones {
 
         hand: Zone<Card>;
         deck: Zone<Card>;
         graveyard: Zone<Card>;
         removed_from_play: Zone<Card>;
 
-        hero: Zone<Card>;
+        hero: Zone<Hero>;
         weapon: Zone<Weapon>;
-        heroPower: Zone<Card>;
+        heroPower: Zone<HeroPower>;
 
-        battlefield: Zone<Card>;
+        battlefield: Battlefield<Minion>;
         secret: Zone<Card>;
 
         constructor( public owner: Player ) {
-            super( owner );
 
-            this.hand = new Zone( this, ZoneConsts.HAND_ZONE, 10 );
-            this.deck = new Zone( this, ZoneConsts.DECK_ZONE, 80 );
-            this.graveyard = new Zone( this, ZoneConsts.GRAVEYARD_ZONE, ZoneConsts.UNLIMITED );
-            this.removed_from_play = new Zone( this, ZoneConsts.REMOVED_FROM_PLAY_ZONE, ZoneConsts.UNLIMITED );
+            this.hand = new Zone<Card>( owner );
+            this.deck = new Zone<Card>( owner );
+            this.graveyard = new Zone<Card>( owner );
+            this.removed_from_play = new Zone<Card>( owner );
 
-            this.hero = new Zone( this, ZoneConsts.HERO_ZONE, 1 );
-            this.weapon = new Zone<Weapon>( this, ZoneConsts.WEAPON_ZONE, 1 );
-            this.heroPower = new Zone( this, ZoneConsts.HERO_POWER_ZONE, 1 );
+            this.hero = new Zone<Hero>( owner );
+            this.weapon = new Zone<Weapon>( owner );
+            this.heroPower = new Zone<HeroPower>( owner );
 
-            this.battlefield = new Zone( this, ZoneConsts.GAME_ZONE, 7 );
-            this.secret = new Zone( this, ZoneConsts.SECRET_ZONE, 5 );
+            this.battlefield = new Battlefield<Minion>( owner );
+            this.secret = new Zone<Card>( owner );
         }
     }
 }

@@ -33,7 +33,7 @@ namespace HsLogic {
 
                     // 2. enters the battlefied
                     actions.push( new InlineAction(( resolve, reject ): void => {
-                        gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
+                        gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addAt( param.card, param.position );
                         resolve( jsAction.NO_CONSEQUENCES );
                     }) );
 

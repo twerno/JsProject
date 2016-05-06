@@ -23,7 +23,7 @@ namespace HsLogic {
     //                     hand: Zone<Card> = gameCtx.gameBoard.zonesOf( param.player ).hand;
 
     //                 if ( !hand.isFull )
-    //                     hand.addEntity( param.card );
+    //                     hand.add( param.card );
     //             });
     //     }
     // }

@@ -25,7 +25,7 @@ namespace HsLogic {
                     player.filled_mana_crystals -= card.baseCost;
                     param.manaSpend = card.baseCost;
 
-                    gameCtx.gameBoard.zonesOf( player ).hand.removeEntity( card );
+                    gameCtx.gameBoard.zonesOf( player ).hand.remove( card );
 
                     resolve( jsAction.NO_CONSEQUENCES );
                 }

@@ -40,10 +40,10 @@ namespace Def {
                 result = result.concat( this._getApplicableTriggers( player.triggers, source, gameCtx ) );
                 result = result.concat( this._getApplicableTriggers( player.hero.triggers, source, gameCtx ) );
 
-                result = result.concat( this._locateTriggerInside( zones.battlefield.getRawArray(), source, gameCtx ) );
-                result = result.concat( this._locateTriggerInside( zones.weapon.getRawArray(), source, gameCtx ) );
-                result = result.concat( this._locateTriggerInside( zones.hand.getRawArray(), source, gameCtx ) );
-                result = result.concat( this._locateTriggerInside( zones.secret.getRawArray(), source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.battlefield.entities, source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.weapon.entities, source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.hand.entities, source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.secret.entities, source, gameCtx ) );
             }
             return result;
         }

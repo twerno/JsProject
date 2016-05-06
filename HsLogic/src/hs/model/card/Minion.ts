@@ -9,6 +9,7 @@ namespace HsLogic {
         def: Def.IMinion;
         body: MinionBody = new MinionBody();
         minion_type: string;
+        position: number = -1;
 
         auras: Aura[] = [];
         battlecry: Def.IDefAction;

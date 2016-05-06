@@ -34,8 +34,6 @@
     <TypeScriptCompile Include="src\core\action\IAction.ts" />
     <TypeScriptCompile Include="src\core\action\InlineAction.ts" />
     <TypeScriptCompile Include="src\core\Entity.ts" />
-    <TypeScriptCompile Include="src\core\Zone.ts" />
-    <TypeScriptCompile Include="src\core\ZoneExceptions.ts" />
     <TypeScriptCompile Include="src\def\Aliases.ts" />
     <TypeScriptCompile Include="src\def\Const.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefAction.ts" />
@@ -90,6 +88,7 @@
     <TypeScriptCompile Include="src\hs\factories\TechActionFactory.ts" />
     <TypeScriptCompile Include="src\hs\helpers\EffectManager.ts" />
     <TypeScriptCompile Include="src\hs\helpers\AuraUpdate.ts" />
+    <TypeScriptCompile Include="src\hs\helpers\ZoneLimit.ts" />
     <TypeScriptCompile Include="src\hs\helpers\RefreshEnchantments.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\DrawCards.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\main\DrawCard.ts" />

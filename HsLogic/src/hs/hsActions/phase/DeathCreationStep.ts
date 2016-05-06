@@ -48,7 +48,7 @@ namespace HsLogic {
                             source = gameCtx.lethalMonitor.getSourceFor( minions[i] );
 
                         //  remove from battlefield
-                        gameCtx.gameBoard.zonesOf( minions[i].owner ).battlefield.removeEntity( minions[i] );
+                        gameCtx.gameBoard.zonesOf( minions[i].owner ).battlefield.remove( minions[i] );
 
                         actions.push(
                             new event.Death( {

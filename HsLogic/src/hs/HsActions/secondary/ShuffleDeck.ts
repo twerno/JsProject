@@ -16,7 +16,7 @@ namespace HsLogic {
                     let param: P = self.param,
                         deck: Zone<Card> = gameCtx.gameBoard.zonesOf( param.player ).deck;
 
-                    MathUtils.randomizeArray( deck.getRawArray() );
+                    MathUtils.randomizeArray( deck.entities );
                 });
         }
     }

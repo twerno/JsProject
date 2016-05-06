@@ -32,7 +32,7 @@ namespace Def {
                 if ( this.param.zones ) {
                     zones = this.param.zones( gameCtx.gameBoard.zonesOf( player ) );
                     for ( let zone of zones ) {
-                        for ( let card of zone.getRawArray() )
+                        for ( let card of zone.entities )
                             if ( this.testAgainstFilters( source, card, gameCtx ) )
                                 result.push( card );
                     }

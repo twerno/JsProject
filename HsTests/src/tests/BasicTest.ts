@@ -15,9 +15,9 @@ var BasicTest: HsTest.TestSequence =
         }),
 
         actions: ( hsGameCtx: HsLogic.HsGameCtx ) => {
-            let frost_bolt: HsLogic.Spell = <HsLogic.Spell>hsGameCtx.gameBoard.zonesOf( hsGameCtx.activePlayer ).hand.getRawArray()[0];
-            let arcane_missiles: HsLogic.Spell = <HsLogic.Spell>hsGameCtx.gameBoard.zonesOf( hsGameCtx.activePlayer ).hand.getRawArray()[1];
-            let target: HsLogic.Minion = <HsLogic.Minion>hsGameCtx.gameBoard.zonesOf( hsGameCtx.inactivePlayer ).battlefield.getRawArray()[0];
+            let frost_bolt: HsLogic.Spell = <HsLogic.Spell>hsGameCtx.gameBoard.zonesOf( hsGameCtx.activePlayer ).hand.entities[0];
+            let arcane_missiles: HsLogic.Spell = <HsLogic.Spell>hsGameCtx.gameBoard.zonesOf( hsGameCtx.activePlayer ).hand.entities[1];
+            let target: HsLogic.Minion = <HsLogic.Minion>hsGameCtx.gameBoard.zonesOf( hsGameCtx.inactivePlayer ).battlefield.entities[0];
 
             return [
                 hsGameCtx.actionFactory.playSpell( {
@@ -45,7 +45,7 @@ var BasicTest: HsTest.TestSequence =
                 name: 'Minion destroyed',
                 errorMsg: 'Minion is not dead!',
                 check: ( hsGameCtx: HsLogic.HsGameCtx ): boolean => {
-                    return hsGameCtx.gameBoard.zonesOf( hsGameCtx.inactivePlayer ).battlefield.getRawArray().length === 0;
+                    return hsGameCtx.gameBoard.zonesOf( hsGameCtx.inactivePlayer ).battlefield.entities.length === 0;
                 }
             },
             {

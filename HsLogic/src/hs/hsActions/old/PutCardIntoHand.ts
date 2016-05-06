@@ -23,7 +23,7 @@
 //                        zones: Zones = gameCtx.gameBoard.zonesOf( param.player );
 //
 //                    if ( !zones.hand.isFull ) {
-//                        zones.hand.addEntity( param.card );
+//                        zones.hand.add( param.card );
 //                        resolve( null );
 //                    } else {
 //                        resolve( [gameCtx.actionFactory.millCard( param.source, param.card )] );

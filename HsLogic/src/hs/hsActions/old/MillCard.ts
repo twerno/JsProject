@@ -16,7 +16,7 @@ namespace HsLogic {
     //                 let param: P = self.param,
     //                     graveyard: Zone<Card> = gameCtx.gameBoard.zonesOf( param.card.owner ).graveyard;
 
-    //                 graveyard.addEntity( param.card );
+    //                 graveyard.add( param.card );
     //             });
     //     }
     // }

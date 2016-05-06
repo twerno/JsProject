@@ -92,6 +92,8 @@
     <TypeScriptCompile Include="src\Classic\Mage\Arcane_Missiles.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Flamestrike.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Fireball.ts" />
+    <TypeScriptCompile Include="src\Classic\Mage\Sheep_Token.ts" />
+    <TypeScriptCompile Include="src\Classic\Mage\Polymorph.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Frost_Nova.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Frost_Bolt.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Mirror_Image.ts" />

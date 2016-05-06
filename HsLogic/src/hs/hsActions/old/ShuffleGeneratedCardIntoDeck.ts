@@ -26,7 +26,7 @@
 //
 //                    for ( let id in param.cards ) {
 //                        if ( !deck.isFull ) {
-//                            deck.addEntity( param.cards[id] );
+//                            deck.add( param.cards[id] );
 //                            added = true;
 //                        }
 //                    }

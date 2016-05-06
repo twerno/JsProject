@@ -21,7 +21,7 @@ namespace HsLogic {
         export class GenSummonMinionEvent<P extends SummonMinionParam> extends ActionEvent<P> {
             valid( gameCtx: HsGameCtx ): boolean {
                 return gameCtx.gameBoard.zonesOf( this.param.card.owner )
-                    .battlefield.has( this.param.card );
+                    .battlefield.contains( this.param.card );
             }
         }
 
@@ -80,7 +80,7 @@ namespace HsLogic {
 
                     // 2. enters the battlefied
                     actions.push( new InlineAction(( resolve, reject ): void => {
-                        gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addEntity( param.card, param.position );
+                        gameCtx.gameBoard.zonesOf( param.card.owner ).battlefield.addAt( param.card, param.position );
                         resolve( jsAction.NO_CONSEQUENCES );
                     }) );
 

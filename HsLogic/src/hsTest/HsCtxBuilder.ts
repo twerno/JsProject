@@ -75,14 +75,14 @@ namespace HsTest {
                 zones = result.gameBoard.zonesOf( player );
 
                 if ( isBattlefieldMinion( c ) ) {
-                    let minion: Card = this.buildCard( player, ( <IBattlefieldMinion>c ).minion );
-                    zones.battlefield.addEntity( minion, ( <IBattlefieldMinion>c ).position );
-                    this.registerAuras( <HsLogic.Minion>minion, result );
+                    let minion: HsLogic.Minion = <HsLogic.Minion>this.buildCard( player, ( <IBattlefieldMinion>c ).minion );
+                    zones.battlefield.addAt( minion, ( <IBattlefieldMinion>c ).position );
+                    this.registerAuras( minion, result );
                 }
 
                 else if ( isBattlefieldWeapon( c ) ) {
                     let weapon: Card = this.buildCard( player, ( <IBattlefieldWeapon>c ).weapon );
-                    zones.weapon.addEntity( <HsLogic.Weapon>weapon );
+                    zones.weapon.add( <HsLogic.Weapon>weapon );
                     this.registerAuras( <HsLogic.Weapon>weapon, result );
                 }
             }
@@ -122,11 +122,11 @@ namespace HsTest {
 
         protected initDeckAndHandOf( player: Player, playerDef: HsCtxPlayerBuilderParam, zones: Zones ): void {
             for ( let cardDef of ( playerDef.hand || [] ) ) {
-                zones.hand.addEntity( this.buildCard( player, cardDef ) );
+                zones.hand.add( this.buildCard( player, cardDef ) );
             }
 
             for ( let cardDef of ( playerDef.deck || [] ) ) {
-                zones.deck.addEntity( this.buildCard( player, cardDef ) );
+                zones.deck.add( this.buildCard( player, cardDef ) );
             }
         }
 

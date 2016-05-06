@@ -32,7 +32,7 @@ namespace HsLogic {
                     let param: P = self.param,
                         actions: ActionType[] = [],
                         weaponZone: Zone<Weapon> = gameCtx.gameBoard.zonesOf( param.player ).weapon,
-                        oldWeapon: Weapon = weaponZone.getRawArray()[0] || null;
+                        oldWeapon: Weapon = weaponZone.entities[0] || null;
 
                     // pay cost & remove from hand
                     actions.push( gameCtx.actionFactory.payCostAndRemoveFromHand( param ) );
@@ -44,12 +44,12 @@ namespace HsLogic {
 
                     // destroy old weapon
                     if ( oldWeapon ) {
-                        weaponZone.removeEntity( oldWeapon );
-                        gameCtx.gameBoard.zonesOf( param.player ).graveyard.addEntity( oldWeapon );
+                        weaponZone.remove( oldWeapon );
+                        gameCtx.gameBoard.zonesOf( param.player ).graveyard.add( oldWeapon );
                     }
 
                     // equip new weapon
-                    weaponZone.addEntity( <Weapon>param.card );
+                    weaponZone.add( <Weapon>param.card );
 
                     // new weapon battlecry triggers
                     // 5. Battlecry Phase

@@ -21,12 +21,5 @@ namespace HsLogic {
                 throw new Error( `No zones defined for player: ${player}.` );
         }
 
-
-        zoneOf<T extends Card>( player: jsAction.Entity, zoneId: string ): Zone<T> {
-            return <Zone<T>>this.zonesOf( player ).get( zoneId );
-        }
-
-
-
     }
 }

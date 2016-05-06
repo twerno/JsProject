@@ -8,7 +8,7 @@ namespace HsLogic {
 
         private registerCard( card: Def.ICard ): Def.ICard {
             if ( this._map.has( card.name ) )
-                throw new Error( `Attempt to duplicate value: ${card}` );
+                console.warn( `Duplicate value ${card.name}`, card );
 
             if ( card.metadata.cardType === Def.UNDEFINED )
                 throw new Error( `Type of card "${card.name}" of set "${this.name}" is UNDEFINED` );

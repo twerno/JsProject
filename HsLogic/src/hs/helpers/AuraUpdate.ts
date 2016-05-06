@@ -31,9 +31,9 @@ namespace HsLogic {
             || aura.auraBearer instanceof Player )
             return true
         else if ( aura.auraBearer instanceof Minion )
-            return gameCtx.gameBoard.zonesOf( aura.auraBearer.owner ).battlefield.has( <Minion>aura.auraBearer )
+            return gameCtx.gameBoard.zonesOf( aura.auraBearer.owner ).battlefield.contains( <Minion>aura.auraBearer )
         else if ( aura.auraBearer instanceof Weapon )
-            return gameCtx.gameBoard.zonesOf( aura.auraBearer.owner ).weapon.has( <Weapon>aura.auraBearer )
+            return gameCtx.gameBoard.zonesOf( aura.auraBearer.owner ).weapon.contains( <Weapon>aura.auraBearer )
 
         return false;
     }

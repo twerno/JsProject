@@ -27,8 +27,8 @@ namespace HsLogic {
     //                     return;
     //                 }
 
-    //                 zones.hand.removeEntity( param.card );
-    //                 zones.graveyard.addEntity( param.card );
+    //                 zones.hand.remove( param.card );
+    //                 zones.graveyard.add( param.card );
 
     //                 resolve( [
     //                     //gameCtx.actionFactory.dispatch<HsGameCtx, P>( new OnAfterDiscardEvent<P>( param ) )
