@@ -35,6 +35,12 @@ namespace Def {
         }
 
 
+        static get ENEMY_SPELL_TARGETABLE_MINION(): ISetBuilder<Minion> {
+            return TargetFinder.ENEMY_MINION
+                .addFilter( Filter.targetable_by_spell_or_hero_power );
+        }
+
+
         static get ENEMY_WEAPON(): ISetBuilder<Weapon> {
             return new EntitySetBuilder<Weapon>( {
                 includeHeroes: false,

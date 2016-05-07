@@ -89,4 +89,13 @@ namespace Def.Filter {
         }
     }
 
+    export function adjacentMinions( minion: Minion ): FSetBuilderFilter<Minion> {
+        return ( source: ISource, entity: Minion, gameCtx: HsGameCtx ): boolean => {
+
+            return entity.owner === minion.owner
+                && Math.abs( entity.position - minion.position ) === 1
+                && gameCtx.gameBoard.zonesOf( minion.owner ).battlefield.contains( entity );
+        }
+    }
+
 }

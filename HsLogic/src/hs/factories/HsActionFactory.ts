@@ -90,5 +90,11 @@ namespace HsLogic {
         transformMinion( param: TransformMinionParam ): jsAction.IAction<T> {
             return new TransformMinion( param );
         }
+
+        putCardIntoOwnersHand( param: PutCardIntoOwnersHandParam ): jsAction.IAction<T> {
+            return new PutCardIntoOwnersHand( param );
+        }
+
+
     }
 }

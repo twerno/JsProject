@@ -5,6 +5,7 @@ namespace Def {
     export type Entity = HsLogic.Entity;
     export type Card = HsLogic.Card;
     export type Hero = HsLogic.Hero;
+    export type Spell = HsLogic.Spell;
     export type Minion = HsLogic.Minion;
     export type Weapon = HsLogic.Weapon;
 

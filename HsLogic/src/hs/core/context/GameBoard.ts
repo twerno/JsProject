@@ -18,7 +18,7 @@ namespace HsLogic {
             if ( result )
                 return result;
             else
-                throw new Error( `No zones defined for player: ${player}.` );
+                throw new Error( `No zones owned by: ${player}.` );
         }
 
     }

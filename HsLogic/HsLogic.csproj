@@ -116,7 +116,7 @@
     <TypeScriptCompile Include="src\hs\hsActions\old\makeChoice\ChooseSingleTarget.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\old\MillCard.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\BasicParam.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\PutCardIntoHand.ts" />
+    <TypeScriptCompile Include="src\hs\hsActions\secondary\PutCardIntoHand.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\old\ReturnCardIntoHandFromPlayZone.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\old\Sequence.ts" />
     <TypeScriptCompile Include="src\hs\hsActions\old\ShuffleGeneratedCardIntoDeck.ts" />
@@ -154,7 +154,6 @@
     <TypeScriptCompile Include="src\hs\model\mechanic\Aura.ts" />
     <TypeScriptCompile Include="src\hs\model\mechanic\Enchantment.ts" />
     <TypeScriptCompile Include="src\hs\model\mechanic\enchantments\AttackHealthEnchantment.ts" />
-    <TypeScriptCompile Include="src\hs\model\mechanic\enchantments\TagManagerEnchantment.ts" />
     <TypeScriptCompile Include="src\hs\model\mechanic\Tag.ts" />
     <TypeScriptCompile Include="src\hs\model\mechanic\Trigger.ts" />
     <TypeScriptCompile Include="src\hs\model\Zone.ts" />

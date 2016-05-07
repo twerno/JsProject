@@ -58,10 +58,10 @@ namespace HsLogic {
 
 
                             // step 4 - spellTextPhase
-                            if ( param.card.spellAction )
-                                actions.push.apply( actions,
-                                    param.card.spellAction.actionBuilder( param.source, param.targets, gameCtx ) );
-
+                            if ( param.card.spellAction
+                                && ( !param.card.spellAction.executable
+                                    || param.card.spellAction.executable( param.source, param.targets, gameCtx ) ) )
+                                actions = actions.concat( param.card.spellAction.actionBuilder( param.source, param.targets, gameCtx ) );
 
                             // step 5 - onAfterPlaySpell
                             actions.push( new OnAfterSpellPhaseEvent( param ).dispatch( gameCtx ) );

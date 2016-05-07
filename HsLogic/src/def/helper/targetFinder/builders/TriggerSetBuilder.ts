@@ -40,17 +40,18 @@ namespace Def {
                 result = result.concat( this._getApplicableTriggers( player.triggers, source, gameCtx ) );
                 result = result.concat( this._getApplicableTriggers( player.hero.triggers, source, gameCtx ) );
 
-                result = result.concat( this._locateTriggerInside( zones.battlefield.entities, source, gameCtx ) );
-                result = result.concat( this._locateTriggerInside( zones.weapon.entities, source, gameCtx ) );
-                result = result.concat( this._locateTriggerInside( zones.hand.entities, source, gameCtx ) );
-                result = result.concat( this._locateTriggerInside( zones.secret.entities, source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.battlefield, source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.weapon, source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.hand, source, gameCtx ) );
+                result = result.concat( this._locateTriggerInside( zones.secret, source, gameCtx ) );
             }
             return result;
         }
 
 
-        protected _locateTriggerInside( cards: Card[], source: ISource, gameCtx: HsGameCtx ): Trigger[] {
-            let result: any[] = [];
+        protected _locateTriggerInside( zone: Zone, source: ISource, gameCtx: HsGameCtx ): Trigger[] {
+            let result: any[] = [],
+                cards: Card[] = zone.entities;
 
             for ( let i = 0; i < cards.length; i++ )
                 result.push.apply( result, this._getApplicableTriggers( cards[i].triggers, source, gameCtx ) );

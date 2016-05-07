@@ -15,7 +15,7 @@ namespace HsLogic {
                     actions.push( gameCtx.techActionFactory.addTag( {
                         source: param.source,
                         tag: new Def.Freeze_Tag( param.source ),
-                        targets: param.targets
+                        targets: acquireTargets<Character>( param.targets, param.source, gameCtx )
                     }) );
 
                     resolve( actions );
