@@ -88,6 +88,8 @@ namespace HsLogic {
     }
 
     function isSetter( x: any ): x is ISetter {
-        return typeof x === 'object' && x.hasOwnProperty( 'set' )
+        return ClassUtils.ObjectValidator
+            .NUMBER( 'set' )
+            .validate( x );
     }
 }

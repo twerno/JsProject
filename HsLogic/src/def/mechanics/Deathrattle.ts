@@ -22,7 +22,7 @@ namespace Def {
             },
 
 
-            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] {
+            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] {
                 return param.action( trigger, event, gameCtx );
             }
         }

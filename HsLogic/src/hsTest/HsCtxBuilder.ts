@@ -20,8 +20,10 @@ namespace HsTest {
     }
 
     function isBattlefieldWeapon( x: any ): x is IBattlefieldWeapon {
-        return x.hasOwnProperty( 'owner' )
-            && x.hasOwnProperty( 'weapon' );
+        return ClassUtils.ObjectValidator
+            .NUMBER( 'owner' )
+            .OBJECT( 'weapon' )
+            .validate( x );
     }
 
     export interface IBattlefieldMinion {
@@ -31,8 +33,10 @@ namespace HsTest {
     }
 
     function isBattlefieldMinion( x: any ): x is IBattlefieldMinion {
-        return x.hasOwnProperty( 'owner' )
-            && x.hasOwnProperty( 'minion' );
+        return ClassUtils.ObjectValidator
+            .NUMBER( 'owner' )
+            .OBJECT( 'minion' )
+            .validate( x );
     }
 
     export interface HsCtxBuilderParam {

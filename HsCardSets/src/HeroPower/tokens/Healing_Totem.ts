@@ -21,15 +21,17 @@ namespace Def {
 
                 enable_self_trigger_protection: false,
 
-                actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] => {
+                actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                     let source: ISource = trigger.getSource();
 
-                    return gameCtx.actionFactory.calculateAndHeal( {
-                        source: source,
-                        targets: TargetFinder.FRIENDLY_MINION.buildSet( source, gameCtx ),
-                        amount: 1,
-                        cancelAction: { value: false }
-                    });
+                    return [
+                        gameCtx.actionFactory.calculateAndHeal( {
+                            source: source,
+                            targets: TargetFinder.FRIENDLY_MINION.buildSet( source, gameCtx ),
+                            amount: 1,
+                            cancelAction: { value: false }
+                        })
+                    ];
                 }
             }
         ]

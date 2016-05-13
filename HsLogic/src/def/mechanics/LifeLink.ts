@@ -20,15 +20,17 @@ namespace Def {
             },
 
 
-            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] {
+            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] {
                 let param: HsLogic.DamageParam = <HsLogic.DamageParam>event.param;
 
-                return gameCtx.actionFactory.calculateAndHeal( {
-                    source: param.source,
-                    targets: [trigger.owner.hero],
-                    amount: param.amount,
-                    cancelAction: { value: false }
-                });
+                return [
+                    gameCtx.actionFactory.calculateAndHeal( {
+                        source: param.source,
+                        targets: [trigger.owner.hero],
+                        amount: param.amount,
+                        cancelAction: { value: false }
+                    })
+                ];
             }
         }
     }

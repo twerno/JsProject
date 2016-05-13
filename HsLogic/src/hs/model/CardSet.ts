@@ -34,6 +34,13 @@ namespace HsLogic {
         }
 
 
+        registerSecred( secretDef: Def.ISecret ): Def.ISecret {
+            secretDef.metadata.cardType = Def.CARD_TYPE.SECRET;
+            this.registerCard( secretDef );
+            return secretDef;
+        }
+
+
         count(): number {
             return this._map.size;
         }

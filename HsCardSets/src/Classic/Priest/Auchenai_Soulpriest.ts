@@ -48,30 +48,34 @@ namespace Def {
                 return event.param.source.player === trigger.owner;
             },
 
-            actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] => {
+            actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                 let param: HsLogic.CalculateHealParam = <HsLogic.CalculateHealParam>event.param;
 
                 param.cancelAction.value = true;
 
                 if ( event instanceof HsLogic.event.PreCalculateAndHealEvent ) {
                     let param: HsLogic.HealTargetsParam = <HsLogic.HealTargetsParam>event.param;
-                    return gameCtx.actionFactory.calculateAndDealDamage( {
-                        source: param.source,
-                        amount: param.amount,
-                        targets: param.targets,
-                        damageType: DAMAGE_TYPE.DIRECT,
-                        notifyMode: param.notifyMode
-                    })
+                    return [
+                        gameCtx.actionFactory.calculateAndDealDamage( {
+                            source: param.source,
+                            amount: param.amount,
+                            targets: param.targets,
+                            damageType: DAMAGE_TYPE.DIRECT,
+                            notifyMode: param.notifyMode
+                        })
+                    ]
                 }
 
                 else if ( event instanceof HsLogic.event.PreSplitHealEvent ) {
                     let param: HsLogic.SplitHealParam = <HsLogic.SplitHealParam>event.param;
-                    return gameCtx.actionFactory.calculateAndSplitDamage( {
-                        source: param.source,
-                        amount: param.amount,
-                        splitMode: param.splitMode,
-                        damageType: DAMAGE_TYPE.DIRECT
-                    })
+                    return [
+                        gameCtx.actionFactory.calculateAndSplitDamage( {
+                            source: param.source,
+                            amount: param.amount,
+                            splitMode: param.splitMode,
+                            damageType: DAMAGE_TYPE.DIRECT
+                        })
+                    ]
                 }
 
                 return null;

@@ -26,60 +26,6 @@ namespace ClassUtils {
     //}
 
 
-    export class ObjectValidator {
-
-        private _entries: ObjectValidatorEntry[] = [];
-
-        addType( name: string, type: string, optional?: boolean ): ObjectValidator {
-            this._entries.push( new ObjectValidatorEntry( name, type, null, optional || false ) );
-
-            return this;
-        }
-
-        addClass( name: string, clazz: Function, optional?: boolean ): ObjectValidator {
-            this._entries.push( new ObjectValidatorEntry( name, 'object', clazz, optional || false ) );
-            return this;
-        }
-
-        validate( object: Object ): boolean {
-            let value: any;
-
-            for ( let entry of this._entries ) {
-                if ( !deepHasOwnProperty( entry.name, object ) ) {
-                    if ( entry.optional )
-                        continue;
-                    else
-                        return false;
-                }
-
-                value = deepKeyValue( entry.name, object );
-                if ( typeof ( value ) !== entry.type
-                    || ( entry.clazz && !( value instanceof entry.clazz ) ) )
-                    return false;
-            }
-
-            return true;
-        }
-
-        static addType( name: string, type: string, optional?: boolean ): ObjectValidator {
-            let validator: ObjectValidator = new ObjectValidator();
-            return validator.addType( name, type, optional );
-        }
-
-        static addClass( name: string, clazz: Function, optional?: boolean ): ObjectValidator {
-            let validator: ObjectValidator = new ObjectValidator();
-            return validator.addClass( name, clazz, optional );
-        }
-
-    }
-
-
-    class ObjectValidatorEntry {
-
-        constructor( public name: string, public type: string, public clazz: Function, public optional: boolean ) { }
-    }
-
-
     export function deepHasOwnProperty( deepKey: string, map: any ): any {
         let dotIdx: number = deepKey.indexOf( '.' ),
             result: any;

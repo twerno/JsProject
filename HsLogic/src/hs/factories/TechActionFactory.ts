@@ -7,6 +7,14 @@ namespace HsLogic {
 
     export class TechActionFactory<T extends HsGameCtx> {
 
+        winLossCheck( param: IActionParam ): jsAction.IAction<T> {
+            return new WinLossCheck( param );
+        }
+
+        cancelAction( param: IHsCancelableParam ): jsAction.IAction<T> {
+            return new CancelAction( param );
+        }
+
         registerAura( param: RegisterAuraParam ): jsAction.IAction<T> {
             return new RegisterAura( param );
         }

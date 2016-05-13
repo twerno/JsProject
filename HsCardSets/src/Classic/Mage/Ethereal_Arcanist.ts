@@ -27,15 +27,17 @@ namespace Def {
                         && gameCtx.gameBoard.zonesOf( gameCtx.activePlayer ).secret.length > 0;
                 },
 
-                actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] {
+                actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] {
                     let enchantment: HsLogic.Enchantment<Minion>
                         = new HsLogic.AttackHealthEnchantment( trigger.getSource(), <Minion>trigger.attachedTo )
                             .init( { attack: 2, health: 2 });
 
-                    return gameCtx.techActionFactory.attachEnchantment( {
-                        source: trigger.getSource(),
-                        enchantment: enchantment
-                    });
+                    return [
+                        gameCtx.techActionFactory.attachEnchantment( {
+                            source: trigger.getSource(),
+                            enchantment: enchantment
+                        })
+                    ];
                 }
             }
         ]

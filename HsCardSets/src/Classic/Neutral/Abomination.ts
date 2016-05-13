@@ -17,15 +17,17 @@ namespace Def {
         mechanics: [
             Deathrattle( {
 
-                action: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {
+                action: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                     let source: ISource = trigger.sourceCard.getSource();
 
-                    return gameCtx.actionFactory.calculateAndDealDamage( {
-                        source: source,
-                        targets: TargetFinder.ANY_CHARACTER.buildSet( source, gameCtx ),
-                        amount: 4,
-                        damageType: DAMAGE_TYPE.DIRECT
-                    });
+                    return [
+                        gameCtx.actionFactory.calculateAndDealDamage( {
+                            source: source,
+                            targets: TargetFinder.ANY_CHARACTER.buildSet( source, gameCtx ),
+                            amount: 4,
+                            damageType: DAMAGE_TYPE.DIRECT
+                        })
+                    ];
                 }
 
             })

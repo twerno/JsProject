@@ -15,14 +15,16 @@ namespace Def {
         metadata: metadata( CARD_CLASS.MAGE, CARD_RARITY.LEGENDARY ),
 
         mechanics: [
-            Whenever_You_Cast_Spell(( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {
+            Whenever_You_Cast_Spell(( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                 let fireball: Spell = HsLogic.Spell.build( trigger.owner, Fireball );
 
-                return gameCtx.actionFactory.putCardIntoOwnersHand( {
-                    source: trigger.getSource(),
-                    card: fireball
-                });
+                return [
+                    gameCtx.actionFactory.putCardIntoOwnersHand( {
+                        source: trigger.getSource(),
+                        card: fireball
+                    })
+                ];
             })
-        ]
+        ] // mechanics
     });
 }

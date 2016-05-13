@@ -48,7 +48,7 @@ namespace Def {
 
             enable_self_trigger_protection: false,
 
-            actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] => {
+            actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                 return [
                     gameCtx.techActionFactory.detachEnchantment( {
                         source: source, enchantment: enchantment

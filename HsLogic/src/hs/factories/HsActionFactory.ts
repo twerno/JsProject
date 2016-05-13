@@ -6,6 +6,10 @@ namespace HsLogic {
 
     export class HsActionFactory<T extends HsGameCtx> {
 
+        removeSecret( param: RemoveSecretParam ): jsAction.IAction<T> {
+            return new RemoveSecret( param );
+        }
+
         calculateAndDealDamage( param: DamageTargetsParam ): jsAction.IAction<T> {
             return new CalculateAndDealDamage( param );
         }

@@ -36,7 +36,7 @@ namespace Def {
 
             triggerable: param.triggerable || null,
 
-            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] {
+            actionBuilder( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] {
                 let newEffects: IEffects = param.effectBuilder( trigger, event, gameCtx ),
                     source: ISource = trigger.getSource();
 

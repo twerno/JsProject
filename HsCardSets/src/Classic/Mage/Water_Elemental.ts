@@ -26,13 +26,15 @@ namespace Def {
                         && param.amount > 0;
                 },
 
-                actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action | Action[] => {
+                actionBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                     let param: HsLogic.DamageParam = <HsLogic.DamageParam>event.param;
 
-                    return gameCtx.actionFactory.freeze( {
-                        source: trigger.getSource(),
-                        targets: [param.target]
-                    });
+                    return [
+                        gameCtx.actionFactory.freeze( {
+                            source: trigger.getSource(),
+                            targets: [param.target]
+                        })
+                    ];
                 }
             }
         ]

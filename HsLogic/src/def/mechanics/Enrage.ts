@@ -14,6 +14,7 @@ namespace Def {
                     if ( event instanceof HsLogic.event.Heal
                         || event instanceof HsLogic.event.Damage )
                         return event.param.target === trigger.attachedTo;
+                    return false;
                 },
 
                 effectBuilder: ( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): IEffects => {

@@ -45,6 +45,7 @@ namespace Def {
         export const ENCHANT: string = 'ENCHANT';
         export const WHENEVER_YOU_CAST_SPELL: string = 'WHENEVER_YOU_CAST_SPELL';
         export const NONE: string = 'NONE';
+        export const SECRET: string = 'SECRET';
     }
 
     export namespace CARD_CLASS {

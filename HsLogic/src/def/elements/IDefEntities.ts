@@ -2,10 +2,6 @@
 
 namespace Def {
 
-    //    manaCrystals: number,
-    //    hero: any,
-    //    heroPower: any
-
     export type LinkedType = ICard | IHeroPower | IHero;
 
     export interface ICard {
@@ -51,6 +47,7 @@ namespace Def {
 
         aura?: IDefAura[],
         battlecry?: IDefAction,
+        customDurabilityLoseMechanic?: any
     }
 
 
@@ -69,6 +66,12 @@ namespace Def {
         armor: number,
 
         equipHeroActions: IDefAction
+    }
+
+
+    export interface ISecret extends ICard {
+
+        mechanics: IDefTrigger[]
     }
 
 }

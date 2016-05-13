@@ -18,15 +18,17 @@ namespace Def {
         linked: [Violet_Apprentice],
 
         mechanics: [
-            Whenever_You_Cast_Spell(( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action => {
+            Whenever_You_Cast_Spell(( trigger: Trigger, event: ActionEvent, gameCtx: HsGameCtx ): Action[] => {
                 let minion: Minion = HsLogic.Minion.build( trigger.owner, Violet_Apprentice );
                 let position: number = 0;
 
-                return gameCtx.actionFactory.summonMinion( {
-                    source: trigger.getSource(),
-                    card: minion,
-                    position: position
-                });
+                return [
+                    gameCtx.actionFactory.summonMinion( {
+                        source: trigger.getSource(),
+                        card: minion,
+                        position: position
+                    })
+                ];
             })
         ]
 

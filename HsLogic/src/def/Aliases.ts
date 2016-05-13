@@ -8,6 +8,7 @@ namespace Def {
     export type Spell = HsLogic.Spell;
     export type Minion = HsLogic.Minion;
     export type Weapon = HsLogic.Weapon;
+    export type Secret = HsLogic.Secret;
 
 
     export type Player = HsLogic.Player;

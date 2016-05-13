@@ -67,9 +67,9 @@ namespace HsLogic {
 
     export function isLivingEntity( x: any ): x is ILivingEntity {
         return ClassUtils.ObjectValidator
-            .addType( 'def.attack', 'number' )
-            .addType( 'def.health', 'number' )
-            .addClass( 'body', MinionBody )
+            .NUMBER( 'def.attack' )
+            .NUMBER( 'def.health' )
+            .OBJECT( 'body', MinionBody )
             .validate( x );
     }
 
