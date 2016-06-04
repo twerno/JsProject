@@ -9,7 +9,10 @@ namespace HsLogic {
 
     export class Tag {
         get type(): string { return ClassUtils.getNameOfClass( this ) }
-        silencable: boolean;
+        silencable: boolean = true;
+        copyable: boolean = true;
+
+        value: number = 0;
 
         constructor( public source: HsLogic.ISource ) { }
     }
@@ -89,6 +92,15 @@ namespace HsLogic {
 
         count( tagClass: TagClass ): number {
             return this.getAll( tagClass ).length;
+        }
+
+
+        countValues( tagClass: TagClass ): number {
+            let result: number = 0;
+            this.getAll( tagClass ).forEach(
+                tag => result += tag.value
+            );
+            return result;
         }
     }
 

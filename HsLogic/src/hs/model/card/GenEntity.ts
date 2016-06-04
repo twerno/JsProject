@@ -5,59 +5,78 @@
 namespace HsLogic {
 
 
-    export interface IOrderable {
-        orderOfPlay: Date
-    }
-
-
-    export class OrderableEntity extends jsAction.Entity implements IOrderable {
+    export class Entity {
+        id: string;
+        def: Object;
+        owner: Player;
         orderOfPlay: Date = new Date();
 
-        static compare( a: IOrderable, b: IOrderable ): number {
-            return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
-        }
-    }
+        //static build( source: ISource, def: Object ): Entity {
+        //    return new Entity( source, def ).init();
+        //}
 
 
-    export class Entity extends OrderableEntity {
-        def: Object;
-
-        protected initFromDefinition( def: Object ): void {
-            this.def = def;
-        }
-
-
-        static build( owner: Player, def: Object ): Entity {
-            return new Entity( owner, def ).init();
-        }
-
-
-        constructor( public owner: Player, def: Object ) {
-            super( owner );
+        constructor( public source: ISource, def: Object ) {
+            this.id = generateNewId();
+            this.owner = source ? source.player : null;
             this.def = def || null;
         }
 
-
         init(): Entity {
-            this.def && this.initFromDefinition( this.def );
             return this;
         }
-
 
         getSource(): ISource {
             return {
                 player: this.owner,
-                entity: this,
+                sourceCardDef: this.def,
                 sourceType: this.getSourceType()
             }
         }
-
 
         getSourceType(): SOURCE_TYPE {
             return SOURCE_TYPE.NONE;
         }
 
+        static compare( a: Entity, b: Entity ): number {
+            return a.orderOfPlay.getTime() - b.orderOfPlay.getTime();
+        }
+
+        toString(): string {
+            return `[${ClassUtils.getNameOfClass( this )}:${this.id}]`;
+        }
+
     }
+
+
+    //export class NamedEntity extends Entity {
+
+    //    def: Def.INamedEntity;
+
+    //    name: string;
+
+
+    //    protected initFromDefinition( def: Def.INamedEntity ): void {
+    //        super.initFromDefinition( def );
+
+    //        this.name = def.name;
+    //    }
+
+
+    //    static build( owner: Player, def: Def.INamedEntity ): NamedEntity {
+    //        return new NamedEntity( owner, def ).init();
+    //    }
+
+
+    //    constructor( owner: Player, def: Def.INamedEntity ) {
+    //        super( owner, def );
+    //    }
+
+    //    init(): NamedEntity {
+    //        super.init();
+    //        return this;
+    //    }
+    //}
 
 
     export interface ILivingEntity {

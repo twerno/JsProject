@@ -66,7 +66,13 @@ namespace Def {
 
     export enum AURA_TYPE {
         ATTACK_HEALTH = <any>"ATTACK_HEALTH",
-        OTHER = <any>"OTHER"
+        OTHER = <any>"OTHER",
+        NONE = <any>"NONE"
+    }
+
+    export enum ENCHANTMENT_MODE {
+        STATIC = <any>"STATIC",
+        DYNAMIC = <any>"DYNAMIC"
     }
 
     export enum FILTER_COMPARE_MODE {

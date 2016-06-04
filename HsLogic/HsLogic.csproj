@@ -34,12 +34,14 @@
     <TypeScriptCompile Include="src\core\Entity.ts" />
     <TypeScriptCompile Include="src\def\Aliases.ts" />
     <TypeScriptCompile Include="src\def\Const.ts" />
+    <TypeScriptCompile Include="src\def\elements\Effects\IDefAura2.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefAction.ts" />
-    <TypeScriptCompile Include="src\def\elements\IDefAura.ts" />
+    <TypeScriptCompile Include="src\def\elements\Effects\IDefEnchantment.ts" />
+    <TypeScriptCompile Include="src\def\elements\Effects\IDefAura.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefEntities.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefMetadata.ts" />
     <TypeScriptCompile Include="src\def\elements\IDefTargetDefinition.ts" />
-    <TypeScriptCompile Include="src\def\elements\IDefTrigger.ts" />
+    <TypeScriptCompile Include="src\def\elements\Effects\IDefTrigger.ts" />
     <TypeScriptCompile Include="src\def\helper\SimpleTargetDefinition.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\DefMinionSetBuilder.ts" />
     <TypeScriptCompile Include="src\def\helper\targetFinder\builders\EntitySetBuilder.ts" />

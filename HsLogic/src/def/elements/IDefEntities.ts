@@ -4,8 +4,12 @@ namespace Def {
 
     export type LinkedType = ICard | IHeroPower | IHero;
 
-    export interface ICard {
-        name: string,
+    export interface INamedEntity {
+        name: string;
+    }
+
+    export interface ICard extends INamedEntity {
+        //name: string,
         //        text: string,
         cost?: number,
         metadata: IMetadata,

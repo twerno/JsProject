@@ -93,6 +93,7 @@
     <TypeScriptCompile Include="src\Classic\Mage\Archmage_Antonidas.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Blizzard.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Cone_Of_Cold.ts" />
+    <TypeScriptCompile Include="src\Classic\Mage\Mirror_Entity.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Counterspell.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Ethereal_Arcanist.ts" />
     <TypeScriptCompile Include="src\Classic\Mage\Fireball.ts" />

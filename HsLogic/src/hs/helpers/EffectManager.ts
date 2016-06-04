@@ -2,6 +2,15 @@
 
 namespace HsLogic {
 
+    export class EffectManager {
+        private _managedEffects: Entity[];
+
+
+
+    }
+
+
+
 
     export function tagsOperations( source: ISource, target: Card | Player, oldTags: Tag[], newTags: Tag[], gameCtx: HsGameCtx ): ActionType[] {
         let result: ActionType[] = [],

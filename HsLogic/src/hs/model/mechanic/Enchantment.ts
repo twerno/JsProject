@@ -3,27 +3,30 @@
 namespace HsLogic {
 
 
-    export abstract class Enchantment<T extends PermanentExt> extends OrderableEntity {
+    export class Enchantment<T extends PermanentExt> extends Entity {
 
-        priority: number = 1;
+        def: Def.IDefEnchantment;
 
-        constructor( public source: ISource, public target: T, public isAura: boolean = false ) {
+        get priority(): number { return this.def.priority || 1 }
+        get name(): string { return this.def.name || '' }
+        get desc(): string { return this.def.desc || '' }
+        get mechanic(): string { return this.def.mechanic || '' }
+        get enchantmentMode(): Def.ENCHANTMENT_MODE { return this.def.enchantmentMode || Def.ENCHANTMENT_MODE.DYNAMIC }
+        get effectBuilder(): Def.FEnchantmentEffectBuilder { return this.def.effectBuilder }
 
-            super( null );
+        attachedTo: PermanentExt;
+        managedBy: Entity;
 
-            if ( !this.validateTarget )
-                throw new Error( `Target ${target} is not valid for enchantment ${ClassUtils.getNameOfClass( this )}.` );
+        constructor( source: ISource, def: Def.IDefEnchantment ) {
+            super( null, def );
         }
 
-        protected abstract validateTarget(): boolean;
-        abstract apply(): void;
-        abstract remove(): void;
 
         eq( enchant: Enchantment<PermanentExt> ): boolean {
-            return this.priority === enchant.priority
-                && this.target === enchant.target
-                && this.isAura === enchant.isAura
-                && this.source.entity === enchant.source.entity;
+            return this.def === enchant.def
+                && this.owner === enchant.owner
+                && this.attachedTo === enchant.attachedTo
+                && this.managedBy === enchant.managedBy;
         }
 
         compare( a: Enchantment<T>, b: Enchantment<T> ): number {
@@ -33,7 +36,7 @@ namespace HsLogic {
                 return a.priority - b.priority;
         }
 
-        get owner(): Player { return this.target.owner }
+        get owner(): Player { return this.attachedTo.owner }
         set owner( dummy: Player ) { /* dummy */ }
     }
 }
