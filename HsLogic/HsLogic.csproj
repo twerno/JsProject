@@ -22,157 +22,16 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\commons\ClassUtils.ts" />
-    <TypeScriptCompile Include="src\commons\Collection.ts" />
-    <TypeScriptCompile Include="src\commons\CommonUtils.ts" />
-    <TypeScriptCompile Include="src\commons\MathUtils.ts" />
-    <TypeScriptCompile Include="src\commons\ObjectValidator.ts" />
-    <TypeScriptCompile Include="src\commons\StringUtils.ts" />
-    <TypeScriptCompile Include="src\core\action\ActionStack.ts" />
-    <TypeScriptCompile Include="src\core\action\IAction.ts" />
-    <TypeScriptCompile Include="src\core\action\InlineAction.ts" />
-    <TypeScriptCompile Include="src\core\Entity.ts" />
-    <TypeScriptCompile Include="src\def\Aliases.ts" />
-    <TypeScriptCompile Include="src\def\Const.ts" />
-    <TypeScriptCompile Include="src\def\elements\Effects\IDefAura2.ts" />
-    <TypeScriptCompile Include="src\def\elements\IDefAction.ts" />
-    <TypeScriptCompile Include="src\def\elements\Effects\IDefEnchantment.ts" />
-    <TypeScriptCompile Include="src\def\elements\Effects\IDefAura.ts" />
-    <TypeScriptCompile Include="src\def\elements\IDefEntities.ts" />
-    <TypeScriptCompile Include="src\def\elements\IDefMetadata.ts" />
-    <TypeScriptCompile Include="src\def\elements\IDefTargetDefinition.ts" />
-    <TypeScriptCompile Include="src\def\elements\Effects\IDefTrigger.ts" />
-    <TypeScriptCompile Include="src\def\helper\SimpleTargetDefinition.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\builders\DefMinionSetBuilder.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\builders\EntitySetBuilder.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\builders\IEntitySetBuilder.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\builders\TriggerSetBuilder.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\filters\DefMinionFilter.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\filters\Filters.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\filters\StandardFilters.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\filters\TargetFilters.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\filters\TechFilters.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\ISetBuilder.ts" />
-    <TypeScriptCompile Include="src\def\helper\targetFinder\TargetFinder.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\aura\SpellDamage.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\SecretsTrigger.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\Deathrattle.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\EffectManager.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\Enchantment.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\Enrage.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\LifeLink.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\onPlayMechanics\AttackHealthEnchant.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\Tags.ts" />
-    <TypeScriptCompile Include="src\def\mechanics\Whenever_You_Cast_Spell.ts" />
-    <TypeScriptCompile Include="src\helpers\DbgUtils.ts" />
-    <TypeScriptCompile Include="src\hsTest\drawer\TestSequenceResultDrawer.ts" />
-    <TypeScriptCompile Include="src\hsTest\HsCtxBuilder.ts" />
-    <TypeScriptCompile Include="src\hsTest\HsTestFramework.ts" />
-    <TypeScriptCompile Include="src\hsTest\TestCommons.ts" />
-    <TypeScriptCompile Include="src\hsTest\TestSequenceRunner.ts" />
-    <TypeScriptCompile Include="src\hs\Const.ts" />
-    <TypeScriptCompile Include="src\hs\core\Action.ts" />
-    <TypeScriptCompile Include="src\hs\core\ActionEvent.ts" />
-    <TypeScriptCompile Include="src\hs\core\context\EventManager.ts" />
-    <TypeScriptCompile Include="src\hs\core\context\GameBoard.ts" />
-    <TypeScriptCompile Include="src\hs\core\context\HsContext.ts" />
-    <TypeScriptCompile Include="src\hs\core\context\IContextUtils.ts" />
-    <TypeScriptCompile Include="src\hs\core\context\LethalMonitor.ts" />
-    <TypeScriptCompile Include="src\hs\core\context\PowerManager.ts" />
-    <TypeScriptCompile Include="src\hs\event\CombatEvents.ts" />
-    <TypeScriptCompile Include="src\hs\event\DamageEvents.ts" />
-    <TypeScriptCompile Include="src\hs\event\DrawCardEvents.ts" />
-    <TypeScriptCompile Include="src\hs\event\HealEvents.ts" />
-    <TypeScriptCompile Include="src\hs\event\TurnEvents.ts" />
-    <TypeScriptCompile Include="src\hs\factories\HsActionFactory.ts" />
-    <TypeScriptCompile Include="src\hs\factories\HsEntityFactory.ts" />
-    <TypeScriptCompile Include="src\hs\factories\PhaseActionFactory.ts" />
-    <TypeScriptCompile Include="src\hs\factories\TechActionFactory.ts" />
-    <TypeScriptCompile Include="src\hs\helpers\AuraUpdate.ts" />
-    <TypeScriptCompile Include="src\hs\helpers\EffectManager.ts" />
-    <TypeScriptCompile Include="src\hs\helpers\RefreshEnchantments.ts" />
-    <TypeScriptCompile Include="src\hs\helpers\CharacterHelper.ts" />
-    <TypeScriptCompile Include="src\hs\helpers\ZoneLimit.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\BasicParam.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\damage\CalculateAndDealDamage.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\damage\CalculateAndSplitDamage.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\damage\DamageCommons.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\damage\MultistepDamage.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\EmptyAction.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\heal\CalculateAndHeal.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\heal\CalculateAndSplitHeal.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\heal\HealCommons.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\heal\MultistepHeal.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\CombatSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\DrawCard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\DrawCards.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\PlayCardSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\PlayMinionSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\PlaySpellSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\main\PlayWeaponSequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\AddGeneratedCardIntoHand.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\DestroyCardInPlay.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\Discard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\makeChoice\ChooseSingleTarget.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\MillCard.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\ReturnCardIntoHandFromPlayZone.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\Sequence.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\ShuffleGeneratedCardIntoDeck.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\old\SilenceAMinion.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\phase\CombatPhase.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\phase\CombatPreparationPhase.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\phase\AuraUpdateStep.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\phase\DeathCreationStep.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\phase\DeathPhase.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\phase\OutermostPhaseEnd.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\phase\PlayPhase.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\Battlecry.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\EquipHeroPower.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\EquipWeapon.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\Fatigue.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\Freeze.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\RemoveSecret.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\GainArmor.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\PayCostAndRemoveFromHand.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\PutCardIntoHand.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\ShuffleDeck.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\SummonMinion.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\WinLossCheck.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\secondary\TransformMinion.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\AddTag.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\AttachEnchantment.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\CancelAction.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\ChooseAtRandom.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\DetachEnchantment.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvent.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\DispatchEvents.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\ForceUnregisterAura.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterAura.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\RegisterTrigger.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\RemoveTag.ts" />
-    <TypeScriptCompile Include="src\hs\hsActions\technical\UnregisterTrigger.ts" />
-    <TypeScriptCompile Include="src\hs\model\CardSet.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\Card.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\GenEntity.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\Hero.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\HeroPower.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\Minion.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\Player.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\Secret.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\Spell.ts" />
-    <TypeScriptCompile Include="src\hs\model\card\Weapon.ts" />
-    <TypeScriptCompile Include="src\hs\model\mechanic\Aura.ts" />
-    <TypeScriptCompile Include="src\hs\model\mechanic\Enchantment.ts" />
-    <TypeScriptCompile Include="src\hs\model\mechanic\enchantments\AttackHealthEnchantment.ts" />
-    <TypeScriptCompile Include="src\hs\model\mechanic\Tag.ts" />
-    <TypeScriptCompile Include="src\hs\model\mechanic\Trigger.ts" />
-    <TypeScriptCompile Include="src\hs\model\Zone.ts" />
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TODO.txt" />
+    <TypeScriptCompile Include="src\action\ActionStack.ts" />
+    <TypeScriptCompile Include="src\core\IAction.ts" />
+    <TypeScriptCompile Include="src\Entity.ts" />
+    <TypeScriptCompile Include="src\helpers\ClassHelper.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\hs\hsActions\old\param\" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -202,20 +61,18 @@
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>
-    </TypeScriptModuleKind>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <TypeScriptOutFile>dist\HsLogic.js</TypeScriptOutFile>
     <TypeScriptOutDir>dist\</TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
-    <TypeScriptSourceRoot>
-    </TypeScriptSourceRoot>
+    <TypeScriptSourceRoot>..\src</TypeScriptSourceRoot>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
