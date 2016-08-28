@@ -1,0 +1,11 @@
+{
+	"name": "my-awesome-package",
+	
+  "version": "0.1",
+  "dependencies": {
+    "typescript": "^2.0.0"
+  },
+  "scripts": {
+        "build": "tsc"
+  }
+}

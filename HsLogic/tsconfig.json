@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "sourceMap": true,
+    "declaration": true,
+    "removeComments": true,
+    "outFile": "dist/HsLogic.js",
+    "outDir": "dist",
+    "sourceRoot": "../src",
+    
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    //"strictNullChecks": true, //does not works with: "typescript.validate.enable" = true
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "skipDefaultLibCheck": true
+  },
+  "exclude": [
+    "src.old/**/*",
+    "dist/**/*",
+	"node_modules/**/*"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+  // "compileOnSave": true
+}

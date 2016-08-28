@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+	<script src="http://requirejs.org/docs/release/2.2.0/comments/require.js"></script>
+    <script src="..\dist\HsLogic.js"></script>
+	<script>
+		require(['helpers/ClassHelper'], function(methods) {
+			console.log(methods.getNameOfClass(window));
+		})
+	</script>
+</head>
+<body>
+    <div id='results'></div>
+</body>
+</html>

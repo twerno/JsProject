@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "tsc",
+    "isShellCommand": true,
+    "args": [
+        "-p",
+        "."
+        // "-w" // auto compile does not work properly 
+    ],
+    // "isWatching": true, // auto compile does not work properly
+    "showOutput": "silent",
+    "problemMatcher": { // default matcher ("$tsc") does not work
+        "owner": "typescript",
+        "fileLocation": [
+            "relative",
+            "${workspaceRoot}"
+        ],
+        "pattern": {
+            "regexp": "^(.*)\\((\\d+),(\\d+)\\):\\s+(warning|error)\\s+(TS\\d+):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "code": 5,
+            "message": 6
+        }
+    }
+}
