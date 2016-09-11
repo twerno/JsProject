@@ -14,6 +14,6 @@ namespace HsLogic {
         HERO_POWER = <any>"HERO_POWER",
         PLAYER = <any>"PLAYER",
         HERO = <any>"HERO",
-        NONE = <any>"NONE"
+        OTHER = <any>"OTHER"
     }
 }

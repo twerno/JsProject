@@ -8,20 +8,23 @@
     "outFile": "dist/HsLogic.js",
     "outDir": "dist",
     "sourceRoot": "../src",
-    
-    "noEmit": true,
+
     "noImplicitAny": true,
     "noImplicitThis": true,
-    //"strictNullChecks": true, //does not works with: "typescript.validate.enable" = true
+    "strictNullChecks": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true,
-    "skipDefaultLibCheck": true
+    "skipDefaultLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noResolve": false, //?
+    "preserveConstEnums": false
   },
   "exclude": [
     "src.old/**/*",
     "dist/**/*",
-	"node_modules/**/*"
+    "node_modules/**/*"
   ],
   "include": [
     "src/**/*"

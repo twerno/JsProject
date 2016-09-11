@@ -6,12 +6,12 @@
     "isShellCommand": true,
     "args": [
         "-p",
-        "."
-        // "-w" // auto compile does not work properly 
+        ".",
+        "-w"
     ],
-    // "isWatching": true, // auto compile does not work properly
+    "isWatching": true,
     "showOutput": "silent",
-    "problemMatcher": { // default matcher ("$tsc") does not work
+    "problemMatcher": { // default matcher ("$tsc", "$tsc-watch") does not work
         "owner": "typescript",
         "fileLocation": [
             "relative",
@@ -25,6 +25,11 @@
             "severity": 4,
             "code": 5,
             "message": 6
+        },
+        "watching": {
+            "beginsPattern": "File change detected. Starting incremental compilation...",
+            "endsPattern": "Compilation complete. Watching for file changes.",
+            "activeOnStart": true
         }
     }
 }

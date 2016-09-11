@@ -5,7 +5,7 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/.vscode/": false,
+        "**/.vscode/": true,
         "**/.settings": true,
         "**/bin": true,
         "**/dist": true,
@@ -16,9 +16,11 @@
         ".gitignore": true,
         ".project": true,
         "HsLogic.csproj*": true,
-        "packages.config": true
+        "packages.config": true,
+        "package.json": true
     },
     "explorer.openEditors.visible": 0,
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "typescript.validate.enable": true
+    "typescript.validate.enable": false,
+    "editor.fontSize": 14
 }

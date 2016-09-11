@@ -1,9 +1,9 @@
 {
-	"name": "my-awesome-package",
+	"name": "hsLogic",
 	
-  "version": "0.1",
+  "version": "0.0.1",
   "dependencies": {
-    "typescript": "^2.0.0"
+    "typescript": "^2.0.2"
   },
   "scripts": {
         "build": "tsc"
