@@ -1,5 +1,5 @@
 import {Player} from '../../model/card/Player';
-import {ICardDef} from '../../model/schema/CardDef';
+import {ICardDef} from '../../model/def/CardDef';
 import {SOURCE_TYPE} from '../../Const';
 
 export interface ISource {
@@ -11,6 +11,5 @@ export interface ISource {
 }
 
 export interface IActionParam {
-    source: ISource;
-    suspendEvents?: string[]
+    source: ISource | null
 }

@@ -11,25 +11,47 @@
     ],
     "isWatching": true,
     "showOutput": "silent",
-    "problemMatcher": { // default matcher ("$tsc", "$tsc-watch") does not work
-        "owner": "typescript",
-        "fileLocation": [
-            "relative",
-            "${workspaceRoot}"
-        ],
-        "pattern": {
-            "regexp": "^(.*)\\((\\d+),(\\d+)\\):\\s+(warning|error)\\s+(TS\\d+):\\s+(.*)$",
-            "file": 1,
-            "line": 2,
-            "column": 3,
-            "severity": 4,
-            "code": 5,
-            "message": 6
+    "problemMatcher": [ // default matcher ("$tsc", "$tsc-watch") does not work
+        {
+            "fileLocation": [
+                "relative",
+                "${workspaceRoot}"
+            ],
+            "pattern": {
+                //works: 
+                //src/logic/core/ActionStackRunner.ts(3,10): error TS6133: 'ActionResolver' is declared but never used.
+                "regexp": "^(.*)\\((\\d+),(\\d+)\\):\\s+(warning|error)\\s+(TS\\d+):\\s+(.*)$",
+                "file": 1,
+                "line": 2,
+                "column": 3,
+                "severity": 4,
+                "code": 5,
+                "message": 6
+            },
+            "watching": {
+                "beginsPattern": "File change detected. Starting incremental compilation...",
+                "endsPattern": "Compilation complete. Watching for file changes.",
+                "activeOnStart": true
+            }
         },
-        "watching": {
-            "beginsPattern": "File change detected. Starting incremental compilation...",
-            "endsPattern": "Compilation complete. Watching for file changes.",
-            "activeOnStart": true
+        {
+            "fileLocation": [
+                "relative",
+                "${workspaceRoot}"
+            ],
+            "pattern": {
+                //works:
+                //error TS5051: Option 'sourceRoot can only be used when either option '--inlineSourceMap' or option '--sourceMap' is provided.
+                "regexp": "^(.*)\\s+TS(\\d+):\\s+(.*)$",
+                "file": 1,
+                "line": 2,
+                "message": 3
+            },
+            "watching": {
+                "beginsPattern": "File change detected. Starting incremental compilation...",
+                "endsPattern": "Compilation complete. Watching for file changes.",
+                "activeOnStart": true
+            }
         }
-    }
+    ]
 }

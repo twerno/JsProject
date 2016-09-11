@@ -1,5 +1,5 @@
 import {Card} from '../card/Card';
-import {IDefTarget} from '../schema/IDefTarget';
+import {IDefTarget} from '../def/IDefTarget';
 import {Entity} from '../Entity';
 import {Enchantment} from './Enchantment';
 

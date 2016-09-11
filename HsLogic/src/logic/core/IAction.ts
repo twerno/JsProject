@@ -23,39 +23,6 @@ export interface ActionTypeClass {
 }
 
 
-/**
- *  Action<T>
- * 
- */
-export abstract class Action<P extends IActionParam> extends GenAction<P> {
-
-    hsContext: HsContext | null = null;
-
-    /**
-     * abstract worker
-     */
-    abstract resolve(): ActionType[];
-
-    resolvable(): boolean { return true }
-}
-
-
-/**
- *  AsyncAction<T>
- * 
- */
-export abstract class AsyncAction<P extends IActionParam> extends GenAction<P> {
-
-    /**
-     * abstract worker
-     */
-    abstract resolve(success: SuccessCallback, _failure: FailureCallback): void;
-
-    resolvable(): boolean { return true }
-}
-
-
-
 export abstract class GenAction<P extends IActionParam> extends Entity {
 
     parent: ActionType | null = null;
@@ -83,4 +50,35 @@ export abstract class GenAction<P extends IActionParam> extends Entity {
      */
     get className(): string { return getNameOfClass(this) }
     toString(): string { return this.className }
+}
+
+/**
+ *  Action<T>
+ * 
+ */
+export abstract class Action<P extends IActionParam> extends GenAction<P> {
+
+    hsContext: HsContext | null = null;
+ 
+    /**
+     * abstract worker
+     */
+    abstract resolve(): ActionType[];
+
+    resolvable(): boolean { return true }
+}
+
+
+/**
+ *  AsyncAction<T>
+ * 
+ */
+export abstract class AsyncAction<P extends IActionParam> extends GenAction<P> {
+
+    /**
+     * abstract worker
+     */
+    abstract resolve(success: SuccessCallback, _failure: FailureCallback): void;
+
+    resolvable(): boolean { return true }
 }

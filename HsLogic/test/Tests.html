@@ -5,8 +5,10 @@
 	<script src="http://requirejs.org/docs/release/2.2.0/comments/require.js"></script>
     <script src="..\dist\HsLogic.js"></script>
 	<script>
-		require(['helpers/ClassHelper'], function(methods) {
+		require(['helper/ClassHelper'], function(methods) {
 			console.log(methods.getNameOfClass(window));
+		})
+		require(['test/ActionStackTest'], function(methods) {
 		})
 	</script>
 </head>

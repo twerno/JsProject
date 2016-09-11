@@ -1,6 +1,5 @@
 import { ActionStack } from './ActionStack';
 import { ActionInitializer } from './ActionInitializer';
-import { ActionResolver } from './ActionResolver';
 import { ActionType } from './IAction';
 
 
@@ -41,9 +40,12 @@ export class ActionStackRunner {
 
     private _actionInProgress: ActionType | null = null;
     public stack: IActionStack<ActionType> = new ActionStack();
-    protected resolver: IActionResolver<ActionType> = new ActionResolver();
-
-    constructor(protected _callbacks: ActionStackRunnerCallbacks<ActionType>, protected actionInitializer: ActionInitializer) {
+ 
+    constructor(protected _callbacks: ActionStackRunnerCallbacks<ActionType>,
+        protected actionInitializer: ActionInitializer,
+        protected resolver: IActionResolver<ActionType>) {
+        if (actionInitializer !== null)
+            actionInitializer.stackRunner = this;
     }
 
     putOnTop(action: ActionType): void {
@@ -53,7 +55,7 @@ export class ActionStackRunner {
         this.stack.putOnTop(action);
     }
 
-    isEmpty(): boolean {
+    get isEmpty(): boolean {
         return this.stack.isEmpty();
     }
 

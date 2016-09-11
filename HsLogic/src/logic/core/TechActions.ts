@@ -4,10 +4,11 @@ import { Action, ActionTypeClass, ActionType } from './IAction';
 
 
 
-export abstract class SuspendAction extends Action<IActionParam> {
+export abstract class SuspendAction<T extends IActionParam> extends Action<T> {
 
-    constructor(param: IActionParam, public data: ActionIterceptionData) {
+    constructor(param: T, public data: ActionIterceptionData) {
         super(param);
+        data.interceptedActions = []
     }
 }
 
@@ -19,5 +20,5 @@ export abstract class TechAction extends Action<IActionParam> {
 
 export interface ActionIterceptionData {
     actionsToIntercept: ActionTypeClass[],
-    interceptedActions: ActionType[]
+    interceptedActions?: ActionType[]
 }

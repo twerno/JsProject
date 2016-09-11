@@ -2,13 +2,13 @@
   "compilerOptions": {
     "module": "amd",
     "target": "es6",
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": true,
     "removeComments": true,
     "outFile": "dist/HsLogic.js",
     "outDir": "dist",
-    "sourceRoot": "../src",
-
+      // "sourceRoot": "../src",
+  
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,

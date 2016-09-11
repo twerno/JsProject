@@ -4,7 +4,7 @@ import { Action, ActionType, AsyncAction } from './IAction';
 import { IActionParam } from './IActionParam';
 import { ActionIterceptionData, SuspendAction } from './TechActions';
 
-
+ 
 export class ActionResolver extends IActionResolver<ActionType> {
 
     private interceptData: ActionIterceptionData[] = [];
@@ -68,12 +68,10 @@ export class ActionResolver extends IActionResolver<ActionType> {
     }
 
     private manipulate(action: ActionType, consequences: ActionType[]): ActionType[] {
-        let result: ActionType[] = [],
-            fit: boolean;
+        let result: ActionType[] = [];
 
         for (let i = 0; i < consequences.length; i++) {
-            fit = false;
-            let consequence: ActionType = consequences[i];
+            let consequence: ActionType | null = consequences[i];
 
             for (let j = 0; j < this.interceptData.length; j++) {
                 let data: ActionIterceptionData = this.interceptData[j];
@@ -81,14 +79,14 @@ export class ActionResolver extends IActionResolver<ActionType> {
                 for (let k = 0; k < data.actionsToIntercept.length; k++) {
                     if (consequence instanceof data.actionsToIntercept[k]) {
                         data.interceptedActions.push(consequence);
-                        fit = true;
+                        consequence = null;
                         break;
                     }
                 }
-                if (fit)
+                if (consequence === null)
                     break;
             }
-            if (!fit)
+            if (consequence!== null)
                 result.push(consequence);
         }
 

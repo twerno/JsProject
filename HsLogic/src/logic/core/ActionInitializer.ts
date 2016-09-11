@@ -5,6 +5,8 @@ import { TechAction } from './TechActions';
 
 export class ActionInitializer extends IActionInitializer {
 
+    stackRunner: ActionStackRunner;
+
     initialize(action: ActionType): void {
 
         if (action instanceof Action) {
@@ -17,7 +19,7 @@ export class ActionInitializer extends IActionInitializer {
 
     }
 
-    constructor(private hsCtx: HsContext, protected stackRunner: ActionStackRunner) {
+    constructor(private hsCtx: HsContext) {
         super();
     }
 }
